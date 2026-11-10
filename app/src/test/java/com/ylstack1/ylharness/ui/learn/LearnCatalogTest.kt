@@ -41,7 +41,7 @@ class LearnCatalogTest {
             assertTrue(lesson.id, lesson.actions.isNotEmpty() && lesson.actions.all { it.kind in setOf("settings", "screen") && it.label.isNotBlank() })
             assertTrue(lesson.id, lesson.related.isNotEmpty() && lesson.related.all { it in ids && it != lesson.id })
             assertTrue(lesson.id, lesson.sources.isNotEmpty())
-            lesson.sources.forEach { path -> assertTrue("${lesson.id}: $path", File("src/main/java/com.ylstack1.ylharness", path).isFile) }
+            lesson.sources.forEach { path -> assertTrue("${lesson.id}: $path", File("src/main/java/com/ylstack1/ylharness", path).isFile) }
             lesson.links.forEach { link ->
                 val uri = URI(link.url)
                 assertEquals("${lesson.id}: ${link.label}", "https", uri.scheme)
