@@ -1,0 +1,4 @@
+#ifndef HARNESS_ADB_PAIRING_H
+#define HARNESS_ADB_PAIRING_H
+
+#endif

@@ -1,0 +1,11 @@
+<resources>
+    <string name="chat_activity_full_view">全画面で開く</string>
+    <string name="chat_activity_tool_details">ツールの詳細を開く</string>
+    <string name="chat_activity_input">入力</string>
+    <string name="chat_activity_output">出力</string>
+    <string name="chat_activity_output_preview">出力プレビュー</string>
+    <string name="chat_activity_more">下に続きがあります</string>
+    <string name="chat_activity_latest">最新</string>
+    <string name="chat_activity_copy">テキストをコピー</string>
+    <string name="chat_activity_copied">コピーしました</string>
+</resources>

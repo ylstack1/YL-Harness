@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="rich_filter_rows">"تصفية الصفوف"</string>
+    <string name="rich_no_rows">"لا توجد صفوف مطابقة"</string>
+    <string name="rich_previous">"السابق"</string>
+    <string name="rich_next">"التالي"</string>
+    <string name="rich_discuss_rows">"مناقشة الصفوف المحددة"</string>
+    <string name="rich_discuss_rows_prompt">"قارن الصفوف التي حددتها."</string>
+    <string name="rich_discuss_tab">"السؤال عن علامة التبويب هذه"</string>
+    <string name="rich_discuss_tab_prompt">"اشرح علامة التبويب %1$s."</string>
+    <string name="rich_copy">"نسخ"</string>
+    <string name="rich_copied">"نُسخ"</string>
+    <string name="rich_share">"مشاركة"</string>
+    <string name="rich_share_unavailable">"لا يوجد تطبيق لمشاركة هذا النص."</string>
+    <string name="rich_images_hidden">"الصور متوقفة لهذه المحادثة."</string>
+    <string name="rich_expand_image">"توسيع الصورة"</string>
+    <string name="rich_open_source">"مفتوح المصدر"</string>
+    <string name="rich_discuss_image">"السؤال عن هذه الصورة"</string>
+    <string name="rich_discuss_image_prompt">"اشرح الصورة التي حددتها."</string>
+    <string name="rich_reported_status">"المبلّغ عنه: %1$s"</string>
+    <string name="rich_passed">"ناجح"</string>
+    <string name="rich_failed">"فشل"</string>
+    <string name="rich_unverified">"غير متحقّق منه"</string>
+    <string name="rich_open_file">"فتح الملف"</string>
+    <string name="rich_show_less">"عرض أقل"</string>
+    <string name="rich_show_all">"عرض الكل"</string>
+    <string name="rich_changes">"التغييرات"</string>
+    <string name="rich_before">"قبل"</string>
+    <string name="rich_after">"بعد"</string>
+    <string name="rich_change_count">"أُضيف %1$d · أُزيل %2$d"</string>
+    <string name="rich_discuss_diff">"مناقشة هذه التغييرات"</string>
+    <string name="rich_discuss_diff_prompt">"اشرح هذه المقارنة ومزايا خياراتها وتنازلاتها."</string>
+    <string name="rich_input_range">"من %1$s إلى %2$s"</string>
+    <string name="rich_result_unavailable">"تحقّق من المدخلات أو الصيغة"</string>
+    <string name="rich_reset">"إعادة ضبط"</string>
+    <string name="rich_discuss_values">"السؤال عن هذه القيم"</string>
+    <string name="rich_discuss_values_prompt">"اشرح النتيجة باستخدام قيمي الحالية."</string>
+    <string name="rich_chart_range">"النطاق الظاهر"</string>
+    <string name="rich_reset_range">"عرض النطاق الكامل"</string>
+    <string name="rich_chart_label">"التسمية"</string>
+    <string name="rich_discuss_chart">"السؤال عن هذا الرسم البياني"</string>
+    <string name="rich_discuss_chart_prompt">"اشرح نقطة الرسم المحددة ومجموعات البيانات الظاهرة."</string>
+    <string name="rich_select_point">"اختيار %1$s"</string>
+    <string name="rich_selected_count">"المحدد: %1$d"</string>
+    <string name="rich_clear_selection">"مسح التحديد"</string>
+    <string name="rich_adjust_input">"ضبط %1$s"</string>
+</resources>

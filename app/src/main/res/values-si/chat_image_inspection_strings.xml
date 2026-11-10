@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="chat_viewing_image">"රූපය පරීක්ෂා කරමින්"</string>
+    <string name="chat_viewed_image">"රූපය පරීක්ෂා කළා"</string>
+    <string name="chat_image_failed">"රූපය පරීක්ෂා කළ නොහැක"</string>
+</resources>

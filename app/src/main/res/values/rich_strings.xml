@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rich_filter_rows">"Filter rows"</string>
+    <string name="rich_no_rows">"No matching rows"</string>
+    <string name="rich_previous">"Previous"</string>
+    <string name="rich_next">"Next"</string>
+    <string name="rich_discuss_rows">"Discuss selected rows"</string>
+    <string name="rich_discuss_rows_prompt">"Compare the rows I selected."</string>
+    <string name="rich_discuss_tab">"Ask about this tab"</string>
+    <string name="rich_discuss_tab_prompt">"Explain the %1$s tab."</string>
+    <string name="rich_copy">"Copy"</string>
+    <string name="rich_copied">"Copied"</string>
+    <string name="rich_share">"Share"</string>
+    <string name="rich_share_unavailable">"No app is available to share this text."</string>
+    <string name="rich_images_hidden">"Images are turned off for this chat."</string>
+    <string name="rich_expand_image">"Expand image"</string>
+    <string name="rich_open_source">"Open source"</string>
+    <string name="rich_discuss_image">"Ask about this image"</string>
+    <string name="rich_discuss_image_prompt">"Explain the image I selected."</string>
+    <string name="rich_reported_status">"Reported: %1$s"</string>
+    <string name="rich_passed">"Passed"</string>
+    <string name="rich_failed">"Failed"</string>
+    <string name="rich_unverified">"Unverified"</string>
+    <string name="rich_open_file">"Open file"</string>
+    <string name="rich_show_less">"Show less"</string>
+    <string name="rich_show_all">"Show all"</string>
+    <string name="rich_changes">"Changes"</string>
+    <string name="rich_before">"Before"</string>
+    <string name="rich_after">"After"</string>
+    <string name="rich_change_count">"%1$d added · %2$d removed"</string>
+    <string name="rich_discuss_diff">"Discuss these changes"</string>
+    <string name="rich_discuss_diff_prompt">"Explain this comparison and its tradeoffs."</string>
+    <string name="rich_input_range">"%1$s to %2$s"</string>
+    <string name="rich_result_unavailable">"Check the inputs or formula"</string>
+    <string name="rich_reset">"Reset"</string>
+    <string name="rich_discuss_values">"Ask about these values"</string>
+    <string name="rich_discuss_values_prompt">"Explain the result using my current values."</string>
+    <string name="rich_chart_range">"Visible range"</string>
+    <string name="rich_reset_range">"Show full range"</string>
+    <string name="rich_chart_label">"Label"</string>
+    <string name="rich_discuss_chart">"Ask about this chart"</string>
+    <string name="rich_discuss_chart_prompt">"Explain my selected chart point and visible datasets."</string>
+    <string name="rich_select_point">"Select %1$s"</string>
+    <string name="rich_selected_count">"%1$d selected"</string>
+    <string name="rich_clear_selection">"Clear selection"</string>
+    <string name="rich_adjust_input">"Adjust %1$s"</string>
+</resources>

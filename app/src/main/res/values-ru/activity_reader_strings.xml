@@ -1,0 +1,11 @@
+<resources>
+    <string name="chat_activity_full_view">Открыть полностью</string>
+    <string name="chat_activity_tool_details">Открыть детали инструмента</string>
+    <string name="chat_activity_input">Ввод</string>
+    <string name="chat_activity_output">Вывод</string>
+    <string name="chat_activity_output_preview">Предпросмотр вывода</string>
+    <string name="chat_activity_more">Ещё ниже</string>
+    <string name="chat_activity_latest">Последнее</string>
+    <string name="chat_activity_copy">Копировать текст</string>
+    <string name="chat_activity_copied">Скопировано</string>
+</resources>

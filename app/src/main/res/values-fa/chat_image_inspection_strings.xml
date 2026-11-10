@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_viewing_image">در حال مشاهدهٔ تصویر</string>
+    <string name="chat_viewed_image">تصویر مشاهده شد</string>
+    <string name="chat_image_failed">بررسی تصویر ممکن نشد</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rich_table_options">表のオプション</string>
+    <string name="rich_select_rows">行を選択</string>
+    <string name="rich_stop_selecting_rows">選択を終了</string>
+    <string name="rich_sort_rows">行を並べ替え</string>
+</resources>

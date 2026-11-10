@@ -1,0 +1,15 @@
+Use only after a relevant environment failure or a user-requested diagnostic.
+
+Record actual results; omit checks that do not apply:
+- Section and agent mode from the current request.
+- Workspace ID, filesystem kind, writable/read-only status, command location.
+- Requested access, default route, connected transports, last verified UID, root allowance and pause state.
+- Relevant env_status result (local) or the selected SSH host's tool checks (remote).
+- Required command/version or exact first build error.
+- Which prerequisite changed, which operation was retried, and its actual result.
+- Remaining uncertainty or the specific user-controlled grant required.
+
+Do not dump environment variables, tokens, settings databases or unrelated files.
+Do not request root/Shizuku if the task works as the app UID.
+Do not call an unadvertised tool or run a modifying diagnostic in Plan mode.
+Do not fill a field with a successful-looking example.

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_coding_workflow">エージェントと作業の流れ</string>
+    <string name="settings_coding_intelligence">スキルとインテリジェンス</string>
+    <string name="settings_coding_execution">ワークスペースと実行</string>
+    <string name="settings_device_connections">接続</string>
+    <string name="settings_device_tools">ツールと詳細設定</string>
+    <string name="settings_linux_optional">Linux が必要なプロジェクト向けの追加ツール</string>
+    <string name="settings_device_advanced">デバイスへの高度なアクセス</string>
+    <string name="settings_device_advanced_summary">Root とデバイス所有者の設定</string>
+    <string name="settings_device_background">バックグラウンドとバッテリー</string>
+    <string name="settings_device_background_summary">ターミナルとエージェントの作業を継続する</string>
+    <string name="settings_connection_help">接続方法</string>
+    <string name="settings_connection_options">接続オプション</string>
+    <string name="wireless_adb_disconnect">切断</string>
+    <string name="wireless_adb_connection_kept">接続中 · 切断するまで利用可能</string>
+    <string name="wireless_adb_auto_reconnecting">保存済みのワイヤレスデバッグに再接続中</string>
+    <string name="rich_profile_details">詳細</string>
+    <string name="rich_profile_sources">ソース</string>
+    <string name="settings_disclosure_expanded">展開済み</string>
+    <string name="settings_disclosure_collapsed">折りたたみ済み</string>
+    <string name="settings_terminal_access">ターミナルへのアクセス</string>
+    <string name="wireless_adb_compact_summary">自動再接続に対応したデバイスコマンド</string>
+</resources>

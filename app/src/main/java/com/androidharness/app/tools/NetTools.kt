@@ -1,0 +1,396 @@
+package com.androidharness.app.tools
+
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.booleanOrNull
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.put
+import kotlinx.serialization.json.putJsonObject
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.util.concurrent.TimeUnit
+
+/**
+ * Web search. When the user configured a search API (Brave / Tavily key in
+ * Settings) that backend is used first for higher-quality results, with the
+ * keyless HTML engine chain as automatic fallback. Without a key the keyless
+ * chain runs directly: an engine parameter picks one, "auto" tries them all.
+ */
+class WebSearchTool(
+    private val client: OkHttpClient,
+    /** User's search API config, read fresh per call (may be null = keyless). */
+    private val searchApi: () -> SearchApiConfig? = { null },
+    /** Turn-scoped source allowance; null means the model decides. */
+    private val sourceBudget: SearchSourceBudget? = null,
+    /** Chat's selected research depth; null for Code and Auto. */
+    private val depth: com.androidharness.app.data.SearchDepth? = null,
+    private val refreshApi: suspend () -> SearchApiConfig? = { searchApi() },
+) : Tool {
+    override val name = "web_search"
+    override val description: String get() = buildString {
+        append(
+            "Search the web and return top results (title, url, date when reported, snippet). Uses the configured " +
+                "search API automatically when one is set in Settings; otherwise keyless engines " +
+                "run with automatic fallback. Choose an engine with the 'engine' parameter " +
+                "(duckduckgo, bing, brave, google; keyless mode only) or use 'auto'. " +
+                "Set freshness to day, week, month, or year for news and latest-state questions; " +
+                "check the reported date before treating a result as current.",
+        )
+        searchBackendFor(searchApi())?.let {
+            append(" The user selected ${it.label} in Settings; every search uses that API with the saved key. " +
+                "The engine parameter is ignored while it is active. API authentication, quota and rate-limit failures " +
+                "are reported explicitly; do not switch to scraping or repeat unchanged requests.")
+        }
+        sourceBudget?.let {
+            append(" This turn allows at most ${it.maxSources} distinct sources; the tool stops returning new sources when the budget is used.")
+        }
+    }
+    override val parametersSchema = Schema.obj(
+        mapOf(
+            "query" to Schema.string("The search query."),
+            "count" to Schema.integer("Maximum number of results (default 8; research depth levels request a full batch of 20)."),
+            "engine" to Schema.string("duckduckgo | bing | brave | google | auto (default). Keyless mode only."),
+            "freshness" to Schema.string("Optional recency filter: day, week, month, year. Omit or use any for no filter."),
+            "language" to Schema.string("Optional result language code, for example en or de."),
+            "country" to Schema.string("Optional country code, for example US or DE."),
+        ),
+        required = listOf("query"),
+    )
+    override val isReadOnly = true
+
+    private val keyless = KeylessSearchBackend()
+
+    internal suspend fun configurationNote(): String {
+        val config = refreshApi()
+        val backend = searchBackendFor(config)
+        return when {
+            backend != null -> "The selected search provider is ${backend.label}; its saved API key is available. " +
+                "Use web_search normally: the harness supplies the key automatically. Do not ask the user to paste it or tell you to use this provider. " +
+                (if (config?.provider == "tavily") "web_fetch also uses Tavily Extract and cached full-page content automatically. " else "") +
+                "Do not navigate to search-engine websites to bypass these tools. Search snippets are not full page reads. Report API failures and unavailable pages honestly."
+            config != null -> "${config.provider} is selected for search, but its saved API key is missing. web_search reports this explicitly; the user can fix it in Web search settings."
+            else -> "No search API is selected. web_search uses public keyless engines. Use web_fetch for pages and browser_read for JavaScript pages."
+        }
+    }
+
+    /** A run-scoped copy that spends from this turn's source and read budgets. */
+    fun forDepth(depth: com.androidharness.app.data.SearchDepth): WebSearchTool =
+        depth.maxSources?.let {
+            WebSearchTool(
+                client, searchApi,
+                SearchSourceBudget(it, researchReadLimit(depth), researchReadMinimum(depth)),
+                depth,
+                refreshApi,
+            )
+        } ?: this
+
+    internal fun budget(): SearchSourceBudget? = sourceBudget
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult {
+        val rawQuery = args["query"]?.jsonPrimitive?.content
+            ?: throw ToolFailure("Missing required argument: query")
+        val query = rawQuery.trim()
+        if (query.isEmpty()) {
+            return ToolResult(true, "No search results for empty query.")
+        }
+        val rawCount = args["count"]?.jsonPrimitive?.content?.toIntOrNull()
+        if (rawCount != null && rawCount <= 0) {
+            throw ToolFailure("count must be greater than 0.")
+        }
+        val budget = sourceBudget
+        if (budget != null && budget.remaining == 0) {
+            return ToolResult(true, exhaustedText())
+        }
+        val count = searchBatchCount(depth, rawCount, budget?.remaining ?: Int.MAX_VALUE)
+        val requested = args["engine"]?.jsonPrimitive?.contentOrNull?.trim()?.lowercase()
+            ?: "auto"
+        val validEngines = setOf("auto", "duckduckgo", "bing", "brave", "google")
+        if (requested !in validEngines) {
+            throw ToolFailure("Unknown engine '$requested'. Supported engines: auto, duckduckgo, bing, brave, google.")
+        }
+        val freshness = args["freshness"]?.jsonPrimitive?.contentOrNull?.trim()?.lowercase()
+            ?.takeIf { it.isNotBlank() && it != "any" }
+        if (freshness != null && freshness !in setOf("day", "week", "month", "year")) {
+            throw ToolFailure("Unknown freshness '$freshness'. Use day, week, month, year, or omit it.")
+        }
+        val language = args["language"]?.jsonPrimitive?.contentOrNull?.trim()?.takeIf { it.isNotBlank() }
+        val country = args["country"]?.jsonPrimitive?.contentOrNull?.trim()?.takeIf { it.isNotBlank() }
+        val deep = depth in setOf(
+            com.androidharness.app.data.SearchDepth.DEEP,
+            com.androidharness.app.data.SearchDepth.DEEP_RESEARCH,
+            com.androidharness.app.data.SearchDepth.MAX_RESEARCH,
+        )
+        val options = SearchOptions(requested, freshness, language, country, deep)
+        val searchClient = client.newBuilder()
+            .readTimeout(25, TimeUnit.SECONDS)
+            .build()
+
+        val notes = StringBuilder()
+        val apiConfig = refreshApi()
+        if (apiConfig != null && apiConfig.keys.isEmpty()) return ToolResult(false,
+            "${apiConfig.provider} search API is selected but it has no enabled saved key. Add or turn on a key in Web search settings.")
+        val apiBackend = searchBackendFor(apiConfig)
+        val cacheKey = listOf(
+            apiBackend?.label ?: "keyless", query, count, options.engine,
+            options.freshness, options.language, options.country, options.deep,
+            apiConfig?.credentialIdentity(),
+        ).joinToString("|")
+        WebResultCache.getSearch(cacheKey)?.let { cached ->
+            val suffix = (cached.via?.let { "\n[via $it]" } ?: "") + "\n[cached search; no new API request]"
+            return render(cached.results, count, "", suffix)
+        }
+        if (apiBackend != null) {
+            try {
+                val outcome = apiBackend.fetch(searchClient, query, count, options)
+                if (outcome.results.isNotEmpty()) {
+                    WebResultCache.putSearch(cacheKey, outcome)
+                    val suffix = buildString {
+                        if (requested != "auto") {
+                            // The engine selector is keyless-only; say so instead of
+                            // silently returning different results than asked for.
+                            append("\n[note: the engine parameter is ignored; ${apiBackend.label} is active]")
+                        }
+                        append("\n[via ").append(outcome.via ?: apiBackend.label).append(']')
+                    }
+                    return render(outcome.results, count, notes.toString(), suffix)
+                }
+                return render(emptyList(), count, "${apiBackend.label} returned no results. Try a different query.\n", "\n[via ${apiBackend.label}]")
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                return ToolResult(false, "${apiBackend.label} failed: ${SecretRedactor.redact(e.message.orEmpty())}. " +
+                    "The selected API was not replaced with anonymous scraping. Check the API key, available credits, or the reported cooldown.")
+            }
+        }
+
+        val outcome = try {
+            keyless.fetch(searchClient, query, count, options)
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: ToolFailure) {
+            return ToolResult(
+                false,
+                notes.toString() + e.message +
+                    " You can also use web_fetch with a known URL.",
+            )
+        } catch (e: Exception) {
+            return ToolResult(false, notes.toString() + "Search failed: ${e.message}")
+        }
+        WebResultCache.putSearch(cacheKey, outcome)
+        val suffix = outcome.via?.let { "\n[via $it]" } ?: ""
+        return render(outcome.results, count, notes.toString(), suffix)
+    }
+
+    private fun render(
+        results: List<WebSearchResult>,
+        count: Int,
+        prefix: String,
+        suffix: String,
+    ): ToolResult {
+        val varied = diversifyResults(results)
+        val budget = sourceBudget
+        if (budget == null) {
+            return ToolResult(true, prefix + WebSearchText.render(varied, count) + suffix,
+                research = com.androidharness.app.core.ResearchReceipt(backend = suffix.substringAfter("[via ", "").substringBefore(']')))
+        }
+        val claimed = budget.claim(varied.take(count))
+        if (claimed.isEmpty()) {
+            val message = if (budget.remaining == 0) exhaustedText()
+            else "[No new sources found; ${budget.remaining} of ${budget.maxSources} sources remain this turn. Try a different query angle.]"
+            return ToolResult(true, prefix + message + suffix, research = budget.receipt(backend = suffix.substringAfter("[via ", "").substringBefore(']')))
+        }
+        val push = when (depth) {
+            com.androidharness.app.data.SearchDepth.DEEP ->
+                ". Read the strongest pages with web_fetch before answering."
+            com.androidharness.app.data.SearchDepth.DEEP_RESEARCH,
+            com.androidharness.app.data.SearchDepth.MAX_RESEARCH ->
+                ". Keep searching different angles and read the strongest pages with web_fetch until the budget is used."
+            else -> ""
+        }
+        val note = buildString {
+            append("\n[sources this turn: ${budget.used}/${budget.maxSources}, ${budget.remaining} remaining")
+            if (budget.minReads > 0) {
+                append("; pages read: ${budget.pagesRead}/${budget.minReads} required")
+            }
+            append(push)
+            append(']')
+        }
+        return ToolResult(true, prefix + WebSearchText.render(claimed, claimed.size) + suffix + note,
+            research = budget.receipt(backend = suffix.substringAfter("[via ", "").substringBefore(']')))
+    }
+
+    private fun exhaustedText(): String {
+        val budget = sourceBudget ?: return ""
+        return "[Search source limit reached: ${budget.used}/${budget.maxSources} sources this turn. " +
+            "Do not search again; read the strongest pages already found with web_fetch, then answer from what you have.]"
+    }
+}
+
+/**
+ * Decides when http_request attaches the stored GitHub token. API hosts
+ * (api.github.com, uploads.github.com) get it AUTOMATICALLY, anonymous API
+ * calls from the main agent were a standing footgun (60 req/h rate limit,
+ * private repos 404). Explicit true widens to other github.com /
+ * githubusercontent.com hosts; explicit false never attaches. The token is
+ * NEVER attached for any other host, whatever the arguments say.
+ */
+internal object GithubAuthPolicy {
+    fun shouldAttach(host: String?, explicit: Boolean?): Boolean {
+        val h = host?.lowercase()?.trimEnd('.') ?: return false
+        return when (explicit) {
+            false -> false
+            true -> h == "github.com" || h.endsWith(".github.com") ||
+                h == "githubusercontent.com" || h.endsWith(".githubusercontent.com")
+            null -> h == "api.github.com" || h == "uploads.github.com"
+        }
+    }
+}
+
+internal object HttpBinaryDetector {
+    fun isBinaryMediaType(mediaType: MediaType?): Boolean {
+        if (mediaType == null) return false
+        val type = mediaType.type.lowercase()
+        val subtype = mediaType.subtype.lowercase()
+        if (type == "text") return false
+        if (subtype == "svg+xml") return false
+        if (type in setOf("image", "audio", "video", "font")) return true
+        if (subtype == "json" || subtype.endsWith("+json")) return false
+        if (subtype == "xml" || subtype.endsWith("+xml")) return false
+        if (subtype == "yaml" || subtype == "x-yaml" || subtype.endsWith("+yaml")) return false
+        if (subtype == "javascript" || subtype == "x-javascript" || subtype == "ecmascript") return false
+        if (subtype == "graphql" || subtype == "x-www-form-urlencoded") return false
+        if (subtype == "sql" || subtype == "csv") return false
+        return true
+    }
+}
+
+/** Generic HTTP client for testing APIs. */
+class HttpRequestTool(
+    private val client: OkHttpClient,
+    /** Stored GitHub token from the app's encrypted settings (lazy, may be null). */
+    private val githubToken: () -> String? = { null },
+) : Tool {
+    override val name = "http_request"
+    override val description =
+        "Send an HTTP request (GET/POST/PUT/PATCH/DELETE) with optional headers and body. " +
+        "Public addresses only; localhost/private destinations are blocked and redirects are not followed. " +
+        "Returns status, headers and the truncated response body. Requests to api.github.com " +
+        "and uploads.github.com are authenticated with the configured GitHub token automatically " +
+        "(set github_auth=false to go anonymous); github_auth=true extends auth to other " +
+        "github.com/githubusercontent.com hosts."
+    override val parametersSchema = Schema.obj(
+        mapOf(
+            "method" to Schema.string("HTTP method. Defaults to GET."),
+            "url" to Schema.string("The request URL."),
+            "headers" to kotlinx.serialization.json.buildJsonObject {
+                put("type", "object")
+                put("description", "Request headers as key/value pairs.")
+                putJsonObject("additionalProperties") { put("type", "string") }
+            },
+            "body" to Schema.string("Request body (for POST/PUT/PATCH)."),
+            "content_type" to Schema.string("Body content type. Defaults to application/json."),
+            "github_auth" to Schema.boolean(
+                "GitHub token handling. Omitted: attach automatically for api.github.com and " +
+                    "uploads.github.com. true: also attach for other github.com / " +
+                    "githubusercontent.com hosts. false: never attach (anonymous request).",
+            ),
+        ),
+        required = listOf("url"),
+    )
+    override val isReadOnly = true
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val url = args["url"]?.jsonPrimitive?.content
+                ?: throw ToolFailure("Missing required argument: url")
+            val method = (args["method"]?.jsonPrimitive?.content ?: "GET").uppercase()
+            val body = args["body"]?.jsonPrimitive?.content
+            val contentType = args["content_type"]?.jsonPrimitive?.content ?: "application/json"
+            val githubAuth = args["github_auth"]
+                ?.let { runCatching { it.jsonPrimitive.booleanOrNull }.getOrNull() }
+            val host = runCatching { url.toHttpUrlOrNull()?.host }.getOrNull()
+            val attachAuth = GithubAuthPolicy.shouldAttach(host, githubAuth)
+            val token = if (attachAuth) githubToken() else null
+
+            val builder = Request.Builder().url(url)
+            // Attached first so an explicit user Authorization header wins.
+            if (attachAuth && token != null) {
+                builder.header("Authorization", "Bearer $token")
+            }
+            args["headers"]?.jsonObject?.forEach { (key, value) ->
+                builder.header(key, value.jsonPrimitive.content)
+            }
+            val requestBody = body?.toRequestBody(contentType.toMediaTypeOrNull())
+            when (method) {
+                "GET" -> builder.get()
+                "DELETE" -> if (body == null) builder.delete() else builder.delete(requestBody)
+                "HEAD" -> builder.head()
+                else -> builder.method(method, requestBody ?: "".toRequestBody(contentType.toMediaTypeOrNull()))
+            }
+
+            try {
+                val request = builder.build()
+                val addresses = PublicHttpAddresses.validate(client.dns.lookup(request.url.host))
+                val reqClient = client.newBuilder()
+                    .proxy(java.net.Proxy.NO_PROXY)
+                    .dns(object : okhttp3.Dns {
+                        override fun lookup(hostname: String): List<java.net.InetAddress> =
+                            if (hostname == request.url.host) addresses
+                            else PublicHttpAddresses.validate(client.dns.lookup(hostname))
+                    })
+                    .followRedirects(false)
+                    .followSslRedirects(false)
+                    .connectionPool(okhttp3.ConnectionPool())
+                    .connectTimeout(15, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .build()
+                reqClient.newCall(request).execute().use { resp ->
+                    val sb = StringBuilder()
+                    sb.append("HTTP ").append(resp.code).append(' ').append(resp.message).append('\n')
+                    val headers = (0 until minOf(resp.headers.size, 12))
+                        .map { resp.headers.name(it) to resp.headers.value(it) }
+                    headers.forEach { (k, v) -> sb.append(k).append(": ").append(v).append('\n') }
+                    sb.append('\n')
+                    val body = resp.body
+                    val mediaType = body?.contentType()
+                    if (HttpBinaryDetector.isBinaryMediaType(mediaType)) {
+                        val mime = mediaType?.let { "${it.type}/${it.subtype}" } ?: "application/octet-stream"
+                        val len = if ((body?.contentLength() ?: -1L) >= 0L) {
+                            body!!.contentLength()
+                        } else {
+                            body?.bytes()?.size?.toLong() ?: 0L
+                        }
+                        sb.append("[binary content: $mime, $len bytes]")
+                    } else {
+                        val bytes = body?.bytes() ?: ByteArray(0)
+                        if (mediaType == null && bytes.isNotEmpty() && com.androidharness.app.workspace.isBinaryStream(java.io.ByteArrayInputStream(bytes))) {
+                            sb.append("[binary content: application/octet-stream, ${bytes.size} bytes]")
+                        } else {
+                            val respBody = bytes.toString(mediaType?.charset() ?: Charsets.UTF_8)
+                            sb.append(respBody.take(20_000))
+                            if (respBody.length > 20_000) sb.append("\n[truncated]")
+                        }
+                    }
+                    if (attachAuth && token == null) {
+                        sb.append("\n[note: no GitHub token configured; request sent anonymously; " +
+                            "set one in Settings → GitHub for private repos and the 5000 req/h limit]")
+                    }
+                    if (attachAuth && token != null && (resp.code == 401 || resp.code == 403)) {
+                        sb.append("\n[note: GitHub refused an AUTHENTICATED request (" + resp.code + "): " +
+                            "check the token's validity/scopes with doctor --github]")
+                    }
+                    ToolResult(true, sb.toString())
+                }
+            } catch (e: Exception) {
+                ToolResult(false, "Request failed: ${e.message}")
+            }
+        }
+}

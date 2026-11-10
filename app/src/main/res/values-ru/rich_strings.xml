@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="rich_filter_rows">"Фильтр строк"</string>
+    <string name="rich_no_rows">"Строки не найдены"</string>
+    <string name="rich_previous">"Назад"</string>
+    <string name="rich_next">"Далее"</string>
+    <string name="rich_discuss_rows">"Обсудить выбранные строки"</string>
+    <string name="rich_discuss_rows_prompt">"Сравни выбранные мной строки."</string>
+    <string name="rich_discuss_tab">"Спросить об этой вкладке"</string>
+    <string name="rich_discuss_tab_prompt">"Объясни вкладку %1$s."</string>
+    <string name="rich_copy">"Скопировать"</string>
+    <string name="rich_copied">"Скопировано"</string>
+    <string name="rich_share">"Поделиться"</string>
+    <string name="rich_share_unavailable">"Нет приложения для отправки этого текста."</string>
+    <string name="rich_images_hidden">"Изображения выключены для этого чата."</string>
+    <string name="rich_expand_image">"Развернуть изображение"</string>
+    <string name="rich_open_source">"Открыть источник"</string>
+    <string name="rich_discuss_image">"Спросить об этом изображении"</string>
+    <string name="rich_discuss_image_prompt">"Объясни выбранное мной изображение."</string>
+    <string name="rich_reported_status">"Сообщённый статус: %1$s"</string>
+    <string name="rich_passed">"Успешно"</string>
+    <string name="rich_failed">"Ошибка"</string>
+    <string name="rich_unverified">"Не проверено"</string>
+    <string name="rich_open_file">"Открыть файл"</string>
+    <string name="rich_show_less">"Показать меньше"</string>
+    <string name="rich_show_all">"Показать все"</string>
+    <string name="rich_changes">"Изменения"</string>
+    <string name="rich_before">"До"</string>
+    <string name="rich_after">"После"</string>
+    <string name="rich_change_count">"Добавлено: %1$d · Удалено: %2$d"</string>
+    <string name="rich_discuss_diff">"Обсудить эти изменения"</string>
+    <string name="rich_discuss_diff_prompt">"Объясни это сравнение и его компромиссы."</string>
+    <string name="rich_input_range">"от %1$s до %2$s"</string>
+    <string name="rich_result_unavailable">"Проверьте ввод или формулу"</string>
+    <string name="rich_reset">"Сбросить"</string>
+    <string name="rich_discuss_values">"Спросить об этих значениях"</string>
+    <string name="rich_discuss_values_prompt">"Объясни результат с моими текущими значениями."</string>
+    <string name="rich_chart_range">"Видимый диапазон"</string>
+    <string name="rich_reset_range">"Показать весь диапазон"</string>
+    <string name="rich_chart_label">"Подпись"</string>
+    <string name="rich_discuss_chart">"Спросить об этом графике"</string>
+    <string name="rich_discuss_chart_prompt">"Объясни выбранную точку графика и видимые наборы данных."</string>
+    <string name="rich_select_point">"Выбрать %1$s"</string>
+    <string name="rich_selected_count">"Выбрано: %1$d"</string>
+    <string name="rich_clear_selection">"Снять выделение"</string>
+    <string name="rich_adjust_input">"Изменить %1$s"</string>
+</resources>

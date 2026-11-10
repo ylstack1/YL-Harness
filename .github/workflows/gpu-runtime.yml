@@ -1,0 +1,43 @@
+name: Publish GPU runtime packages
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency:
+  group: gpu-runtime-publication
+  cancel-in-progress: false
+jobs:
+  packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Install native tools
+        run: |
+          "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" --install 'ndk;27.2.12479018'
+          sudo apt-get update && sudo apt-get install -y glslc
+      - name: Build matching APK and GPU packages
+        run: ./gradlew :app:assembleRelease --no-daemon --stacktrace
+      - name: Upload matching build artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: github-apk-and-gpu-runtime
+          path: |
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/gpuRuntime/release/*.gz
+      - name: Publish content-addressed GPU assets
+        env:
+          GH_TOKEN: ${{ secrets.GPU_RUNTIME_PUBLISH_TOKEN }}
+        run: |
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo 'Matching packages are attached to this build. Publish them from AH-GPU-Runtime, or configure GPU_RUNTIME_PUBLISH_TOKEN for automatic cross-repository uploads.'
+            exit 0
+          fi
+          if ! gh release view 1 --repo Sanuu7/AH-GPU-Runtime >/dev/null 2>&1; then
+            gh release create 1 --repo Sanuu7/AH-GPU-Runtime --title 'Optional local GPU runtime' --notes 'Verified, device-specific GPU packages for AndroidHarness. The app contains the expected content hash.' --latest=false
+          fi
+          gh release upload 1 --repo Sanuu7/AH-GPU-Runtime app/build/outputs/gpuRuntime/release/*.gz --clobber

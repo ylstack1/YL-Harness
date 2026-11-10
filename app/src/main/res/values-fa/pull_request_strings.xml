@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pr_tool_opening">در حال باز کردن درخواست ادغام…</string>
+    <string name="pr_tool_opened">درخواست ادغام #%1$d باز شد</string>
+    <string name="pr_tool_existing">درخواست ادغام #%1$d از قبل باز است</string>
+    <string name="pr_tool_failed">درخواست ادغام باز نشد</string>
+    <string name="pr_tool_waiting">در انتظار تأیید شما</string>
+    <string name="pr_draft">پیش‌نویس</string>
+    <string name="pr_counts">کامیت‌ها: %1$d · فایل‌ها: %2$d</string>
+    <string name="pr_open_on_github">باز کردن در GitHub</string>
+    <string name="pr_copy_link">کپی پیوند</string>
+    <string name="pr_link_copied">پیوند کپی شد</string>
+    <string name="pr_open_failed">هیچ برنامه‌ای نتوانست پیوند را باز کند؛ به‌جای آن کپی شد.</string>
+    <string name="pr_approval_title">درخواست ادغام باز شود؟</string>
+    <string name="pr_approval_body">یک درخواست ادغام در GitHub از شاخهٔ پوش‌شده می‌سازد. چیزی پوش یا ادغام نمی‌شود.</string>
+    <string name="pr_approval_base">به %1$s</string>
+    <string name="pr_approval_default_base">به شاخهٔ پیش‌فرض</string>
+    <string name="pr_create">ایجاد درخواست ادغام</string>
+    <string name="pr_create_draft">ایجاد درخواست ادغام پیش‌نویس</string>
+    <string name="pr_entry_body">کامیت‌های پوش‌شدهٔ این شاخه را برای بازبینی در GitHub پیشنهاد دهید.</string>
+    <string name="pr_loading">در حال مقایسهٔ این شاخه با GitHub…</string>
+    <string name="pr_title_label">عنوان</string>
+    <string name="pr_description_label">توضیحات</string>
+    <string name="pr_rewrite_description">بازنویسی توضیحات</string>
+    <string name="pr_base_label">شاخهٔ پایه</string>
+    <string name="pr_draft_label">باز کردن به‌صورت پیش‌نویس</string>
+    <string name="pr_draft_body">بازبین‌ها آن را می‌بینند، اما تا وقتی آن را آماده علامت نزنید قابل ادغام نیست.</string>
+    <string name="pr_include_checks">افزودن بررسی‌های این گفتگو</string>
+    <string name="pr_include_checks_body">نتایج ساخت، آزمون و lint ثبت‌شده در این گفتگو را اضافه می‌کند.</string>
+    <string name="pr_existing_body">پوش‌های جدید به %1$s این درخواست ادغام را خودکار به‌روز می‌کنند.</string>
+    <string name="pr_not_pushed_title">شاخه هنوز در GitHub نیست</string>
+    <string name="pr_out_of_date_title">نسخهٔ GitHub از این شاخه قدیمی‌تر است</string>
+    <string name="pr_push_body">%1$s را پوش کنید تا GitHub آخرین کامیت‌های شما را داشته باشد.</string>
+    <string name="pr_push_branch">پوش شاخه</string>
+    <string name="pr_pushed">شاخه پوش شد.</string>
+    <string name="pr_uncommitted_title">تغییرات کامیت‌نشده: %1$d</string>
+    <string name="pr_uncommitted_body">تا آن‌ها را کامیت و پوش نکنید، شامل نمی‌شوند.</string>
+    <string name="pr_behind_title">کامیت‌های جدیدتر در %1$s: %2$d</string>
+    <string name="pr_behind_body">این شاخه هنوز آن‌ها را ندارد. ممکن است بازبین‌ها بخواهند آن را به‌روز کنید.</string>
+    <string name="pr_no_commits_title">هنوز چیزی برای پیشنهاد نیست</string>
+    <string name="pr_no_commits_body">%1$s هیچ کامیتی ندارد که در %2$s نباشد.</string>
+    <string name="pr_commits_header">کامیت‌ها</string>
+    <string name="pr_more">بیشتر: %1$d</string>
+    <string name="pr_created_title">درخواست ادغام #%1$d باز شد</string>
+    <string name="pr_created_draft_title">درخواست ادغام پیش‌نویس #%1$d باز شد</string>
+    <string name="pr_retry">تلاش دوباره</string>
+</resources>

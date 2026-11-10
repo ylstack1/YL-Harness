@@ -1,0 +1,353 @@
+package com.androidharness.app.llm
+
+import com.androidharness.app.core.ChatMessage
+import com.androidharness.app.core.Role
+import com.androidharness.app.core.ToolCallData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.intOrNull
+import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.put
+import kotlinx.serialization.json.putJsonArray
+import kotlinx.serialization.json.putJsonObject
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+
+/**
+ * OpenAI's Responses API (`POST /v1/responses`), the newer gpt-5/o-series
+ * API where reasoning is a first-class object (`reasoning.effort` + streamed
+ * summary), tools are flattened function items, and the whole request can be
+ * serverless (`store: false`). Some newer OpenAI models are only available
+ * here, not on /chat/completions. For all OpenAI-compatible gateways nothing
+ * changes, they keep using [OpenAiCompatProvider].
+ */
+class OpenAiResponsesProvider(
+    @Suppress("unused") private val client: OkHttpClient,
+    @Suppress("unused") private val json: Json,
+) : LlmProvider {
+
+    override fun streamChat(
+        config: ProviderConfig,
+        apiKey: String,
+        systemPrompt: String,
+        messages: List<ChatMessage>,
+        tools: List<ToolSchema>,
+        options: RequestOptions,
+    ): Flow<StreamEvent> {
+        val thinking = options.resolveThinking(config)
+        val body = buildRequestBody(config, systemPrompt, messages, tools, options, thinking)
+        val request = buildRequest(
+            config,
+            apiKey,
+            body.toString().toRequestBody("application/json; charset=utf-8".toMediaType()),
+            options,
+        )
+
+        // Function-call fragments accumulate by item id: (call id, name, args)
+        val acc = LinkedHashMap<String, Triple<String, String, StringBuilder>>()
+
+        return flow {
+            // Usage lands once on response.completed, hold it and emit after
+            // the stream so each request tallies exactly once.
+            var pendingUsage: StreamEvent.Usage? = null
+            val reasoningItems = linkedMapOf<String, JsonObject>()
+            emit(StreamEvent.ThinkingConfigured(thinking.detail))
+            ProviderFactory.sseJson(request, ProviderHeaders.client(config, client)).collect { el ->
+                val event = el as? JsonObject
+                val item = event?.get("item") as? JsonObject
+                if (event?.get("type")?.jsonPrimitive?.contentOrNull == "response.output_item.done" &&
+                    item?.get("type")?.jsonPrimitive?.contentOrNull == "reasoning") {
+                    reasoningItems[item["id"]?.jsonPrimitive?.contentOrNull ?: reasoningItems.size.toString()] = item
+                }
+                (event?.get("response") as? JsonObject)?.get("output")?.jsonArrayOrAbsent()?.forEach { output ->
+                    val obj = output as? JsonObject ?: return@forEach
+                    if (obj["type"]?.jsonPrimitive?.contentOrNull == "reasoning")
+                        reasoningItems[obj["id"]?.jsonPrimitive?.contentOrNull ?: reasoningItems.size.toString()] = obj
+                }
+                parseEvent(el, acc).forEach { event ->
+                    if (event is StreamEvent.Usage) pendingUsage = event else emit(event)
+                }
+            }
+            pendingUsage?.let { emit(it) }
+            if (reasoningItems.isNotEmpty()) emit(StreamEvent.ResponseState(
+                com.androidharness.app.core.ProviderMessageState.of(config, "responses", reasoningItems.values.toList())))
+            // Defensive flush: a stream that ends without output_item.done.
+            drainAccumulated(acc)?.let { emit(it) }
+        }
+    }
+
+    // ------------------------------------------------------------------
+    // Request building (pure, unit-tested)
+
+    internal fun buildRequest(
+        config: ProviderConfig,
+        apiKey: String,
+        body: RequestBody,
+        options: RequestOptions,
+    ): Request {
+        val requestBuilder = Request.Builder()
+            .url(config.baseUrl.trimEnd('/') + "/responses")
+            .header("Authorization", "Bearer $apiKey")
+        if (HarnessProvider.isOpenCode(config)) {
+            HarnessProvider.withSession(requestBuilder, options.cacheKey)
+        }
+        return ProviderHeaders.apply(requestBuilder, config).post(body).build()
+    }
+
+    internal fun buildRequestBody(
+        config: ProviderConfig,
+        systemPrompt: String,
+        messages: List<ChatMessage>,
+        tools: List<ToolSchema>,
+        options: RequestOptions,
+        thinking: com.androidharness.app.agent.ThinkingSpecs.ResolvedThinking = options.resolveThinking(config),
+    ): JsonObject = options.applyReasoningMapping(config, buildJsonObject {
+        put("model", config.model)
+        put("stream", true)
+        // Stateless: we resend full history every request, so nothing is kept server-side.
+        put("store", false)
+        put("max_output_tokens", thinking.maxOutputTokens)
+        put("instructions", systemPrompt)
+        options.cacheKey?.takeIf { PromptCachePolicy.supportsKey(config.baseUrl) }?.let { key ->
+            val cleanKey = key.take(64)
+            put("prompt_cache_key", cleanKey)
+            put("user", "pc_$cleanKey")
+        }
+        thinking.effort?.let { effort ->
+            putJsonObject("reasoning") {
+                put("effort", effort)
+                if (effort != "none") put("summary", "auto")
+            }
+            if (effort != "none") putJsonArray("include") { add(kotlinx.serialization.json.JsonPrimitive("reasoning.encrypted_content")) }
+        }
+        putJsonArray("input") {
+            messages.forEach { message -> serializeMessage(message, config).forEach { add(it) } }
+        }
+        if (tools.isNotEmpty()) {
+            putJsonArray("tools") {
+                tools.sortedBy { it.name }.forEach { schema ->
+                    add(buildJsonObject {
+                        put("type", "function")
+                        put("name", schema.name)
+                        put("description", schema.description)
+                        put("parameters", schema.parametersJson)
+                        put("strict", false)
+                    })
+                }
+            }
+        }
+    })
+
+    /**
+     * One chat message → zero or more Responses input items. Tool calls and
+     * their results are standalone items (`function_call` / `function_call_output`),
+     * which is also the replay shape the API expects back.
+     */
+    private fun serializeMessage(m: ChatMessage, config: ProviderConfig): List<JsonObject> = when (m.role) {
+        Role.USER -> listOf(buildJsonObject {
+            put("role", "user")
+            putJsonArray("content") {
+                if (m.text.isNotBlank() || m.imageData.isEmpty()) {
+                    add(buildJsonObject {
+                        put("type", "input_text")
+                        put("text", m.text)
+                    })
+                }
+                m.imageData.forEach { image ->
+                    add(buildJsonObject {
+                        put("type", "input_image")
+                        put("image_url", "data:${image.mime};base64,${image.base64}")
+                    })
+                }
+            }
+        })
+
+        Role.ASSISTANT -> buildList {
+            m.generation.state?.takeIf { it.matches(config, "responses", m) }?.items?.let { addAll(it) }
+            if (m.text.isNotBlank()) {
+                add(buildJsonObject {
+                    put("role", "assistant")
+                    putJsonArray("content") {
+                        add(buildJsonObject {
+                            put("type", "output_text")
+                            put("text", m.text)
+                        })
+                    }
+                })
+            }
+            m.toolCalls.forEach { call ->
+                add(buildJsonObject {
+                    put("type", "function_call")
+                    put("call_id", call.id)
+                    put("name", call.name)
+                    put("arguments", call.argumentsJson)
+                })
+            }
+        }
+
+        Role.TOOL -> buildList {
+            // Tool outputs are string-only; images must ride in their own user
+            // message item. A bare top-level input_image item 400s on strict
+            // gateways ("did not match any supported type").
+            add(buildJsonObject {
+                put("type", "function_call_output")
+                put("call_id", m.toolCallId ?: "")
+                put("output", m.text)
+            })
+            if (m.imageData.isNotEmpty()) {
+                add(buildJsonObject {
+                    put("role", "user")
+                    putJsonArray("content") {
+                        m.imageData.forEach { image ->
+                            add(buildJsonObject {
+                                put("type", "input_image")
+                                put("image_url", "data:${image.mime};base64,${image.base64}")
+                            })
+                        }
+                    }
+                })
+            }
+        }
+
+        Role.SYSTEM -> listOf(buildJsonObject {
+            put("role", "user")
+            putJsonArray("content") {
+                add(buildJsonObject {
+                    put("type", "input_text")
+                    put("text", m.text)
+                })
+            }
+        })
+    }
+
+    // ------------------------------------------------------------------
+    // Stream parsing (pure given the accumulator, unit-tested)
+
+    /**
+     * Parses one SSE payload (Responses event types ride in the `type` field)
+     * against the function-call accumulator; returns every event it carries.
+     */
+    internal fun parseEvent(
+        el: kotlinx.serialization.json.JsonElement,
+        acc: LinkedHashMap<String, Triple<String, String, StringBuilder>>,
+    ): List<StreamEvent> {
+        val event = el as? JsonObject ?: return emptyList()
+
+        event["error"]?.jsonObjectOrAbsent()?.let { err ->
+            val message = err["message"]?.jsonPrimitive?.contentOrNull ?: "Upstream server error"
+            return listOf(StreamEvent.Failure(message, code = providerErrorStatus(err), errorCode = providerErrorCode(err)))
+        }
+
+        val type = event["type"]?.jsonPrimitive?.contentOrNull ?: return emptyList()
+        val events = mutableListOf<StreamEvent>()
+        when {
+            type == "response.failed" -> {
+                val message = event["response"]?.jsonObjectOrAbsent()
+                    ?.get("error")?.jsonObjectOrAbsent()
+                    ?.get("message")?.jsonPrimitive?.contentOrNull ?: "Request failed"
+                val error = event["response"]?.jsonObjectOrAbsent()?.get("error")?.jsonObjectOrAbsent()
+                events += StreamEvent.Failure(message, code = providerErrorStatus(error), errorCode = providerErrorCode(error))
+            }
+
+            type == "response.output_text.delta" ->
+                event["delta"]?.jsonPrimitive?.contentOrNull
+                    ?.takeIf { it.isNotEmpty() }
+                    ?.let { events += StreamEvent.TextDelta(it) }
+
+            // Reasoning summaries stream as their own item type.
+            type == "response.reasoning_summary_text.delta" || type == "response.reasoning_text.delta" ->
+                event["delta"]?.jsonPrimitive?.contentOrNull
+                    ?.takeIf { it.isNotEmpty() }
+                    ?.let { events += StreamEvent.ThinkingDelta(it) }
+
+            type == "response.output_item.added" -> {
+                val item = event["item"]?.jsonObjectOrAbsent()
+                if (item?.get("type")?.jsonPrimitive?.contentOrNull == "function_call") {
+                    val itemId = item["id"]?.jsonPrimitive?.contentOrNull.orEmpty()
+                    val callId = item["call_id"]?.jsonPrimitive?.contentOrNull ?: itemId
+                    val name = item["name"]?.jsonPrimitive?.contentOrNull.orEmpty()
+                    acc[itemId] = Triple(callId, name, StringBuilder())
+                    events += StreamEvent.ToolCallDelta(callId, name, "")
+                }
+            }
+
+            type == "response.function_call_arguments.delta" -> {
+                val itemId = event["item_id"]?.jsonPrimitive?.contentOrNull.orEmpty()
+                event["delta"]?.jsonPrimitive?.contentOrNull
+                    ?.let { fragment ->
+                        acc[itemId]?.let { entry ->
+                            entry.third.append(fragment)
+                            events += StreamEvent.ToolCallDelta(entry.first, entry.second, fragment)
+                        }
+                    }
+            }
+
+            type == "response.output_item.done" -> {
+                val item = event["item"]?.jsonObjectOrAbsent()
+                if (item?.get("type")?.jsonPrimitive?.contentOrNull == "function_call") {
+                    val itemId = item["id"]?.jsonPrimitive?.contentOrNull.orEmpty()
+                    val entry = acc[itemId]
+                    if (entry != null && entry.third.isEmpty()) {
+                        // Some servers never stream argument deltas; the
+                        // finished item carries the full body.
+                        item["arguments"]?.jsonPrimitive?.contentOrNull
+                            ?.let { entry.third.append(it) }
+                    }
+                }
+            }
+
+            type == "response.completed" || type == "response.incomplete" -> {
+                val response = event["response"]?.jsonObjectOrAbsent()
+                response?.get("usage")?.jsonObjectOrAbsent()?.let { usage ->
+                    val input = usage["input_tokens"]?.jsonPrimitive?.intOrNull ?: 0
+                    val output = usage["output_tokens"]?.jsonPrimitive?.intOrNull ?: 0
+                    val inputDetails = usage["input_tokens_details"]?.jsonObjectOrAbsent()
+                    val cached = inputDetails?.get("cached_tokens")?.jsonPrimitive?.intOrNull
+                        ?: inputDetails?.get("cache_read_input_tokens")?.jsonPrimitive?.intOrNull
+                        ?: usage["prompt_cache_hit_tokens"]?.jsonPrimitive?.intOrNull
+                    val cacheWrite = inputDetails?.get("cache_creation_input_tokens")?.jsonPrimitive?.intOrNull
+                        ?: usage["cache_creation_input_tokens"]?.jsonPrimitive?.intOrNull
+                        ?: 0
+                    events += StreamEvent.Usage(input, output, cached ?: 0, cacheWrite, cacheReported = cached != null,
+                        reasoningTokens = usage["output_tokens_details"]?.jsonObjectOrAbsent()?.get("reasoning_tokens")?.jsonPrimitive?.intOrNull)
+                }
+                drainAccumulated(acc)?.let { events += it }
+                val reason = if (type == "response.incomplete") {
+                    response?.get("incomplete_details")?.jsonObjectOrAbsent()
+                        ?.get("reason")?.jsonPrimitive?.contentOrNull ?: "incomplete"
+                } else {
+                    "stop"
+                }
+                events += StreamEvent.Done(reason)
+            }
+        }
+        return events
+    }
+
+    /** Materializes accumulated function calls into tool-call events and clears [acc]. */
+    private fun drainAccumulated(
+        acc: LinkedHashMap<String, Triple<String, String, StringBuilder>>,
+    ): StreamEvent? {
+        val calls = acc.values.mapNotNull { (callId, name, args) ->
+            if (name.isBlank()) null
+            else ToolCallData(
+                id = callId.ifBlank { "call_${System.nanoTime()}" },
+                name = name,
+                argumentsJson = args.toString().ifBlank { "{}" },
+            )
+        }
+        acc.clear()
+        return when {
+            calls.size == 1 -> StreamEvent.ToolCallReady(calls.first())
+            calls.size > 1 -> StreamEvent.ToolCallBatch(calls)
+            else -> null
+        }
+    }
+}

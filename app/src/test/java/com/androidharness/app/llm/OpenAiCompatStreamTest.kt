@@ -1,0 +1,233 @@
+package com.androidharness.app.llm
+
+import com.androidharness.app.agent.StreamRetrier
+import com.androidharness.app.core.ChatMessage
+import com.androidharness.app.core.Role
+import com.androidharness.app.core.ToolCallData
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Protocol
+import okhttp3.Response
+import okhttp3.ResponseBody.Companion.toResponseBody
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Test
+
+class OpenAiCompatStreamTest {
+    private val config = ProviderConfig(
+        "kilo", "Kilo Auto Free", ProviderType.OPENAI_COMPAT,
+        "https://api.kilo.ai/api/gateway", "kilo-auto/free",
+    )
+    private val partialCall = """{"choices":[{"delta":{"tool_calls":[{"index":0,"id":"broken","function":{"name":"write_file","arguments":"{\"path\":\"providers.py\""}}]}}]}"""
+    private val completeCall = """{"choices":[{"delta":{"tool_calls":[{"index":0,"id":"complete","function":{"name":"write_file","arguments":"{\"path\":\"ok.txt\",\"content\":\"ok\"}"}}]},"finish_reason":"tool_calls"}]}"""
+
+    private fun provider(vararg attempts: List<String>): OpenAiCompatProvider {
+        var attempt = 0
+        val client = OkHttpClient.Builder().addInterceptor { chain ->
+            val body = buildString {
+                attempts[attempt++].forEach { append("data: $it\n\n") }
+                append("data: [DONE]\n\n")
+            }
+            Response.Builder()
+                .request(chain.request())
+                .protocol(Protocol.HTTP_1_1)
+                .code(200)
+                .message("OK")
+                .body(body.toResponseBody("text/event-stream".toMediaType()))
+                .build()
+        }.build()
+        return OpenAiCompatProvider(client, Json { ignoreUnknownKeys = true })
+    }
+
+    private fun stream(provider: OpenAiCompatProvider) = provider.streamChat(
+        config, "", "Help with coding.", listOf(ChatMessage(role = Role.USER, text = "Write a file.")),
+        emptyList(), RequestOptions(),
+    ).filter { it !is StreamEvent.ThinkingConfigured && it !is StreamEvent.ResponseState }
+
+    @Test fun `done sentinel completes text without a finish reason`() = runBlocking {
+        val events = stream(provider(listOf("""{"choices":[{"delta":{"content":"complete summary"}}]}"""))).toList()
+        assertEquals(listOf(StreamEvent.TextDelta("complete summary"), StreamEvent.Done()), events)
+    }
+
+    @Test
+    fun `continued conversation accepts object tool arguments from a compat gateway`() = runBlocking {
+        val provider = provider(listOf(
+            """{"choices":[{"delta":{"content":null,"tool_calls":[{"index":0,"id":"next","function":{"name":"write_file","arguments":{"path":"next.txt","content":"continued"}}}]}}]}""",
+            """{"choices":[{"delta":{},"finish_reason":"tool_calls"}]}""",
+        ))
+        val events = provider.streamChat(
+            ProviderConfig("llm7", "LLM7", ProviderType.OPENAI_COMPAT, "https://api.llm7.io/v1", "test-model"),
+            "", "Help with coding.",
+            listOf(
+                ChatMessage(role = Role.USER, text = "Write two files."),
+                ChatMessage(role = Role.ASSISTANT, toolCalls = listOf(ToolCallData("previous", "list_dir", "{}"))),
+                ChatMessage(role = Role.TOOL, toolCallId = "previous", text = "Directory is empty."),
+                ChatMessage(role = Role.USER, text = "Continue"),
+            ), emptyList(), RequestOptions(),
+        ).toList()
+
+        val call = events.filterIsInstance<StreamEvent.ToolCallReady>().single().call
+        assertEquals("next", call.id)
+        assertEquals("write_file", call.name)
+        assertEquals(Json.parseToJsonElement("""{"path":"next.txt","content":"continued"}"""), Json.parseToJsonElement(call.argumentsJson))
+        assertEquals(StreamEvent.Done("tool_calls"), events.last())
+        assertFalse(events.any { it is StreamEvent.Failure })
+    }
+
+    @Test
+    fun `unsupported arguments fail without releasing buffered tool calls`() = runBlocking {
+        val events = stream(provider(listOf(
+            partialCall,
+            """{"choices":[{"delta":{"tool_calls":[{"index":1,"id":"bad","function":{"name":"write_file","arguments":[]}}]}}]}""",
+            completeCall,
+        ))).toList()
+
+        assertTrue(events.filterNot { it is StreamEvent.ToolCallDelta }.single() is StreamEvent.Failure)
+        assertFalse(events.any { it is StreamEvent.ToolCallReady || it is StreamEvent.ToolCallBatch })
+    }
+
+    @Test
+    fun `injected SSE error discards partial tool call and all later chunks`() = runBlocking {
+        val events = stream(provider(listOf(
+            partialCall,
+            """{"error":{"code":502,"message":"JSON error injected into SSE stream"}}""",
+            completeCall,
+        ))).toList()
+
+        assertEquals(1, events.count { it !is StreamEvent.ToolCallDelta })
+        assertTrue(events.filterNot { it is StreamEvent.ToolCallDelta }.single() is StreamEvent.Failure)
+        assertFalse(events.any { it is StreamEvent.ToolCallReady || it is StreamEvent.ToolCallBatch })
+    }
+
+    @Test
+    fun `error finish reason without error body discards partial tool call`() = runBlocking {
+        val events = stream(provider(listOf(
+            partialCall,
+            """{"choices":[{"delta":{},"finish_reason":"error"}]}""",
+        ))).toList()
+
+        assertEquals(1, events.count { it !is StreamEvent.ToolCallDelta })
+        assertTrue(events.filterNot { it is StreamEvent.ToolCallDelta }.single() is StreamEvent.Failure)
+    }
+
+    @Test
+    fun `transient injected error retries and only delivers the complete tool call`() = runBlocking {
+        val provider = provider(
+            listOf(partialCall, """{"error":{"code":502,"message":"JSON error injected into SSE stream"}}"""),
+            listOf(completeCall),
+        )
+        val events = mutableListOf<StreamEvent>()
+        var retries = 0
+        val result = StreamRetrier.run(
+            streamFor = { stream(provider) },
+            onAttemptStart = { events.clear() },
+            hasOutput = { events.any { it is StreamEvent.ToolCallReady || it is StreamEvent.ToolCallBatch } },
+            handleEvent = { events += it },
+            retryReason = { it },
+            emitEvent = { retries++ },
+            sleep = {},
+        )
+
+        assertEquals(null, result)
+        assertEquals(1, retries)
+        val call = events.filterIsInstance<StreamEvent.ToolCallReady>().single().call
+        assertEquals("complete", call.id)
+        assertEquals("""{"path":"ok.txt","content":"ok"}""", call.argumentsJson)
+    }
+
+    @Test
+    fun `generic gateway 503 retries using error code`() = runBlocking {
+        val provider = provider(
+            listOf("""{"error":{"code":503,"message":"Service unavailable"}}"""),
+            listOf("""{"choices":[{"delta":{"content":"ok"},"finish_reason":"stop"}]}"""),
+        )
+        var retries = 0
+        val result = StreamRetrier.run(
+            streamFor = { stream(provider) }, onAttemptStart = {}, hasOutput = { false },
+            handleEvent = {}, retryReason = { it }, emitEvent = { retries++ }, sleep = {},
+        )
+        assertEquals(null, result)
+        assertEquals(1, retries)
+    }
+
+    @Test
+    fun `permanent error code overrides transient wording`() = runBlocking {
+        val provider = provider(listOf("""{"error":{"code":400,"message":"Invalid request, try again"}}"""))
+        val result = StreamRetrier.run(
+            streamFor = { stream(provider) }, onAttemptStart = {}, hasOutput = { false },
+            handleEvent = {}, retryReason = { it },
+            emitEvent = { error("400 must not retry") }, sleep = {},
+        )
+        assertEquals("Invalid request, try again", result)
+    }
+
+    @Test
+    fun `legacy injected error without code still retries`() = runBlocking {
+        val provider = provider(
+            listOf(partialCall, """{"error":"JSON error injected into SSE stream"}"""),
+            listOf(completeCall),
+        )
+        var retries = 0
+        val result = StreamRetrier.run(
+            streamFor = { stream(provider) }, onAttemptStart = {}, hasOutput = { false },
+            handleEvent = {}, retryReason = { it }, emitEvent = { retries++ }, sleep = {},
+        )
+        assertEquals(null, result)
+        assertEquals(1, retries)
+    }
+
+    @Test
+    fun `failure after visible thinking preserves output without retrying or emitting tools`() = runBlocking {
+        val provider = provider(listOf(
+            """{"choices":[{"delta":{"reasoning_content":"Let me check."}}]}""",
+            partialCall,
+            """{"error":{"code":502,"message":"JSON error injected into SSE stream"}}""",
+        ))
+        val events = mutableListOf<StreamEvent>()
+        val result = StreamRetrier.run(
+            streamFor = { stream(provider) }, onAttemptStart = {}, hasOutput = { events.isNotEmpty() },
+            handleEvent = { events += it }, retryReason = { it },
+            emitEvent = { error("Visible output must not be duplicated") }, sleep = {},
+        )
+        assertEquals("JSON error injected into SSE stream", result)
+        assertEquals(listOf(StreamEvent.ThinkingDelta("Let me check.")), events.filterNot { it is StreamEvent.ToolCallDelta })
+
+    }
+
+    @Test fun `file arguments reach preview before a completed executable call`() = runBlocking {
+        val events = stream(provider(listOf(
+            """{"choices":[{"delta":{"tool_calls":[{"index":0,"id":"draft","function":{"name":"write_file","arguments":"{\"path\":\"a.kt\",\"content\":\"one\\n"}}]}}]}""",
+            """{"choices":[{"delta":{"tool_calls":[{"index":0,"function":{"arguments":"two\\n\"}"}}]}}]}""",
+            """{"choices":[{"delta":{},"finish_reason":"tool_calls"}]}""",
+        ))).toList()
+        val progress = events.filterIsInstance<StreamEvent.ToolCallDelta>()
+        assertEquals(2, progress.size)
+        assertEquals("draft", progress.first().id)
+        assertTrue(events.indexOf(progress.last()) < events.indexOfFirst { it is StreamEvent.ToolCallReady })
+        assertEquals("""{"path":"a.kt","content":"one\ntwo\n"}""", events.filterIsInstance<StreamEvent.ToolCallReady>().single().call.argumentsJson)
+    }
+
+    @Test
+    fun `null error field permits a successful tool response`() = runBlocking {
+        val events = stream(provider(listOf(
+            """{"error":null,"choices":[{"delta":{"tool_calls":[{"index":0,"id":"ok","function":{"name":"list_dir","arguments":"{}"}}]},"finish_reason":"tool_calls"}]}""",
+        ))).toList()
+        assertEquals("ok", events.filterIsInstance<StreamEvent.ToolCallReady>().single().call.id)
+        assertEquals(StreamEvent.Done("tool_calls"), events.last())
+    }
+
+    @Test
+    fun `choice error discards fragments and preserves string status code`() = runBlocking {
+        val events = stream(provider(listOf(
+            partialCall,
+            """{"choices":[{"delta":{},"finish_reason":"error","error":{"code":"429","message":"Too many requests"}}]}""",
+        ))).toList()
+        assertEquals(listOf(StreamEvent.Failure("Too many requests", 429)), events.filterNot { it is StreamEvent.ToolCallDelta })
+        assertFalse(events.any { it is StreamEvent.ToolCallReady || it is StreamEvent.ToolCallBatch })
+    }
+}

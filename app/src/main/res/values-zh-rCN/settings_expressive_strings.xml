@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_coding_workflow">智能体与工作流程</string>
+    <string name="settings_coding_intelligence">技能与智能</string>
+    <string name="settings_coding_execution">工作区与执行</string>
+    <string name="settings_device_connections">连接</string>
+    <string name="settings_device_tools">工具与高级设置</string>
+    <string name="settings_linux_optional">需要 Linux 的项目可选工具</string>
+    <string name="settings_device_advanced">高级设备访问</string>
+    <string name="settings_device_advanced_summary">Root 和设备所有者控制</string>
+    <string name="settings_device_background">后台与电池</string>
+    <string name="settings_device_background_summary">保持终端会话和智能体工作运行</string>
+    <string name="settings_connection_help">连接方法</string>
+    <string name="settings_connection_options">连接选项</string>
+    <string name="wireless_adb_disconnect">断开连接</string>
+    <string name="wireless_adb_connection_kept">已连接 · 断开前持续可用</string>
+    <string name="wireless_adb_auto_reconnecting">正在重新连接已保存的无线调试</string>
+    <string name="rich_profile_details">详情</string>
+    <string name="rich_profile_sources">来源</string>
+    <string name="settings_disclosure_expanded">已展开</string>
+    <string name="settings_disclosure_collapsed">已折叠</string>
+    <string name="settings_terminal_access">终端访问</string>
+    <string name="wireless_adb_compact_summary">设备命令与自动重新连接</string>
+</resources>

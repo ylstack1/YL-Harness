@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pr_tool_opening">プルリクエストを作成中…</string>
+    <string name="pr_tool_opened">プルリクエスト #%1$d を作成しました</string>
+    <string name="pr_tool_existing">プルリクエスト #%1$d はすでに開いています</string>
+    <string name="pr_tool_failed">プルリクエストは作成されませんでした</string>
+    <string name="pr_tool_waiting">承認を待っています</string>
+    <string name="pr_draft">下書き</string>
+    <string name="pr_counts">コミット: %1$d · ファイル: %2$d</string>
+    <string name="pr_open_on_github">GitHub で開く</string>
+    <string name="pr_copy_link">リンクをコピー</string>
+    <string name="pr_link_copied">リンクをコピーしました</string>
+    <string name="pr_open_failed">リンクを開けるアプリがないため、代わりにコピーしました。</string>
+    <string name="pr_approval_title">プルリクエストを作成しますか？</string>
+    <string name="pr_approval_body">プッシュ済みのブランチから GitHub にプルリクエストを作成します。プッシュやマージは行いません。</string>
+    <string name="pr_approval_base">%1$s へ</string>
+    <string name="pr_approval_default_base">デフォルトブランチへ</string>
+    <string name="pr_create">プルリクエストを作成</string>
+    <string name="pr_create_draft">下書きプルリクエストを作成</string>
+    <string name="pr_entry_body">このブランチのプッシュ済みコミットを GitHub でレビューに出します。</string>
+    <string name="pr_loading">このブランチを GitHub と比較中…</string>
+    <string name="pr_title_label">タイトル</string>
+    <string name="pr_description_label">説明</string>
+    <string name="pr_rewrite_description">説明を書き直す</string>
+    <string name="pr_base_label">ベースブランチ</string>
+    <string name="pr_draft_label">下書きとして作成</string>
+    <string name="pr_draft_body">レビュアーは閲覧できますが、準備完了にするまでマージできません。</string>
+    <string name="pr_include_checks">このチャットのチェックを含める</string>
+    <string name="pr_include_checks_body">この会話で記録されたビルド、テスト、lint の結果を追加します。</string>
+    <string name="pr_existing_body">%1$s への新しいプッシュでこのプルリクエストは自動更新されます。</string>
+    <string name="pr_not_pushed_title">ブランチがまだ GitHub にありません</string>
+    <string name="pr_out_of_date_title">GitHub のブランチが古くなっています</string>
+    <string name="pr_push_body">%1$s をプッシュして、最新のコミットを GitHub に反映してください。</string>
+    <string name="pr_push_branch">ブランチをプッシュ</string>
+    <string name="pr_pushed">ブランチをプッシュしました。</string>
+    <string name="pr_uncommitted_title">未コミットの変更: %1$d</string>
+    <string name="pr_uncommitted_body">コミットしてプッシュするまで含まれません。</string>
+    <string name="pr_behind_title">%1$s の新しいコミット: %2$d</string>
+    <string name="pr_behind_body">このブランチにはまだ含まれていません。レビュアーから更新を求められる場合があります。</string>
+    <string name="pr_no_commits_title">提案できる内容がまだありません</string>
+    <string name="pr_no_commits_body">%1$s には %2$s にないコミットがありません。</string>
+    <string name="pr_commits_header">コミット</string>
+    <string name="pr_more">その他: %1$d</string>
+    <string name="pr_created_title">プルリクエスト #%1$d を作成しました</string>
+    <string name="pr_created_draft_title">下書きプルリクエスト #%1$d を作成しました</string>
+    <string name="pr_retry">再試行</string>
+</resources>

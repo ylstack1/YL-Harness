@@ -1,0 +1,11 @@
+<resources>
+    <string name="chat_activity_full_view">සම්පූර්ණ දසුන විවෘත කරන්න</string>
+    <string name="chat_activity_tool_details">මෙවලම් විස්තර විවෘත කරන්න</string>
+    <string name="chat_activity_input">ආදානය</string>
+    <string name="chat_activity_output">ප්‍රතිදානය</string>
+    <string name="chat_activity_output_preview">ප්‍රතිදාන පෙරදසුන</string>
+    <string name="chat_activity_more">තව පහළින්</string>
+    <string name="chat_activity_latest">නවතම</string>
+    <string name="chat_activity_copy">පෙළ පිටපත් කරන්න</string>
+    <string name="chat_activity_copied">පිටපත් විය</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rich_table_options">Параметры таблицы</string>
+    <string name="rich_select_rows">Выбрать строки</string>
+    <string name="rich_stop_selecting_rows">Завершить выбор</string>
+    <string name="rich_sort_rows">Сортировать строки</string>
+</resources>

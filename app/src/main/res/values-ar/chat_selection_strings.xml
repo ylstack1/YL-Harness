@@ -1,0 +1,17 @@
+<resources>
+    <string name="sidebar_select">تحديد</string>
+    <string name="sidebar_selected_count">تم تحديد %1$d</string>
+    <string name="sidebar_select_all">تحديد الكل</string>
+    <string name="sidebar_clear_selection">مسح التحديد</string>
+    <string name="sidebar_exit_selection">الخروج من وضع التحديد</string>
+    <string name="sidebar_select_chat">تحديد %1$s</string>
+    <string name="sidebar_details">التفاصيل</string>
+    <string name="sidebar_other_chats">دردشات أخرى</string>
+    <string name="sidebar_model_unavailable">غير متاح</string>
+    <string name="sidebar_delete_selected">حذف الدردشات المحددة؟</string>
+    <string name="sidebar_delete_selected_message">حذف هذه الدردشات وسجل محادثاتها؟ لا يمكن التراجع عن ذلك.</string>
+    <string name="sidebar_delete_running">ستتوقف المهام قيد التشغيل في هذه الدردشات.</string>
+    <string name="sidebar_selection_error">تعذّر إكمال هذا الإجراء. حاول مرة أخرى.</string>
+    <plurals name="sidebar_archived_count"><item quantity="zero">لا دردشات مؤرشفة (%1$d)</item><item quantity="one">أُرشفت دردشة واحدة (%1$d)</item><item quantity="two">أُرشفت دردشتان (%1$d)</item><item quantity="few">أُرشفت %1$d دردشات</item><item quantity="many">أُرشفت %1$d دردشةً</item><item quantity="other">أُرشفت %1$d دردشة</item></plurals>
+    <plurals name="sidebar_restored_count"><item quantity="zero">لا دردشات مستعادة (%1$d)</item><item quantity="one">استُعيدت دردشة واحدة (%1$d)</item><item quantity="two">استُعيدت دردشتان (%1$d)</item><item quantity="few">استُعيدت %1$d دردشات</item><item quantity="many">استُعيدت %1$d دردشةً</item><item quantity="other">استُعيدت %1$d دردشة</item></plurals>
+</resources>

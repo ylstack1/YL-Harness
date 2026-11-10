@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rich_filter_rows">"行をフィルター"</string>
+    <string name="rich_no_rows">"一致する行がありません"</string>
+    <string name="rich_previous">"前へ"</string>
+    <string name="rich_next">"次へ"</string>
+    <string name="rich_discuss_rows">"選択した行について質問"</string>
+    <string name="rich_discuss_rows_prompt">"選択した行を比較してください。"</string>
+    <string name="rich_discuss_tab">"このタブについて質問"</string>
+    <string name="rich_discuss_tab_prompt">"%1$s タブを説明してください。"</string>
+    <string name="rich_copy">"コピー"</string>
+    <string name="rich_copied">"コピーしました"</string>
+    <string name="rich_share">"共有"</string>
+    <string name="rich_share_unavailable">"このテキストを共有できるアプリがありません。"</string>
+    <string name="rich_images_hidden">"このチャットでは画像が無効になっています。"</string>
+    <string name="rich_expand_image">"画像を拡大"</string>
+    <string name="rich_open_source">"情報源を開く"</string>
+    <string name="rich_discuss_image">"この画像について質問"</string>
+    <string name="rich_discuss_image_prompt">"選択した画像を説明してください。"</string>
+    <string name="rich_reported_status">"報告済み: %1$s"</string>
+    <string name="rich_passed">"合格"</string>
+    <string name="rich_failed">"失敗"</string>
+    <string name="rich_unverified">"未検証"</string>
+    <string name="rich_open_file">"ファイルを開く"</string>
+    <string name="rich_show_less">"少なく表示"</string>
+    <string name="rich_show_all">"すべて表示"</string>
+    <string name="rich_changes">"変更"</string>
+    <string name="rich_before">"変更前"</string>
+    <string name="rich_after">"変更後"</string>
+    <string name="rich_change_count">"%1$d 件追加 · %2$d 件削除"</string>
+    <string name="rich_discuss_diff">"この変更について質問"</string>
+    <string name="rich_discuss_diff_prompt">"この比較とそのトレードオフを説明してください。"</string>
+    <string name="rich_input_range">"%1$s から %2$s"</string>
+    <string name="rich_result_unavailable">"入力または数式を確認"</string>
+    <string name="rich_reset">"リセット"</string>
+    <string name="rich_discuss_values">"これらの値について質問"</string>
+    <string name="rich_discuss_values_prompt">"現在の値を使って結果を説明してください。"</string>
+    <string name="rich_chart_range">"表示範囲"</string>
+    <string name="rich_reset_range">"全範囲を表示"</string>
+    <string name="rich_chart_label">"ラベル"</string>
+    <string name="rich_discuss_chart">"このグラフについて質問"</string>
+    <string name="rich_discuss_chart_prompt">"選択したグラフの点と表示中のデータセットを説明してください。"</string>
+    <string name="rich_select_point">"%1$s を選択"</string>
+    <string name="rich_selected_count">"%1$d 件選択中"</string>
+    <string name="rich_clear_selection">"選択を解除"</string>
+    <string name="rich_adjust_input">"%1$s を調整"</string>
+</resources>

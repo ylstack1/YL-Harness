@@ -1,0 +1,17 @@
+<resources>
+    <string name="sidebar_select">选择</string>
+    <string name="sidebar_selected_count">已选择 %1$d 个</string>
+    <string name="sidebar_select_all">全选</string>
+    <string name="sidebar_clear_selection">清除选择</string>
+    <string name="sidebar_exit_selection">退出选择</string>
+    <string name="sidebar_select_chat">选择 %1$s</string>
+    <string name="sidebar_details">详情</string>
+    <string name="sidebar_other_chats">其他聊天</string>
+    <string name="sidebar_model_unavailable">不可用</string>
+    <string name="sidebar_delete_selected">删除所选聊天？</string>
+    <string name="sidebar_delete_selected_message">删除这些聊天及其对话记录？此操作无法撤销。</string>
+    <string name="sidebar_delete_running">这些聊天中正在运行的任务将被停止。</string>
+    <string name="sidebar_selection_error">无法完成此操作。请重试。</string>
+    <plurals name="sidebar_archived_count"><item quantity="one">已归档 %1$d 个聊天</item><item quantity="other">已归档 %1$d 个聊天</item></plurals>
+    <plurals name="sidebar_restored_count"><item quantity="one">已恢复 %1$d 个聊天</item><item quantity="other">已恢复 %1$d 个聊天</item></plurals>
+</resources>

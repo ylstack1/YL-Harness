@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rich_table_options">Opciones de la tabla</string>
+    <string name="rich_select_rows">Seleccionar filas</string>
+    <string name="rich_stop_selecting_rows">Dejar de seleccionar</string>
+    <string name="rich_sort_rows">Ordenar filas</string>
+</resources>

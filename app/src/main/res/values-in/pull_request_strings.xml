@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pr_tool_opening">Membuka pull request…</string>
+    <string name="pr_tool_opened">Pull request #%1$d dibuka</string>
+    <string name="pr_tool_existing">Pull request #%1$d sudah terbuka</string>
+    <string name="pr_tool_failed">Pull request tidak dibuka</string>
+    <string name="pr_tool_waiting">Menunggu persetujuan Anda</string>
+    <string name="pr_draft">Draf</string>
+    <string name="pr_counts">Commit: %1$d · File: %2$d</string>
+    <string name="pr_open_on_github">Buka di GitHub</string>
+    <string name="pr_copy_link">Salin tautan</string>
+    <string name="pr_link_copied">Tautan disalin</string>
+    <string name="pr_open_failed">Tidak ada aplikasi yang dapat membuka tautan. Tautan disalin sebagai gantinya.</string>
+    <string name="pr_approval_title">Buka pull request?</string>
+    <string name="pr_approval_body">Membuat pull request di GitHub dari branch yang sudah di-push. Tidak ada yang di-push atau digabungkan.</string>
+    <string name="pr_approval_base">Ke %1$s</string>
+    <string name="pr_approval_default_base">Ke branch default</string>
+    <string name="pr_create">Buat pull request</string>
+    <string name="pr_create_draft">Buat pull request draf</string>
+    <string name="pr_entry_body">Ajukan commit yang sudah di-push dari branch ini untuk ditinjau di GitHub.</string>
+    <string name="pr_loading">Membandingkan branch ini dengan GitHub…</string>
+    <string name="pr_title_label">Judul</string>
+    <string name="pr_description_label">Deskripsi</string>
+    <string name="pr_rewrite_description">Tulis ulang deskripsi</string>
+    <string name="pr_base_label">Branch dasar</string>
+    <string name="pr_draft_label">Buka sebagai draf</string>
+    <string name="pr_draft_body">Peninjau dapat melihatnya, tetapi tidak dapat digabungkan sampai Anda menandainya siap.</string>
+    <string name="pr_include_checks">Sertakan pemeriksaan dari chat ini</string>
+    <string name="pr_include_checks_body">Menambahkan hasil build, pengujian, dan lint yang tercatat dalam percakapan ini.</string>
+    <string name="pr_existing_body">Push baru ke %1$s memperbarui pull request ini secara otomatis.</string>
+    <string name="pr_not_pushed_title">Branch belum ada di GitHub</string>
+    <string name="pr_out_of_date_title">GitHub memiliki salinan lama branch ini</string>
+    <string name="pr_push_body">Push %1$s agar GitHub memiliki commit terbaru Anda.</string>
+    <string name="pr_push_branch">Push branch</string>
+    <string name="pr_pushed">Branch di-push.</string>
+    <string name="pr_uncommitted_title">Perubahan belum di-commit: %1$d</string>
+    <string name="pr_uncommitted_body">Perubahan ini tidak disertakan sampai Anda meng-commit dan mem-push-nya.</string>
+    <string name="pr_behind_title">Commit lebih baru di %1$s: %2$d</string>
+    <string name="pr_behind_body">Branch ini belum menyertakannya. Peninjau mungkin meminta Anda memperbaruinya.</string>
+    <string name="pr_no_commits_title">Belum ada yang bisa diajukan</string>
+    <string name="pr_no_commits_body">%1$s tidak memiliki commit yang belum ada di %2$s.</string>
+    <string name="pr_commits_header">Commit</string>
+    <string name="pr_more">Lainnya: %1$d</string>
+    <string name="pr_created_title">Pull request #%1$d dibuka</string>
+    <string name="pr_created_draft_title">Pull request draf #%1$d dibuka</string>
+    <string name="pr_retry">Coba lagi</string>
+</resources>

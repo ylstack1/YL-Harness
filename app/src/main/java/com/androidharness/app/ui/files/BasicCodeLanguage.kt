@@ -1,0 +1,132 @@
+package com.androidharness.app.ui.files
+
+import io.github.rosemoe.sora.lang.EmptyLanguage
+import io.github.rosemoe.sora.lang.analysis.AnalyzeManager
+import io.github.rosemoe.sora.lang.analysis.SimpleAnalyzeManager
+import io.github.rosemoe.sora.lang.styling.MappedSpans
+import io.github.rosemoe.sora.lang.styling.SpanFactory
+import io.github.rosemoe.sora.lang.styling.Styles
+import io.github.rosemoe.sora.lang.styling.TextStyle
+import io.github.rosemoe.sora.widget.schemes.EditorColorScheme
+import io.github.rosemoe.sora.lang.completion.CompletionItem
+import io.github.rosemoe.sora.lang.completion.CompletionPublisher
+import io.github.rosemoe.sora.text.Content
+import io.github.rosemoe.sora.text.ContentReference
+import io.github.rosemoe.sora.text.CharPosition
+import io.github.rosemoe.sora.widget.CodeEditor
+import kotlinx.coroutines.runBlocking
+
+/**
+ * Keyword-based language for the editor built on [CodeTokenizer]. Token types
+ * map onto [EditorColorScheme] slots so the host app theme drives the colors
+ * (the editor view overrides those slots with Material colors at setup).
+ *
+ * Optional semantic completion comes from the bundled language worker.
+ */
+internal class BasicCodeLanguage(private val path: String, private val smart: SmartEditorController? = null) : EmptyLanguage() {
+
+    private val lang = CodeTokenizer.langFor(path)
+    private val analyzer = Analyzer()
+
+    override fun getAnalyzeManager(): AnalyzeManager = analyzer
+
+    override fun requireAutoComplete(content: ContentReference, position: CharPosition, publisher: CompletionPublisher, extraArguments: android.os.Bundle) {
+        val controller = smart ?: return
+        if (!SmartEditorSupport.completion(path) || position.index == 0 || content.length > 512_000) return
+        val source = content.toString()
+        val previous = source.getOrNull(position.index - 1) ?: return
+        if (!previous.isLetterOrDigit() && previous !in "_$.-<\"'") return
+        try {
+            publisher.checkCancelled()
+            val items = runBlocking { controller.completions(path, source, position.index) }
+            publisher.checkCancelled()
+            for (suggestion in items) {
+                if (suggestion.start !in 0..position.index || suggestion.end !in position.index..source.length) continue
+                publisher.addItem(object : CompletionItem(suggestion.label, suggestion.detail) {
+                    init { prefixLength = position.index - suggestion.start }
+                    override fun performCompletion(editor: CodeEditor, text: Content, line: Int, column: Int) {
+                        // A delayed completion must never overwrite edits or a moved selection.
+                        if (!editor.isEditable || text.toString() != source || editor.cursor.isSelected || editor.cursor.left != position.index) return
+                        text.replace(suggestion.start, suggestion.end, suggestion.text)
+                        val cursor = text.indexer.getCharPosition(suggestion.start + suggestion.cursor.coerceIn(0, suggestion.text.length))
+                        editor.setSelection(cursor.line, cursor.column)
+                    }
+                })
+            }
+            publisher.updateList()
+        } catch (_: Exception) {
+            // Manual language actions display actionable errors; typing must remain uninterrupted.
+        }
+    }
+
+    private inner class Analyzer : SimpleAnalyzeManager<Unit>() {
+
+        override fun analyze(text: StringBuilder, delegate: Delegate<Unit>): Styles {
+            val builder = MappedSpans.Builder()
+            var lineStart = 0
+            var lineIdx = 0
+
+            var i = 0
+            val n = text.length
+            while (i <= n) {
+                if (i == n || text[i] == '\n') {
+                    val line = text.substring(lineStart, i)
+                    val tokens = CodeTokenizer.tokenizeLine(lang, line)
+                    if (tokens.isEmpty()) {
+                        builder.add(lineIdx, SpanFactory.obtain(0, slot(PLAIN)))
+                    } else {
+                        var lineLastStyle = -1L
+                        if (tokens.first().start > 0) {
+                            builder.add(lineIdx, SpanFactory.obtain(0, slot(PLAIN)))
+                            lineLastStyle = slot(PLAIN)
+                        }
+                        for (t in tokens) {
+                            val slot = when (t.type) {
+                                TokenType.KEYWORD_CONTROL -> slot(KEYWORD_CONTROL, bold = true)
+                                TokenType.KEYWORD -> slot(KEYWORD, bold = true)
+                                TokenType.HTML_TAG -> slot(HTML_TAG, bold = true)
+                                TokenType.ATTRIBUTE_NAME -> slot(ATTRIBUTE_NAME)
+                                TokenType.TYPE_NAME -> slot(TYPE_NAME)
+                                TokenType.FUNCTION_NAME -> slot(FUNCTION_NAME)
+                                TokenType.STRING -> slot(STRING)
+                                TokenType.NUMBER -> slot(NUMBER)
+                                TokenType.COMMENT -> slot(COMMENT, italic = true)
+                                TokenType.ANNOTATION -> slot(ANNOTATION)
+                                TokenType.OPERATOR -> slot(OPERATOR)
+                                TokenType.PLAIN -> slot(PLAIN)
+                            }
+                            if (t.start == 0 || slot != lineLastStyle) {
+                                builder.add(lineIdx, SpanFactory.obtain(t.start, slot))
+                                lineLastStyle = slot
+                            }
+                        }
+                    }
+                    lineIdx++
+                    lineStart = i + 1
+                    if (i == n) break
+                }
+                i++
+            }
+            builder.determine((lineIdx - 1).coerceAtLeast(0))
+            return Styles(builder.build())
+        }
+
+        private fun slot(id: Int, bold: Boolean = false, italic: Boolean = false): Long =
+            TextStyle.makeStyle(id, 0, bold, italic, false)
+    }
+
+    private companion object {
+        const val PLAIN = EditorColorScheme.TEXT_NORMAL
+        const val KEYWORD = EditorColorScheme.KEYWORD
+        const val KEYWORD_CONTROL = EditorColorScheme.ATTRIBUTE_NAME
+        const val HTML_TAG = EditorColorScheme.HTML_TAG
+        const val ATTRIBUTE_NAME = EditorColorScheme.IDENTIFIER_VAR
+        const val TYPE_NAME = EditorColorScheme.IDENTIFIER_NAME
+        const val FUNCTION_NAME = EditorColorScheme.FUNCTION_NAME
+        const val COMMENT = EditorColorScheme.COMMENT
+        const val STRING = EditorColorScheme.LITERAL
+        const val NUMBER = EditorColorScheme.ATTRIBUTE_VALUE
+        const val ANNOTATION = EditorColorScheme.ANNOTATION
+        const val OPERATOR = EditorColorScheme.OPERATOR
+    }
+}

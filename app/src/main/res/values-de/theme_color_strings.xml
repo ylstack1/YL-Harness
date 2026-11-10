@@ -1,0 +1,19 @@
+<resources>
+    <string name="theme_color_palette">Farbpalette</string>
+    <string name="theme_color_hint">Wähle eine Palette für die Farben der App.</string>
+    <string name="theme_wallpaper_colors">Hintergrundfarben</string>
+    <string name="theme_wallpaper_hint">Folgt den Material-You-Farben deines Smartphones.</string>
+    <string name="theme_wallpaper_unavailable">Hintergrundfarben benötigen Android 12 oder neuer. Wähle unten eine Palette.</string>
+    <string name="theme_palette_blue">Harness-Blau</string>
+    <string name="theme_palette_ocean">Ozean</string>
+    <string name="theme_palette_indigo">Indigo</string>
+    <string name="theme_palette_lavender">Lavendel</string>
+    <string name="theme_palette_orchid">Orchidee</string>
+    <string name="theme_palette_rose">Rosé</string>
+    <string name="theme_palette_coral">Koralle</string>
+    <string name="theme_palette_amber">Bernstein</string>
+    <string name="theme_palette_lime">Limette</string>
+    <string name="theme_palette_forest">Wald</string>
+    <string name="theme_palette_teal">Petrol</string>
+    <string name="theme_palette_slate">Schiefer</string>
+</resources>

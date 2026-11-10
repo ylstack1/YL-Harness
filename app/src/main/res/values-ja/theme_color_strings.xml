@@ -1,0 +1,19 @@
+<resources>
+    <string name="theme_color_palette">カラーパレット</string>
+    <string name="theme_color_hint">アプリの配色に使うパレットを選びます。</string>
+    <string name="theme_wallpaper_colors">壁紙の色</string>
+    <string name="theme_wallpaper_hint">スマートフォンの Material You の色に合わせます。</string>
+    <string name="theme_wallpaper_unavailable">壁紙の色には Android 12 以降が必要です。下からパレットを選んでください。</string>
+    <string name="theme_palette_blue">Harness ブルー</string>
+    <string name="theme_palette_ocean">オーシャン</string>
+    <string name="theme_palette_indigo">インディゴ</string>
+    <string name="theme_palette_lavender">ラベンダー</string>
+    <string name="theme_palette_orchid">オーキッド</string>
+    <string name="theme_palette_rose">ローズ</string>
+    <string name="theme_palette_coral">コーラル</string>
+    <string name="theme_palette_amber">アンバー</string>
+    <string name="theme_palette_lime">ライム</string>
+    <string name="theme_palette_forest">フォレスト</string>
+    <string name="theme_palette_teal">ティール</string>
+    <string name="theme_palette_slate">スレート</string>
+</resources>

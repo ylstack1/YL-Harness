@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pr_tool_opening">正在创建拉取请求…</string>
+    <string name="pr_tool_opened">已创建拉取请求 #%1$d</string>
+    <string name="pr_tool_existing">拉取请求 #%1$d 已处于打开状态</string>
+    <string name="pr_tool_failed">未创建拉取请求</string>
+    <string name="pr_tool_waiting">等待你的批准</string>
+    <string name="pr_draft">草稿</string>
+    <string name="pr_counts">提交：%1$d · 文件：%2$d</string>
+    <string name="pr_open_on_github">在 GitHub 上打开</string>
+    <string name="pr_copy_link">复制链接</string>
+    <string name="pr_link_copied">链接已复制</string>
+    <string name="pr_open_failed">没有可打开该链接的应用，已改为复制链接。</string>
+    <string name="pr_approval_title">创建拉取请求？</string>
+    <string name="pr_approval_body">将基于已推送的分支在 GitHub 上创建拉取请求。不会推送或合并任何内容。</string>
+    <string name="pr_approval_base">合并到 %1$s</string>
+    <string name="pr_approval_default_base">合并到默认分支</string>
+    <string name="pr_create">创建拉取请求</string>
+    <string name="pr_create_draft">创建草稿拉取请求</string>
+    <string name="pr_entry_body">在 GitHub 上提交此分支已推送的提交以供审查。</string>
+    <string name="pr_loading">正在与 GitHub 比较此分支…</string>
+    <string name="pr_title_label">标题</string>
+    <string name="pr_description_label">描述</string>
+    <string name="pr_rewrite_description">重写描述</string>
+    <string name="pr_base_label">目标分支</string>
+    <string name="pr_draft_label">以草稿形式创建</string>
+    <string name="pr_draft_body">审查者可以查看，但在你标记为就绪之前无法合并。</string>
+    <string name="pr_include_checks">包含此对话中的检查</string>
+    <string name="pr_include_checks_body">添加此对话中记录的构建、测试和 lint 结果。</string>
+    <string name="pr_existing_body">推送到 %1$s 的新提交会自动更新此拉取请求。</string>
+    <string name="pr_not_pushed_title">分支尚未推送到 GitHub</string>
+    <string name="pr_out_of_date_title">GitHub 上的分支副本较旧</string>
+    <string name="pr_push_body">推送 %1$s，让 GitHub 获得你的最新提交。</string>
+    <string name="pr_push_branch">推送分支</string>
+    <string name="pr_pushed">分支已推送。</string>
+    <string name="pr_uncommitted_title">未提交的更改：%1$d</string>
+    <string name="pr_uncommitted_body">在你提交并推送之前，它们不会包含在内。</string>
+    <string name="pr_behind_title">%1$s 上的新提交：%2$d</string>
+    <string name="pr_behind_body">此分支尚未包含这些提交，审查者可能会要求你更新。</string>
+    <string name="pr_no_commits_title">暂无可提交的内容</string>
+    <string name="pr_no_commits_body">%1$s 没有任何不在 %2$s 上的提交。</string>
+    <string name="pr_commits_header">提交</string>
+    <string name="pr_more">更多：%1$d</string>
+    <string name="pr_created_title">拉取请求 #%1$d 已创建</string>
+    <string name="pr_created_draft_title">草稿拉取请求 #%1$d 已创建</string>
+    <string name="pr_retry">重试</string>
+</resources>

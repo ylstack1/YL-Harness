@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="rich_table_options">"වගු විකල්ප"</string>
+    <string name="rich_select_rows">"පේළි තෝරන්න"</string>
+    <string name="rich_stop_selecting_rows">"තේරීම නවත්වන්න"</string>
+    <string name="rich_sort_rows">"පේළි අනුපිළිවෙළට සකසන්න"</string>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rich_filter_rows">"فیلتر کردن سطرها"</string>
+    <string name="rich_no_rows">"سطری یافت نشد"</string>
+    <string name="rich_previous">"قبلی"</string>
+    <string name="rich_next">"بعدی"</string>
+    <string name="rich_discuss_rows">"گفتگو درباره سطرهای انتخاب‌شده"</string>
+    <string name="rich_discuss_rows_prompt">"سطرهایی که انتخاب کردم را مقایسه کن."</string>
+    <string name="rich_discuss_tab">"پرسش درباره این تب"</string>
+    <string name="rich_discuss_tab_prompt">"تب %1$s را توضیح بده."</string>
+    <string name="rich_copy">"کپی"</string>
+    <string name="rich_copied">"کپی شد"</string>
+    <string name="rich_share">"اشتراک‌گذاری"</string>
+    <string name="rich_share_unavailable">"برنامه‌ای برای اشتراک‌گذاری این متن در دسترس نیست."</string>
+    <string name="rich_images_hidden">"تصاویر برای این گفتگو خاموش است."</string>
+    <string name="rich_expand_image">"بزرگ‌نمایی تصویر"</string>
+    <string name="rich_open_source">باز کردن منبع</string>
+    <string name="rich_discuss_image">"پرسش درباره این تصویر"</string>
+    <string name="rich_discuss_image_prompt">"تصویری که انتخاب کردم را توضیح بده."</string>
+    <string name="rich_reported_status">"گزارش‌شده: %1$s"</string>
+    <string name="rich_passed">"موفق"</string>
+    <string name="rich_failed">"ناموفق"</string>
+    <string name="rich_unverified">"تأییدنشده"</string>
+    <string name="rich_open_file">"باز کردن فایل"</string>
+    <string name="rich_show_less">"نمایش کمتر"</string>
+    <string name="rich_show_all">"نمایش همه"</string>
+    <string name="rich_changes">"تغییرات"</string>
+    <string name="rich_before">"قبل"</string>
+    <string name="rich_after">"بعد"</string>
+    <string name="rich_change_count">"%1$d افزوده شد · %2$d حذف شد"</string>
+    <string name="rich_discuss_diff">"گفتگو درباره این تغییرات"</string>
+    <string name="rich_discuss_diff_prompt">"این مقایسه و مزایا و معایب آن را توضیح بده."</string>
+    <string name="rich_input_range">"از %1$s تا %2$s"</string>
+    <string name="rich_result_unavailable">"ورودی‌ها یا فرمول را بررسی کنید"</string>
+    <string name="rich_reset">"بازنشانی"</string>
+    <string name="rich_discuss_values">"پرسش درباره این مقادیر"</string>
+    <string name="rich_discuss_values_prompt">"نتیجه را با استفاده از مقادیر فعلی من توضیح بده."</string>
+    <string name="rich_chart_range">"محدوده قابل مشاهده"</string>
+    <string name="rich_reset_range">"نمایش محدوده کامل"</string>
+    <string name="rich_chart_label">"برچسب"</string>
+    <string name="rich_discuss_chart">"پرسش درباره این نمودار"</string>
+    <string name="rich_discuss_chart_prompt">"نقطه انتخاب‌شده در نمودار و مجموعه‌داده‌های قابل مشاهده را توضیح بده."</string>
+    <string name="rich_select_point">"انتخاب %1$s"</string>
+    <string name="rich_selected_count">"%1$d انتخاب‌شده"</string>
+    <string name="rich_clear_selection">"پاک کردن انتخاب"</string>
+    <string name="rich_adjust_input">"تنظیم %1$s"</string>
+</resources>

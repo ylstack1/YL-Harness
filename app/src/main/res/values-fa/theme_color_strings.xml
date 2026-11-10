@@ -1,0 +1,19 @@
+<resources>
+    <string name="theme_color_palette">پالت رنگ</string>
+    <string name="theme_color_hint">برای رنگ‌آمیزی برنامه یک پالت انتخاب کنید.</string>
+    <string name="theme_wallpaper_colors">رنگ‌های تصویر زمینه</string>
+    <string name="theme_wallpaper_hint">از رنگ‌های Material You گوشی شما پیروی می‌کند.</string>
+    <string name="theme_wallpaper_unavailable">رنگ‌های تصویر زمینه به Android 12 یا بالاتر نیاز دارند. یک پالت را در پایین انتخاب کنید.</string>
+    <string name="theme_palette_blue">آبی Harness</string>
+    <string name="theme_palette_ocean">اقیانوس</string>
+    <string name="theme_palette_indigo">نیلی</string>
+    <string name="theme_palette_lavender">اسطوخودوس</string>
+    <string name="theme_palette_orchid">ثعلبی</string>
+    <string name="theme_palette_rose">گلی</string>
+    <string name="theme_palette_coral">مرجانی</string>
+    <string name="theme_palette_amber">کهربایی</string>
+    <string name="theme_palette_lime">لیمویی</string>
+    <string name="theme_palette_forest">جنگل</string>
+    <string name="theme_palette_teal">سبزآبی</string>
+    <string name="theme_palette_slate">سنگ‌لوحی</string>
+</resources>

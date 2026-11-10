@@ -1,0 +1,17 @@
+<resources>
+    <string name="sidebar_select">Pilih</string>
+    <string name="sidebar_selected_count">%1$d dipilih</string>
+    <string name="sidebar_select_all">Pilih semua</string>
+    <string name="sidebar_clear_selection">Hapus pilihan</string>
+    <string name="sidebar_exit_selection">Keluar dari pemilihan</string>
+    <string name="sidebar_select_chat">Pilih %1$s</string>
+    <string name="sidebar_details">Detail</string>
+    <string name="sidebar_other_chats">Chat lain</string>
+    <string name="sidebar_model_unavailable">Tidak tersedia</string>
+    <string name="sidebar_delete_selected">Hapus chat yang dipilih?</string>
+    <string name="sidebar_delete_selected_message">Hapus chat ini beserta riwayat percakapannya? Tindakan ini tidak dapat dibatalkan.</string>
+    <string name="sidebar_delete_running">Tugas yang sedang berjalan di chat ini akan dihentikan.</string>
+    <string name="sidebar_selection_error">Tindakan ini tidak dapat diselesaikan. Coba lagi.</string>
+    <plurals name="sidebar_archived_count"><item quantity="other">%1$d chat diarsipkan</item></plurals>
+    <plurals name="sidebar_restored_count"><item quantity="other">%1$d chat dipulihkan</item></plurals>
+</resources>

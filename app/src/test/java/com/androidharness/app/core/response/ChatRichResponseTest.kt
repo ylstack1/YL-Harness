@@ -1,0 +1,171 @@
+package com.androidharness.app.core.response
+
+import org.junit.Assert.*
+import org.junit.Test
+
+class ChatRichResponseTest {
+    private val card = """{"type":"callout","tone":"info","title":"Today's lead story","text":"A report with {braces} and an escaped \"quote\"."}"""
+
+    @Test fun multipleInlineImagesAndRichGalleryKeepTheirChosenPlacementDuringStreamingAndReload() {
+        val before = (1..3).joinToString("\n\n") { "![Before $it](https://example.com/before-$it.jpg)" }
+        val after = (1..3).joinToString("\n\n") { "![After $it](https://example.com/after-$it.jpg)" }
+        val urls = (1..25).map { "https://example.com/gallery-$it.jpg" }
+        val gallery = """{"type":"gallery","title":"Collection","images":[${urls.joinToString(",") { """{"url":"$it"}""" }}]}"""
+        val reply = "$before\n\n$gallery\n\n$after"
+        for (streaming in listOf(true, false)) {
+            val normalized = ChatRichResponse.normalize(reply, streaming)
+            val parts = RichResponse.parse(normalized, streaming)
+            assertEquals(3, parts.size)
+            assertEquals(before, (parts[0] as RichResponse.Part.Markdown).text.trim())
+            assertEquals(urls, ((parts[1] as RichResponse.Part.Content).node as RichResponse.Node.Gallery).images.map { it.url })
+            assertEquals(after, (parts[2] as RichResponse.Part.Markdown).text.trim())
+            assertEquals(parts, RichResponse.parse(ChatRichResponse.normalize(normalized), streaming))
+        }
+    }
+
+    @Test fun screenshotStyleBareComponentsRenderWithSurroundingProseAndCitations() {
+        val reply = "Here is today's news.\n$card\n[Source](https://example.com/report)"
+        val parts = RichResponse.parse(ChatRichResponse.normalize(reply))
+        assertTrue(parts[0] is RichResponse.Part.Markdown)
+        assertEquals("Today's lead story", (parts[1] as RichResponse.Part.Content).node.let { it as RichResponse.Node.Callout }.title)
+        assertTrue((parts[2] as RichResponse.Part.Markdown).text.contains("[Source]"))
+        assertTrue("Code parsing remains strict", RichResponse.parse(reply).all { it is RichResponse.Part.Markdown })
+    }
+
+    @Test fun everyStreamedPrefixWithholdsComponentMetadataUntilItCanRender() {
+        for (length in 1..card.length) {
+            val parts = RichResponse.parse(ChatRichResponse.normalize("News\n" + card.take(length), true), true)
+            assertFalse("prefix $length", parts.filterIsInstance<RichResponse.Part.Markdown>().any { it.text.contains('{') || it.text.contains("\"type\"") })
+            assertTrue(parts.any { it is RichResponse.Part.Content || it is RichResponse.Part.Pending })
+        }
+    }
+
+    @Test fun explicitCodeFencesAndOrdinaryJsonStayLiteralWhilePrettyComponentsRecover() {
+        for (fence in listOf("```json", "```kotlin", "~~~json")) {
+            val text = "$fence\n$card\n${fence.take(3)}\nordinary prose"
+            assertEquals(text, ChatRichResponse.normalize(text))
+        }
+        val plain = "Data\n{\"type\":\"person\",\"name\":\"Ada\"}\nEnd"
+        assertEquals(plain, ChatRichResponse.normalize(plain))
+        val pretty = "{\n  \"type\": \"callout\",\n  \"title\": \"Summary\", \"text\": \"Details\"\n}"
+        assertTrue(RichResponse.parse(ChatRichResponse.normalize(pretty)).single() is RichResponse.Part.Content)
+        val alreadyFenced = "```harness-ui\n$card\n```"
+        assertEquals(alreadyFenced, ChatRichResponse.normalize(alreadyFenced))
+    }
+
+    @Test fun brokenComponentsNeverLeakMetadataAndDoNotSwallowTrailingTextAfterCompleteObjects() {
+        val broken = """{"type":"callout","title":12}"""
+        val parts = RichResponse.parse(ChatRichResponse.normalize("$broken\nUseful trailing prose"))
+        assertEquals(RichResponse.Part.Unavailable, parts[0])
+        assertTrue((parts[1] as RichResponse.Part.Markdown).text.contains("Useful trailing prose"))
+        assertEquals(RichResponse.Part.Unavailable, RichResponse.parse(ChatRichResponse.normalize(card.dropLast(1))).single())
+    }
+
+    @Test fun validBareComponentDoesNotRequireTypeToBeFirst() {
+        val response = "Before\n{\"title\":\"Summary\",\"text\":\"Details\",\"type\":\"callout\"}\nAfter"
+        val parts = RichResponse.parse(ChatRichResponse.normalize(response))
+        assertEquals("Summary", ((parts[1] as RichResponse.Part.Content).node as RichResponse.Node.Callout).title)
+        assertTrue((parts[2] as RichResponse.Part.Markdown).text.contains("After"))
+        val ordinary = "{\"name\":\"Ada\",\"type\":\"person\"}"
+        assertEquals(ordinary, ChatRichResponse.normalize(ordinary))
+    }
+
+    @Test fun screenshotStyleDirectivesRenderAndKeepSurroundingText() {
+        val reply = """Intro
+::card
+title: Mobile Harness
+text: A description, with punctuation.
+::
+::callout
+tone: info
+title: The verdict
+text: A useful summary.
+::
+::profile
+name: AndroidHarness
+subtitle: Android app
+description: An app for coding.
+facts: [{label:License,value:MIT,source:https://example.com/license}]
+sources: [{title:Repository,url:https://example.com/repo}]
+::
+After"""
+        val parts = RichResponse.parse(ChatRichResponse.normalize(reply))
+        val nodes = parts.filterIsInstance<RichResponse.Part.Content>().map { it.node }
+        assertEquals("Mobile Harness", (nodes[0] as RichResponse.Node.Card).title)
+        assertEquals("The verdict", (nodes[1] as RichResponse.Node.Callout).title)
+        val profile = nodes[2] as RichResponse.Node.Profile
+        assertEquals("MIT", profile.facts.single().value)
+        assertEquals("https://example.com/repo", profile.sources.single().url)
+        assertTrue((parts.last() as RichResponse.Part.Markdown).text.contains("After"))
+        val fenced = "```text\n::card\ntitle: Example\ntext: source\n::\n```"
+        assertEquals(fenced, ChatRichResponse.normalize(fenced))
+        assertTrue(RichResponse.parse(ChatRichResponse.normalize("::card\ntitle: Partial", true), true).single() is RichResponse.Part.Pending)
+        val preview = "::preview\ntitle: Demo\nhtml: <p>Hello</p>\n::"
+        val previewNode = (RichResponse.parse(ChatRichResponse.normalize(preview)).single() as RichResponse.Part.Content).node as RichResponse.Node.Preview
+        assertEquals("<p>Hello</p>", previewNode.html)
+    }
+
+    @Test fun attributeDirectivesTakeTheirBodyAsText() {
+        val reply = """Bottom line
+::callout{tone="info" title="Key takeaway"}
+The risk comes mainly from *smoking* it.
+Avoiding smoke removes the exposure.
+::
+:::card{title="Next step"}
+Talk to a doctor.
+:::
+After"""
+        val parts = RichResponse.parse(ChatRichResponse.normalize(reply))
+        val nodes = parts.filterIsInstance<RichResponse.Part.Content>().map { it.node }
+        val callout = nodes[0] as RichResponse.Node.Callout
+        assertEquals("Key takeaway", callout.title)
+        assertEquals("info", callout.tone)
+        assertEquals("The risk comes mainly from *smoking* it.\nAvoiding smoke removes the exposure.", callout.text)
+        assertEquals("Talk to a doctor.", (nodes[1] as RichResponse.Node.Card).text)
+        assertTrue((parts.last() as RichResponse.Part.Markdown).text.contains("After"))
+        assertTrue(parts.none { it is RichResponse.Part.Markdown && it.text.contains("::") })
+    }
+
+    @Test fun jsonCalloutInsideDirectiveRendersAndKeepsSurroundingImages() {
+        val body = """{"tone":"info","title":"Why the still is unavailable","text":"The footage was cut. A quoted \"scene\" and {braces} remain readable."}"""
+        val before = "Before the callout."
+        val after = "![Interview](harness-image:img_fixture)\n\nAfter the picture."
+        for (wrapper in listOf("::", ":::")) for (typeField in listOf("", "\"type\":\"callout\",")) {
+            val json = body.replaceFirst("{", "{$typeField")
+            val reply = "$before\n\n${wrapper}callout\n$json\n$wrapper\n\n$after"
+            val expected = RichResponse.decode("""{"type":"callout",${body.drop(1)}""")
+            for (streaming in listOf(true, false)) {
+                val normalized = ChatRichResponse.normalize(reply, streaming)
+                val parts = RichResponse.parse(normalized, streaming)
+                assertEquals(3, parts.size)
+                assertEquals(before, (parts.first() as RichResponse.Part.Markdown).text.trim())
+                assertEquals(expected, (parts[1] as RichResponse.Part.Content).node)
+                assertEquals(after, (parts.last() as RichResponse.Part.Markdown).text.trim())
+                assertEquals(parts, RichResponse.parse(ChatRichResponse.normalize(normalized)))
+            }
+            val prefix = "${wrapper}callout\n$json\n$wrapper"
+            for (end in "${wrapper}callout".length until prefix.length - wrapper.length) {
+                val parts = RichResponse.parse(ChatRichResponse.normalize(prefix.take(end), true), true)
+                assertTrue(parts.none { it is RichResponse.Part.Content || it is RichResponse.Part.Unavailable })
+                assertFalse(parts.filterIsInstance<RichResponse.Part.Markdown>().any { it.text.contains("\"tone\"") })
+            }
+        }
+    }
+
+    @Test fun jsonDirectiveBodiesKeepSchemaValidationAndRejectConflictingTypesAndAttributes() {
+        fun parts(type: String, body: String, attributes: String = "") =
+            RichResponse.parse(ChatRichResponse.normalize("::$type$attributes\n$body\n::"))
+        assertTrue(parts("card", """{"text":"Readable body"}""", "{title=\"A card\"}").single() is RichResponse.Part.Content)
+        val card = parts("card", """{"title":"A nested card","children":[{"type":"text","text":"Readable child"}]}""").single() as RichResponse.Part.Content
+        assertEquals(listOf(RichResponse.Node.Text("Readable child")), (card.node as RichResponse.Node.Card).children)
+        for (body in listOf(
+            """{"type":"card","title":"Wrong wrapper","text":"Body"}""",
+            """{"tone":"unsupported","title":"Title","text":"Body"}""",
+            """{"title":"Title","text":12}""",
+            """{"title":"Title","text":"Broken""",
+        )) assertEquals(listOf(RichResponse.Part.Unavailable), parts("callout", body))
+        assertEquals(listOf(RichResponse.Part.Unavailable), parts("card", """{"title":"Body title","text":"Body"}""", "{title=\"Header title\"}"))
+        assertEquals(listOf(RichResponse.Part.Unavailable), parts("preview", """{"title":"Only a title"}"""))
+        assertEquals(listOf(RichResponse.Part.Unavailable), parts("profile", """{"name":"Name","description":"Body","image":"file:///private/image","image_source":"https://example.com","sources":[{"title":"Source","url":"https://example.com"}]}"""))
+    }
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_viewing_image">画像を確認中</string>
+    <string name="chat_viewed_image">画像を確認しました</string>
+    <string name="chat_image_failed">画像を確認できませんでした</string>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pr_tool_opening">Abriendo pull request…</string>
+    <string name="pr_tool_opened">Pull request #%1$d abierto</string>
+    <string name="pr_tool_existing">El pull request #%1$d ya está abierto</string>
+    <string name="pr_tool_failed">Pull request no abierto</string>
+    <string name="pr_tool_waiting">Esperando tu aprobación</string>
+    <string name="pr_draft">Borrador</string>
+    <string name="pr_counts">Commits: %1$d · Archivos: %2$d</string>
+    <string name="pr_open_on_github">Abrir en GitHub</string>
+    <string name="pr_copy_link">Copiar enlace</string>
+    <string name="pr_link_copied">Enlace copiado</string>
+    <string name="pr_open_failed">Ninguna app pudo abrir el enlace. Se ha copiado en su lugar.</string>
+    <string name="pr_approval_title">¿Abrir un pull request?</string>
+    <string name="pr_approval_body">Crea un pull request en GitHub desde la rama enviada. No se envía ni se fusiona nada.</string>
+    <string name="pr_approval_base">Hacia %1$s</string>
+    <string name="pr_approval_default_base">Hacia la rama predeterminada</string>
+    <string name="pr_create">Crear pull request</string>
+    <string name="pr_create_draft">Crear pull request en borrador</string>
+    <string name="pr_entry_body">Propón los commits enviados de esta rama para revisión en GitHub.</string>
+    <string name="pr_loading">Comparando esta rama con GitHub…</string>
+    <string name="pr_title_label">Título</string>
+    <string name="pr_description_label">Descripción</string>
+    <string name="pr_rewrite_description">Reescribir descripción</string>
+    <string name="pr_base_label">Rama base</string>
+    <string name="pr_draft_label">Abrir como borrador</string>
+    <string name="pr_draft_body">Los revisores pueden verlo, pero no se puede fusionar hasta que lo marques como listo.</string>
+    <string name="pr_include_checks">Incluir comprobaciones de este chat</string>
+    <string name="pr_include_checks_body">Añade los resultados de compilación, pruebas y lint registrados en esta conversación.</string>
+    <string name="pr_existing_body">Los nuevos envíos a %1$s actualizan este pull request automáticamente.</string>
+    <string name="pr_not_pushed_title">La rama aún no está en GitHub</string>
+    <string name="pr_out_of_date_title">GitHub tiene una copia antigua de esta rama</string>
+    <string name="pr_push_body">Envía %1$s para que GitHub tenga tus últimos commits.</string>
+    <string name="pr_push_branch">Enviar rama</string>
+    <string name="pr_pushed">Rama enviada.</string>
+    <string name="pr_uncommitted_title">Cambios sin confirmar: %1$d</string>
+    <string name="pr_uncommitted_body">No se incluirán hasta que los confirmes y envíes.</string>
+    <string name="pr_behind_title">Commits más recientes en %1$s: %2$d</string>
+    <string name="pr_behind_body">Esta rama aún no los incluye. Los revisores podrían pedirte que la actualices.</string>
+    <string name="pr_no_commits_title">Aún no hay nada que proponer</string>
+    <string name="pr_no_commits_body">%1$s no tiene commits que no estén ya en %2$s.</string>
+    <string name="pr_commits_header">Commits</string>
+    <string name="pr_more">Más: %1$d</string>
+    <string name="pr_created_title">Pull request #%1$d abierto</string>
+    <string name="pr_created_draft_title">Pull request en borrador #%1$d abierto</string>
+    <string name="pr_retry">Reintentar</string>
+</resources>

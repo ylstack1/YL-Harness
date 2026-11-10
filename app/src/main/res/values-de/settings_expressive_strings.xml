@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_coding_workflow">Agent &amp; Arbeitsablauf</string>
+    <string name="settings_coding_intelligence">Fähigkeiten &amp; Intelligenz</string>
+    <string name="settings_coding_execution">Arbeitsbereiche &amp; Ausführung</string>
+    <string name="settings_device_connections">Verbindungen</string>
+    <string name="settings_device_tools">Werkzeuge &amp; erweiterte Einstellungen</string>
+    <string name="settings_linux_optional">Optionale Werkzeuge für Projekte mit Linux</string>
+    <string name="settings_device_advanced">Erweiterter Gerätezugriff</string>
+    <string name="settings_device_advanced_summary">Root- und Geräteinhabersteuerung</string>
+    <string name="settings_device_background">Hintergrund &amp; Akku</string>
+    <string name="settings_device_background_summary">Terminalsitzungen und Agentenarbeit aktiv halten</string>
+    <string name="settings_connection_help">So verbindest du dich</string>
+    <string name="settings_connection_options">Verbindungsoptionen</string>
+    <string name="wireless_adb_disconnect">Trennen</string>
+    <string name="wireless_adb_connection_kept">Verbunden · verfügbar bis zum Trennen</string>
+    <string name="wireless_adb_auto_reconnecting">Erneute Verbindung mit gespeicherter drahtloser Fehlerbehebung</string>
+    <string name="rich_profile_details">Details</string>
+    <string name="rich_profile_sources">Quellen</string>
+    <string name="settings_disclosure_expanded">Erweitert</string>
+    <string name="settings_disclosure_collapsed">Eingeklappt</string>
+    <string name="settings_terminal_access">Terminalzugriff</string>
+    <string name="wireless_adb_compact_summary">Gerätebefehle mit automatischer Wiederverbindung</string>
+</resources>

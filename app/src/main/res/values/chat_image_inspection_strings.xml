@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_viewing_image">Looking at the image</string>
+    <string name="chat_viewed_image">Looked at the image</string>
+    <string name="chat_image_failed">Could not inspect the image</string>
+</resources>

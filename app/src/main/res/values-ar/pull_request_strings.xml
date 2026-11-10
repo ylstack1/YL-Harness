@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pr_tool_opening">جارٍ فتح طلب الدمج…</string>
+    <string name="pr_tool_opened">تم فتح طلب الدمج #%1$d</string>
+    <string name="pr_tool_existing">طلب الدمج #%1$d مفتوح بالفعل</string>
+    <string name="pr_tool_failed">لم يُفتح طلب الدمج</string>
+    <string name="pr_tool_waiting">بانتظار موافقتك</string>
+    <string name="pr_draft">مسودة</string>
+    <string name="pr_counts">الإيداعات: %1$d · الملفات: %2$d</string>
+    <string name="pr_open_on_github">فتح على GitHub</string>
+    <string name="pr_copy_link">نسخ الرابط</string>
+    <string name="pr_link_copied">تم نسخ الرابط</string>
+    <string name="pr_open_failed">لا يوجد تطبيق لفتح الرابط، لذا تم نسخه بدلاً من ذلك.</string>
+    <string name="pr_approval_title">فتح طلب دمج؟</string>
+    <string name="pr_approval_body">ينشئ طلب دمج على GitHub من الفرع المدفوع. لا يتم دفع أو دمج أي شيء.</string>
+    <string name="pr_approval_base">إلى %1$s</string>
+    <string name="pr_approval_default_base">إلى الفرع الافتراضي</string>
+    <string name="pr_create">إنشاء طلب دمج</string>
+    <string name="pr_create_draft">إنشاء طلب دمج كمسودة</string>
+    <string name="pr_entry_body">اقترح إيداعات هذا الفرع المدفوعة للمراجعة على GitHub.</string>
+    <string name="pr_loading">جارٍ مقارنة هذا الفرع مع GitHub…</string>
+    <string name="pr_title_label">العنوان</string>
+    <string name="pr_description_label">الوصف</string>
+    <string name="pr_rewrite_description">إعادة كتابة الوصف</string>
+    <string name="pr_base_label">الفرع الأساسي</string>
+    <string name="pr_draft_label">فتح كمسودة</string>
+    <string name="pr_draft_body">يمكن للمراجعين رؤيته، لكن لا يمكن دمجه حتى تحدده كجاهز.</string>
+    <string name="pr_include_checks">تضمين الفحوصات من هذه المحادثة</string>
+    <string name="pr_include_checks_body">يضيف نتائج البناء والاختبار و lint المسجلة في هذه المحادثة.</string>
+    <string name="pr_existing_body">عمليات الدفع الجديدة إلى %1$s تحدّث طلب الدمج هذا تلقائياً.</string>
+    <string name="pr_not_pushed_title">الفرع غير موجود على GitHub بعد</string>
+    <string name="pr_out_of_date_title">نسخة GitHub من هذا الفرع أقدم</string>
+    <string name="pr_push_body">ادفع %1$s ليحصل GitHub على أحدث إيداعاتك.</string>
+    <string name="pr_push_branch">دفع الفرع</string>
+    <string name="pr_pushed">تم دفع الفرع.</string>
+    <string name="pr_uncommitted_title">تغييرات غير مودعة: %1$d</string>
+    <string name="pr_uncommitted_body">لن تُضمَّن حتى تودعها وتدفعها.</string>
+    <string name="pr_behind_title">إيداعات أحدث على %1$s: %2$d</string>
+    <string name="pr_behind_body">هذا الفرع لا يتضمنها بعد. قد يطلب منك المراجعون تحديثه.</string>
+    <string name="pr_no_commits_title">لا شيء لاقتراحه بعد</string>
+    <string name="pr_no_commits_body">لا يحتوي %1$s على إيداعات غير موجودة في %2$s.</string>
+    <string name="pr_commits_header">الإيداعات</string>
+    <string name="pr_more">المزيد: %1$d</string>
+    <string name="pr_created_title">تم فتح طلب الدمج #%1$d</string>
+    <string name="pr_created_draft_title">تم فتح مسودة طلب الدمج #%1$d</string>
+    <string name="pr_retry">إعادة المحاولة</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_coding_workflow">Agent &amp; workflow</string>
+    <string name="settings_coding_intelligence">Skills &amp; intelligence</string>
+    <string name="settings_coding_execution">Workspaces &amp; execution</string>
+    <string name="settings_device_connections">Connections</string>
+    <string name="settings_device_tools">Tools &amp; advanced settings</string>
+    <string name="settings_linux_optional">Optional tools for projects that need Linux</string>
+    <string name="settings_device_advanced">Advanced device access</string>
+    <string name="settings_device_advanced_summary">Root and device owner controls</string>
+    <string name="settings_device_background">Background &amp; battery</string>
+    <string name="settings_device_background_summary">Keep terminal sessions and agent work running</string>
+    <string name="settings_connection_help">How to connect</string>
+    <string name="settings_connection_options">Connection options</string>
+    <string name="wireless_adb_disconnect">Disconnect</string>
+    <string name="wireless_adb_connection_kept">Connected · available until you disconnect</string>
+    <string name="wireless_adb_auto_reconnecting">Reconnecting to saved wireless debugging</string>
+    <string name="rich_profile_details">Details</string>
+    <string name="rich_profile_sources">Sources</string>
+    <string name="settings_disclosure_expanded">Expanded</string>
+    <string name="settings_disclosure_collapsed">Collapsed</string>
+    <string name="settings_terminal_access">Terminal access</string>
+    <string name="wireless_adb_compact_summary">Device commands, with automatic reconnection</string>
+</resources>

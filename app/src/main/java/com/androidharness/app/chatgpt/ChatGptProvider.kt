@@ -1,0 +1,165 @@
+package com.androidharness.app.chatgpt
+
+import com.androidharness.app.core.ChatMessage
+import com.androidharness.app.llm.*
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.serialization.json.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.util.concurrent.TimeUnit
+
+class ChatGptProvider(
+    private val token: suspend (String, Boolean) -> String,
+    private val client: OkHttpClient = OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(90, TimeUnit.SECONDS).callTimeout(10, TimeUnit.MINUTES).followRedirects(false).build(),
+    private val modelEntry: (String, String) -> ModelEntry? = { _, _ -> null },
+) : LlmProvider {
+    /** Diagnostic type only, never credentials, request bodies or exception messages. */
+    @Volatile internal var lastFailureType: String? = null
+        private set
+    @Volatile internal var lastResponseSummary: String? = null
+        private set
+    private val responses = OpenAiResponsesProvider(client, ProviderFactory.json)
+    private class StreamFinished : RuntimeException(null, null, false, false)
+
+    internal fun body(config: ProviderConfig, system: String, messages: List<ChatMessage>, tools: List<ToolSchema>, options: RequestOptions): JsonObject {
+        val body = responses.buildRequestBody(config, system, messages, tools, options.copy(customReasoning = emptyMap()),
+            options.resolveThinking(config, modelEntry(config.id, config.model))).toMutableMap()
+        body.remove("max_output_tokens")
+        body.remove("user")
+        body.remove("reasoning")
+        options.resolveThinking(config, modelEntry(config.id, config.model)).effort?.let { effort ->
+            body["reasoning"] = buildJsonObject {
+                put("effort", effort)
+                if (effort != "none") put("summary", "auto")
+            }
+        }
+        body["include"] = JsonArray(listOf(JsonPrimitive("reasoning.encrypted_content")))
+        val replayReasoning = messages.filter { it.generation.state == null }.flatMap { it.toolCalls }.filter { it.responseProviderId == config.id }.associate { it.id to it.responseReasoning }
+        body["input"] = JsonArray(body.getValue("input").jsonArray.flatMap { item ->
+            val obj = item.jsonObject
+            if (obj["type"]?.jsonPrimitive?.contentOrNull == "function_call") {
+                replayReasoning[obj["call_id"]?.jsonPrimitive?.contentOrNull].orEmpty() +
+                    JsonObject(obj + ("namespace" to JsonPrimitive(ChatGptProtocol.NAMESPACE)))
+            } else listOf(obj)
+        })
+        if (tools.isNotEmpty()) body["tools"] = buildJsonArray {
+            add(buildJsonObject {
+                put("type", "namespace"); put("name", ChatGptProtocol.NAMESPACE)
+                put("description", "AndroidHarness tools for coding and working with the user's project.")
+                put("tools", body.getValue("tools"))
+            })
+        }
+        return options.applyReasoningMapping(config, JsonObject(body))
+    }
+
+    override fun streamChat(config: ProviderConfig, apiKey: String, systemPrompt: String, messages: List<ChatMessage>, tools: List<ToolSchema>, options: RequestOptions): Flow<StreamEvent> = flow {
+        val requestBody = body(config, systemPrompt, messages, tools, options)
+        emit(StreamEvent.ThinkingConfigured(options.resolveThinking(config, modelEntry(config.id, config.model)).detail))
+        lastFailureType = null
+        lastResponseSummary = null
+        var retry = false
+        while (true) {
+            val acc = LinkedHashMap<String, Triple<String, String, StringBuilder>>()
+            val finishedItems = mutableListOf<JsonObject>()
+            var completed = false
+            var failed = false
+            var received = false
+            val eventCounts = linkedMapOf<String, Int>()
+            try {
+                val access = token(config.id, retry)
+                // Never send an account token to an editable provider URL.
+                val request = Request.Builder().url(ChatGptProtocol.RESOURCE + "/responses")
+                    .header("Authorization", "Bearer $access")
+                    .post(requestBody.toString().toRequestBody("application/json; charset=utf-8".toMediaType())).build()
+                try { ProviderFactory.sseJson(request, com.androidharness.app.llm.ProviderNetwork.client(client, config.id)).collect { element ->
+                    if (completed || failed) return@collect
+                    received = true
+                    val event = element as? JsonObject ?: return@collect
+                    val type = event["type"]?.jsonPrimitive?.contentOrNull
+                    type?.let { eventCounts[it] = (eventCounts[it] ?: 0) + 1 }
+                    val error = event["error"] as? JsonObject ?: (event["response"] as? JsonObject)?.get("error") as? JsonObject
+                        ?: event.takeIf { type == "error" }
+                    var reasoningItems: List<JsonObject> = emptyList()
+                    when {
+                        error != null || type in setOf("error", "response.failed", "response.incomplete") -> {
+                            failed = true; acc.clear()
+                            val code = error?.get("code")?.jsonPrimitive?.contentOrNull
+                            emit(failure(code))
+                        }
+                        else -> {
+                            val item = event["item"] as? JsonObject
+                            if (type == "response.output_item.done" && item != null) finishedItems += item
+                            val namespace = item?.get("namespace")?.jsonPrimitive?.contentOrNull
+                            if (item?.get("type")?.jsonPrimitive?.contentOrNull == "function_call" && namespace != null && namespace != ChatGptProtocol.NAMESPACE) {
+                                failed = true; acc.clear(); emit(StreamEvent.Failure("ChatGPT returned an unknown tool namespace."))
+                            } else {
+                                if (type == "response.completed") {
+                                    val response = event["response"] as? JsonObject
+                                    if (response?.get("status")?.jsonPrimitive?.contentOrNull != "completed") {
+                                        failed = true; emit(StreamEvent.Failure("ChatGPT did not complete this response.")); throw StreamFinished()
+                                    }
+                                    // Subscription streams may leave terminal output empty while
+                                    // output_item.done contains the completed items. Never use partial deltas.
+                                    val terminalItems = (response["output"] as? JsonArray)?.mapNotNull { it as? JsonObject }.orEmpty()
+                                    val output = terminalItems.ifEmpty { finishedItems }
+                                    lastResponseSummary = "events=$eventCounts; outputTypes=${output.map { it["type"]?.jsonPrimitive?.contentOrNull }}"
+                                    reasoningItems = output.filter {
+                                        it["type"]?.jsonPrimitive?.contentOrNull == "reasoning" &&
+                                            !it["encrypted_content"]?.jsonPrimitive?.contentOrNull.isNullOrBlank()
+                                    }
+                                    if (reasoningItems.isNotEmpty()) emit(StreamEvent.ResponseState(
+                                        com.androidharness.app.core.ProviderMessageState.of(config, "responses", reasoningItems)))
+                                    // Completed output is authoritative, including calls without earlier argument deltas.
+                                    run {
+                                        acc.clear()
+                                        output.filter { it["type"]?.jsonPrimitive?.contentOrNull == "function_call" }.forEach { call ->
+                                            val ns = call["namespace"]?.jsonPrimitive?.contentOrNull
+                                            val id = call["call_id"]?.jsonPrimitive?.contentOrNull
+                                            val name = call["name"]?.jsonPrimitive?.contentOrNull
+                                            val args = call["arguments"]?.jsonPrimitive?.contentOrNull
+                                            if ((ns != null && ns != ChatGptProtocol.NAMESPACE) || id.isNullOrBlank() || tools.none { it.name == name } ||
+                                                args == null || runCatching { ProviderFactory.json.parseToJsonElement(args) as? JsonObject }.getOrNull() == null) {
+                                                failed = true; acc.clear(); emit(StreamEvent.Failure("ChatGPT returned an invalid tool call.")); throw StreamFinished()
+                                            }
+                                            acc[id] = Triple(id, name!!, StringBuilder(args))
+                                        }
+                                    }
+                                    completed = true
+                                }
+                                // Tools are released only after successful completion, never from an interrupted stream.
+                                responses.parseEvent(element, acc).forEach { parsed -> emit(when (parsed) {
+                                    is StreamEvent.ToolCallReady -> parsed.copy(call = parsed.call.copy(responseReasoning = reasoningItems, responseProviderId = config.id.takeIf { reasoningItems.isNotEmpty() }))
+                                    is StreamEvent.ToolCallBatch -> parsed.copy(calls = parsed.calls.mapIndexed { index, call ->
+                                        if (index == 0) call.copy(responseReasoning = reasoningItems, responseProviderId = config.id.takeIf { reasoningItems.isNotEmpty() }) else call
+                                    })
+                                    else -> parsed
+                                }) }
+                            }
+                        }
+                    }
+                    if (completed || failed) throw StreamFinished()
+                } } catch (_: StreamFinished) { /* Cancel the SSE reader as soon as the terminal event arrives. */ }
+                if (!completed && !failed) emit(StreamEvent.Failure("ChatGPT disconnected before finishing. Please retry."))
+                break
+            } catch (e: CancellationException) { throw e
+            } catch (e: ApiException) {
+                if (e.code == 401 && !retry && !received) { retry = true; continue }
+                val code = runCatching { ProviderFactory.json.parseToJsonElement(e.message.orEmpty().substringAfter(": ")).jsonObject["error"]?.jsonObject?.get("code")?.jsonPrimitive?.contentOrNull }.getOrNull()
+                emit(failure(code, e.code)); break
+            } catch (e: Exception) {
+                lastFailureType = e.javaClass.simpleName
+                emit(StreamEvent.Failure("ChatGPT could not finish. Check your connection or reconnect in Settings > Connected accounts.")); break
+            }
+        }
+    }
+
+    private fun failure(code: String?, status: Int? = null) = StreamEvent.Failure(
+        ChatGptProtocol.requestError(code, status ?: ChatGptProtocol.errorStatus(code)), status ?: ChatGptProtocol.errorStatus(code), code,
+        retryable = false.takeIf { code == ChatGptProtocol.USAGE_LIMIT },
+    )
+}

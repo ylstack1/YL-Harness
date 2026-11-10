@@ -1,0 +1,17 @@
+<resources>
+    <string name="sidebar_select">Auswählen</string>
+    <string name="sidebar_selected_count">%1$d ausgewählt</string>
+    <string name="sidebar_select_all">Alle auswählen</string>
+    <string name="sidebar_clear_selection">Auswahl aufheben</string>
+    <string name="sidebar_exit_selection">Auswahl beenden</string>
+    <string name="sidebar_select_chat">%1$s auswählen</string>
+    <string name="sidebar_details">Details</string>
+    <string name="sidebar_other_chats">Andere Chats</string>
+    <string name="sidebar_model_unavailable">Nicht verfügbar</string>
+    <string name="sidebar_delete_selected">Ausgewählte Chats löschen?</string>
+    <string name="sidebar_delete_selected_message">Diese Chats und ihren Gesprächsverlauf löschen? Das kann nicht rückgängig gemacht werden.</string>
+    <string name="sidebar_delete_running">Laufende Aufgaben in diesen Chats werden gestoppt.</string>
+    <string name="sidebar_selection_error">Diese Aktion konnte nicht abgeschlossen werden. Bitte versuche es erneut.</string>
+    <plurals name="sidebar_archived_count"><item quantity="one">%1$d Chat archiviert</item><item quantity="other">%1$d Chats archiviert</item></plurals>
+    <plurals name="sidebar_restored_count"><item quantity="one">%1$d Chat wiederhergestellt</item><item quantity="other">%1$d Chats wiederhergestellt</item></plurals>
+</resources>

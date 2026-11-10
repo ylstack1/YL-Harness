@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Lets the agent-run notification be promoted to an Android 16 Live Update on any OEM. -->
+    <uses-permission android:name="android.permission.POST_PROMOTED_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <!-- Keep the CPU alive while an agent run / terminal is active so
+         minimizing the app doesn't freeze the terminal mid-run. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- Let the user exclude the app from battery optimization (Samsung etc.). -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="moe.shizuku.manager.permission.API_V23" />
+    <!-- In-app updates: request the install session for downloaded release APKs. -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- Wireless ADB pairing talks to the device's own adbd over loopback. -->
+    <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <!-- AH Rumble: haptic pulses as a Chat turn changes step. -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Make audio recording hardware optional so devices without a built-in
+         microphone (Android TV, displays, kiosks) are not excluded by Play. -->
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
+
+    <!-- Allow discovering speech recognition service engines and installed
+         root managers on Android 11+. Root identification is display-only. -->
+    <queries>
+        <package android:name="moe.shizuku.privileged.api" />
+        <package android:name="com.hamondev.shevery" />
+        <package android:name="com.rosan.dhizuku" />
+        <package android:name="me.weishu.kernelsu" />
+        <package android:name="com.rifsxd.ksunext" />
+        <package android:name="org.sukisu.manager" />
+        <package android:name="me.bmax.apatch" />
+        <package android:name="com.topjohnwu.magisk" />
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
+        </intent>
+        <!-- Android 11+ package visibility: discover installed TTS engines/voices. -->
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
+
+    <!-- Terminal/storage: let the app use real filesystem paths across shared
+         storage ("All files access"), which the shell and file tools need on
+         Android 11+. Grant it from Settings → Storage access. -->
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <application
+        android:name=".HarnessApp"
+        android:requestLegacyExternalStorage="true"
+        android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_rules"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:enableOnBackInvokedCallback="true"
+        android:theme="@style/Theme.AndroidHarness">
+
+        <service android:name=".data.transfer.FtpShareService" android:exported="false" android:foregroundServiceType="dataSync" />
+
+        <!-- Finds the wireless debugging pairing port while the user is in Settings. -->
+        <service
+            android:name=".data.env.adb.AdbPairingService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="User-initiated on-device wireless debugging pairing while entering the Android Settings pairing code" />
+        </service>
+        <service android:name=".data.env.adb.WirelessAdbService" android:exported="false" android:foregroundServiceType="specialUse">
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Maintain the user-enabled on-device ADB shell connection with an explicit disconnect action" />
+        </service>
+        <receiver android:name=".data.env.adb.WirelessAdbReconnectReceiver" android:exported="false">
+            <intent-filter><action android:name="android.intent.action.MY_PACKAGE_REPLACED" /></intent-filter>
+        </receiver>
+
+        <!-- Persist language overrides on Android 12 and earlier; Android 13+
+             shares the same preference with the system's per-app language UI. -->
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data android:name="autoStoreLocales" android:value="true" />
+        </service>
+
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|uiMode">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- MCP OAuth: the browser redirects back here after sign-in. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="androidharness" android:host="mcp" />
+            </intent-filter>
+        </activity>
+
+        <activity-alias
+            android:name=".ShareToChat"
+            android:targetActivity=".MainActivity"
+            android:exported="true"
+            android:label="@string/chat_share_target">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity-alias>
+
+        <provider
+            android:name="rikka.shizuku.ShizukuProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:enabled="true"
+            android:exported="true"
+            android:multiprocess="false" />
+
+        <!-- Shares staged update APKs with the system package installer. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.update"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <service
+            android:name=".AgentService"
+            android:foregroundServiceType="specialUse"
+            android:exported="false">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Persistent local coding agent and terminal runtime with user-controlled stop action" />
+        </service>
+
+        <!-- Resolves notification action buttons (approve/deny/answer) against
+             RunManager. Explicit intents only, never exported. -->
+        <receiver
+            android:name=".agent.NotificationActionReceiver"
+            android:exported="false" />
+        <receiver android:name=".automation.AutomationActionReceiver" android:exported="false" />
+        <service android:name=".telegram.TelegramService" android:exported="false" android:foregroundServiceType="specialUse">
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="User-enabled remote control of local coding chats, tool approvals and task progress through a paired Telegram account, with visible pause and stop controls" />
+        </service>
+        <receiver android:name=".telegram.TelegramBootReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+        <service android:name="androidx.work.impl.foreground.SystemForegroundService" android:foregroundServiceType="dataSync" tools:node="merge" />
+    </application>
+
+</manifest>

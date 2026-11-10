@@ -1,0 +1,17 @@
+<resources>
+    <string name="sidebar_select">انتخاب</string>
+    <string name="sidebar_selected_count">%1$d مورد انتخاب شد</string>
+    <string name="sidebar_select_all">انتخاب همه</string>
+    <string name="sidebar_clear_selection">پاک‌کردن انتخاب</string>
+    <string name="sidebar_exit_selection">خروج از حالت انتخاب</string>
+    <string name="sidebar_select_chat">انتخاب %1$s</string>
+    <string name="sidebar_details">جزئیات</string>
+    <string name="sidebar_other_chats">گفتگوهای دیگر</string>
+    <string name="sidebar_model_unavailable">در دسترس نیست</string>
+    <string name="sidebar_delete_selected">گفتگوهای انتخاب‌شده حذف شوند؟</string>
+    <string name="sidebar_delete_selected_message">این گفتگوها و تاریخچه گفتگوی آن‌ها حذف شود؟ این کار برگشت‌پذیر نیست.</string>
+    <string name="sidebar_delete_running">وظایف در حال اجرای این گفتگوها متوقف می‌شوند.</string>
+    <string name="sidebar_selection_error">انجام این اقدام ممکن نشد. لطفاً دوباره تلاش کنید.</string>
+    <plurals name="sidebar_archived_count"><item quantity="one">%1$d گفتگو بایگانی شد</item><item quantity="other">%1$d گفتگو بایگانی شد</item></plurals>
+    <plurals name="sidebar_restored_count"><item quantity="one">%1$d گفتگو بازیابی شد</item><item quantity="other">%1$d گفتگو بازیابی شد</item></plurals>
+</resources>

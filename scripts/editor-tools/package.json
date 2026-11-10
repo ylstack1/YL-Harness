@@ -1,0 +1,15 @@
+{
+  "name": "androidharness-editor-tools",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "node build.mjs", "test": "node --test engine.test.mjs" },
+  "dependencies": {
+    "prettier": "3.9.6",
+    "typescript": "5.9.3",
+    "vscode-css-languageservice": "6.3.10",
+    "vscode-html-languageservice": "5.6.2",
+    "vscode-json-languageservice": "5.6.3",
+    "vscode-languageserver-textdocument": "1.0.15"
+  },
+  "devDependencies": { "esbuild": "0.28.2" }
+}

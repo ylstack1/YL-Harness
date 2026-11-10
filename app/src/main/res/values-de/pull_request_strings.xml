@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pr_tool_opening">Pull-Request wird geöffnet…</string>
+    <string name="pr_tool_opened">Pull-Request #%1$d geöffnet</string>
+    <string name="pr_tool_existing">Pull-Request #%1$d ist bereits offen</string>
+    <string name="pr_tool_failed">Pull-Request nicht geöffnet</string>
+    <string name="pr_tool_waiting">Wartet auf deine Freigabe</string>
+    <string name="pr_draft">Entwurf</string>
+    <string name="pr_counts">Commits: %1$d · Dateien: %2$d</string>
+    <string name="pr_open_on_github">Auf GitHub öffnen</string>
+    <string name="pr_copy_link">Link kopieren</string>
+    <string name="pr_link_copied">Link kopiert</string>
+    <string name="pr_open_failed">Keine App konnte den Link öffnen. Er wurde stattdessen kopiert.</string>
+    <string name="pr_approval_title">Pull-Request öffnen?</string>
+    <string name="pr_approval_body">Erstellt auf GitHub einen Pull-Request aus dem gepushten Branch. Es wird nichts gepusht oder gemergt.</string>
+    <string name="pr_approval_base">Nach %1$s</string>
+    <string name="pr_approval_default_base">In den Standard-Branch</string>
+    <string name="pr_create">Pull-Request erstellen</string>
+    <string name="pr_create_draft">Entwurf-Pull-Request erstellen</string>
+    <string name="pr_entry_body">Schlage die gepushten Commits dieses Branches auf GitHub zur Prüfung vor.</string>
+    <string name="pr_loading">Branch wird mit GitHub verglichen…</string>
+    <string name="pr_title_label">Titel</string>
+    <string name="pr_description_label">Beschreibung</string>
+    <string name="pr_rewrite_description">Beschreibung neu schreiben</string>
+    <string name="pr_base_label">Ziel-Branch</string>
+    <string name="pr_draft_label">Als Entwurf öffnen</string>
+    <string name="pr_draft_body">Reviewer sehen ihn, aber er kann erst gemergt werden, wenn du ihn als bereit markierst.</string>
+    <string name="pr_include_checks">Prüfungen aus diesem Chat einfügen</string>
+    <string name="pr_include_checks_body">Fügt die in dieser Unterhaltung erfassten Build-, Test- und Lint-Ergebnisse hinzu.</string>
+    <string name="pr_existing_body">Neue Pushes nach %1$s aktualisieren diesen Pull-Request automatisch.</string>
+    <string name="pr_not_pushed_title">Branch ist noch nicht auf GitHub</string>
+    <string name="pr_out_of_date_title">GitHub hat eine ältere Kopie dieses Branches</string>
+    <string name="pr_push_body">Pushe %1$s, damit GitHub deine neuesten Commits hat.</string>
+    <string name="pr_push_branch">Branch pushen</string>
+    <string name="pr_pushed">Branch gepusht.</string>
+    <string name="pr_uncommitted_title">Nicht committete Änderungen: %1$d</string>
+    <string name="pr_uncommitted_body">Sie sind erst enthalten, wenn du sie committest und pushst.</string>
+    <string name="pr_behind_title">Neuere Commits auf %1$s: %2$d</string>
+    <string name="pr_behind_body">Dieser Branch enthält sie noch nicht. Reviewer bitten dich eventuell, ihn zu aktualisieren.</string>
+    <string name="pr_no_commits_title">Noch nichts vorzuschlagen</string>
+    <string name="pr_no_commits_body">%1$s hat keine Commits, die nicht schon auf %2$s sind.</string>
+    <string name="pr_commits_header">Commits</string>
+    <string name="pr_more">Weitere: %1$d</string>
+    <string name="pr_created_title">Pull-Request #%1$d geöffnet</string>
+    <string name="pr_created_draft_title">Entwurf-Pull-Request #%1$d geöffnet</string>
+    <string name="pr_retry">Erneut versuchen</string>
+</resources>

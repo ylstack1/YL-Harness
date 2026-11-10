@@ -1,0 +1,19 @@
+<resources>
+    <string name="theme_color_palette">调色板</string>
+    <string name="theme_color_hint">选择一套调色板为应用配色。</string>
+    <string name="theme_wallpaper_colors">壁纸颜色</string>
+    <string name="theme_wallpaper_hint">跟随手机的 Material You 配色。</string>
+    <string name="theme_wallpaper_unavailable">壁纸配色需要 Android 12 或更高版本。请在下方选择调色板。</string>
+    <string name="theme_palette_blue">Harness 蓝</string>
+    <string name="theme_palette_ocean">海洋</string>
+    <string name="theme_palette_indigo">靛蓝</string>
+    <string name="theme_palette_lavender">薰衣草</string>
+    <string name="theme_palette_orchid">兰花</string>
+    <string name="theme_palette_rose">玫瑰</string>
+    <string name="theme_palette_coral">珊瑚</string>
+    <string name="theme_palette_amber">琥珀</string>
+    <string name="theme_palette_lime">青柠</string>
+    <string name="theme_palette_forest">森林</string>
+    <string name="theme_palette_teal">蓝绿</string>
+    <string name="theme_palette_slate">石板</string>
+</resources>

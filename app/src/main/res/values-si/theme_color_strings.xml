@@ -1,0 +1,19 @@
+<resources>
+    <string name="theme_color_palette">වර්ණ පුවරුව</string>
+    <string name="theme_color_hint">යෙදුම වර්ණ ගැන්වීමට පුවරුවක් තෝරන්න.</string>
+    <string name="theme_wallpaper_colors">බිතුපතේ වර්ණ</string>
+    <string name="theme_wallpaper_hint">ඔබේ දුරකථනයේ Material You වර්ණ අනුගමනය කරයි.</string>
+    <string name="theme_wallpaper_unavailable">බිතුපතේ වර්ණ සඳහා Android 12 හෝ ඊට වැඩි අවශ්‍ය වේ. පහතින් පුවරුවක් තෝරන්න.</string>
+    <string name="theme_palette_blue">Harness නිල්</string>
+    <string name="theme_palette_ocean">සාගර</string>
+    <string name="theme_palette_indigo">නිල් දම්</string>
+    <string name="theme_palette_lavender">ලැවෙන්ඩර්</string>
+    <string name="theme_palette_orchid">ඕකිඩ්</string>
+    <string name="theme_palette_rose">රෝස</string>
+    <string name="theme_palette_coral">පුෂ්ප කොරල්</string>
+    <string name="theme_palette_amber">ඇම්බර්</string>
+    <string name="theme_palette_lime">දෙහි කොළ</string>
+    <string name="theme_palette_forest">වනාන්තර</string>
+    <string name="theme_palette_teal">නිල් කොළ</string>
+    <string name="theme_palette_slate">ස්ලේට්</string>
+</resources>

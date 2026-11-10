@@ -1,0 +1,17 @@
+<resources>
+    <string name="sidebar_select">Выбрать</string>
+    <string name="sidebar_selected_count">Выбрано: %1$d</string>
+    <string name="sidebar_select_all">Выбрать все</string>
+    <string name="sidebar_clear_selection">Снять выделение</string>
+    <string name="sidebar_exit_selection">Выйти из режима выбора</string>
+    <string name="sidebar_select_chat">Выбрать %1$s</string>
+    <string name="sidebar_details">Подробности</string>
+    <string name="sidebar_other_chats">Другие чаты</string>
+    <string name="sidebar_model_unavailable">Недоступно</string>
+    <string name="sidebar_delete_selected">Удалить выбранные чаты?</string>
+    <string name="sidebar_delete_selected_message">Удалить эти чаты и их историю переписки? Это действие нельзя отменить.</string>
+    <string name="sidebar_delete_running">Запущенные задачи в этих чатах будут остановлены.</string>
+    <string name="sidebar_selection_error">Не удалось выполнить это действие. Попробуйте ещё раз.</string>
+    <plurals name="sidebar_archived_count"><item quantity="one">%1$d чат заархивирован</item><item quantity="few">%1$d чата заархивированы</item><item quantity="many">%1$d чатов заархивировано</item><item quantity="other">%1$d чата заархивированы</item></plurals>
+    <plurals name="sidebar_restored_count"><item quantity="one">%1$d чат восстановлен</item><item quantity="few">%1$d чата восстановлены</item><item quantity="many">%1$d чатов восстановлено</item><item quantity="other">%1$d чата восстановлены</item></plurals>
+</resources>

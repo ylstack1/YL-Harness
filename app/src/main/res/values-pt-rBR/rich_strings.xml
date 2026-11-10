@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rich_filter_rows">"Filtrar linhas"</string>
+    <string name="rich_no_rows">"Nenhuma linha correspondente"</string>
+    <string name="rich_previous">"Anterior"</string>
+    <string name="rich_next">"Próximo"</string>
+    <string name="rich_discuss_rows">"Discutir linhas selecionadas"</string>
+    <string name="rich_discuss_rows_prompt">"Compare as linhas que selecionei."</string>
+    <string name="rich_discuss_tab">"Perguntar sobre esta aba"</string>
+    <string name="rich_discuss_tab_prompt">"Explique a aba %1$s."</string>
+    <string name="rich_copy">"Copiar"</string>
+    <string name="rich_copied">"Copiado"</string>
+    <string name="rich_share">"Compartilhar"</string>
+    <string name="rich_share_unavailable">"Nenhum app está disponível para compartilhar este texto."</string>
+    <string name="rich_images_hidden">"As imagens estão desativadas neste chat."</string>
+    <string name="rich_expand_image">"Expandir imagem"</string>
+    <string name="rich_open_source">"Abrir fonte"</string>
+    <string name="rich_discuss_image">"Perguntar sobre esta imagem"</string>
+    <string name="rich_discuss_image_prompt">"Explique a imagem que selecionei."</string>
+    <string name="rich_reported_status">"Reportado: %1$s"</string>
+    <string name="rich_passed">"Passou"</string>
+    <string name="rich_failed">"Falhou"</string>
+    <string name="rich_unverified">"Não verificado"</string>
+    <string name="rich_open_file">"Abrir arquivo"</string>
+    <string name="rich_show_less">"Mostrar menos"</string>
+    <string name="rich_show_all">"Mostrar tudo"</string>
+    <string name="rich_changes">"Alterações"</string>
+    <string name="rich_before">"Antes"</string>
+    <string name="rich_after">"Depois"</string>
+    <string name="rich_change_count">"%1$d adicionadas · %2$d removidas"</string>
+    <string name="rich_discuss_diff">"Discutir estas alterações"</string>
+    <string name="rich_discuss_diff_prompt">"Explique esta comparação, suas vantagens e desvantagens."</string>
+    <string name="rich_input_range">"%1$s a %2$s"</string>
+    <string name="rich_result_unavailable">"Verifique as entradas ou a fórmula"</string>
+    <string name="rich_reset">"Redefinir"</string>
+    <string name="rich_discuss_values">"Perguntar sobre estes valores"</string>
+    <string name="rich_discuss_values_prompt">"Explique o resultado usando meus valores atuais."</string>
+    <string name="rich_chart_range">"Intervalo visível"</string>
+    <string name="rich_reset_range">"Mostrar intervalo completo"</string>
+    <string name="rich_chart_label">"Rótulo"</string>
+    <string name="rich_discuss_chart">"Perguntar sobre este gráfico"</string>
+    <string name="rich_discuss_chart_prompt">"Explique o ponto selecionado do gráfico e os conjuntos de dados visíveis."</string>
+    <string name="rich_select_point">"Selecionar %1$s"</string>
+    <string name="rich_selected_count">"%1$d selecionados"</string>
+    <string name="rich_clear_selection">"Limpar seleção"</string>
+    <string name="rich_adjust_input">"Ajustar %1$s"</string>
+</resources>

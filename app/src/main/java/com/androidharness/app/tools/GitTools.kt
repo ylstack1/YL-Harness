@@ -1,0 +1,615 @@
+package com.androidharness.app.tools
+
+import com.androidharness.app.data.env.LinuxEnvironmentManager
+import com.androidharness.app.data.env.ShellTierRouter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.booleanOrNull
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonPrimitive
+
+private fun String.shellQuote(): String = "'" + replace("'", "'\\''") + "'"
+
+/**
+ * Every git invocation runs with -c safe.directory='*'. Repos can be owned by
+ * a different uid than whoever executes git (the app workspace seen by the
+ * Shizuku shell uid, shared storage owned by the media uid), which otherwise
+ * trips "detected dubious ownership in repository" on the very first command.
+ *
+ * gc.auto=0 and maintenance.auto=false stop git from spawning its detached
+ * auto-maintenance subprocess after commits: the sandbox cannot exec it, and
+ * the resulting "fatal: cannot exec 'maintenance'" noise made successful
+ * commits look failed (on-device QA, 2026-08-28).
+ */
+private const val GIT_BASE_ARGS = "-c 'safe.directory=*' -c gc.auto=0 -c maintenance.auto=false"
+
+/**
+ * Builds a shell command where every git step carries the safe.directory
+ * override. Multi-step commands ("add && commit", "diff && diff") need the
+ * flag on EACH segment, not just the first.
+ */
+internal fun gitCmd(vararg steps: String): String =
+    steps.joinToString(" && ") { "git $GIT_BASE_ARGS ${it.trim()}" }
+
+internal fun gitDiffCmd(path: String?, staged: Boolean): String {
+    val flags = if (staged) " --staged" else ""
+    // Outside a repo, plain `git diff` can enter no-index mode and load a
+    // different config path. Establish repository context before either diff.
+    return gitCmd("rev-parse --git-dir >/dev/null", "diff$flags --stat",
+        "diff$flags" + if (path.isNullOrBlank()) "" else " -- ${path.shellQuote()}")
+}
+
+/**
+ * Runtime directory whose artifacts must never be swept into a commit.
+ *
+ * Matched at ANY depth on purpose. The artifacts live in the WORKSPACE, and the
+ * workspace is not always the repository root: the old `:(top).harness` pattern
+ * is anchored at the repo root, so a workspace one level down kept every
+ * screenshot and background log out of the exclusion and into the commit
+ * (on-device QA, 2026-09-17: 16 runtime files committed in one `git_commit`,
+ * despite the tool promising they never are).
+ */
+private const val HARNESS_DIR = ".harness"
+
+/** `:(glob)**` magic, because a plain pathspec's `*` stops at a path separator. */
+private const val HARNESS_DIR_GLOB = ":(glob)**/$HARNESS_DIR"
+private const val HARNESS_TREE_GLOB = ":(glob)**/$HARNESS_DIR/**"
+
+/** Exclusions for `add`: the same two paths, with the exclude magic added. */
+private const val HARNESS_DIR_EXCLUDE = ":(exclude,glob)**/$HARNESS_DIR"
+private const val HARNESS_TREE_EXCLUDE = ":(exclude,glob)**/$HARNESS_DIR/**"
+
+internal fun gitCommitCmd(message: String): String = gitCmd(
+    "rm -r --cached --ignore-unmatch ${HARNESS_DIR_GLOB.shellQuote()} ${HARNESS_TREE_GLOB.shellQuote()}",
+    "add -A -- ${HARNESS_DIR_EXCLUDE.shellQuote()} ${HARNESS_TREE_EXCLUDE.shellQuote()}",
+    // Belt and braces: whatever an older git's all-exclude pathspec lets through
+    // is dropped from the index again before the commit, so the guarantee does
+    // not rest on pathspec semantics alone. Artifacts tracked by an earlier
+    // build are staged as deletions here, which is the self-heal the first step
+    // is for.
+    "rm -r --cached --ignore-unmatch ${HARNESS_DIR_GLOB.shellQuote()} ${HARNESS_TREE_GLOB.shellQuote()}",
+    "commit -m ${message.shellQuote()}",
+)
+
+internal fun gitLogCmd(limit: Int, path: String?, stat: Boolean): String =
+    gitCmd(
+        buildString {
+            append("log -n ").append(limit.coerceIn(1, 100))
+            append(" --date=short --pretty=format:'%h %ad %an  %s'")
+            if (stat) append(" --stat")
+            if (!path.isNullOrBlank()) append(" -- ").append(path.shellQuote())
+        },
+    )
+
+internal fun gitLogResult(result: ToolResult, path: String?): ToolResult {
+    if (!result.ok || !result.output.endsWith("(no output)")) return result
+    val message = if (path.isNullOrBlank()) "No commit history found."
+        else "No commit history found for '$path'. The path filters workspace history; it does not select a repository."
+    return result.copy(output = result.output.removeSuffix("(no output)") + message)
+}
+
+internal fun gitShowCmd(hash: String, noPatch: Boolean): String =
+    gitCmd(
+        buildString {
+            append("show --stat")
+            if (noPatch) append(" -s") else append(" --patch")
+            append(' ').append(hash.trim().shellQuote())
+        },
+    )
+
+internal fun gitCheckoutCmd(branch: String?, create: Boolean, paths: List<String>): String {
+    val cleanPaths = paths.map { it.trim() }.filter { it.isNotEmpty() }
+    val b = branch?.trim().orEmpty()
+    if (b.isEmpty() && cleanPaths.isEmpty()) {
+        throw ToolFailure("checkout needs a branch, paths, or both")
+    }
+    return gitCmd(
+        buildString {
+            append("checkout")
+            if (b.isNotEmpty()) {
+                if (create) append(" -b")
+                append(' ').append(b.shellQuote())
+            } else {
+                append(" --")
+            }
+            if (cleanPaths.isNotEmpty()) {
+                if (b.isNotEmpty()) append(" --")
+                cleanPaths.forEach { append(' ').append(it.shellQuote()) }
+            }
+        },
+    )
+}
+
+internal fun gitPushCmd(remote: String?, branch: String?, setUpstream: Boolean): String =
+    gitCmd(
+        buildString {
+            append("push")
+            if (setUpstream) append(" -u")
+            append(' ').append((remote?.trim()?.ifEmpty { null } ?: "origin").shellQuote())
+            val b = branch?.trim().orEmpty()
+            append(' ').append(if (b.isEmpty()) "HEAD" else b.shellQuote())
+        },
+    )
+
+internal fun gitHeadBranchCmd(): String = gitCmd("rev-parse --abbrev-ref HEAD")
+
+/**
+ * Reads branch.<branch>.merge, the ref git_pull merges FROM. Mere existence
+ * of @{u} is not enough: a branch cut with `checkout -b <name> origin/main`
+ * records merge = refs/heads/main, and a plain push leaves that untouched,
+ * so the next git_pull merges main into the feature branch and --ff-only
+ * aborts (on-device QA, 2026-09-06). The push tool requires
+ * refs/heads/<branch> here and re-pushes with -u on any mismatch; -u
+ * rewrites the tracking config even when the push is up to date, so a wrong
+ * upstream self-heals on the next push.
+ */
+internal fun gitUpstreamCheckCmd(branch: String): String =
+    gitCmd("config --get ${"branch.$branch.merge".shellQuote()}")
+
+/** First non-blank stdout line of a built result; check commands emit one value. */
+internal fun ToolResult.firstOutputLine(): String? =
+    output
+        .substringAfter("--- stdout ---\n", "")
+        .substringBefore("\n--- stderr ---")
+        .lineSequence()
+        .firstOrNull { it.isNotBlank() }
+
+internal fun gitPullCmd(remote: String?, mode: String?): String {
+    val r = (remote?.trim()?.ifEmpty { null } ?: "origin").shellQuote()
+    return gitCmd(
+        when (mode?.trim()?.lowercase()) {
+            null, "", "ff-only" -> "pull --ff-only $r"
+            "merge" -> "pull $r"
+            "rebase" -> "pull --rebase $r"
+            else -> throw ToolFailure("Unknown pull mode '$mode' (use ff-only, merge or rebase)")
+        },
+    )
+}
+
+internal fun isDubiousOwnership(output: String): Boolean =
+    output.contains("dubious ownership", ignoreCase = true)
+
+private suspend fun runGit(
+    router: ShellTierRouter,
+    linuxEnv: LinuxEnvironmentManager,
+    ctx: ToolContext,
+    command: String,
+): ToolResult {
+    val cwd = ctx.workspace.shellRoot ?: (ctx.workspace as? com.androidharness.app.workspace.SshFs)?.root?.let { java.io.File(it) }
+        ?: return ToolResult(
+            false,
+            "This workspace has no real filesystem path, so git cannot run here. " +
+                "Switch to a device folder or the app workspace (Settings → Workspace).",
+        )
+    var res = router.runWorkspace(command, ctx.workspace, timeoutMs = 60_000, maxOutput = 24_000)
+    val fullOutput = "${res.rawOutput}\n${res.rawStderr}"
+    if (res.exitCode == 127 && (fullOutput.contains("not found") || fullOutput.contains("no such file", true))) {
+        return ToolResult(
+            false,
+            if (ctx.workspace is com.androidharness.app.workspace.SshFs) "Git is unavailable on the SSH host. Install Git there first."
+            else "git is not available here. Install the Linux environment (Settings → Terminal → Install) first.",
+        )
+    }
+    if (res.exitCode != 0 && fullOutput.contains("not a git repository", ignoreCase = true)) {
+        return buildGitResult(res)
+    }
+    // Defense in depth: -c should make dubious ownership impossible, but an
+    // exotic setup that still hits it gets '*' persisted into the global
+    // config once and a re-run, this is also what creates ~/.gitconfig when
+    // none existed before.
+    if (res.exitCode != 0 && isDubiousOwnership(fullOutput)) {
+        val fixRes = router.runWorkspace(
+            gitCmd("config --global --add safe.directory '*'"),
+            ctx.workspace,
+            timeoutMs = 30_000,
+            maxOutput = 2_000,
+        )
+        if (fixRes.exitCode == 0) {
+            res = router.runWorkspace(command, ctx.workspace, timeoutMs = 60_000, maxOutput = 24_000)
+            return buildGitResult(
+                res,
+                note = "[note: added safe.directory '*' to the global git config; the repository was owned by another uid]",
+            )
+        }
+    }
+    return buildGitResult(res)
+}
+
+internal fun buildGitResult(
+    res: com.androidharness.app.data.env.ShellRunResult,
+    note: String? = null,
+): ToolResult {
+    val full = "${res.rawOutput}\n${res.rawStderr}"
+    if (res.exitCode != 0 && (full.contains("not a git repository", ignoreCase = true) ||
+            full.contains("outside repository", ignoreCase = true))) {
+        return ToolResult(false, "The workspace or requested path is not in a Git repository. " +
+            "Select the repository workspace, or run git init in the intended folder first.")
+    }
+    if (res.exitCode != 0 && full.contains("does not have any commits yet", ignoreCase = true)) {
+        return ToolResult(
+            ok = true,
+            output = buildString {
+                val header = note ?: res.note
+                if (header != null) append(header).append('\n')
+                append("No commits yet (repository is empty).")
+            }.trimEnd(),
+        )
+    }
+    return ToolResult(
+        ok = !res.timedOut && res.exitCode == 0,
+        // trimEnd kills the trailing newline that used to render as a stray blank line.
+        output = buildString {
+            val header = note ?: res.note
+            if (header != null) append(header).append('\n')
+            val text = res.rawOutput.trimEnd()
+            if (text.isNotEmpty()) {
+                append("--- stdout ---\n").append(text).append('\n')
+            }
+            val err = res.rawStderr.trimEnd()
+            if (err.isNotEmpty()) {
+                append("--- stderr ---\n").append(err)
+            }
+            if (text.isEmpty() && err.isEmpty()) append("(no output)")
+        }.trimEnd(),
+    )
+}
+
+private suspend fun runGitWithRetry(
+    router: ShellTierRouter,
+    linuxEnv: LinuxEnvironmentManager,
+    ctx: ToolContext,
+    command: String,
+    maxRetries: Int = 3,
+): ToolResult {
+    var res = runGit(router, linuxEnv, ctx, command)
+    var attempt = 0
+    while (!res.ok && !res.output.contains("uncertain", ignoreCase = true) && isIndexLocked(res.output) && attempt < maxRetries) {
+        attempt++
+        kotlinx.coroutines.delay(200L * (1L shl (attempt - 1)))
+        res = runGit(router, linuxEnv, ctx, command)
+    }
+    return res
+}
+
+class GitStatusTool(
+    private val router: ShellTierRouter,
+    private val linuxEnv: LinuxEnvironmentManager,
+) : Tool {
+    override val name = "git_status"
+    override val description =
+        "Show git status for the workspace repository (branch + changed files). " +
+        "Use before committing or to answer 'what changed'."
+    override val parametersSchema = Schema.obj(emptyMap())
+    override val isReadOnly = true
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) { runGitWithRetry(router, linuxEnv, ctx, gitCmd("status --short --branch")) }
+}
+
+class GitDiffTool(
+    private val router: ShellTierRouter,
+    private val linuxEnv: LinuxEnvironmentManager,
+) : Tool {
+    override val name = "git_diff"
+    override val description =
+        "Show the git diff of unstaged (or staged) changes in the workspace repository, " +
+        "optionally limited to one path."
+    override val parametersSchema = Schema.obj(
+        mapOf(
+            "path" to Schema.string("Optional file path to limit the diff to."),
+            "staged" to Schema.string("Pass \"true\" to diff staged changes instead of unstaged."),
+        ),
+    )
+    override val isReadOnly = true
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val path = args["path"]?.jsonPrimitive?.content
+            val staged = args["staged"]?.jsonPrimitive?.content == "true"
+            runGitWithRetry(router, linuxEnv, ctx, gitDiffCmd(path, staged))
+        }
+}
+
+class GitCommitTool(
+    private val router: ShellTierRouter,
+    private val linuxEnv: LinuxEnvironmentManager,
+) : Tool {
+    override val name = "git_commit"
+    override val description =
+        "Stage all changes in the workspace repository and commit them with the given " +
+        "message. Runtime artifacts under .harness/ are never staged. Runs as a " +
+        "modifying operation, so the user approves it first."
+    override val parametersSchema = Schema.obj(
+        mapOf("message" to Schema.string("The commit message.")),
+        required = listOf("message"),
+    )
+    override val isReadOnly = false
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val message = args["message"]?.jsonPrimitive?.content
+                ?: throw ToolFailure("Missing required argument: message")
+            val commitCommand = gitCommitCmd(message)
+            val res = runGitWithRetry(router, linuxEnv, ctx, commitCommand)
+            if (!res.ok && isIdentityUnknown(res.output)) {
+                val repoConfig = runGitWithRetry(
+                    router,
+                    linuxEnv,
+                    ctx,
+                    gitCmd(
+                        "config user.name 'Android Harness'",
+                        "config user.email 'harness@android.local'",
+                    ),
+                )
+                var note =
+                    "[note: auto-configured repository git identity 'Android Harness <harness@android.local>']"
+                if (!repoConfig.ok) {
+                    // Repo-local config failed (read-only .git/config etc.),
+                    // fall back to the global ~/.gitconfig identity.
+                    val globalConfig = runGitWithRetry(
+                        router,
+                        linuxEnv,
+                        ctx,
+                        gitCmd(
+                            "config --global user.name 'Android Harness'",
+                            "config --global user.email 'harness@android.local'",
+                        ),
+                    )
+                    if (globalConfig.ok) {
+                        note = "[note: auto-configured global git identity 'Android Harness <harness@android.local>' in ~/.gitconfig]"
+                    }
+                }
+                val retryRes = runGitWithRetry(router, linuxEnv, ctx, commitCommand)
+                if (retryRes.ok) {
+                    return@withContext ToolResult(true, "$note\n${retryRes.output}")
+                }
+            }
+            res
+        }
+}
+
+class GitLogTool(
+    private val router: ShellTierRouter,
+    private val linuxEnv: LinuxEnvironmentManager,
+) : Tool {
+    override val name = "git_log"
+    override val description =
+        "Show recent commit history of the workspace repository (short hash, date, author, " +
+        "subject), optionally limited to one path. Use it to answer 'what happened recently', " +
+        "to find a commit hash for git_show, or to check whether a file was touched before."
+    override val parametersSchema = Schema.obj(
+        mapOf(
+            "limit" to Schema.integer("Maximum number of commits (default 20, max 100)."),
+            "path" to Schema.string("Optional file or directory filter within the workspace repository; does not select another repository."),
+            "stat" to Schema.string("Pass \"true\" to append a per-commit change summary (--stat)."),
+        ),
+    )
+    override val isReadOnly = true
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val limit = args["limit"]?.jsonPrimitive?.content?.toIntOrNull() ?: 20
+            val path = args["path"]?.jsonPrimitive?.content
+            val stat = args["stat"]?.jsonPrimitive?.content == "true"
+            val result = runGitWithRetry(router, linuxEnv, ctx, gitLogCmd(limit, path, stat))
+            gitLogResult(result, path)
+        }
+}
+
+class GitShowTool(
+    private val router: ShellTierRouter,
+    private val linuxEnv: LinuxEnvironmentManager,
+) : Tool {
+    override val name = "git_show"
+    override val description =
+        "Show one commit: message, per-file stats and the patch. Defaults to HEAD. Use after " +
+        "git_log to inspect a specific change. Pass no_patch=true for just the message and stats."
+    override val parametersSchema = Schema.obj(
+        mapOf(
+            "hash" to Schema.string("Commit hash or ref (default HEAD)."),
+            "no_patch" to Schema.string("Pass \"true\" to omit the diff and show message + stats only."),
+        ),
+    )
+    override val isReadOnly = true
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val hash = args["hash"]?.jsonPrimitive?.content?.trim() ?: "HEAD"
+            val noPatch = args["no_patch"]?.jsonPrimitive?.booleanOrNull
+                ?: (args["no_patch"]?.jsonPrimitive?.content?.equals("true", ignoreCase = true) == true)
+            runGitWithRetry(router, linuxEnv, ctx, gitShowCmd(hash, noPatch))
+        }
+}
+
+class GitBranchTool(
+    private val router: ShellTierRouter,
+    private val linuxEnv: LinuxEnvironmentManager,
+) : Tool {
+    override val name = "git_branch"
+    override val description =
+        "List git branches of the workspace repository, current one marked with *. " +
+        "With all=true also lists remote-tracking branches."
+    override val parametersSchema = Schema.obj(
+        mapOf("all" to Schema.string("Pass \"true\" to include remote-tracking branches.")),
+    )
+    override val isReadOnly = true
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val all = args["all"]?.jsonPrimitive?.content == "true"
+            runGitWithRetry(router, linuxEnv, ctx, gitCmd(if (all) "branch -a -v" else "branch -v"))
+        }
+}
+
+class GitBranchManageTool(
+    private val router: ShellTierRouter,
+    private val linuxEnv: LinuxEnvironmentManager,
+) : Tool {
+    override val name = "git_branch_manage"
+    override val description =
+        "Create or delete a git branch in the workspace repository. action='create' makes a " +
+        "new branch pointing at HEAD (does not switch to it; use git_checkout); " +
+        "action='delete' removes it (-d refuses unmerged branches unless force=true). " +
+        "Runs as a modifying operation, so the user approves it first."
+    override val parametersSchema = Schema.obj(
+        mapOf(
+            "action" to Schema.string("create | delete (required)."),
+            "name" to Schema.string("The branch name (required)."),
+            "force" to Schema.string("delete only: pass \"true\" to delete even if unmerged (-D)."),
+        ),
+        required = listOf("action", "name"),
+    )
+    override val isReadOnly = false
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val action = args["action"]?.jsonPrimitive?.content?.trim()?.lowercase()
+                ?: throw ToolFailure("Missing required argument: action")
+            val name = args["name"]?.jsonPrimitive?.content?.trim()
+                ?: throw ToolFailure("Missing required argument: name")
+            if (name.isEmpty()) throw ToolFailure("Branch name must not be empty")
+            val force = args["force"]?.jsonPrimitive?.content == "true"
+            val command = when (action) {
+                "create" -> gitCmd("branch ${name.shellQuote()}")
+                "delete" -> gitCmd("branch ${if (force) "-D" else "-d"} ${name.shellQuote()}")
+                else -> throw ToolFailure("Unknown action '$action' (use create or delete)")
+            }
+            runGitWithRetry(router, linuxEnv, ctx, command)
+        }
+}
+
+class GitCheckoutTool(
+    private val router: ShellTierRouter,
+    private val linuxEnv: LinuxEnvironmentManager,
+) : Tool {
+    override val name = "git_checkout"
+    override val description =
+        "Switch the workspace repository to another branch, or restore files. With branch: " +
+        "switches to it (create=true makes it first). With paths: discards uncommitted " +
+        "changes to those files (destructive). With both: restores the paths from the " +
+        "given branch. Runs as a modifying operation, so the user approves it first."
+    override val parametersSchema = Schema.obj(
+        mapOf(
+            "branch" to Schema.string("Branch to switch to (or to restore paths from)."),
+            "create" to Schema.string("Pass \"true\" to create the branch before switching (-b)."),
+            "paths" to Schema.array(
+                Schema.string("File path to restore."),
+                "Paths to restore from the branch (or to reset if no branch is given). " +
+                    "Discards uncommitted changes to them.",
+            ),
+        ),
+    )
+    override val isReadOnly = false
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val branch = args["branch"]?.jsonPrimitive?.content
+            val create = args["create"]?.jsonPrimitive?.content == "true"
+            val paths = args["paths"]?.let { runCatching { it.jsonArray }.getOrNull() }
+                ?.mapNotNull { runCatching { it.jsonPrimitive.content }.getOrNull() }
+                ?: emptyList()
+            if (branch.isNullOrBlank() && paths.isEmpty()) {
+                throw ToolFailure("checkout needs a branch, paths, or both")
+            }
+            runGitWithRetry(router, linuxEnv, ctx, gitCheckoutCmd(branch, create, paths))
+        }
+}
+
+class GitPushTool(
+    private val router: ShellTierRouter,
+    private val linuxEnv: LinuxEnvironmentManager,
+) : Tool {
+    override val name = "git_push"
+    override val description =
+        "Push committed work to a remote (default origin; branch defaults to the current one). " +
+        "GitHub HTTPS remotes authenticate automatically with the stored GitHub token " +
+        "(doctor --github verifies it); other HTTPS remotes need credentials already set up " +
+        "in the shell. If a branch tracks nothing or the wrong upstream, the push is sent " +
+        "with -u so tracking points at the same-named remote branch. " +
+        "Runs as a modifying operation, so the user approves it first."
+    override val parametersSchema = Schema.obj(
+        mapOf(
+            "remote" to Schema.string("Remote name (default origin)."),
+            "branch" to Schema.string("Branch to push (default: the current branch)."),
+        ),
+    )
+    override val isReadOnly = false
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val remote = args["remote"]?.jsonPrimitive?.content
+            val branchArg = args["branch"]?.jsonPrimitive?.content?.trim().orEmpty()
+            var branch = branchArg
+            if (branch.isEmpty()) {
+                // Resolve HEAD so the tracking check targets the checked-out
+                // branch instead of a literal "HEAD"; failure means there is
+                // no repository (or no commit) to push from, so surface it.
+                val head = runGitWithRetry(router, linuxEnv, ctx, gitHeadBranchCmd())
+                if (!head.ok) return@withContext head
+                branch = head.firstOutputLine() ?: return@withContext head
+            }
+            val mergeValue = runGitWithRetry(router, linuxEnv, ctx, gitUpstreamCheckCmd(branch))
+            if (mergeValue.ok && mergeValue.firstOutputLine() == "refs/heads/$branch") {
+                return@withContext runGitWithRetry(router, linuxEnv, ctx, gitPushCmd(remote, branchArg.ifEmpty { null }, setUpstream = false))
+            }
+            // Upstream missing or pointing at another branch. The explicit
+            // refspec cannot fail with a no-upstream error, so there is no
+            // post-hoc retry to attempt; -u rewrites the tracking config.
+            val retry = runGitWithRetry(router, linuxEnv, ctx, gitPushCmd(remote, branchArg.ifEmpty { null }, setUpstream = true))
+            if (retry.ok) {
+                retry.copy(
+                    output = "[note: upstream tracking was missing or pointed at another branch; pushed with -u to fix it]\n${retry.output}",
+                )
+            } else {
+                retry
+            }
+        }
+}
+
+class GitPullTool(
+    private val router: ShellTierRouter,
+    private val linuxEnv: LinuxEnvironmentManager,
+) : Tool {
+    override val name = "git_pull"
+    override val description =
+        "Pull changes from a remote (default origin) into the current branch. mode: " +
+        "'ff-only' (default) refuses to create a merge commit, 'merge' allows one, " +
+        "'rebase' replays local commits on top. On conflicts: resolve the marked files, " +
+        "then stage and commit them. Runs as a modifying operation, so the user approves it first."
+    override val parametersSchema = Schema.obj(
+        mapOf(
+            "remote" to Schema.string("Remote name (default origin)."),
+            "mode" to Schema.string("ff-only (default) | merge | rebase."),
+        ),
+    )
+    override val isReadOnly = false
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val remote = args["remote"]?.jsonPrimitive?.content
+            val mode = args["mode"]?.jsonPrimitive?.content
+            val res = runGitWithRetry(router, linuxEnv, ctx, gitPullCmd(remote, mode))
+            if (!res.ok && res.output.contains("CONFLICT", ignoreCase = true)) {
+                res.copy(
+                    output = res.output +
+                        "\n[note: merge conflicts found; edit the marked files, then stage and commit them]",
+                )
+            } else {
+                res
+            }
+        }
+}
+
+private fun isIndexLocked(output: String): Boolean {
+    val lower = output.lowercase()
+    return lower.contains("index.lock") || lower.contains("another git process seems to be running")
+}
+
+private fun isIdentityUnknown(output: String): Boolean {
+    val lower = output.lowercase()
+    return lower.contains("author identity unknown") ||
+        lower.contains("tell me who you are") ||
+        lower.contains("empty ident name") ||
+        lower.contains("please tell me who you are")
+}

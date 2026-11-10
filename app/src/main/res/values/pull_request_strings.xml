@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pr_tool_opening">Opening pull request…</string>
+    <string name="pr_tool_opened">Opened pull request #%1$d</string>
+    <string name="pr_tool_existing">Pull request #%1$d is already open</string>
+    <string name="pr_tool_failed">Pull request not opened</string>
+    <string name="pr_tool_waiting">Waiting for your approval</string>
+    <string name="pr_draft">Draft</string>
+    <string name="pr_counts">Commits: %1$d · Files: %2$d</string>
+    <string name="pr_open_on_github">Open on GitHub</string>
+    <string name="pr_copy_link">Copy link</string>
+    <string name="pr_link_copied">Link copied</string>
+    <string name="pr_open_failed">No app could open the link. It has been copied instead.</string>
+    <string name="pr_approval_title">Open a pull request?</string>
+    <string name="pr_approval_body">Creates a pull request on GitHub from the pushed branch. Nothing is pushed or merged.</string>
+    <string name="pr_approval_base">Into %1$s</string>
+    <string name="pr_approval_default_base">Into the default branch</string>
+    <string name="pr_create">Create pull request</string>
+    <string name="pr_create_draft">Create draft pull request</string>
+    <string name="pr_entry_body">Propose this branch\'s pushed commits for review on GitHub.</string>
+    <string name="pr_loading">Comparing this branch with GitHub…</string>
+    <string name="pr_title_label">Title</string>
+    <string name="pr_description_label">Description</string>
+    <string name="pr_rewrite_description">Rewrite description</string>
+    <string name="pr_base_label">Base branch</string>
+    <string name="pr_draft_label">Open as draft</string>
+    <string name="pr_draft_body">Reviewers can see it, but it can\'t be merged until you mark it ready.</string>
+    <string name="pr_include_checks">Include checks from this chat</string>
+    <string name="pr_include_checks_body">Adds the build, test and lint results recorded in this conversation.</string>
+    <string name="pr_existing_body">New pushes to %1$s update this pull request automatically.</string>
+    <string name="pr_not_pushed_title">Branch isn\'t on GitHub yet</string>
+    <string name="pr_out_of_date_title">GitHub has an older copy of this branch</string>
+    <string name="pr_push_body">Push %1$s so GitHub has your latest commits.</string>
+    <string name="pr_push_branch">Push branch</string>
+    <string name="pr_pushed">Branch pushed.</string>
+    <string name="pr_uncommitted_title">Uncommitted changes: %1$d</string>
+    <string name="pr_uncommitted_body">They won\'t be included until you commit and push them.</string>
+    <string name="pr_behind_title">Newer commits on %1$s: %2$d</string>
+    <string name="pr_behind_body">This branch doesn\'t include them yet. Reviewers may ask you to update it.</string>
+    <string name="pr_no_commits_title">Nothing to propose yet</string>
+    <string name="pr_no_commits_body">%1$s has no commits that aren\'t already on %2$s.</string>
+    <string name="pr_commits_header">Commits</string>
+    <string name="pr_more">More: %1$d</string>
+    <string name="pr_created_title">Pull request #%1$d opened</string>
+    <string name="pr_created_draft_title">Draft pull request #%1$d opened</string>
+    <string name="pr_retry">Try again</string>
+</resources>

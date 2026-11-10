@@ -1,0 +1,1000 @@
+package com.androidharness.app.tools
+
+import com.androidharness.app.workspace.readUtf8ForEdit
+
+import com.androidharness.app.core.splitLines
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.booleanOrNull
+import kotlinx.serialization.json.intOrNull
+import kotlinx.serialization.json.jsonPrimitive
+import java.nio.file.FileSystems
+import com.androidharness.app.workspace.FsNode
+import com.androidharness.app.workspace.WorkspaceFs
+
+/** Bytes scanned at most when filesystem size metadata cannot be trusted (procfs/virtual entries). */
+private const val VIRTUAL_FILE_SCAN_CAP = 1024L * 1024L
+
+/**
+ * Shared-storage mounts (emulated internal storage, FAT-style SAF providers)
+ * treat names differing only in case as ONE file, so creating a twin-cased
+ * name silently mixes two files into one slot. App-private ext4/f2fs storage
+ * is genuinely case-sensitive. There is no portable mount-flag query on
+ * Android, so this is judged purely by path shape.
+ */
+internal object CaseCollision {
+    fun insensitiveMount(shellRootPath: String?, isSaf: Boolean): Boolean {
+        if (isSaf) return true
+        val p = shellRootPath?.replace('\\', '/') ?: return false
+        return p.startsWith("/storage/") || p.startsWith("/sdcard")
+    }
+
+    fun siblingsMatchingOnlyByCase(name: String, siblingNames: Collection<String>): List<String> =
+        siblingNames.filter { it != name && it.equals(name, ignoreCase = true) }
+
+    fun warning(newName: String, collisions: List<String>): String? =
+        collisions.firstOrNull()?.let { other ->
+            "[warning: \"$other\" already exists here and this filesystem treats names differing only in case as the SAME file; writing \"$newName\" will collide with it]"
+        }
+}
+
+/**
+ * Non-fatal aliasing check for write_file / create_dir / move_file on
+ * case-insensitive mounts. Walks only the nearest EXISTING parent directory;
+ * fully-new nested paths cannot collide with anything yet except through
+ * their created ancestors' siblings, which this deliberately ignores.
+ */
+internal fun caseCollisionWarning(workspace: WorkspaceFs, target: FsNode): String? {
+    if (!CaseCollision.insensitiveMount(workspace.shellRoot?.absolutePath, workspace.isSaf)) return null
+    val rel = target.relPath
+    if (rel.isBlank() || rel == ".") return null
+    val parentRel = if ('/' in rel) rel.substringBeforeLast('/') else "."
+    val parent = runCatching { workspace.resolve(parentRel) }.getOrNull() ?: return null
+    if (!parent.isDirectory) return null
+    val leaf = target.name.ifBlank { return null }
+    if (leaf == "?" || leaf == ".") return null
+    val collisions = CaseCollision.siblingsMatchingOnlyByCase(leaf, parent.list().mapNotNull { n -> n.name })
+    return CaseCollision.warning(leaf, collisions)
+}
+
+private const val MAX_LIST_ENTRIES = 500
+private const val MAX_READ_CHARS = 100_000
+private const val MAX_READ_LINE_CHARS = 10_000
+private const val MAX_SEARCH_RESULTS = 300
+private const val MAX_GREP_MATCHES = 200
+
+class ListDirTool : Tool {
+    override val name = "list_dir"
+    override val description =
+        "List the contents of a directory in the workspace. Directories are marked with a trailing /."
+    override val parametersSchema = Schema.obj(
+        mapOf("path" to Schema.string("Directory path relative to the workspace root. Use \".\" for the root.")),
+        required = listOf("path"),
+    )
+    override val isReadOnly = true
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val path = args["path"]?.jsonPrimitive?.content ?: "."
+            val dir = ctx.workspace.resolve(path)
+            if (!dir.exists) throw ToolFailure("Directory does not exist: $path")
+            if (!dir.isDirectory) throw ToolFailure("Not a directory: $path")
+
+            val entries = dir.list()
+                .sortedWith(compareBy({ !it.isDirectory }, { it.name.lowercase() }))
+            if (entries.isEmpty()) return@withContext ToolResult(true, "(empty directory)")
+
+            val sb = StringBuilder()
+            entries.take(MAX_LIST_ENTRIES).forEach { node ->
+                sb.append(node.name)
+                if (node.isDirectory) sb.append('/')
+                sb.append('\n')
+            }
+            if (entries.size > MAX_LIST_ENTRIES) {
+                sb.append("... and ${entries.size - MAX_LIST_ENTRIES} more entries\n")
+            }
+            ToolResult(true, sb.toString().trimEnd())
+        }
+}
+
+class ReadFileTool : Tool {
+    override val name = "read_file"
+    override val description =
+        "Read a text file from the workspace with line numbers. Use offset and limit for large files."
+    override val parametersSchema = Schema.obj(
+        mapOf(
+            "path" to Schema.string("File path relative to the workspace root."),
+            "offset" to Schema.integer("1-based line number to start reading from. Defaults to 1."),
+            "limit" to Schema.integer("Maximum number of lines to read. Defaults to 2000."),
+        ),
+        required = listOf("path"),
+    )
+    override val isReadOnly = true
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val path = args["path"]?.jsonPrimitive?.content
+                ?: throw ToolFailure("Missing required argument: path")
+            try {
+                val file = ctx.workspace.resolve(path)
+                if (!file.exists) {
+                    if (com.androidharness.app.workspace.isNameTooLong(null, path)) {
+                        throw ToolFailure(com.androidharness.app.workspace.longFilenameGuidance(path))
+                    }
+                    throw ToolFailure("File does not exist: $path")
+                }
+                if (!file.isFile) throw ToolFailure("Not a file: $path")
+                if (file.isBinary()) {
+                    throw ToolFailure("Cannot read $path: binary file (not text).")
+                }
+                if (file.length > 2_000_000 && args["offset"] == null) {
+                    throw ToolFailure("File is ${file.length} bytes; use offset/limit to read it in chunks.")
+                }
+
+                val rawOffset = args["offset"]?.jsonPrimitive?.intOrNull
+                if (rawOffset != null && rawOffset <= 0) {
+                    throw ToolFailure("offset must be greater than 0.")
+                }
+                val rawLimit = args["limit"]?.jsonPrimitive?.intOrNull
+                if (rawLimit != null && rawLimit <= 0) {
+                    throw ToolFailure("limit must be greater than 0.")
+                }
+                val offset = (rawOffset ?: 1).coerceAtLeast(1)
+                val limit = (rawLimit ?: 2000).coerceIn(1, 4000)
+
+                // A UTF-8 BOM is encoding metadata, not content, never surface it
+                // to the model (it leaks into line 1 and breaks exact matching).
+                val raw = file.readText().removePrefix("\uFEFF")
+                if (raw.isEmpty()) return@withContext ToolResult(true, "(empty file)")
+                val all = splitLines(raw)
+                if (all.isEmpty()) return@withContext ToolResult(true, "(empty file)")
+                if (offset > all.size) {
+                    return@withContext ToolResult(true, "[offset $offset is beyond end of file: ${all.size} lines]")
+                }
+                val slice = all.drop(offset - 1).take(limit)
+                val sb = StringBuilder()
+                var truncated = false
+                for ((idx, line) in slice.withIndex()) {
+                    val prefix = "${offset + idx}\t"
+                    val remaining = MAX_READ_CHARS - sb.length
+                    if (remaining <= prefix.length) {
+                        truncated = true
+                        break
+                    }
+                    sb.append(prefix)
+                    val safeLine = if (line.length > MAX_READ_LINE_CHARS) {
+                        line.substring(0, MAX_READ_LINE_CHARS) + "... [line truncated at $MAX_READ_LINE_CHARS chars]"
+                    } else line
+                    val lineBudget = MAX_READ_CHARS - sb.length
+                    if (safeLine.length > lineBudget) {
+                        sb.append(safeLine, 0, lineBudget)
+                        truncated = true
+                        break
+                    }
+                    sb.append(safeLine).append('\n')
+                }
+                if (truncated) {
+                    sb.append("\n[truncated: output exceeded $MAX_READ_CHARS chars]\n")
+                } else if (offset + slice.size - 1 < all.size) {
+                    sb.append("[showing lines $offset..${offset + slice.size - 1} of ${all.size}]\n")
+                }
+                ToolResult(true, sb.toString().trimEnd())
+            } catch (e: Exception) {
+                if (e is ToolFailure) throw e
+                if (com.androidharness.app.workspace.isNameTooLong(e, path)) {
+                    throw ToolFailure(com.androidharness.app.workspace.longFilenameGuidance(path))
+                }
+                throw e
+            }
+        }
+}
+
+data class FileLineInfo(
+    val isEmpty: Boolean,
+    val isBinary: Boolean,
+    val lineCount: Long,
+    val trailingNewline: String,
+    /**
+     * Bytes actually streamed when filesystem metadata could not be trusted
+     * (procfs / virtual files report size 0). 0 for regular stat-backed files.
+     */
+    val measuredBytes: Long = 0L,
+    /** True when the scan stopped at the cap, i.e. real content continues. */
+    val sizeTruncated: Boolean = false,
+)
+
+private class StreamScan {
+    var hasBytes = false
+    var lineCount = 0L
+    var lastByte = -1
+    var measuredBytes = 0L
+    var truncated = false
+    var binary = false
+}
+
+/**
+ * Streams [node] counting bytes and line-terminated lines up to [byteCap].
+ * With [sniffBinary], binary content is detected inline from the first chunk
+ * (for zero-stat entries where node.isBinary()'s own length guard skips it).
+ *
+ * A line ends at LF, CRLF, or a bare CR, matching [splitLines] and therefore
+ * read_file: counting only LF made file_info report one line for "a\rb\rc"
+ * while read_file numbered three, so the two tools disagreed about the same
+ * file (QA, 2026-09-21).
+ */
+private fun scanFileStream(node: FsNode, byteCap: Long, sniffBinary: Boolean): StreamScan {
+    val scan = StreamScan()
+    val buf = ByteArray(64 * 1024)
+    var pendingCr = false
+    try {
+        (node.openInputStream() ?: throw ToolFailure("Cannot read file: input stream unavailable"))
+            .buffered(64 * 1024).use { input ->
+            var total = 0L
+            while (total < byteCap) {
+                val want = minOf(buf.size.toLong(), byteCap - total).toInt()
+                val read = input.read(buf, 0, want)
+                if (read <= 0) break
+                if (sniffBinary &&
+                    com.androidharness.app.workspace.isBinaryStream(java.io.ByteArrayInputStream(buf, 0, minOf(read, 1024)))
+                ) {
+                    scan.binary = true
+                    break
+                }
+                total += read
+                for (i in 0 until read) {
+                    val b = buf[i].toInt()
+                    when {
+                        b == 0x0D -> { // '\r': CRLF counts on the LF, a bare CR counts here
+                            if (pendingCr) scan.lineCount++
+                            pendingCr = true
+                        }
+                        b == 0x0A -> { // '\n'
+                            scan.lineCount++
+                            pendingCr = false
+                        }
+                        pendingCr -> { // bare CR holding a terminator
+                            scan.lineCount++
+                            pendingCr = false
+                        }
+                    }
+                    scan.lastByte = b
+                }
+            }
+            if (total >= byteCap && input.read() > 0) {
+                scan.truncated = true
+            }
+            scan.hasBytes = total > 0
+            scan.measuredBytes = total
+        }
+        if (pendingCr) scan.lineCount++
+    } catch (e: Exception) {
+        throw ToolFailure("Cannot inspect file contents: ${e.message}")
+    }
+    return scan
+}
+
+fun inspectFileInfo(node: FsNode): FileLineInfo {
+    if (!node.exists || !node.isFile) {
+        return emptyTextResult()
+    }
+    if (node.length > 0L) {
+        // Trust metadata for regular files (unchanged behavior, incl. big files).
+        if (node.isBinary()) {
+            return FileLineInfo(
+                isEmpty = false,
+                isBinary = true,
+                lineCount = 0L,
+                trailingNewline = "none (binary)",
+            )
+        }
+        val scan = scanFileStream(node, byteCap = Long.MAX_VALUE, sniffBinary = false)
+        if (!scan.hasBytes) return emptyTextResult()
+        return finished(scan)
+    }
+
+    // Size metadata says 0, but procfs/sysfs entries report 0 no matter how
+    // much they contain (/proc/self/status reads ~1KB). Decide emptiness by
+    // actually reading, bounded so pathological virtual files stay cheap.
+    val scan = scanFileStream(node, byteCap = VIRTUAL_FILE_SCAN_CAP, sniffBinary = true)
+    if (scan.binary) {
+        return FileLineInfo(
+            isEmpty = false,
+            isBinary = true,
+            lineCount = 0L,
+            trailingNewline = "none (binary)",
+        )
+    }
+    if (!scan.hasBytes) return emptyTextResult()
+    // Full cap consumed and more behind it: report what was verified and say so.
+    return finished(scan, sizeTruncated = scan.truncated || scan.measuredBytes >= VIRTUAL_FILE_SCAN_CAP)
+}
+
+private fun emptyTextResult() = FileLineInfo(
+    isEmpty = true,
+    isBinary = false,
+    lineCount = 0L,
+    trailingNewline = "none (empty file)",
+)
+
+private fun finished(scan: StreamScan, sizeTruncated: Boolean = false): FileLineInfo {
+    val endsWithNl = scan.lastByte == 0x0A || scan.lastByte == 0x0D
+    var lineCount = scan.lineCount
+    if (!endsWithNl) {
+        lineCount++
+    }
+    return FileLineInfo(
+        isEmpty = false,
+        isBinary = false,
+        lineCount = lineCount,
+        trailingNewline = if (endsWithNl) "present" else "none",
+        measuredBytes = scan.measuredBytes,
+        sizeTruncated = sizeTruncated,
+    )
+}
+
+class FileInfoTool : Tool {
+    override val name = "file_info"
+    override val description =
+        "Inspect file or directory metadata: size in bytes, line count, and trailing newline status."
+    override val parametersSchema = Schema.obj(
+        mapOf("path" to Schema.string("Path relative to the workspace root.")),
+        required = listOf("path"),
+    )
+    override val isReadOnly = true
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val path = args["path"]?.jsonPrimitive?.content
+                ?: throw ToolFailure("Missing required argument: path")
+            if (path.isBlank()) throw ToolFailure("path must not be empty. Use '.' explicitly for the workspace root.")
+            try {
+                val node = ctx.workspace.resolve(path)
+                if (!node.exists) {
+                    if (com.androidharness.app.workspace.isNameTooLong(null, path)) {
+                        throw ToolFailure(com.androidharness.app.workspace.longFilenameGuidance(path))
+                    }
+                    throw ToolFailure("Path does not exist: $path")
+                }
+                val sb = StringBuilder()
+                sb.append("path: ").append(path).append('\n')
+                sb.append("type: ").append(node.fileType).append('\n')
+                sb.append("size_bytes: ").append(node.length).append('\n')
+                if (CaseCollision.insensitiveMount(ctx.workspace.shellRoot?.absolutePath, ctx.workspace.isSaf)) {
+                    sb.append("permissions_note: Shared/document storage does not provide normal Unix chmod protection; store private credentials in app-private storage.\n")
+                }
+                if (node.isFile) {
+                    val info = inspectFileInfo(node)
+                    if (info.isEmpty) {
+                        sb.append("is_empty: true\n")
+                        sb.append("line_count: 0\n")
+                    } else {
+                        val measuredNote =
+                            if (!info.isBinary && node.length == 0L && info.measuredBytes > 0L) {
+                                // procfs-style entry: stat undercounts, streaming told the truth.
+                                val measured = if (info.sizeTruncated) {
+                                    ">= ${info.measuredBytes} bytes (scan cap reached)"
+                                } else {
+                                    "${info.measuredBytes} bytes"
+                                }
+                                "size_note: stat reports 0 bytes; streamed content measures $measured\n"
+                            } else ""
+                        sb.append(measuredNote)
+                        sb.append("is_empty: ").append(info.isEmpty).append('\n')
+                        if (info.isBinary) {
+                            sb.append("is_binary: true\n")
+                            sb.append("line_count: (binary file)\n")
+                        } else {
+                            sb.append("line_count: ").append(info.lineCount).append('\n')
+                            sb.append("trailing_newline: ").append(info.trailingNewline).append('\n')
+                        }
+                    }
+                }
+                ToolResult(true, sb.toString().trimEnd())
+            } catch (e: Exception) {
+                if (e is ToolFailure) throw e
+                if (com.androidharness.app.workspace.isNameTooLong(e, path)) {
+                    throw ToolFailure(com.androidharness.app.workspace.longFilenameGuidance(path))
+                }
+                throw e
+            }
+        }
+}
+
+class WriteFileTool : Tool {
+    override val name = "write_file"
+    override val description =
+        "Create or overwrite a file in the workspace. Parent directories are created automatically. " +
+            "Non-empty content that doesn't end in a newline gets one appended (POSIX convention), " +
+            "so files stay patch- and grep-friendly."
+    override val parametersSchema = Schema.obj(
+        mapOf(
+            "path" to Schema.string("File path relative to the workspace root."),
+            "content" to Schema.string("Full content to write to the file."),
+        ),
+        required = listOf("path", "content"),
+    )
+    override val isReadOnly = false
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val path = args["path"]?.jsonPrimitive?.content
+                ?: throw ToolFailure("Missing required argument: path")
+            if (path.isBlank()) throw ToolFailure("path must not be empty. Use a file path; use '.' explicitly for directory metadata.")
+            val content = args["content"]?.jsonPrimitive?.content
+                ?: throw ToolFailure("Missing required argument: content")
+            val file = ctx.workspace.resolve(path)
+            if (file.exists && file.isDirectory) {
+                throw ToolFailure("Cannot write file '$path': is a directory")
+            }
+            val existed = file.exists
+            val endsWithNewline = content.endsWith("\n") || content.endsWith("\r")
+            val written = if (content.isNotEmpty() && !endsWithNewline) "$content\n" else content
+            val note = if (content.isNotEmpty() && !endsWithNewline) ", trailing newline added" else ""
+            val warn = if (!existed) caseCollisionWarning(ctx.workspace, file) else null
+            file.writeText(written)
+            ToolResult(
+                true,
+                buildString {
+                    append("${if (existed) "Overwrote" else "Created"} $path (${written.length} chars$note)")
+                    if (warn != null) append('\n').append(warn)
+                },
+            )
+        }
+}
+
+class EditFileTool : Tool {
+    override val name = "edit_file"
+    override val description =
+        "Replace a string in a file. Matching tolerates whitespace drift " +
+            "(indentation, trailing spaces, line endings); the match must still be unique. " +
+            "Fails if not found or appears more than once (unless replace_all is true)."
+    override val parametersSchema = Schema.obj(
+        mapOf(
+            "path" to Schema.string("File path relative to the workspace root."),
+            "old_string" to Schema.string("The text to replace."),
+            "new_string" to Schema.string("The replacement text."),
+            "replace_all" to Schema.boolean("Replace all occurrences. Defaults to false."),
+        ),
+        required = listOf("path", "old_string", "new_string"),
+    )
+    override val isReadOnly = false
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val path = args["path"]?.jsonPrimitive?.content
+                ?: throw ToolFailure("Missing required argument: path")
+            val old = args["old_string"]?.jsonPrimitive?.content
+                ?: throw ToolFailure("Missing required argument: old_string")
+            val new = args["new_string"]?.jsonPrimitive?.content
+                ?: throw ToolFailure("Missing required argument: new_string")
+            val replaceAll = args["replace_all"]?.jsonPrimitive?.booleanOrNull ?: false
+
+            val file = ctx.workspace.resolve(path)
+            if (!file.exists || !file.isFile) throw ToolFailure("File does not exist: $path")
+
+            when (val r = FuzzyEdit.replace(file.readUtf8ForEdit(), old, new, replaceAll)) {
+                is FuzzyEdit.Result.Ok -> {
+                    file.writeText(r.newText)
+                    val note = if (r.level != FuzzyEdit.Level.EXACT) {
+                        " matched with whitespace tolerance (${r.level.name.lowercase()})"
+                    } else ""
+                    ToolResult(
+                        true,
+                        "Edited $path (${r.count} replacement${if (r.count > 1) "s" else ""})$note",
+                    )
+                }
+                is FuzzyEdit.Result.Ambiguous -> throw ToolFailure(
+                    "old_string appears ${r.count} times in $path; make it more specific or set replace_all.",
+                )
+                is FuzzyEdit.Result.NotFound -> throw ToolFailure("${r.detail} (in $path)")
+            }
+        }
+}
+
+internal fun globMatcher(pattern: String): java.nio.file.PathMatcher = try {
+    FileSystems.getDefault().getPathMatcher("glob:$pattern")
+} catch (_: IllegalArgumentException) {
+    throw ToolFailure("Invalid glob pattern: \"$pattern\". Check brackets, braces, and escapes.")
+}
+
+class SearchFilesTool : Tool {
+    override val name = "search_files"
+    override val description =
+        "Find files by glob, sorted by path. Use offset/limit to page through results and recursive=false for direct children only."
+    override val parametersSchema = Schema.obj(
+        mapOf(
+            "pattern" to Schema.string("Glob pattern matched against file names/paths."),
+            "path" to Schema.string("Subdirectory to search in. Defaults to the workspace root."),
+            "offset" to Schema.integer("1-based result to start at. Default 1."),
+            "limit" to Schema.integer("Results per page (1..300). Default 300."),
+            "recursive" to Schema.boolean("Search subdirectories too. Default true."),
+        ),
+        required = listOf("pattern"),
+    )
+    override val isReadOnly = true
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val pattern = args["pattern"]?.jsonPrimitive?.content
+                ?: throw ToolFailure("Missing required argument: pattern")
+            val path = args["path"]?.jsonPrimitive?.content ?: "."
+            val offset = args["offset"]?.jsonPrimitive?.intOrNull ?: 1
+            val limit = args["limit"]?.jsonPrimitive?.intOrNull ?: MAX_SEARCH_RESULTS
+            if (offset < 1) throw ToolFailure("offset must be greater than 0.")
+            if (limit !in 1..MAX_SEARCH_RESULTS) throw ToolFailure("limit must be between 1 and $MAX_SEARCH_RESULTS.")
+            val recursive = args["recursive"]?.jsonPrimitive?.booleanOrNull ?: true
+
+            // Match against the file name via a synthetic path; ** patterns
+            // additionally match against the workspace-relative path. When
+            // a pattern starts with "**/" also match against the file name directly
+            // so root-level files match "**/*.ext".
+            val nameMatcher = globMatcher(pattern)
+            val rootMatcher = if (pattern.startsWith("**/")) {
+                runCatching {
+                    globMatcher(pattern.removePrefix("**/"))
+                }.getOrNull()
+            } else null
+            val matches = mutableListOf<String>()
+            val nodes = if (recursive) ctx.workspace.walk(path) else {
+                val root = ctx.workspace.resolve(path)
+                if (!root.exists) throw ToolFailure("Path does not exist: $path")
+                if (root.isDirectory) root.list().asSequence() else sequenceOf(root)
+            }
+            nodes.forEach { node ->
+                if (!node.isFile) return@forEach
+                val nameMatch = runCatching {
+                    nameMatcher.matches(java.nio.file.Paths.get(node.name))
+                }.getOrDefault(false)
+                val pathMatch = runCatching {
+                    nameMatcher.matches(java.nio.file.Paths.get(node.relPath))
+                }.getOrDefault(false)
+                val rootMatch = if (rootMatcher != null && !node.relPath.contains('/')) {
+                    runCatching {
+                        rootMatcher.matches(java.nio.file.Paths.get(node.name))
+                    }.getOrDefault(false)
+                } else false
+                if (nameMatch || pathMatch || rootMatch) matches += node.relPath
+            }
+            val sorted = matches.sorted()
+            val page = sorted.drop(offset - 1).take(limit)
+            if (matches.isEmpty()) ToolResult(true, "No files matched \"$pattern\".")
+            else if (page.isEmpty()) ToolResult(true, "[offset $offset is beyond end of results: ${matches.size} files]")
+            else ToolResult(
+                true,
+                page.joinToString("\n") + if (offset > 1 || offset - 1 + page.size < sorted.size) {
+                    "\n[showing results $offset..${offset - 1 + page.size} of ${sorted.size}" +
+                        (if (offset - 1 + page.size < sorted.size) "; next offset=${offset + page.size}" else "") + "]"
+                } else "",
+            )
+        }
+}
+
+/** Thrown when a regex burns through its step budget; mapped to a clean tool failure. */
+internal class RegexBudgetExceeded : RuntimeException()
+internal class RegexTimeoutExceeded : RuntimeException()
+
+/** Default charAt budget for one tool call; bounds pathological backtracking on device. */
+internal const val DEFAULT_REGEX_STEP_BUDGET = 20_000_000L
+internal const val DEFAULT_REGEX_TIMEOUT_MS = 2_000L
+
+/**
+ * Tracks regex engine steps across a whole tool call. java.util.regex reads
+ * its input only through CharSequence.charAt, so a counting wrapper bounds
+ * catastrophic backtracking: `^(a+)+$` against a crafted 36-byte file used
+ * to wedge grep forever with no recovery (security QA, 2026-09-06).
+ */
+internal class RegexStepBudget(
+    internal val maxSteps: Long = DEFAULT_REGEX_STEP_BUDGET,
+    internal val timeoutMs: Long = DEFAULT_REGEX_TIMEOUT_MS,
+) {
+    var steps = 0L
+        internal set
+    val deadlineMs = System.currentTimeMillis() + timeoutMs
+}
+
+/**
+ * A CharSequence that charges one step per charAt against [budget]. The
+ * budget is shared across every text this call matches, so once a pattern
+ * blows it, every later match attempt fails immediately.
+ */
+internal class BudgetedCharSequence(
+    private val inner: CharSequence,
+    private val budget: RegexStepBudget,
+) : CharSequence {
+    override val length: Int get() = inner.length
+
+    override fun get(index: Int): Char {
+        val s = ++budget.steps
+        if (s > budget.maxSteps) throw RegexBudgetExceeded()
+        if ((s and 0x0FFF) == 0L && System.currentTimeMillis() > budget.deadlineMs) {
+            throw RegexTimeoutExceeded()
+        }
+        return inner[index]
+    }
+
+    override fun subSequence(startIndex: Int, endIndex: Int): CharSequence =
+        BudgetedCharSequence(inner.subSequence(startIndex, endIndex), budget)
+
+    override fun toString(): String = inner.toString()
+}
+
+internal object RegexSafety {
+
+    /**
+     * Statically inspects a regex pattern for nested quantifiers that trigger
+     * exponential catastrophic backtracking (ReDoS bombs like `(z+z+)+q`, `(a+)+$`, `(a*)*`).
+     * Returns null if safe, or a descriptive error message if dangerous.
+     */
+    fun checkReDos(pattern: String): String? {
+        // 1. Check for extreme repetition counts in braces {N} or {N,M}
+        val quantifiers = Regex("\\{(\\d+)(?:,\\d*)?\\}").findAll(pattern)
+            .mapNotNull { it.groupValues[1].toLongOrNull() }.toList()
+        if (quantifiers.any { it > 1_000L }) {
+            return "Regex quantifier exceeds maximum supported repetition of 1,000."
+        }
+        if (quantifiers.size >= 2 && quantifiers.reduce { a, b -> (a * b).coerceAtMost(1_000_000L) } > 100_000L) {
+            return "Regex nested repetition is too complex. Simplify the pattern."
+        }
+
+        // 2. Normalize: replace escapes (e.g. \+, \*, \(, \)) with dummy char
+        var s = pattern.replace(Regex("\\\\."), "_")
+
+        // 3. Replace character classes [...] with dummy char so literals inside brackets don't look like operators
+        s = s.replace(Regex("\\[(?:\\\\.|[^\\]])*\\]"), "_")
+
+        // 4. Track group nesting to detect nested quantifiers: (inner+)+, (inner*)*, etc.
+        class Group(
+            val startIdx: Int,
+            var hasInnerQuantifier: Boolean = false,
+            var hasAlternation: Boolean = false,
+        )
+        val stack = ArrayDeque<Group>()
+
+        var i = 0
+        while (i < s.length) {
+            val c = s[i]
+            when (c) {
+                '(' -> {
+                    val isSpecial = (i + 1 < s.length && s[i + 1] == '?')
+                    stack.addLast(Group(startIdx = i))
+                    if (isSpecial) i++
+                }
+                '|' -> {
+                    if (stack.isNotEmpty()) {
+                        stack.last().hasAlternation = true
+                    }
+                }
+                ')' -> {
+                    if (stack.isNotEmpty()) {
+                        val group = stack.removeLast()
+                        var nextIdx = i + 1
+                        val hasOuterQuantifier = if (nextIdx < s.length) {
+                            val nextChar = s[nextIdx]
+                            if (nextChar == '+' || nextChar == '*') {
+                                true
+                            } else if (nextChar == '{') {
+                                val closingBrace = s.indexOf('}', nextIdx)
+                                closingBrace != -1
+                            } else false
+                        } else false
+
+                        if (hasOuterQuantifier) {
+                            if (group.hasInnerQuantifier) {
+                                return "Regex contains nested repetition which causes catastrophic backtracking (e.g. '(x+)+'). Simplify the pattern."
+                            }
+                            if (group.hasAlternation) {
+                                val branches = s.substring(group.startIdx + 1, i).split('|')
+                                val hasOverlap = branches.size != branches.distinct().size ||
+                                    branches.any { it.isEmpty() } ||
+                                    branches.any { b1 -> branches.any { b2 -> b1 != b2 && (b1.startsWith(b2) || b2.startsWith(b1)) } }
+                                if (hasOverlap) {
+                                    return "Regex contains overlapping or duplicate alternatives in a repeated group (e.g. '(z|z)+'). Simplify the pattern."
+                                }
+                            }
+                            if (stack.isNotEmpty()) {
+                                stack.last().hasInnerQuantifier = true
+                            }
+                        }
+                    }
+                }
+                '+', '*' -> {
+                    if (stack.isNotEmpty()) {
+                        stack.last().hasInnerQuantifier = true
+                    }
+                }
+                '{' -> {
+                    val closing = s.indexOf('}', i)
+                    if (closing != -1 && stack.isNotEmpty()) {
+                        val inner = s.substring(i + 1, closing)
+                        if (inner.contains(',')) {
+                            stack.last().hasInnerQuantifier = true
+                        } else {
+                            val n = inner.toIntOrNull() ?: 0
+                            if (n > 1) stack.last().hasInnerQuantifier = true
+                        }
+                    }
+                }
+            }
+            i++
+        }
+
+        return null
+    }
+}
+
+/** Characters of line text shown around a match before the excerpt is clipped. */
+internal const val GREP_EXCERPT_WINDOW = 300
+
+/**
+ * Renders the part of [line] around the match at [matchStart] so the matched
+ * text is actually visible.
+ *
+ * A plain `line.take(300)` hid the match completely whenever it sat deep in a
+ * long line: a 210,022-byte line holding the token at column 100,003 reported
+ * one matching line and showed only its first 300 characters, with no hint
+ * that anything had been cut, so an agent reading the result could not see
+ * what matched (on-device QA, 2026-09-17). Clipped sides are marked with "...".
+ */
+internal fun grepExcerpt(line: String, matchStart: Int, window: Int = GREP_EXCERPT_WINDOW): String {
+    if (line.length <= window) return line
+    val start = (matchStart - window / 2).coerceIn(0, (line.length - window).coerceAtLeast(0))
+    val end = (start + window).coerceAtMost(line.length)
+    val head = if (start > 0) "..." else ""
+    val tail = if (end < line.length) "..." else ""
+    return head + line.substring(start, end) + tail
+}
+
+/**
+ * Finds a match in a line too long to scan in one piece, returning the
+ * absolute character offset of the match (or null). Overlapping windows, so a
+ * match straddling a chunk boundary is still found.
+ */
+internal fun findInLongLine(regex: Regex, line: String, budget: RegexStepBudget): Int? {
+    val chunkSize = 60_000
+    val overlap = 2_000
+    var start = 0
+    while (start < line.length) {
+        val end = (start + chunkSize).coerceAtMost(line.length)
+        val match = regex.find(BudgetedCharSequence(line.substring(start, end), budget))
+        if (match != null) return start + match.range.first
+        if (end >= line.length) break
+        start += (chunkSize - overlap)
+    }
+    return null
+}
+
+class GrepTool(
+    private val regexStepBudget: Long = DEFAULT_REGEX_STEP_BUDGET,
+    private val regexTimeoutMs: Long = DEFAULT_REGEX_TIMEOUT_MS,
+) : Tool {
+    override val name = "grep"
+    override val description =
+        "Search file contents in the workspace with a regular expression. Returns matching lines as path:line: text."
+    override val parametersSchema = Schema.obj(
+        mapOf(
+            "pattern" to Schema.string("Regular expression to search for."),
+            "path" to Schema.string("Subdirectory to search in. Defaults to the workspace root."),
+            "include" to Schema.string("Optional glob to limit files, e.g. \"*.kt\"."),
+            "offset" to Schema.integer("1-based matching line to start at. Default 1."),
+            "limit" to Schema.integer("Matches per page (1..200). Default 200."),
+        ),
+        required = listOf("pattern"),
+    )
+    override val isReadOnly = true
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val pattern = args["pattern"]?.jsonPrimitive?.content
+                ?: throw ToolFailure("Missing required argument: pattern")
+
+            val danger = RegexSafety.checkReDos(pattern)
+            if (danger != null) {
+                throw ToolFailure(danger)
+            }
+
+            val regex = try {
+                Regex(pattern)
+            } catch (e: Exception) {
+                throw ToolFailure("Invalid regex: ${e.message}")
+            }
+            val path = args["path"]?.jsonPrimitive?.content ?: "."
+            val include = args["include"]?.jsonPrimitive?.content
+            val offset = args["offset"]?.jsonPrimitive?.intOrNull ?: 1
+            val limit = args["limit"]?.jsonPrimitive?.intOrNull ?: MAX_GREP_MATCHES
+            if (offset < 1) throw ToolFailure("offset must be greater than 0.")
+            if (limit !in 1..MAX_GREP_MATCHES) throw ToolFailure("limit must be between 1 and $MAX_GREP_MATCHES.")
+            val includeMatcher = include?.let {
+                globMatcher(it)
+            }
+            if (includeMatcher != null) {
+                val targetNode = ctx.workspace.resolve(path)
+                if (targetNode.exists && targetNode.isFile &&
+                    !includeMatcher.matches(java.nio.file.Paths.get(targetNode.name))
+                ) {
+                    throw ToolFailure(
+                        "Path '$path' is a file, but the 'include' filter '$include' excludes it. " +
+                            "Remove 'include' when targeting a single file, or match its filename/extension."
+                    )
+                }
+            }
+
+            val executor = java.util.concurrent.Executors.newSingleThreadExecutor { r ->
+                Thread(r, "grep-worker").apply { isDaemon = true }
+            }
+            val future = executor.submit(java.util.concurrent.Callable {
+                val matches = mutableListOf<String>()
+                val skipped = mutableListOf<String>()
+                var matchIndex = 0
+                val budget = RegexStepBudget(regexStepBudget, regexTimeoutMs)
+                for (node in ctx.workspace.walk(path).sortedBy { it.relPath }) {
+                    if (matches.size > limit) break
+                    if (!node.isFile) continue
+                    // The include filter runs BEFORE the size/binary/skip
+                    // bookkeeping. A file the caller excluded is not part of
+                    // this search, so naming it in "[Skipped: …]" only made the
+                    // result look like the filter had been ignored (on-device
+                    // QA, 2026-09-17).
+                    if (includeMatcher != null &&
+                        !includeMatcher.matches(java.nio.file.Paths.get(node.name))
+                    ) continue
+                    if (node.length > 2_000_000) {
+                        skipped += "${node.relPath} (>2MB)"
+                        continue
+                    }
+                    if (node.isBinary()) {
+                        skipped += "${node.relPath} (binary)"
+                        continue
+                    }
+                    val text = runCatching { node.readText() }.getOrNull()
+                    if (text == null) {
+                        skipped += "${node.relPath} (read failed)"
+                        continue
+                    }
+                    val lines = splitLines(text)
+                    try {
+                        lines.forEachIndexed { idx, line ->
+                            if (matches.size > limit) return@forEachIndexed
+                            val matchStart = if (line.length <= 65_536) {
+                                regex.find(BudgetedCharSequence(line, budget))?.range?.first
+                            } else {
+                                findInLongLine(regex, line, budget)
+                            }
+                            if (matchStart != null) {
+                                matchIndex++
+                                if (matchIndex >= offset) matches += "${node.relPath}:${idx + 1}: " + grepExcerpt(line, matchStart)
+                            }
+                        }
+                    } catch (e: RegexBudgetExceeded) {
+                        throw ToolFailure(
+                            "Regex exceeded its step budget while matching (pathological backtracking). " +
+                                "Simplify the pattern or narrow the search."
+                        )
+                    } catch (e: RegexTimeoutExceeded) {
+                        throw ToolFailure(
+                            "Regex execution timed out (pathological backtracking). " +
+                                "Simplify the pattern or narrow the search."
+                        )
+                    }
+                }
+
+                val skippedNote = if (skipped.isNotEmpty()) {
+                    val preview = skipped.take(3).joinToString(", ")
+                    val extra = if (skipped.size > 3) " and ${skipped.size - 3} more" else ""
+                    "\n[Skipped: $preview$extra]"
+                } else ""
+
+                val page = matches.take(limit)
+                if (matches.isEmpty()) ToolResult(true,
+                    (if (offset > 1 && matchIndex > 0) "[offset $offset is beyond end of results: $matchIndex matches]"
+                    else "No matches for \"$pattern\".") + skippedNote)
+                else ToolResult(
+                    true,
+                    "Found ${page.size} match(es) for \"$pattern\":\n" +
+                        page.joinToString("\n") +
+                        (if (matches.size > limit) "\n[more matches available; next offset=${offset + page.size}]" else "") +
+                        skippedNote,
+                )
+            })
+
+            try {
+                future.get(regexTimeoutMs, java.util.concurrent.TimeUnit.MILLISECONDS)
+            } catch (e: java.util.concurrent.TimeoutException) {
+                future.cancel(true)
+                executor.shutdownNow()
+                throw ToolFailure(
+                    "Regex execution timed out after ${regexTimeoutMs / 1000}s (pathological backtracking). " +
+                        "Simplify the pattern or narrow the search."
+                )
+            } catch (e: java.util.concurrent.ExecutionException) {
+                val cause = e.cause ?: e
+                if (cause is ToolFailure) throw cause
+                throw ToolFailure(cause.message ?: "Search failed")
+            } finally {
+                executor.shutdown()
+            }
+        }
+}
+
+/**
+ * Inspects or loads an image file from the workspace or app image store (such as browser screenshots).
+ * The image is attached to the tool result so vision-capable models receive the image in multimodal requests.
+ */
+class ReadImageTool(
+    private val imageStore: com.androidharness.app.data.ImageStore,
+) : Tool {
+    override val name = "read_image"
+    override val description =
+        "Inspect and load an image file from the workspace (or a browser screenshot filename/path) so you can see its visual content. The image is rendered and passed directly to your vision context."
+    override val parametersSchema = Schema.obj(
+        mapOf(
+            "path" to Schema.string("Workspace-relative path to an image file (e.g. 'assets/logo.png', '.harness/screenshots/20260903_120000.jpg') OR screenshot filename returned by browser_screenshot."),
+        ),
+        required = listOf("path"),
+    )
+    override val isReadOnly = true
+
+    override suspend fun execute(args: JsonObject, ctx: ToolContext): ToolResult =
+        withContext(Dispatchers.IO) {
+            val path = args["path"]?.jsonPrimitive?.content
+                ?: throw ToolFailure("Missing required argument: path")
+
+            // 1. Check if path is in the ImageStore directory directly (e.g. browser screenshots)
+            val leafName = java.io.File(path).name
+            val storedFile = java.io.File(imageStore.imagesDir, leafName)
+            if (storedFile.exists() && storedFile.isFile) {
+                val mime = when (storedFile.extension.lowercase()) {
+                    "jpg", "jpeg" -> "image/jpeg"
+                    "webp" -> "image/webp"
+                    "gif" -> "image/gif"
+                    else -> "image/png"
+                }
+                return@withContext ToolResult(
+                    ok = true,
+                    output = "Loaded image from store: ${storedFile.name} (${storedFile.length()} bytes, $mime). Image attached for visual analysis.",
+                    image = com.androidharness.app.core.ImageRef(storedFile.name, mime),
+                )
+            }
+
+            // 2. Check if path or filename points to .harness/screenshots/
+            val candidatePath = if (!path.contains('/') && !path.contains('\\')) {
+                ".harness/screenshots/$path"
+            } else {
+                path
+            }
+            val resolvedNode = runCatching { ctx.workspace.resolve(candidatePath) }.getOrNull()
+            val node = if (resolvedNode != null && resolvedNode.exists && resolvedNode.isFile) {
+                resolvedNode
+            } else {
+                ctx.workspace.resolve(path)
+            }
+            if (!node.exists) throw ToolFailure("Image file does not exist: $path")
+            if (!node.isFile) throw ToolFailure("Not a file: $path")
+
+            val ext = node.name.substringAfterLast('.', "").lowercase()
+            val mime = when (ext) {
+                "jpg", "jpeg" -> "image/jpeg"
+                "png" -> "image/png"
+                "webp" -> "image/webp"
+                "gif" -> "image/gif"
+                "svg" -> "image/svg+xml"
+                else -> throw ToolFailure("Unsupported image format: .$ext (expected png, jpg, webp, gif, svg)")
+            }
+
+            // Read bytes from workspace and copy into ImageStore so ImageStore.resolve can serve base64
+            val bytes = node.openInputStream()?.use { it.readBytes() }
+                ?: throw ToolFailure("Could not read image bytes from $path")
+
+            if (bytes.isEmpty()) throw ToolFailure("Image file is empty (0 bytes): $path")
+
+            val destFile = java.io.File(imageStore.imagesDir, "ws_${java.util.UUID.randomUUID()}.$ext")
+            destFile.writeBytes(bytes)
+
+            ToolResult(
+                ok = true,
+                output = "Loaded image $path (${bytes.size} bytes, $mime). Image attached for visual analysis.",
+                image = com.androidharness.app.core.ImageRef(destFile.name, mime),
+            )
+        }
+}
+

@@ -1,0 +1,11 @@
+<resources>
+    <string name="chat_activity_full_view">Abrir vista completa</string>
+    <string name="chat_activity_tool_details">Abrir detalles de la herramienta</string>
+    <string name="chat_activity_input">Entrada</string>
+    <string name="chat_activity_output">Salida</string>
+    <string name="chat_activity_output_preview">Vista previa de la salida</string>
+    <string name="chat_activity_more">Más abajo</string>
+    <string name="chat_activity_latest">Más reciente</string>
+    <string name="chat_activity_copy">Copiar texto</string>
+    <string name="chat_activity_copied">Copiado</string>
+</resources>

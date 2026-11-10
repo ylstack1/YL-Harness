@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_coding_workflow">Агент и рабочий процесс</string>
+    <string name="settings_coding_intelligence">Навыки и интеллект</string>
+    <string name="settings_coding_execution">Рабочие пространства и выполнение</string>
+    <string name="settings_device_connections">Подключения</string>
+    <string name="settings_device_tools">Инструменты и дополнительные настройки</string>
+    <string name="settings_linux_optional">Дополнительные инструменты для проектов с Linux</string>
+    <string name="settings_device_advanced">Расширенный доступ к устройству</string>
+    <string name="settings_device_advanced_summary">Настройки root и владельца устройства</string>
+    <string name="settings_device_background">Фоновая работа и батарея</string>
+    <string name="settings_device_background_summary">Поддерживать работу терминала и агента</string>
+    <string name="settings_connection_help">Как подключиться</string>
+    <string name="settings_connection_options">Параметры подключения</string>
+    <string name="wireless_adb_disconnect">Отключить</string>
+    <string name="wireless_adb_connection_kept">Подключено · доступно до отключения</string>
+    <string name="wireless_adb_auto_reconnecting">Повторное подключение к сохранённой беспроводной отладке</string>
+    <string name="rich_profile_details">Подробнее</string>
+    <string name="rich_profile_sources">Источники</string>
+    <string name="settings_disclosure_expanded">Развёрнуто</string>
+    <string name="settings_disclosure_collapsed">Свёрнуто</string>
+    <string name="settings_terminal_access">Доступ к терминалу</string>
+    <string name="wireless_adb_compact_summary">Команды устройства с автоматическим переподключением</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_viewing_image">جارٍ النظر إلى الصورة</string>
+    <string name="chat_viewed_image">تمت معاينة الصورة</string>
+    <string name="chat_image_failed">تعذّرت معاينة الصورة</string>
+</resources>

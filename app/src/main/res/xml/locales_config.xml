@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Locales the app ships translations for. Declared on <application> via
+  android:localeConfig so Android 13+ lists them under Settings → Apps →
+  AndroidHarness → Language, and so the per-app language survives a reboot.
+  English stays the default, so it comes first.
+-->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="en" />
+    <locale android:name="zh-CN" />
+    <locale android:name="zh-Hant" />
+    <locale android:name="ru" />
+    <locale android:name="ar" />
+    <locale android:name="fa" />
+    <locale android:name="pt-BR" />
+    <locale android:name="de" />
+    <locale android:name="es" />
+    <locale android:name="ja" />
+    <locale android:name="id" />
+    <locale android:name="si" />
+    <locale android:name="vi" />
+    <locale android:name="tr" />
+    <locale android:name="ms" />
+    <locale android:name="th" />
+    <locale android:name="fr" />
+    <locale android:name="hi" />
+    <locale android:name="ko" />
+    <locale android:name="ta" />
+    <locale android:name="bn" />
+    <locale android:name="fil" />
+</locale-config>

@@ -1,0 +1,19 @@
+<resources>
+    <string name="theme_color_palette">لوحة الألوان</string>
+    <string name="theme_color_hint">اختر لوحة لتلوين التطبيق.</string>
+    <string name="theme_wallpaper_colors">ألوان الخلفية</string>
+    <string name="theme_wallpaper_hint">يتبع ألوان Material You في هاتفك.</string>
+    <string name="theme_wallpaper_unavailable">تتطلب ألوان الخلفية Android 12 أو أحدث. اختر لوحة أدناه.</string>
+    <string name="theme_palette_blue">أزرق Harness</string>
+    <string name="theme_palette_ocean">محيط</string>
+    <string name="theme_palette_indigo">نيلي</string>
+    <string name="theme_palette_lavender">خزامى</string>
+    <string name="theme_palette_orchid">أوركيد</string>
+    <string name="theme_palette_rose">وردي</string>
+    <string name="theme_palette_coral">مرجاني</string>
+    <string name="theme_palette_amber">كهرماني</string>
+    <string name="theme_palette_lime">ليموني</string>
+    <string name="theme_palette_forest">غابة</string>
+    <string name="theme_palette_teal">أزرق مخضر</string>
+    <string name="theme_palette_slate">أردوازي</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="settings_coding_workflow">"නියෝජිතයා සහ කාර්ය ප්‍රවාහය"</string>
+    <string name="settings_coding_intelligence">"කුසලතා සහ බුද්ධිය"</string>
+    <string name="settings_coding_execution">"වැඩබිම් සහ ක්‍රියාත්මක කිරීම"</string>
+    <string name="settings_device_connections">"සම්බන්ධතා"</string>
+    <string name="settings_device_tools">"මෙවලම් සහ උසස් සැකසීම්"</string>
+    <string name="settings_linux_optional">"Linux අවශ්‍ය ව්‍යාපෘති සඳහා විකල්ප මෙවලම්"</string>
+    <string name="settings_device_advanced">"උසස් උපාංග ප්‍රවේශය"</string>
+    <string name="settings_device_advanced_summary">"Root සහ උපාංග හිමිකරු පාලන"</string>
+    <string name="settings_device_background">"පසුබිම සහ බැටරිය"</string>
+    <string name="settings_device_background_summary">"ටර්මිනල් සැසි සහ නියෝජිත කාර්ය දිගටම ධාවනය කරන්න"</string>
+    <string name="settings_connection_help">"සම්බන්ධ කරන ආකාරය"</string>
+    <string name="settings_connection_options">"සම්බන්ධතා විකල්ප"</string>
+    <string name="wireless_adb_disconnect">"විසන්ධි කරන්න"</string>
+    <string name="wireless_adb_connection_kept">"සම්බන්ධයි · ඔබ විසන්ධි කරන තුරු ලබාගත හැක"</string>
+    <string name="wireless_adb_auto_reconnecting">"සුරැකි රැහැන් රහිත දෝෂ නිරාකරණයට නැවත සම්බන්ධ වෙමින්"</string>
+    <string name="rich_profile_details">"විස්තර"</string>
+    <string name="rich_profile_sources">"මූලාශ්‍ර"</string>
+    <string name="settings_disclosure_expanded">"දිගහැර ඇත"</string>
+    <string name="settings_disclosure_collapsed">"හකුළා ඇත"</string>
+    <string name="settings_terminal_access">"ටර්මිනල් ප්‍රවේශය"</string>
+    <string name="wireless_adb_compact_summary">"ස්වයංක්‍රීයව නැවත සම්බන්ධ වන උපාංග විධාන"</string>
+</resources>

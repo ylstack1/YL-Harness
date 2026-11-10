@@ -1,0 +1,17 @@
+<resources>
+    <string name="sidebar_select">Seleccionar</string>
+    <string name="sidebar_selected_count">%1$d seleccionados</string>
+    <string name="sidebar_select_all">Seleccionar todo</string>
+    <string name="sidebar_clear_selection">Borrar selección</string>
+    <string name="sidebar_exit_selection">Salir de la selección</string>
+    <string name="sidebar_select_chat">Seleccionar %1$s</string>
+    <string name="sidebar_details">Detalles</string>
+    <string name="sidebar_other_chats">Otros chats</string>
+    <string name="sidebar_model_unavailable">No disponible</string>
+    <string name="sidebar_delete_selected">¿Eliminar los chats seleccionados?</string>
+    <string name="sidebar_delete_selected_message">¿Eliminar estos chats y su historial de conversación? Esto no se puede deshacer.</string>
+    <string name="sidebar_delete_running">Las tareas en ejecución de estos chats se detendrán.</string>
+    <string name="sidebar_selection_error">No se pudo completar esta acción. Inténtalo de nuevo.</string>
+    <plurals name="sidebar_archived_count"><item quantity="one">%1$d chat archivado</item><item quantity="other">%1$d chats archivados</item></plurals>
+    <plurals name="sidebar_restored_count"><item quantity="one">%1$d chat restaurado</item><item quantity="other">%1$d chats restaurados</item></plurals>
+</resources>

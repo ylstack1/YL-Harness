@@ -1,0 +1,17 @@
+<resources>
+    <string name="sidebar_select">තෝරන්න</string>
+    <string name="sidebar_selected_count">%1$dක් තෝරාගෙන ඇත</string>
+    <string name="sidebar_select_all">සියල්ල තෝරන්න</string>
+    <string name="sidebar_clear_selection">තේරීම මකන්න</string>
+    <string name="sidebar_exit_selection">තේරීමෙන් ඉවත් වන්න</string>
+    <string name="sidebar_select_chat">%1$s තෝරන්න</string>
+    <string name="sidebar_details">විස්තර</string>
+    <string name="sidebar_other_chats">වෙනත් චැට්</string>
+    <string name="sidebar_model_unavailable">ලබාගත නොහැක</string>
+    <string name="sidebar_delete_selected">තෝරාගත් චැට් මකන්නද?</string>
+    <string name="sidebar_delete_selected_message">මෙම චැට් සහ ඒවායේ සංවාද ඉතිහාසය මකන්නද? මෙය ආපසු හැරවිය නොහැක.</string>
+    <string name="sidebar_delete_running">මෙම චැට්වල ධාවනය වන කාර්ය නවත්වනු ලැබේ.</string>
+    <string name="sidebar_selection_error">මෙම ක්‍රියාව සම්පූර්ණ කළ නොහැකි විය. කරුණාකර නැවත උත්සාහ කරන්න.</string>
+    <plurals name="sidebar_archived_count"><item quantity="one">චැට් %1$dක් සංරක්ෂිතයට යොදන ලදී</item><item quantity="other">චැට් %1$dක් සංරක්ෂිතයට යොදන ලදී</item></plurals>
+    <plurals name="sidebar_restored_count"><item quantity="one">චැට් %1$dක් යළි පිහිටුවන ලදී</item><item quantity="other">චැට් %1$dක් යළි පහිටුවන ලදී</item></plurals>
+</resources>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="chat_activity_full_view">Buka tampilan penuh</string>
+    <string name="chat_activity_tool_details">Buka detail alat</string>
+    <string name="chat_activity_input">Masukan</string>
+    <string name="chat_activity_output">Keluaran</string>
+    <string name="chat_activity_output_preview">Pratinjau keluaran</string>
+    <string name="chat_activity_more">Selengkapnya di bawah</string>
+    <string name="chat_activity_latest">Terbaru</string>
+    <string name="chat_activity_copy">Salin teks</string>
+    <string name="chat_activity_copied">Tersalin</string>
+</resources>

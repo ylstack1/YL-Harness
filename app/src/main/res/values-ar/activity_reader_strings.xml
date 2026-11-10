@@ -1,0 +1,11 @@
+<resources>
+    <string name="chat_activity_full_view">فتح العرض الكامل</string>
+    <string name="chat_activity_tool_details">فتح تفاصيل الأداة</string>
+    <string name="chat_activity_input">الإدخال</string>
+    <string name="chat_activity_output">الإخراج</string>
+    <string name="chat_activity_output_preview">معاينة الإخراج</string>
+    <string name="chat_activity_more">المزيد أدناه</string>
+    <string name="chat_activity_latest">الأحدث</string>
+    <string name="chat_activity_copy">نسخ النص</string>
+    <string name="chat_activity_copied">تم النسخ</string>
+</resources>

@@ -1,0 +1,19 @@
+<resources>
+    <string name="theme_color_palette">Palet warna</string>
+    <string name="theme_color_hint">Pilih palet untuk mewarnai aplikasi.</string>
+    <string name="theme_wallpaper_colors">Warna wallpaper</string>
+    <string name="theme_wallpaper_hint">Mengikuti warna Material You di ponsel Anda.</string>
+    <string name="theme_wallpaper_unavailable">Warna wallpaper memerlukan Android 12 atau lebih baru. Pilih palet di bawah.</string>
+    <string name="theme_palette_blue">Biru Harness</string>
+    <string name="theme_palette_ocean">Samudra</string>
+    <string name="theme_palette_indigo">Nila</string>
+    <string name="theme_palette_lavender">Lavender</string>
+    <string name="theme_palette_orchid">Anggrek</string>
+    <string name="theme_palette_rose">Mawar</string>
+    <string name="theme_palette_coral">Karang</string>
+    <string name="theme_palette_amber">Amber</string>
+    <string name="theme_palette_lime">Jeruk nipis</string>
+    <string name="theme_palette_forest">Hutan</string>
+    <string name="theme_palette_teal">Hijau kebiruan</string>
+    <string name="theme_palette_slate">Batu tulis</string>
+</resources>

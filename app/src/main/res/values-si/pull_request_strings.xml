@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pr_tool_opening">pull request විවෘත කරමින්…</string>
+    <string name="pr_tool_opened">pull request #%1$d විවෘත කළා</string>
+    <string name="pr_tool_existing">pull request #%1$d දැනටමත් විවෘතයි</string>
+    <string name="pr_tool_failed">pull request විවෘත නොවුණා</string>
+    <string name="pr_tool_waiting">ඔබේ අනුමැතිය බලාපොරොත්තුවෙන්</string>
+    <string name="pr_draft">කෙටුම්පත</string>
+    <string name="pr_counts">commits: %1$d · ගොනු: %2$d</string>
+    <string name="pr_open_on_github">GitHub හි විවෘත කරන්න</string>
+    <string name="pr_copy_link">සබැඳිය පිටපත් කරන්න</string>
+    <string name="pr_link_copied">සබැඳිය පිටපත් කළා</string>
+    <string name="pr_open_failed">සබැඳිය විවෘත කිරීමට යෙදුමක් නැත. ඒ වෙනුවට එය පිටපත් කළා.</string>
+    <string name="pr_approval_title">pull request එකක් විවෘත කරන්නද?</string>
+    <string name="pr_approval_body">push කළ branch එකෙන් GitHub හි pull request එකක් සාදයි. කිසිවක් push හෝ merge නොකෙරේ.</string>
+    <string name="pr_approval_base">%1$s වෙත</string>
+    <string name="pr_approval_default_base">පෙරනිමි branch එකට</string>
+    <string name="pr_create">pull request සාදන්න</string>
+    <string name="pr_create_draft">කෙටුම්පත් pull request සාදන්න</string>
+    <string name="pr_entry_body">මෙම branch එකේ push කළ commits GitHub හි සමාලෝචනයට යොමු කරන්න.</string>
+    <string name="pr_loading">මෙම branch එක GitHub සමඟ සංසන්දනය කරමින්…</string>
+    <string name="pr_title_label">මාතෘකාව</string>
+    <string name="pr_description_label">විස්තරය</string>
+    <string name="pr_rewrite_description">විස්තරය නැවත ලියන්න</string>
+    <string name="pr_base_label">මූලික branch</string>
+    <string name="pr_draft_label">කෙටුම්පතක් ලෙස විවෘත කරන්න</string>
+    <string name="pr_draft_body">සමාලෝචකයින්ට එය දැකිය හැකි නමුත් ඔබ සූදානම් ලෙස සලකුණු කරන තුරු merge කළ නොහැක.</string>
+    <string name="pr_include_checks">මෙම chat එකේ පරීක්ෂා ඇතුළත් කරන්න</string>
+    <string name="pr_include_checks_body">මෙම සංවාදයේ සටහන් වූ build, test සහ lint ප්‍රතිඵල එක් කරයි.</string>
+    <string name="pr_existing_body">%1$s වෙත නව push මගින් මෙම pull request ස්වයංක්‍රීයව යාවත්කාලීන වේ.</string>
+    <string name="pr_not_pushed_title">branch එක තවම GitHub හි නැත</string>
+    <string name="pr_out_of_date_title">GitHub හි මෙම branch එකේ පැරණි පිටපතක් ඇත</string>
+    <string name="pr_push_body">GitHub හට ඔබේ නවතම commits ලැබීමට %1$s push කරන්න.</string>
+    <string name="pr_push_branch">branch push කරන්න</string>
+    <string name="pr_pushed">branch push කළා.</string>
+    <string name="pr_uncommitted_title">commit නොකළ වෙනස්කම්: %1$d</string>
+    <string name="pr_uncommitted_body">ඔබ ඒවා commit කර push කරන තුරු ඇතුළත් නොවේ.</string>
+    <string name="pr_behind_title">%1$s හි නව commits: %2$d</string>
+    <string name="pr_behind_body">මෙම branch එකේ ඒවා තවම නැත. සමාලෝචකයින් එය යාවත්කාලීන කිරීමට ඉල්ලිය හැක.</string>
+    <string name="pr_no_commits_title">තවම යෝජනා කිරීමට කිසිවක් නැත</string>
+    <string name="pr_no_commits_body">%2$s හි දැනටමත් නැති commits %1$s හි නැත.</string>
+    <string name="pr_commits_header">Commits</string>
+    <string name="pr_more">තවත්: %1$d</string>
+    <string name="pr_created_title">pull request #%1$d විවෘත කළා</string>
+    <string name="pr_created_draft_title">කෙටුම්පත් pull request #%1$d විවෘත කළා</string>
+    <string name="pr_retry">නැවත උත්සාහ කරන්න</string>
+</resources>

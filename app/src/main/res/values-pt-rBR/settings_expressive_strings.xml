@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_coding_workflow">Agente e fluxo de trabalho</string>
+    <string name="settings_coding_intelligence">Habilidades e inteligência</string>
+    <string name="settings_coding_execution">Espaços de trabalho e execução</string>
+    <string name="settings_device_connections">Conexões</string>
+    <string name="settings_device_tools">Ferramentas e configurações avançadas</string>
+    <string name="settings_linux_optional">Ferramentas opcionais para projetos que precisam de Linux</string>
+    <string name="settings_device_advanced">Acesso avançado ao dispositivo</string>
+    <string name="settings_device_advanced_summary">Controles de root e proprietário do dispositivo</string>
+    <string name="settings_device_background">Segundo plano e bateria</string>
+    <string name="settings_device_background_summary">Manter sessões do terminal e trabalho do agente ativos</string>
+    <string name="settings_connection_help">Como conectar</string>
+    <string name="settings_connection_options">Opções de conexão</string>
+    <string name="wireless_adb_disconnect">Desconectar</string>
+    <string name="wireless_adb_connection_kept">Conectado · disponível até você desconectar</string>
+    <string name="wireless_adb_auto_reconnecting">Reconectando à depuração sem fio salva</string>
+    <string name="rich_profile_details">Detalhes</string>
+    <string name="rich_profile_sources">Fontes</string>
+    <string name="settings_disclosure_expanded">Expandido</string>
+    <string name="settings_disclosure_collapsed">Recolhido</string>
+    <string name="settings_terminal_access">Acesso ao terminal</string>
+    <string name="wireless_adb_compact_summary">Comandos do dispositivo com reconexão automática</string>
+</resources>

@@ -1,0 +1,19 @@
+<resources>
+    <string name="theme_color_palette">Палитра цветов</string>
+    <string name="theme_color_hint">Выберите палитру для оформления приложения.</string>
+    <string name="theme_wallpaper_colors">Цвета обоев</string>
+    <string name="theme_wallpaper_hint">Следует цветам Material You вашего телефона.</string>
+    <string name="theme_wallpaper_unavailable">Цвета обоев требуют Android 12 или новее. Выберите палитру ниже.</string>
+    <string name="theme_palette_blue">Синий Harness</string>
+    <string name="theme_palette_ocean">Океан</string>
+    <string name="theme_palette_indigo">Индиго</string>
+    <string name="theme_palette_lavender">Лаванда</string>
+    <string name="theme_palette_orchid">Орхидея</string>
+    <string name="theme_palette_rose">Роза</string>
+    <string name="theme_palette_coral">Коралл</string>
+    <string name="theme_palette_amber">Янтарь</string>
+    <string name="theme_palette_lime">Лайм</string>
+    <string name="theme_palette_forest">Лес</string>
+    <string name="theme_palette_teal">Бирюза</string>
+    <string name="theme_palette_slate">Сланец</string>
+</resources>

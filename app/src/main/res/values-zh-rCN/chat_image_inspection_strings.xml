@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chat_viewing_image">正在查看图片</string>
+    <string name="chat_viewed_image">已查看图片</string>
+    <string name="chat_image_failed">无法检查图片</string>
+</resources>

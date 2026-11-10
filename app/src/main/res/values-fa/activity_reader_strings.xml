@@ -1,0 +1,11 @@
+<resources>
+    <string name="chat_activity_full_view">باز کردن نمای کامل</string>
+    <string name="chat_activity_tool_details">باز کردن جزئیات ابزار</string>
+    <string name="chat_activity_input">ورودی</string>
+    <string name="chat_activity_output">خروجی</string>
+    <string name="chat_activity_output_preview">پیش‌نمایش خروجی</string>
+    <string name="chat_activity_more">بیشتر در پایین</string>
+    <string name="chat_activity_latest">آخرین</string>
+    <string name="chat_activity_copy">کپی متن</string>
+    <string name="chat_activity_copied">کپی شد</string>
+</resources>

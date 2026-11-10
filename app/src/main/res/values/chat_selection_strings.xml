@@ -1,0 +1,17 @@
+<resources>
+    <string name="sidebar_select">Select</string>
+    <string name="sidebar_selected_count">%1$d selected</string>
+    <string name="sidebar_select_all">Select all</string>
+    <string name="sidebar_clear_selection">Clear selection</string>
+    <string name="sidebar_exit_selection">Exit selection</string>
+    <string name="sidebar_select_chat">Select %1$s</string>
+    <string name="sidebar_details">Details</string>
+    <string name="sidebar_other_chats">Other chats</string>
+    <string name="sidebar_model_unavailable">Unavailable</string>
+    <string name="sidebar_delete_selected">Delete selected chats?</string>
+    <string name="sidebar_delete_selected_message">Delete these chats and their conversation history? This cannot be undone.</string>
+    <string name="sidebar_delete_running">Running tasks in these chats will be stopped.</string>
+    <string name="sidebar_selection_error">Couldn’t complete this action. Please try again.</string>
+    <plurals name="sidebar_archived_count"><item quantity="one">%1$d chat archived</item><item quantity="other">%1$d chats archived</item></plurals>
+    <plurals name="sidebar_restored_count"><item quantity="one">%1$d chat restored</item><item quantity="other">%1$d chats restored</item></plurals>
+</resources>

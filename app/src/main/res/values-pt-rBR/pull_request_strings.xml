@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pr_tool_opening">Abrindo pull request…</string>
+    <string name="pr_tool_opened">Pull request #%1$d aberto</string>
+    <string name="pr_tool_existing">O pull request #%1$d já está aberto</string>
+    <string name="pr_tool_failed">Pull request não aberto</string>
+    <string name="pr_tool_waiting">Aguardando sua aprovação</string>
+    <string name="pr_draft">Rascunho</string>
+    <string name="pr_counts">Commits: %1$d · Arquivos: %2$d</string>
+    <string name="pr_open_on_github">Abrir no GitHub</string>
+    <string name="pr_copy_link">Copiar link</string>
+    <string name="pr_link_copied">Link copiado</string>
+    <string name="pr_open_failed">Nenhum app conseguiu abrir o link. Ele foi copiado.</string>
+    <string name="pr_approval_title">Abrir um pull request?</string>
+    <string name="pr_approval_body">Cria um pull request no GitHub a partir do branch enviado. Nada é enviado nem mesclado.</string>
+    <string name="pr_approval_base">Para %1$s</string>
+    <string name="pr_approval_default_base">Para o branch padrão</string>
+    <string name="pr_create">Criar pull request</string>
+    <string name="pr_create_draft">Criar pull request de rascunho</string>
+    <string name="pr_entry_body">Proponha os commits enviados deste branch para revisão no GitHub.</string>
+    <string name="pr_loading">Comparando este branch com o GitHub…</string>
+    <string name="pr_title_label">Título</string>
+    <string name="pr_description_label">Descrição</string>
+    <string name="pr_rewrite_description">Reescrever descrição</string>
+    <string name="pr_base_label">Branch base</string>
+    <string name="pr_draft_label">Abrir como rascunho</string>
+    <string name="pr_draft_body">Revisores podem vê-lo, mas ele só pode ser mesclado quando você o marcar como pronto.</string>
+    <string name="pr_include_checks">Incluir verificações deste chat</string>
+    <string name="pr_include_checks_body">Adiciona os resultados de build, testes e lint registrados nesta conversa.</string>
+    <string name="pr_existing_body">Novos envios para %1$s atualizam este pull request automaticamente.</string>
+    <string name="pr_not_pushed_title">O branch ainda não está no GitHub</string>
+    <string name="pr_out_of_date_title">O GitHub tem uma cópia antiga deste branch</string>
+    <string name="pr_push_body">Envie %1$s para que o GitHub tenha seus commits mais recentes.</string>
+    <string name="pr_push_branch">Enviar branch</string>
+    <string name="pr_pushed">Branch enviado.</string>
+    <string name="pr_uncommitted_title">Alterações não commitadas: %1$d</string>
+    <string name="pr_uncommitted_body">Elas só serão incluídas depois de commitadas e enviadas.</string>
+    <string name="pr_behind_title">Commits mais novos em %1$s: %2$d</string>
+    <string name="pr_behind_body">Este branch ainda não os inclui. Revisores podem pedir que você o atualize.</string>
+    <string name="pr_no_commits_title">Nada para propor ainda</string>
+    <string name="pr_no_commits_body">%1$s não tem commits que ainda não estejam em %2$s.</string>
+    <string name="pr_commits_header">Commits</string>
+    <string name="pr_more">Mais: %1$d</string>
+    <string name="pr_created_title">Pull request #%1$d aberto</string>
+    <string name="pr_created_draft_title">Pull request de rascunho #%1$d aberto</string>
+    <string name="pr_retry">Tentar novamente</string>
+</resources>

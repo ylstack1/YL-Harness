@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_coding_workflow">عامل و گردش کار</string>
+    <string name="settings_coding_intelligence">مهارت‌ها و هوشمندی</string>
+    <string name="settings_coding_execution">فضاهای کاری و اجرا</string>
+    <string name="settings_device_connections">اتصال‌ها</string>
+    <string name="settings_device_tools">ابزارها و تنظیمات پیشرفته</string>
+    <string name="settings_linux_optional">ابزارهای اختیاری برای پروژه‌های نیازمند Linux</string>
+    <string name="settings_device_advanced">دسترسی پیشرفته به دستگاه</string>
+    <string name="settings_device_advanced_summary">کنترل‌های روت و مالک دستگاه</string>
+    <string name="settings_device_background">پس‌زمینه و باتری</string>
+    <string name="settings_device_background_summary">فعال نگه داشتن نشست‌های ترمینال و کار عامل</string>
+    <string name="settings_connection_help">روش اتصال</string>
+    <string name="settings_connection_options">گزینه‌های اتصال</string>
+    <string name="wireless_adb_disconnect">قطع اتصال</string>
+    <string name="wireless_adb_connection_kept">متصل · در دسترس تا زمانی که اتصال را قطع کنید</string>
+    <string name="wireless_adb_auto_reconnecting">اتصال دوباره به اشکال‌زدایی بی‌سیم ذخیره‌شده</string>
+    <string name="rich_profile_details">جزئیات</string>
+    <string name="rich_profile_sources">منابع</string>
+    <string name="settings_disclosure_expanded">بازشده</string>
+    <string name="settings_disclosure_collapsed">بسته</string>
+    <string name="settings_terminal_access">دسترسی ترمینال</string>
+    <string name="wireless_adb_compact_summary">فرمان‌های دستگاه با اتصال دوبارهٔ خودکار</string>
+</resources>

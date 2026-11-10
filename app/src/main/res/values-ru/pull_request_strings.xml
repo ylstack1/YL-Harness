@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pr_tool_opening">Создание запроса на слияние…</string>
+    <string name="pr_tool_opened">Открыт запрос на слияние #%1$d</string>
+    <string name="pr_tool_existing">Запрос на слияние #%1$d уже открыт</string>
+    <string name="pr_tool_failed">Запрос на слияние не открыт</string>
+    <string name="pr_tool_waiting">Ожидает вашего подтверждения</string>
+    <string name="pr_draft">Черновик</string>
+    <string name="pr_counts">Коммиты: %1$d · Файлы: %2$d</string>
+    <string name="pr_open_on_github">Открыть на GitHub</string>
+    <string name="pr_copy_link">Копировать ссылку</string>
+    <string name="pr_link_copied">Ссылка скопирована</string>
+    <string name="pr_open_failed">Не найдено приложение для открытия ссылки. Ссылка скопирована.</string>
+    <string name="pr_approval_title">Открыть запрос на слияние?</string>
+    <string name="pr_approval_body">Создаёт запрос на слияние на GitHub из отправленной ветки. Ничего не отправляется и не сливается.</string>
+    <string name="pr_approval_base">В %1$s</string>
+    <string name="pr_approval_default_base">В ветку по умолчанию</string>
+    <string name="pr_create">Создать запрос на слияние</string>
+    <string name="pr_create_draft">Создать черновик запроса</string>
+    <string name="pr_entry_body">Предложить отправленные коммиты этой ветки на проверку в GitHub.</string>
+    <string name="pr_loading">Сравнение ветки с GitHub…</string>
+    <string name="pr_title_label">Заголовок</string>
+    <string name="pr_description_label">Описание</string>
+    <string name="pr_rewrite_description">Переписать описание</string>
+    <string name="pr_base_label">Целевая ветка</string>
+    <string name="pr_draft_label">Открыть как черновик</string>
+    <string name="pr_draft_body">Рецензенты увидят его, но слить его нельзя, пока вы не отметите его готовым.</string>
+    <string name="pr_include_checks">Добавить проверки из этого чата</string>
+    <string name="pr_include_checks_body">Добавляет результаты сборки, тестов и lint, записанные в этой беседе.</string>
+    <string name="pr_existing_body">Новые отправки в %1$s автоматически обновляют этот запрос.</string>
+    <string name="pr_not_pushed_title">Ветки ещё нет на GitHub</string>
+    <string name="pr_out_of_date_title">На GitHub устаревшая копия ветки</string>
+    <string name="pr_push_body">Отправьте %1$s, чтобы на GitHub были ваши последние коммиты.</string>
+    <string name="pr_push_branch">Отправить ветку</string>
+    <string name="pr_pushed">Ветка отправлена.</string>
+    <string name="pr_uncommitted_title">Незакоммиченные изменения: %1$d</string>
+    <string name="pr_uncommitted_body">Они не войдут в запрос, пока вы их не закоммитите и не отправите.</string>
+    <string name="pr_behind_title">Новые коммиты в %1$s: %2$d</string>
+    <string name="pr_behind_body">В этой ветке их пока нет. Рецензенты могут попросить её обновить.</string>
+    <string name="pr_no_commits_title">Пока нечего предложить</string>
+    <string name="pr_no_commits_body">В %1$s нет коммитов, которых ещё нет в %2$s.</string>
+    <string name="pr_commits_header">Коммиты</string>
+    <string name="pr_more">Ещё: %1$d</string>
+    <string name="pr_created_title">Запрос на слияние #%1$d открыт</string>
+    <string name="pr_created_draft_title">Черновик запроса #%1$d открыт</string>
+    <string name="pr_retry">Повторить</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_coding_workflow">الوكيل وسير العمل</string>
+    <string name="settings_coding_intelligence">المهارات والذكاء</string>
+    <string name="settings_coding_execution">مساحات العمل والتنفيذ</string>
+    <string name="settings_device_connections">الاتصالات</string>
+    <string name="settings_device_tools">الأدوات والإعدادات المتقدمة</string>
+    <string name="settings_linux_optional">أدوات اختيارية للمشاريع التي تحتاج إلى Linux</string>
+    <string name="settings_device_advanced">الوصول المتقدم إلى الجهاز</string>
+    <string name="settings_device_advanced_summary">عناصر تحكم الروت ومالك الجهاز</string>
+    <string name="settings_device_background">الخلفية والبطارية</string>
+    <string name="settings_device_background_summary">إبقاء جلسات الطرفية وعمل الوكيل قيد التشغيل</string>
+    <string name="settings_connection_help">كيفية الاتصال</string>
+    <string name="settings_connection_options">خيارات الاتصال</string>
+    <string name="wireless_adb_disconnect">قطع الاتصال</string>
+    <string name="wireless_adb_connection_kept">متصل · متاح حتى تقطع الاتصال</string>
+    <string name="wireless_adb_auto_reconnecting">إعادة الاتصال بتصحيح الأخطاء اللاسلكي المحفوظ</string>
+    <string name="rich_profile_details">التفاصيل</string>
+    <string name="rich_profile_sources">المصادر</string>
+    <string name="settings_disclosure_expanded">موسّع</string>
+    <string name="settings_disclosure_collapsed">مطوي</string>
+    <string name="settings_terminal_access">الوصول إلى الطرفية</string>
+    <string name="wireless_adb_compact_summary">أوامر الجهاز مع إعادة الاتصال تلقائيًا</string>
+</resources>

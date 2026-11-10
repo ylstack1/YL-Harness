@@ -1,0 +1,602 @@
+package com.androidharness.app.tools
+
+import com.androidharness.app.core.splitLines
+import com.androidharness.app.workspace.FileFs
+import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TemporaryFolder
+
+class FileToolsTest {
+
+    @get:Rule
+    val tmp = TemporaryFolder()
+
+    private fun ctx() = ToolContext(FileFs(tmp.root))
+    private fun file(path: String) = tmp.root.resolve(path)
+
+    private suspend fun run(tool: Tool, vararg args: Pair<String, String>): ToolResult =
+        tool.execute(
+            buildJsonObject {
+                args.forEach { (k, v) -> put(k, JsonPrimitive(v)) }
+            },
+            ctx(),
+        )
+
+    /** Runs a tool expecting a ToolFailure; returns the failure message. */
+    private suspend fun runExpectingFailure(tool: Tool, vararg args: Pair<String, String>): String =
+        try {
+            run(tool, *args).let { r ->
+                if (!r.ok) r.output else error("expected ToolFailure, got success: ${r.output}")
+            }
+        } catch (e: ToolFailure) {
+            e.message ?: ""
+        }
+
+    @Test
+    fun `read beyond EOF reports line count`() = runBlocking {
+        file("short.txt").writeText("one\ntwo\nthree\nfour\nfive\n")
+        val result = run(ReadFileTool(), "path" to "short.txt", "offset" to "500")
+        assertTrue(result.output.contains("beyond end of file: 5 lines"))
+    }
+
+    @Test
+    fun `incorrect hunk counts leave file untouched`() = runBlocking {
+        file("patch.txt").writeText("one\ntwo\nthree\nfour\n")
+        val before = file("patch.txt").readText()
+        val message = runExpectingFailure(ApplyPatchTool(), "patch" to
+            "--- a/patch.txt\n+++ b/patch.txt\n@@ -1,3 +1,2 @@\n-one\n-two\n-three\n-four\n+replacement\n")
+        assertTrue(message.contains("declares 3 old / 2 new lines but its body"))
+        assertEquals(before, file("patch.txt").readText())
+    }
+
+    @Test
+    fun `malformed globs return a clean error`() = runBlocking {
+        for (pattern in listOf("*.h[tm][", "[", "{a,b", "**/*[")) {
+            val message = runExpectingFailure(SearchFilesTool(), "pattern" to pattern)
+            assertEquals("Invalid glob pattern: \"$pattern\". Check brackets, braces, and escapes.", message)
+        }
+        val message = runExpectingFailure(GrepTool(), "pattern" to "text", "include" to "[")
+        assertTrue(message, message.startsWith("Invalid glob pattern:"))
+    }
+
+    @Test
+    fun `grep fails fast with a budget error on a pathological regex`() = runBlocking {
+        // The on-device wedge was `^(a+)+$` against 36 bytes (security QA,
+        // 2026-09-06): exponential on ART, but desktop JDKs short-circuit it,
+        // so the test uses a shape that backtracks hard on ANY engine and a
+        // tiny budget to prove the wrapper trips instead of hanging.
+        file("evil.txt").writeText("a".repeat(500) + "\n")
+        val started = System.currentTimeMillis()
+        val message = runExpectingFailure(
+            GrepTool(regexStepBudget = 100_000),
+            "pattern" to ".*.*x",
+        )
+        assertTrue(message, message.contains("step budget"))
+        // Budgeted, so this returns in well under a second; the assert only
+        // catches a regression to the unbounded hang.
+        assertTrue(System.currentTimeMillis() - started < 10_000)
+    }
+
+    @Test
+    fun `grep rejects extreme regex quantifiers before matching`() = runBlocking {
+        val msg1 = runExpectingFailure(GrepTool(), "pattern" to "(z{1000}){1900}")
+        assertTrue("Expected rejection of extreme quantifier, got: $msg1", msg1.contains("quantifier") || msg1.contains("repetition"))
+
+        val msg2 = runExpectingFailure(GrepTool(), "pattern" to "a{5000}")
+        assertTrue("Expected rejection of large quantifier, got: $msg2", msg2.contains("quantifier") || msg2.contains("repetition"))
+    }
+
+    @Test
+    fun `grep rejects bare nested quantifier ReDoS bombs`() = runBlocking {
+        for (pattern in listOf("(z+z+)+q", "(a+)+", "(a*)*", "(a|b+)+", "([a-z]+)+")) {
+            val msg = runExpectingFailure(GrepTool(), "pattern" to pattern)
+            assertTrue("Pattern '$pattern' should be rejected as ReDoS, got: $msg", msg.contains("nested repetition"))
+        }
+
+        // Valid patterns with non-nested repetition must not be falsely rejected
+        assertNull(RegexSafety.checkReDos("(abc)+"))
+        assertNull(RegexSafety.checkReDos("(foo|bar)*"))
+        assertNull(RegexSafety.checkReDos("(\\d{4})-(\\d{2})"))
+        assertNull(RegexSafety.checkReDos("\\(\\+\\)+"))
+    }
+
+    @Test
+    fun `grep rejects duplicate alternatives in repeated groups`() = runBlocking {
+        for (pattern in listOf("(z|z)+q", "(a|a)+", "(a|aa)+q", "(x|y|x)*", "(a|)+")) {
+            val msg = runExpectingFailure(GrepTool(), "pattern" to pattern)
+            assertTrue("Pattern '$pattern' should be rejected, got: $msg", msg.contains("duplicate alternatives") || msg.contains("nested repetition") || msg.contains("overlapping"))
+        }
+
+        // Distinct alternatives in repeated groups must not be falsely rejected
+        assertNull(RegexSafety.checkReDos("(a|b)+"))
+        assertNull(RegexSafety.checkReDos("(cat|dog)*"))
+    }
+
+    @Test
+    fun `read_file rejects non-positive limit or offset`() = runBlocking {
+        file("data.txt").writeText("line1\nline2\n")
+        val msg1 = runExpectingFailure(ReadFileTool(), "path" to "data.txt", "limit" to "0")
+        assertTrue("Expected limit > 0 error, got: $msg1", msg1.contains("limit must be greater than 0"))
+
+        val msg2 = runExpectingFailure(ReadFileTool(), "path" to "data.txt", "offset" to "-1")
+        assertTrue("Expected offset > 0 error, got: $msg2", msg2.contains("offset must be greater than 0"))
+    }
+
+    @Test
+    fun `valid character classes and recursive globs still match`() = runBlocking {
+        file("index.htm").writeText("text")
+        file("nested").mkdirs()
+        file("nested/index.htm").writeText("text")
+        val result = run(SearchFilesTool(), "pattern" to "**/*.ht[ml]")
+        assertEquals(setOf("index.htm", "nested/index.htm"), result.output.lines().toSet())
+    }
+
+    // --- splitLines (POSIX line semantics) -----------------------------------
+
+    @Test
+    fun `splitLines treats trailing newline as terminator`() {
+        assertEquals(listOf("a", "b"), splitLines("a\nb\n"))
+        assertEquals(listOf("a", "b"), splitLines("a\nb"))
+        assertEquals(listOf("a", ""), splitLines("a\n\n")) // one empty line + terminator
+        assertEquals(emptyList<String>(), splitLines(""))
+        assertEquals(listOf(""), splitLines("\n")) // a single empty line
+        assertEquals(listOf("a", "", "b"), splitLines("a\n\nb"))
+    }
+
+    // --- write_file trailing newline ------------------------------------------
+
+    @Test
+    fun `write_file appends trailing newline to non-empty content`() = runBlocking {
+        val r = WriteFileTool().execute(
+            buildJsonObject {
+                put("path", JsonPrimitive("a.txt"))
+                put("content", JsonPrimitive("hello"))
+            },
+            ctx(),
+        )
+        assertTrue(r.output, r.ok)
+        assertEquals("hello\n", file("a.txt").readText())
+        assertTrue(r.output.contains("trailing newline added"))
+    }
+
+    @Test
+    fun `write_file keeps existing trailing newline and does not double it`() = runBlocking {
+        WriteFileTool().execute(
+            buildJsonObject {
+                put("path", JsonPrimitive("a.txt"))
+                put("content", JsonPrimitive("hello\n"))
+            },
+            ctx(),
+        )
+        assertEquals("hello\n", file("a.txt").readText())
+    }
+
+    @Test
+    fun `write_file leaves empty content empty`() = runBlocking {
+        WriteFileTool().execute(
+            buildJsonObject {
+                put("path", JsonPrimitive("a.txt"))
+                put("content", JsonPrimitive(""))
+            },
+            ctx(),
+        )
+        assertEquals("", file("a.txt").readText())
+    }
+
+    // --- CRLF & BOM fidelity -----------------------------------------------------
+
+    @Test
+    fun `write_file preserves carriage returns byte for byte`() = runBlocking {
+        val content = "line1\r\nline2\r\nline3\r\n"
+        WriteFileTool().execute(
+            buildJsonObject {
+                put("path", JsonPrimitive("crlf.txt"))
+                put("content", JsonPrimitive(content))
+            },
+            ctx(),
+        )
+        val bytes = file("crlf.txt").readBytes()
+        assertEquals(content.length, bytes.size)
+        assertEquals(content, String(bytes, Charsets.UTF_8))
+        assertTrue(bytes.contains(0x0D.toByte()))
+    }
+
+    @Test
+    fun `read_file strips a UTF-8 BOM from line 1`() = runBlocking {
+        file("bom.txt").writeBytes(byteArrayOf(0xEF.toByte(), 0xBB.toByte(), 0xBF.toByte()) + "hello".toByteArray())
+        val r = ReadFileTool().execute(
+            buildJsonObject { put("path", JsonPrimitive("bom.txt")) },
+            ctx(),
+        )
+        assertTrue(r.output, r.ok)
+        assertEquals("1\thello", r.output)
+    }
+
+    @Test
+    fun `read_file without BOM is unchanged`() = runBlocking {
+        file("plain.txt").writeText("plain")
+        val r = ReadFileTool().execute(
+            buildJsonObject { put("path", JsonPrimitive("plain.txt")) },
+            ctx(),
+        )
+        assertEquals("1\tplain", r.output)
+    }
+
+    // --- read_file empty file --------------------------------------------------
+
+    @Test
+    fun `read_file reports empty file instead of a phantom line 1`() = runBlocking {
+        file("empty.txt").writeText("")
+        val r = ReadFileTool().execute(
+            buildJsonObject { put("path", JsonPrimitive("empty.txt")) },
+            ctx(),
+        )
+        assertTrue(r.ok)
+        assertEquals("(empty file)", r.output)
+    }
+
+    @Test
+    fun `read_file does not report a phantom trailing empty line`() = runBlocking {
+        file("two.txt").writeText("one\ntwo\n")
+        val r = ReadFileTool().execute(
+            buildJsonObject { put("path", JsonPrimitive("two.txt")) },
+            ctx(),
+        )
+        assertTrue(r.ok)
+        assertEquals("1\tone\n2\ttwo", r.output)
+    }
+
+    // --- create_dir guards ------------------------------------------------------
+
+    @Test
+    fun `create_dir fails when a file occupies the path`() = runBlocking {
+        file("occupied.txt").writeText("data")
+        val msg = runExpectingFailure(CreateDirTool(), "path" to "occupied.txt")
+        assertTrue(msg, msg.contains("already exists and is a file"))
+        assertEquals("data", file("occupied.txt").readText()) // untouched
+    }
+
+    @Test
+    fun `create_dir on existing directory is an explicit no-op`() = runBlocking {
+        file("dir").mkdirs()
+        val r = run(CreateDirTool(), "path" to "dir")
+        assertTrue(r.output, r.ok)
+        assertTrue(r.output.contains("already exists"))
+    }
+
+    @Test
+    fun `create_dir creates nested directories`() = runBlocking {
+        val r = run(CreateDirTool(), "path" to "a/b/c")
+        assertTrue(r.output, r.ok)
+        assertTrue(file("a/b/c").isDirectory)
+    }
+
+    // --- delete_file guards ------------------------------------------------------
+
+    @Test
+    fun `delete_file refuses the workspace root`() = runBlocking {
+        for (path in listOf(".", "", "./", "sub/..")) {
+            val msg = runExpectingFailure(DeleteFileTool(), "path" to path)
+            assertTrue("'$path': $msg", msg.contains("workspace root"))
+        }
+        assertTrue(tmp.root.exists()) // nothing was deleted
+    }
+
+    @Test
+    fun `delete_file refuses non-empty directory without recursive`() = runBlocking {
+        file("proj").apply { mkdirs() }
+        file("proj/inner.txt").writeText("x")
+        val msg = runExpectingFailure(DeleteFileTool(), "path" to "proj")
+        assertTrue(msg, msg.contains("recursive=true"))
+        assertTrue(file("proj/inner.txt").exists()) // untouched
+    }
+
+    @Test
+    fun `delete_file deletes non-empty directory with recursive`() = runBlocking {
+        file("proj").apply { mkdirs() }
+        file("proj/inner.txt").writeText("x")
+        val r = run(DeleteFileTool(), "path" to "proj", "recursive" to "true")
+        assertTrue(r.output, r.ok)
+        assertFalse(file("proj").exists())
+    }
+
+    @Test
+    fun `delete_file deletes empty directory without recursive`() = runBlocking {
+        file("emptydir").mkdirs()
+        val r = run(DeleteFileTool(), "path" to "emptydir")
+        assertTrue(r.output, r.ok)
+        assertFalse(file("emptydir").exists())
+    }
+
+    @Test
+    fun `delete_file deletes plain files as before`() = runBlocking {
+        file("f.txt").writeText("x")
+        val r = run(DeleteFileTool(), "path" to "f.txt")
+        assertTrue(r.output, r.ok)
+        assertFalse(file("f.txt").exists())
+    }
+
+    @Test
+    fun `long filename returns actionable guidance on ENAMETOOLONG`() = runBlocking {
+        val longName = "a".repeat(254) + ".txt"
+        val readMsg = runExpectingFailure(ReadFileTool(), "path" to longName)
+        assertTrue(readMsg, readMsg.contains("Filename exceeds filesystem limit"))
+        assertTrue(readMsg, readMsg.contains("mv"))
+
+        val infoMsg = runExpectingFailure(FileInfoTool(), "path" to longName)
+        assertTrue(infoMsg, infoMsg.contains("Filename exceeds filesystem limit"))
+
+        val moveMsg = runExpectingFailure(MoveFileTool(), "source" to longName, "destination" to "short.txt")
+        assertTrue(moveMsg, moveMsg.contains("Filename exceeds filesystem limit"))
+    }
+
+    // --- sandbox escape still blocked ---------------------------------------------
+
+    @Test
+    fun `file tools still block path escapes`() = runBlocking {
+        val msg = runExpectingFailure(WriteFileTool(), "path" to "../escape.txt", "content" to "nope")
+        assertTrue(msg, msg.contains("outside the workspace"))
+        assertFalse(tmp.root.parentFile?.resolve("escape.txt")?.exists() ?: false)
+    }
+
+    // --- file_info metadata & newline check ---------------------------------------
+
+    @Test
+    fun `file_info reports byte size, line count, and trailing newline`() = runBlocking {
+        file("has_nl.txt").writeText("line1\nline2\n")
+        val r1 = run(FileInfoTool(), "path" to "has_nl.txt")
+        assertTrue(r1.ok)
+        assertTrue(r1.output.contains("type: file"))
+        assertTrue(r1.output.contains("line_count: 2"))
+        assertTrue(r1.output.contains("trailing_newline: present"))
+
+        file("no_nl.txt").writeText("line1\nline2")
+        val r2 = run(FileInfoTool(), "path" to "no_nl.txt")
+        assertTrue(r2.ok)
+        assertTrue(r2.output.contains("type: file"))
+        assertTrue(r2.output.contains("line_count: 2"))
+        assertTrue(r2.output.contains("trailing_newline: none"))
+
+        file("folder").mkdirs()
+        val r3 = run(FileInfoTool(), "path" to "folder")
+        assertTrue(r3.ok)
+        assertTrue(r3.output.contains("type: directory"))
+    }
+
+    // --- binary & empty file checks ----------------------------------------------
+
+    @Test
+    fun `read_file refuses binary files`() = runBlocking {
+        val binBytes = ByteArray(4096) { idx -> if (idx % 10 == 0) 0.toByte() else (idx % 256).toByte() }
+        file("random.bin").writeBytes(binBytes)
+        val msg = runExpectingFailure(ReadFileTool(), "path" to "random.bin")
+        assertTrue(msg, msg.contains("binary"))
+    }
+
+    @Test
+    fun `file_info reports explicit empty marker for 0-byte file`() = runBlocking {
+        file("empty.txt").writeText("")
+        val r = run(FileInfoTool(), "path" to "empty.txt")
+        assertTrue(r.ok)
+        assertTrue(r.output.contains("size_bytes: 0"))
+        assertTrue(r.output.contains("is_empty: true"))
+        assertTrue(r.output.contains("line_count: 0"))
+    }
+
+    @Test
+    fun `file_info reports binary file without line count`() = runBlocking {
+        val binBytes = ByteArray(1024) { (it % 256).toByte() }
+        file("test.bin").writeBytes(binBytes)
+        val r = run(FileInfoTool(), "path" to "test.bin")
+        assertTrue(r.ok)
+        assertTrue(r.output.contains("is_binary: true"))
+    }
+
+    @Test
+    fun `file_info streams large single-line file promptly`() = runBlocking {
+        val largeFile = file("large.txt")
+        val size = 5_000_000
+        val bytes = ByteArray(size) { 'x'.code.toByte() }
+        largeFile.writeBytes(bytes)
+        val start = System.currentTimeMillis()
+        val r = run(FileInfoTool(), "path" to "large.txt")
+        val elapsed = System.currentTimeMillis() - start
+        assertTrue("Took ${elapsed}ms, should be under 1000ms", elapsed < 1000)
+        assertTrue(r.ok)
+        assertTrue(r.output.contains("is_empty: false"))
+        assertTrue(r.output.contains("line_count: 1"))
+        assertTrue(r.output.contains("trailing_newline: none"))
+    }
+
+    @Test
+    fun `grep skips binary files`() = runBlocking {
+        val binBytes = ByteArray(512) { 0.toByte() }
+        file("sample.bin").writeBytes(binBytes)
+        file("sample.txt").writeText("hello pattern here\n")
+        val r = run(GrepTool(), "pattern" to "pattern")
+        assertTrue(r.ok)
+        assertTrue(r.output.contains("sample.txt"))
+        assertTrue(r.output.contains("sample.bin (binary)"))
+        assertFalse(r.output.contains("sample.bin:1:"))
+    }
+
+    @Test
+    fun `read_file clamps single huge line within MAX_READ_LINE_CHARS`() = runBlocking {
+        val hugeLine = "x".repeat(300_000)
+        file("huge_line.txt").writeText(hugeLine)
+        val r = ReadFileTool().execute(
+            buildJsonObject { put("path", JsonPrimitive("huge_line.txt")) },
+            ctx(),
+        )
+        assertTrue(r.ok)
+        assertTrue("Output should contain line truncation marker", r.output.contains("[line truncated at 10000 chars]"))
+        assertTrue("Output length should be bounded around 10k chars, got ${r.output.length}", r.output.length < 15_000)
+    }
+
+    @Test
+    fun `clampForStorage bounds oversized text safely below CursorWindow ceiling`() {
+        val huge = "x".repeat(500_000)
+        val clamped = com.androidharness.app.data.clampForStorage(huge)
+        assertTrue(clamped.contains("[truncated for storage safety]"))
+        assertTrue("Clamped length must be below 260_000, got ${clamped.length}", clamped.length < 260_000)
+
+        val small = "regular message text"
+        assertEquals(small, com.androidharness.app.data.clampForStorage(small))
+    }
+
+    @Test
+    fun `move_file refuses moving directory into its parent or ancestor`() = runBlocking {
+        file("stress2/sub2/deep").mkdirs()
+        file("stress2/sub2/deep/test.txt").writeText("content")
+
+        val msg = runExpectingFailure(MoveFileTool(), "source" to "stress2/sub2", "destination" to "stress2")
+        assertTrue("Expected ancestor/parent move rejection, got: $msg", msg.contains("ancestor") || msg.contains("exists"))
+    }
+
+    @Test
+    fun `move_file refuses moving into itself or subdirectory`() = runBlocking {
+        file("stress2/sub2").mkdirs()
+        val msg = runExpectingFailure(MoveFileTool(), "source" to "stress2", "destination" to "stress2/sub2")
+        assertTrue("Expected self/sub move rejection, got: $msg", msg.contains("subdirectory") || msg.contains("itself"))
+    }
+
+    @Test
+    fun `move_file renames within same directory`() = runBlocking {
+        file("a/old.txt").apply { parentFile?.mkdirs() }.writeText("hello")
+        val r = run(MoveFileTool(), "source" to "a/old.txt", "destination" to "a/new.txt")
+        assertTrue(r.ok)
+        assertFalse(file("a/old.txt").exists())
+        assertEquals("hello", file("a/new.txt").readText())
+    }
+
+    /**
+     * QA (2026-09-21): a move onto an existing file replaced it with no error
+     * and no flag, so a typo in the destination path destroyed data.
+     */
+    @Test
+    fun `move_file refuses to overwrite an existing file`() = runBlocking {
+        file("a/keep.txt").apply { parentFile?.mkdirs() }.writeText("keep me")
+        file("b/target.txt").apply { parentFile?.mkdirs() }.writeText("original")
+        val msg = runExpectingFailure(
+            MoveFileTool(),
+            "source" to "a/keep.txt",
+            "destination" to "b/target.txt",
+        )
+        assertTrue("Expected an overwrite refusal, got: $msg", msg.contains("Destination already exists"))
+        assertEquals("original", file("b/target.txt").readText())
+        assertEquals("keep me", file("a/keep.txt").readText())
+    }
+
+    @Test
+    fun `move_file overwrites only when asked to`() = runBlocking {
+        file("a/keep.txt").apply { parentFile?.mkdirs() }.writeText("replacement")
+        file("b/target.txt").apply { parentFile?.mkdirs() }.writeText("original")
+        val r = run(
+            MoveFileTool(),
+            "source" to "a/keep.txt",
+            "destination" to "b/target.txt",
+            "overwrite" to "true",
+        )
+        assertTrue(r.output, r.ok)
+        assertEquals("replacement", file("b/target.txt").readText())
+        assertFalse(file("a/keep.txt").exists())
+    }
+
+    /**
+     * QA (2026-09-21): file_info called "a\rb\rc" one line while read_file
+     * numbered three, so the two tools disagreed about the same file.
+     */
+    @Test
+    fun `file_info and read_file agree on bare CR line counts`() = runBlocking {
+        file("cr.txt").writeBytes("a\rb\rc".toByteArray())
+        val info = run(FileInfoTool(), "path" to "cr.txt")
+        assertTrue("file_info said: ${info.output}", info.output.contains("line_count: 3"))
+
+        val read = run(ReadFileTool(), "path" to "cr.txt")
+        assertTrue("read_file said: ${read.output.replace('\r', '|')}", read.output.contains("3\tc"))
+        assertEquals(3, read.output.trimEnd().lines().size)
+    }
+
+    @Test
+    fun `file_info counts CRLF once and mixed terminators correctly`() = runBlocking {
+        file("crlf.txt").writeBytes("a\r\nb\r\n".toByteArray())
+        val crlf = run(FileInfoTool(), "path" to "crlf.txt")
+        assertTrue("CRLF counted wrong: ${crlf.output}", crlf.output.contains("line_count: 2"))
+
+        file("mixed.txt").writeBytes("a\rb\r\nc\nd".toByteArray())
+        val mixed = run(FileInfoTool(), "path" to "mixed.txt")
+        assertTrue("mixed terminators counted wrong: ${mixed.output}", mixed.output.contains("line_count: 4"))
+    }
+
+    @Test
+    fun `grep rejects contradictory include pattern on explicit file`() = runBlocking {
+        file("foo.kt").writeText("val x = 1\n")
+        val msg = runExpectingFailure(GrepTool(), "path" to "foo.kt", "pattern" to "val", "include" to "*.txt")
+        assertTrue("Expected contradiction error, got: $msg", msg.contains("excludes it"))
+    }
+
+    @Test
+    fun `grep shows the match text deep inside a long line`() = runBlocking {
+        // The QA fixture: the token sits past column 100,000 of a 210,022-byte line.
+        val token = "UNIQUE_LONG_731"
+        file("long.txt").writeText("x".repeat(100_003) + token + "y".repeat(109_000) + "\n")
+        val r = run(GrepTool(), "pattern" to token, "include" to "long.txt")
+        assertTrue(r.ok)
+        assertTrue("Match token must be visible, got: ${r.output}", r.output.contains(token))
+        assertTrue("Clipped side must be marked, got: ${r.output}", r.output.contains("..."))
+        val hit = r.output.lineSequence().first { it.contains(token) }
+        assertTrue(
+            "Excerpt must stay bounded, was ${hit.length} chars: $hit",
+            hit.length < GREP_EXCERPT_WINDOW + 40,
+        )
+    }
+
+    @Test
+    fun `grep excerpt centers on the match and marks both clipped sides`() {
+        val line = "a".repeat(1_000) + "NEEDLE" + "b".repeat(1_000)
+        val excerpt = grepExcerpt(line, 1_000)
+        assertTrue(excerpt.contains("NEEDLE"))
+        assertTrue(excerpt.startsWith("..."))
+        assertTrue(excerpt.endsWith("..."))
+        assertTrue("Excerpt must stay bounded", excerpt.length <= GREP_EXCERPT_WINDOW + 6)
+
+        // A short line is reported whole, with no truncation marker.
+        assertEquals("short NEEDLE line", grepExcerpt("short NEEDLE line", 6))
+
+        // A match at the very start has nothing to clip on the left.
+        val atStart = grepExcerpt("NEEDLE" + "b".repeat(1_000), 0)
+        assertTrue(atStart.startsWith("NEEDLE"))
+        assertFalse(atStart.startsWith("..."))
+        assertTrue(atStart.endsWith("..."))
+    }
+
+    @Test
+    fun `grep does not report skips for files outside the include filter`() = runBlocking {
+        // >2MB, so it would otherwise land in the skip list, and outside the filter.
+        java.io.RandomAccessFile(file("large.bin"), "rw").use { it.setLength(2_500_000) }
+        file("small.txt").writeText("needle here\n")
+        val r = run(GrepTool(), "pattern" to "needle", "include" to "small.txt")
+        assertTrue(r.ok)
+        assertTrue(r.output.contains("small.txt"))
+        assertFalse("A filtered-out file must not be named as skipped: ${r.output}", r.output.contains("Skipped"))
+        assertFalse(r.output.contains("large.bin"))
+    }
+
+    @Test
+    fun `grep still reports skips for oversized files inside the filter`() = runBlocking {
+        java.io.RandomAccessFile(file("large.txt"), "rw").use { it.setLength(2_500_000) }
+        file("small.txt").writeText("needle here\n")
+        val r = run(GrepTool(), "pattern" to "needle", "include" to "*.txt")
+        assertTrue(r.ok)
+        assertTrue("In-scope oversized files must still be reported: ${r.output}", r.output.contains("large.txt"))
+        assertTrue(r.output.contains("Skipped"))
+    }
+}

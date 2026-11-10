@@ -1,0 +1,35 @@
+name: GGUF GPU problem
+description: Report a problem with automatic GGUF GPU detection or CPU fallback.
+title: "[GGUF GPU] "
+labels: ["enhancement"]
+body:
+  - type: input
+    id: phone
+    attributes:
+      label: Phone model
+      placeholder: Brand, exact model name and model number
+    validations:
+      required: true
+  - type: input
+    id: chipset
+    attributes:
+      label: Chipset
+      placeholder: Snapdragon, Dimensity, Exynos or Tensor model, if known
+  - type: input
+    id: android
+    attributes:
+      label: Android version and AndroidHarness version
+    validations:
+      required: true
+  - type: textarea
+    id: model
+    attributes:
+      label: Local model and processor requested
+      description: Link the model and tell us whether you want Vulkan GPU. Do not share access tokens.
+    validations:
+      required: true
+  - type: textarea
+    id: testing
+    attributes:
+      label: Device testing
+      description: Can you test an experimental build? Include any runtime error shown in Local models.

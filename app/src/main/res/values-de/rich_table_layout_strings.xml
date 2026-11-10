@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rich_table_options">Tabellenoptionen</string>
+    <string name="rich_select_rows">Zeilen auswählen</string>
+    <string name="rich_stop_selecting_rows">Auswahl beenden</string>
+    <string name="rich_sort_rows">Zeilen sortieren</string>
+</resources>

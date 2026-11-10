@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="rich_filter_rows">"පේළි පෙරන්න"</string>
+    <string name="rich_no_rows">"ගැළපෙන පේළි නැත"</string>
+    <string name="rich_previous">"පෙර"</string>
+    <string name="rich_next">"ඊළඟ"</string>
+    <string name="rich_discuss_rows">"තෝරාගත් පේළි ගැන සාකච්ඡා කරන්න"</string>
+    <string name="rich_discuss_rows_prompt">"මා තෝරාගත් පේළි සසඳන්න."</string>
+    <string name="rich_discuss_tab">"මෙම ටැබය ගැන අසන්න"</string>
+    <string name="rich_discuss_tab_prompt">"%1$s ටැබය පැහැදිලි කරන්න."</string>
+    <string name="rich_copy">"පිටපත් කරන්න"</string>
+    <string name="rich_copied">"පිටපත් කළා"</string>
+    <string name="rich_share">"බෙදාගන්න"</string>
+    <string name="rich_share_unavailable">"මෙම පෙළ බෙදාගැනීමට යෙදුමක් නොමැත."</string>
+    <string name="rich_images_hidden">"මෙම කතාබහේ රූප අක්‍රිය කර ඇත."</string>
+    <string name="rich_expand_image">"රූපය විශාල කරන්න"</string>
+    <string name="rich_open_source">"මූලාශ්‍රය විවෘත කරන්න"</string>
+    <string name="rich_discuss_image">"මෙම රූපය ගැන අසන්න"</string>
+    <string name="rich_discuss_image_prompt">"මා තෝරාගත් රූපය පැහැදිලි කරන්න."</string>
+    <string name="rich_reported_status">"වාර්තා කළේ: %1$s"</string>
+    <string name="rich_passed">"සමත්"</string>
+    <string name="rich_failed">"අසාර්ථකයි"</string>
+    <string name="rich_unverified">"තහවුරු කර නැත"</string>
+    <string name="rich_open_file">"ගොනුව විවෘත කරන්න"</string>
+    <string name="rich_show_less">"අඩුවෙන් පෙන්වන්න"</string>
+    <string name="rich_show_all">"සියල්ල පෙන්වන්න"</string>
+    <string name="rich_changes">"වෙනස්කම්"</string>
+    <string name="rich_before">"පෙර"</string>
+    <string name="rich_after">"පසු"</string>
+    <string name="rich_change_count">"එක් කළේ %1$d · ඉවත් කළේ %2$d"</string>
+    <string name="rich_discuss_diff">"මෙම වෙනස්කම් ගැන සාකච්ඡා කරන්න"</string>
+    <string name="rich_discuss_diff_prompt">"මෙම සැසඳීම සහ එහි වාසි හා අවාසි පැහැදිලි කරන්න."</string>
+    <string name="rich_input_range">"%1$s සිට %2$s දක්වා"</string>
+    <string name="rich_result_unavailable">"ආදාන හෝ සූත්‍රය පරීක්ෂා කරන්න"</string>
+    <string name="rich_reset">"යළි සකසන්න"</string>
+    <string name="rich_discuss_values">"මෙම අගයන් ගැන අසන්න"</string>
+    <string name="rich_discuss_values_prompt">"මගේ වත්මන් අගයන් භාවිත කර ප්‍රතිඵලය පැහැදිලි කරන්න."</string>
+    <string name="rich_chart_range">"පෙනෙන පරාසය"</string>
+    <string name="rich_reset_range">"සම්පූර්ණ පරාසය පෙන්වන්න"</string>
+    <string name="rich_chart_label">"ලේබල්"</string>
+    <string name="rich_discuss_chart">"මෙම ප්‍රස්තාරය ගැන අසන්න"</string>
+    <string name="rich_discuss_chart_prompt">"මා තෝරාගත් ප්‍රස්තාර ලක්ෂ්‍යය සහ පෙනෙන දත්ත කට්ටල පැහැදිලි කරන්න."</string>
+    <string name="rich_select_point">"%1$s තෝරන්න"</string>
+    <string name="rich_selected_count">"%1$d තෝරා ඇත"</string>
+    <string name="rich_clear_selection">"තේරීම ඉවත් කරන්න"</string>
+    <string name="rich_adjust_input">"%1$s සකසන්න"</string>
+</resources>

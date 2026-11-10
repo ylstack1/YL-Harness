@@ -1,0 +1,168 @@
+package com.androidharness.app.tools
+
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
+import org.junit.Test
+
+/**
+ * Parser and backend-selection guarantees for the web_search API backends.
+ * Network calls are not exercised; the JSON shapes mirror real responses.
+ */
+class SearchBackendTest {
+
+    @Test
+    fun `brave parser maps web results`() {
+        val body = """
+            {"web":{"results":[
+                {"title":"Kotlin Lang","url":"https://kotlinlang.org","description":"A modern language"},
+                {"title":"No url here","description":"dropped"},
+                {"url":"https://no-title.example","description":"dropped too"}
+            ]}}
+        """.trimIndent()
+        val results = BraveSearchParser.parse(body)
+        assertEquals(1, results.size)
+        assertEquals("Kotlin Lang", results[0].title)
+        assertEquals("https://kotlinlang.org", results[0].url)
+        assertEquals("A modern language", results[0].snippet)
+    }
+
+    @Test
+    fun `brave parser survives garbage and misses`() {
+        assertEquals(emptyList<WebSearchResult>(), BraveSearchParser.parse("not json"))
+        assertEquals(emptyList<WebSearchResult>(), BraveSearchParser.parse("{}"))
+        assertEquals(emptyList<WebSearchResult>(), BraveSearchParser.parse("{\"web\":{}}"))
+    }
+
+    @Test
+    fun `tavily parser maps results with content snippets`() {
+        val body = """
+            {"results":[
+                {"title":"Tavily","url":"https://tavily.com","content":"Search API for LLMs"},
+                {"title":"Bad","url":"not-a-url","content":"filtered"}
+            ]}
+        """.trimIndent()
+        val results = TavilySearchParser.parse(body)
+        assertEquals(1, results.size)
+        assertEquals("Tavily", results[0].title)
+        assertEquals("https://tavily.com", results[0].url)
+        assertEquals("Search API for LLMs", results[0].snippet)
+        assertEquals(emptyList<WebSearchResult>(), TavilySearchParser.parse("garbage"))
+    }
+
+    @Test
+    fun `brave and tavily parsers keep publication dates`() {
+        val age = BraveSearchParser.parse(
+            """{"web":{"results":[{"title":"News","url":"https://news.test/a","description":"d","age":"2 days ago"}]}}""",
+        )
+        assertEquals("2 days ago", age.single().date)
+        val pageAge = BraveSearchParser.parse(
+            """{"web":{"results":[{"title":"News","url":"https://news.test/a","description":"d","page_age":"2026-10-20T10:00:00"}]}}""",
+        )
+        assertEquals("2026-10-20", pageAge.single().date)
+        val tavily = TavilySearchParser.parse(
+            """{"results":[{"title":"News","url":"https://news.test/b","content":"c","published_date":"2026-10-19T08:00:00"}]}""",
+        )
+        assertEquals("2026-10-19", tavily.single().date)
+    }
+
+    @Test
+    fun `backend selection follows provider and key`() {
+        assertNull(searchBackendFor(null))
+        assertNull(searchBackendFor(SearchApiConfig("keyless", "ignored")))
+        assertNull(searchBackendFor(SearchApiConfig("brave", "   ")))
+        assertNull(searchBackendFor(SearchApiConfig("unknown-api", "key")))
+        assertTrue(searchBackendFor(SearchApiConfig("brave", "BSA123")) is BraveApiBackend)
+        assertTrue(searchBackendFor(SearchApiConfig("tavily", "tvly-1")) is TavilyApiBackend)
+        // Provider ids are matched case-insensitively and trimmed.
+        assertTrue(searchBackendFor(SearchApiConfig(" BRAVE ", "BSA123")) is BraveApiBackend)
+    }
+
+    @Test
+    fun `keyless parser routes by engine id`() {
+        val ddg = KeylessSearchBackend().parse(
+            "duckduckgo",
+            "<a class=\"result__a\" href=\"//duckduckgo.com/l/?uddg=https%3A%2F%2Fexample.com%2Fa\">Example A</a>" +
+                "<a class=\"result__snippet\" href=\"#\">Snippet text</a>",
+        )
+        assertEquals(1, ddg.size)
+        assertEquals("https://example.com/a", ddg[0].url)
+        assertEquals("Example A", ddg[0].title)
+        assertEquals("Snippet text", ddg[0].snippet)
+        // Unknown engines fall through to the google parser, which finds nothing here.
+        assertEquals(emptyList<WebSearchResult>(), KeylessSearchBackend().parse("???", "<html></html>"))
+    }
+
+    @Test
+    fun `brave parser ignores footer security links and returns empty on no results`() {
+        val noResultsHtml = """
+            <html>
+                <body>
+                    <div id="results">
+                        <div class="no-results">No results found</div>
+                    </div>
+                    <footer>
+                        <a href="https://hackerone.com/brave">Report a security issue</a>
+                        <a href="https://brave.com/terms">Terms</a>
+                    </footer>
+                </body>
+            </html>
+        """.trimIndent()
+        val results = KeylessSearchBackend().parse("brave", noResultsHtml)
+        assertEquals(0, results.size)
+    }
+
+    @Test
+    fun `brave parser extracts valid search snippets inside results container`() {
+        val validHtml = """
+            <html>
+                <body>
+                    <div id="results">
+                        <div class="snippet">
+                            <a href="https://kotlinlang.org">Kotlin Programming Language</a>
+                            <p class="snippet-description">Official site for Kotlin programming language.</p>
+                        </div>
+                    </div>
+                    <footer>
+                        <a href="https://hackerone.com/brave">Report a security issue</a>
+                    </footer>
+                </body>
+            </html>
+        """.trimIndent()
+        val results = KeylessSearchBackend().parse("brave", validHtml)
+        assertEquals(1, results.size)
+        assertEquals("Kotlin Programming Language", results[0].title)
+        assertEquals("https://kotlinlang.org", results[0].url)
+        assertEquals("Official site for Kotlin programming language.", results[0].snippet)
+    }
+
+    @Test
+    fun `web_search rejects unknown engine and non-positive count`() = kotlinx.coroutines.runBlocking {
+        val tool = WebSearchTool(okhttp3.OkHttpClient())
+        try {
+            tool.execute(
+                kotlinx.serialization.json.buildJsonObject {
+                    put("query", kotlinx.serialization.json.JsonPrimitive("test"))
+                    put("count", kotlinx.serialization.json.JsonPrimitive(0))
+                },
+                ToolContext(com.androidharness.app.workspace.FileFs(java.io.File("/tmp"))),
+            )
+            org.junit.Assert.fail("Expected failure for count=0")
+        } catch (e: ToolFailure) {
+            assertTrue(e.message?.contains("count must be greater than 0") == true)
+        }
+
+        try {
+            tool.execute(
+                kotlinx.serialization.json.buildJsonObject {
+                    put("query", kotlinx.serialization.json.JsonPrimitive("test"))
+                    put("engine", kotlinx.serialization.json.JsonPrimitive("askjeeves"))
+                },
+                ToolContext(com.androidharness.app.workspace.FileFs(java.io.File("/tmp"))),
+            )
+            org.junit.Assert.fail("Expected failure for unknown engine")
+        } catch (e: ToolFailure) {
+            assertTrue(e.message?.contains("Unknown engine") == true)
+        }
+    }
+}

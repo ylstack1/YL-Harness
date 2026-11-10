@@ -1,0 +1,67 @@
+# --- Build outputs / local machine ---
+build/
+.gradle/
+.cxx/
+.kotlin/
+local.properties
+.env
+.env.*
+!.env.example
+secrets.properties
+keystore.properties
+key.properties
+*.apk
+*.aab
+*.ap_
+captures/
+
+# --- IDE ---
+.idea/
+*.iml
+.vscode/
+.run/
+
+# --- AI assistant working files ---
+.zcode/
+.zcodeignore
+.claude/
+.agents/
+.codex/
+.codex-attachments/
+.codegraph/
+.cursor/
+/skills/
+graphify-out/
+
+# --- Not part of the published source tree ---
+docs/*
+!docs/configuration/
+!docs/harness.schema.json
+screenshots/
+mock-server.js
+README.full.md
+android-harness-website/
+
+# --- OS noise ---
+.DS_Store
+Thumbs.db
+
+# --- AI assistant working files --- (continued)
+.hermes/
+research/
+
+
+# --- Signing ---
+signing-keys/
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.key
+*-private.pem
+id_rsa
+id_ed25519
+
+# --- Backend dependencies / local logs ---
+node_modules/
+*.log
