@@ -449,7 +449,7 @@ class OpenAiCompatProvider(
             HarnessProvider.withSession(requestBuilder, options.cacheKey)
         }
         if ("openrouter.ai" in host) {
-            requestBuilder.header("HTTP-Referer", "https://github.com/ylstack1/YL Harness")
+            requestBuilder.header("HTTP-Referer", "https://github.com/ylstack1/YL-Harness")
             requestBuilder.header("X-Title", "YL Harness")
         }
         return ProviderHeaders.apply(requestBuilder, config).post(body).build()

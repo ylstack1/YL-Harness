@@ -11,8 +11,8 @@ class UpdateInstallPolicyTest {
             assertFalse(UpdateInstallPolicy.succeeded(exit, timed, output))
     }
     @Test fun onlyThisRepositoriesHttpsReleaseAssetsCanBeDownloaded() {
-        assertTrue(UpdateInstallPolicy.trustedAsset("https://github.com/ylstack1/YL Harness/releases/download/v3/app.apk"))
-        for (url in listOf("http://github.com/ylstack1/YL Harness/releases/download/a/a.apk", "https://github.com.evil/ylstack1/YL Harness/releases/download/a/a.apk", "https://user@github.com/ylstack1/YL Harness/releases/download/a/a.apk", "https://github.com/other/app/releases/download/a/a.apk", "file:///tmp/app.apk", "https://github.com/ylstack1/YL Harness/releases/download/a/a.apk?token=secret")) assertFalse(url, UpdateInstallPolicy.trustedAsset(url))
+        assertTrue(UpdateInstallPolicy.trustedAsset("https://github.com/ylstack1/YL-Harness/releases/download/v3/app.apk"))
+        for (url in listOf("http://github.com/ylstack1/YL-Harness/releases/download/a/a.apk", "https://github.com.evil/ylstack1/YL-Harness/releases/download/a/a.apk", "https://user@github.com/ylstack1/YL-Harness/releases/download/a/a.apk", "https://github.com/other/app/releases/download/a/a.apk", "file:///tmp/app.apk", "https://github.com/ylstack1/YL-Harness/releases/download/a/a.apk?token=secret")) assertFalse(url, UpdateInstallPolicy.trustedAsset(url))
     }
     @Test fun packageVersionAndSigningIdentityMustBeCompatibleIncludingValidRotationHistory() {
         fun valid(pkg: String = "app", version: Long = 20, signers: Set<String> = setOf("current"), history: Set<String> = signers) =

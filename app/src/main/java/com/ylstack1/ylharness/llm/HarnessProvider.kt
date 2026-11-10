@@ -111,7 +111,7 @@ object HarnessProvider {
         .readTimeout(90, TimeUnit.SECONDS)
         .addInterceptor { chain ->
             chain.proceed(chain.request().newBuilder()
-                .header("HTTP-Referer", "https://github.com/ylstack1/YL Harness")
+                .header("HTTP-Referer", "https://github.com/ylstack1/YL-Harness")
                 .header("X-Title", "Harness")
                 .build())
         }
@@ -180,7 +180,7 @@ object HarnessProvider {
         val builder = request.newBuilder()
             .removeHeader("Authorization")
             .removeHeader("x-api-key")
-            .header("HTTP-Referer", "https://github.com/ylstack1/YL Harness")
+            .header("HTTP-Referer", "https://github.com/ylstack1/YL-Harness")
             .header("X-Title", "Harness")
         withSession(builder, request.header(SESSION_HEADER))
         return builder.build()

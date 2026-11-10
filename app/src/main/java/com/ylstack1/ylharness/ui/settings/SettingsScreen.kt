@@ -3551,8 +3551,8 @@ private fun UpdatesCard(container: AppContainer) {
 // ---------------------------------------------------------------------------
 
 private const val AUTHOR_URL = "https://github.com/ylstack1"
-private const val REPO_URL = "https://github.com/ylstack1/YL Harness"
-private const val LICENSE_URL = "https://github.com/ylstack1/YL Harness/blob/main/LICENSE"
+private const val REPO_URL = "https://github.com/ylstack1/YL-Harness"
+private const val LICENSE_URL = "https://github.com/ylstack1/YL-Harness/blob/main/LICENSE"
 
 /** Installed version, shared by the About page and the update card. */
 private fun appVersionLabel(context: Context): String = runCatching {
@@ -3635,7 +3635,7 @@ private fun AboutSection(container: AppContainer) {
                 Icon(Icons.Outlined.Code, contentDescription = null, tint = scheme.onSurfaceVariant, modifier = Modifier.size(22.dp))
             },
             title = stringResource(R.string.settings_about_source),
-            subtitle = "github.com/ylstack1/YL Harness",
+            subtitle = "github.com/ylstack1/YL-Harness",
             onClick = { open(REPO_URL) },
             trailing = { ExternalLinkIcon() },
         )

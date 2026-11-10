@@ -17,7 +17,7 @@ internal object UpdateInstallPolicy {
     fun trustedAsset(url: String): Boolean = runCatching {
         val uri = java.net.URI(url)
         uri.scheme == "https" && uri.host == "github.com" && uri.port in listOf(-1, 443) && uri.userInfo == null &&
-            uri.path.startsWith("/ylstack1/YL Harness/releases/download/") && uri.query == null && uri.fragment == null
+            uri.path.startsWith("/ylstack1/YL-Harness/releases/download/") && uri.query == null && uri.fragment == null
     }.getOrDefault(false)
     fun compatible(installedPackage: String, candidatePackage: String, installedVersion: Long, candidateVersion: Long,
         currentSigners: Set<String>, candidateSigners: Set<String>, candidateHistory: Set<String>): Boolean =

@@ -167,7 +167,7 @@ class SkillStoreTest {
     }
 
     @Test fun `bundled environment guide references all load through the app skill parser`() {
-        val folder = java.io.File("src/main/assets/skills/ylharness-environment")
+        val folder = java.io.File("app/src/main/assets/skills/ylharness-environment")
         val raw = folder.resolve("SKILL.md").readText()
         val parsed = SkillParser.parse(raw)
         assertEquals("ylharness-environment", parsed.name)

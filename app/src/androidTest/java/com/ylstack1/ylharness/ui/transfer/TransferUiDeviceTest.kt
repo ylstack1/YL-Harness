@@ -134,7 +134,7 @@ class TransferUiDeviceTest {
                     assertEquals(method, UpdateManager(c.appContext, c.deviceAccess).installMethod.value)
                 }
             }
-            val release = UpdateManager.LatestRelease("3", "3", "", "https://github.com/ylstack1/YL Harness/releases", null, null, 0)
+            val release = UpdateManager.LatestRelease("3", "3", "", "https://github.com/ylstack1/YL-Harness/releases", null, null, 0)
             val step = mutableStateOf<UpdateManager.Step>(UpdateManager.Step.Installing(release, false, viaRoot = true))
             openUi(scale = 1f) { UpdateDialog(step.value, {}, {}) }.use { scenario ->
                 await { find("Installing via Root") != null }

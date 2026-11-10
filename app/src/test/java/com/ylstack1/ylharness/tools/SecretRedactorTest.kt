@@ -69,7 +69,7 @@ class SecretRedactorTest {
 
     @Test
     fun `plain urls without userinfo are untouched`() {
-        val src = "https://github.com/ylstack1/YL Harness.git https://example.com/a?b=1"
+        val src = "https://github.com/ylstack1/YL-Harness.git https://example.com/a?b=1"
         assertTrue(SecretRedactor.redact(src) == src)
     }
 

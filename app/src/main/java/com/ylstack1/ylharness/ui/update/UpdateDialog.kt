@@ -384,7 +384,7 @@ private fun ReleaseAvailableContent(release: UpdateManager.LatestRelease) {
                     media = false,
                     onOpenUrl = { url ->
                         val finalUrl = if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                            "https://github.com/ylstack1/YL Harness/blob/main/$url"
+                            "https://github.com/ylstack1/YL-Harness/blob/main/$url"
                         } else url
                         runCatching {
                             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(finalUrl)))
