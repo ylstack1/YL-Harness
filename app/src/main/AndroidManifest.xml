@@ -75,7 +75,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:enableOnBackInvokedCallback="true"
-        android:theme="@style/Theme.YL Harness">
+        android:theme="@style/Theme.YL_Harness">
 
         <service android:name=".data.transfer.FtpShareService" android:exported="false" android:foregroundServiceType="dataSync" />
 
