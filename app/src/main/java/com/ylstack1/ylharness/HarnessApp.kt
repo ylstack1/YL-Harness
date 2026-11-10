@@ -275,6 +275,8 @@ class AppContainer(val appContext: Context) {
         appSettings = settings,
         externalAgentManager = externalAgentManager,
     )
+    // Resolve circular dependency: ExternalAgentManager needs ToolRegistry
+    externalAgentManager.toolRegistry = registry
     val mcp = com.ylstack1.ylharness.tools.mcp.McpManager(appContext, linuxEnv, keys, codeGraph, configuration)
     val github = com.ylstack1.ylharness.github.GitHubAuth(BuildConfig.GITHUB_CLIENT_ID,
         keys::githubCredential, keys::putGitHubCredential, { refreshGitHubAuth() })
