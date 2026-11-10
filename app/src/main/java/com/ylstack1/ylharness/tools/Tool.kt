@@ -99,6 +99,7 @@ class ToolRegistry(private val tools: List<Tool>) {
             pullRequests: (() -> com.ylstack1.ylharness.github.PullRequestPublisher?)? = null,
             sessionMessages: suspend (String) -> List<com.ylstack1.ylharness.core.ChatMessage> = { emptyList() },
             appSettings: com.ylstack1.ylharness.data.SettingsRepository? = null,
+            externalAgentManager: com.ylstack1.ylharness.agent.ExternalAgentManager? = null,
         ): ToolRegistry {
             val baseTools = mutableListOf<Tool>(
                 ListDirTool(),
@@ -154,6 +155,9 @@ class ToolRegistry(private val tools: List<Tool>) {
                 CodeGraphAffectedTool(codeGraph),
                 CodeGraphSyncTool(codeGraph),
             )
+            externalAgentManager?.let {
+                baseTools += ExternalAgentTool(it)
+            }
             if (appSettings != null) {
                 val read: suspend () -> com.ylstack1.ylharness.data.AppSettings = { appSettings.settings.first() }
                 baseTools += AppSettingsFindTool(read)

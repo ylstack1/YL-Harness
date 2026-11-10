@@ -254,6 +254,9 @@ class AppContainer(val appContext: Context) {
         },
     )
     val browser = com.ylstack1.ylharness.browser.BrowserController(appContext, images)
+    val externalAgentManager = com.ylstack1.ylharness.agent.ExternalAgentManager(
+        appContext, linuxEnv, shellRouter, fetchClient
+    )
     val registry = ToolRegistry.default(
         fetchClient, todoStore, backgroundProcesses, linuxEnv, shizuku, shellRouter, skills, codeGraph,
         imageStore = images,
@@ -270,6 +273,7 @@ class AppContainer(val appContext: Context) {
         pullRequests = { githubRepositories },
         sessionMessages = { sessions.messages(it) },
         appSettings = settings,
+        externalAgentManager = externalAgentManager,
     )
     val mcp = com.ylstack1.ylharness.tools.mcp.McpManager(appContext, linuxEnv, keys, codeGraph, configuration)
     val github = com.ylstack1.ylharness.github.GitHubAuth(BuildConfig.GITHUB_CLIENT_ID,
