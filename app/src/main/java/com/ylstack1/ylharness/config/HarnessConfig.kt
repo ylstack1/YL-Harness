@@ -15,6 +15,18 @@ data class ConfigCommandHook(val event: String, val command: String, val matcher
 data class ConfigPlugin(val name: String, val script: String, val hooks: Set<String>, val commands: List<ConfigCommandHook> = emptyList(), val root: String = "")
 data class ConfigMemory(val file: String = ".harness/memory.md", val topics: String = ".harness/memory",
     val autoRecall: Boolean = true, val maxLines: Int = 120)
+data class ExternalAgentConfig(
+    val id: String,
+    val name: String,
+    val enabled: Boolean = false,
+    val autoStart: Boolean = false,
+    val provider: String? = null,
+    val model: String? = null,
+    val workingDir: String? = null,
+    val tier: String? = null,
+    val toolMapping: Map<String, String> = emptyMap(),
+    val extraArgs: List<String> = emptyList(),
+)
 data class ConfigServerSource(val name: String, val plugin: String? = null, val source: String)
 
 data class HarnessConfig(
@@ -28,6 +40,7 @@ data class HarnessConfig(
     val servers: List<McpServerConfig> = emptyList(),
     val permissions: Map<String, String> = emptyMap(),
     val agents: Map<String, ConfigAgent> = emptyMap(), val defaultAgent: String = "default",
+    val externalAgents: Map<String, ExternalAgentConfig> = emptyMap(),
     val memory: ConfigMemory = ConfigMemory(),
     val plugins: List<ConfigPlugin> = emptyList(),
     val warnings: List<String> = emptyList(),
@@ -344,6 +357,20 @@ class HarnessConfigLoader(
             ConfigAgent(name, v["description"]?.string().orEmpty(), instructionFiles(v["instructions"]?.items.orEmpty()),
                 v["tools"]?.fields.orEmpty().mapValues { it.value.json.jsonPrimitive.boolean })
         }
+        val externalAgents = root["externalAgents"]?.fields.orEmpty().filterValues { it.json !is JsonNull }.mapValues { (id, v) ->
+            ExternalAgentConfig(
+                id = id,
+                name = v["name"]?.string()?.orEmpty() ?: id,
+                enabled = v["enabled"]?.json?.jsonPrimitive?.booleanOrNull ?: false,
+                autoStart = v["autoStart"]?.json?.jsonPrimitive?.booleanOrNull ?: false,
+                provider = v["provider"]?.string()?.takeIf { it.isNotEmpty() },
+                model = v["model"]?.string()?.takeIf { it.isNotEmpty() },
+                workingDir = v["workingDir"]?.string()?.takeIf { it.isNotEmpty() },
+                tier = v["tier"]?.string()?.takeIf { it.isNotEmpty() },
+                toolMapping = v["toolMapping"]?.fields.orEmpty().mapValues { it.value.string()?.orEmpty() },
+                extraArgs = v["extraArgs"]?.items.orEmpty().map { it.string()?.orEmpty() },
+            )
+        }
         val instructions = (pluginInstructions + rootInstructions).distinctBy { it.source to it.path }
         require(instructions.sumOf { it.text.length } <= 64_000) { "Combined plugin and project instructions exceed 64,000 characters." }
         val serverSources = linkedMapOf<String, ConfigServerSource>()
@@ -373,6 +400,7 @@ class HarnessConfigLoader(
             root["skills"]?.get("auto_load")?.strings().orEmpty(), servers,
             root["permissions"]?.fields.orEmpty().filterValues { it.json !is JsonNull }.mapValues { it.value.string()!! },
             agents, root["default_agent"]?.string() ?: "default",
+            externalAgents,
             ConfigMemory(mem?.get("file")?.string() ?: ".harness/memory.md", mem?.get("topics_dir")?.string() ?: ".harness/memory",
                 mem?.get("auto_recall")?.json?.jsonPrimitive?.booleanOrNull ?: true, mem?.get("max_core_lines")?.json?.jsonPrimitive?.intOrNull ?: 120),
             plugins, warnings.toList(), sources.values.joinToString("\n") { "${it.id}\n${it.text}" } + plugins.joinToString { it.script + it.commands.joinToString("\n") { c -> "${c.event} ${c.matcher} ${c.command}" } }, sensitiveValues.toSet(), serverSources)

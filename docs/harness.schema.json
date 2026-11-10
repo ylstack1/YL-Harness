@@ -496,12 +496,93 @@
             ]
           }
         },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "default_agent": {
+        "externalAgents": {
+          "anyOf": [
+            {
+              "type": "object",
+              "propertyNames": {
+                "pattern": "^[a-z0-9_-]{1,48}$"
+              },
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "anyOf": [
+                          { "type": "string" },
+                          { "type": "null" }
+                        ]
+                      },
+                      "enabled": {
+                        "anyOf": [
+                          { "type": "boolean" },
+                          { "type": "null" }
+                        ]
+                      },
+                      "autoStart": {
+                        "anyOf": [
+                          { "type": "boolean" },
+                          { "type": "null" }
+                        ]
+                      },
+                      "provider": {
+                        "anyOf": [
+                          { "type": "string" },
+                          { "type": "null" }
+                        ]
+                      },
+                      "model": {
+                        "anyOf": [
+                          { "type": "string" },
+                          { "type": "null" }
+                        ]
+                      },
+                      "workingDir": {
+                        "anyOf": [
+                          { "type": "string" },
+                          { "type": "null" }
+                        ]
+                      },
+                      "tier": {
+                        "anyOf": [
+                          { "type": "string" },
+                          { "type": "null" }
+                        ]
+                      },
+                      "toolMapping": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": { "type": "string" }
+                          },
+                          { "type": "null" }
+                        ]
+                      },
+                      "extraArgs": {
+                        "anyOf": [
+                          {
+                            "type": "array",
+                            "items": { "type": "string" }
+                          },
+                          { "type": "null" }
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default_agent": {
       "anyOf": [
         {
           "type": "string"

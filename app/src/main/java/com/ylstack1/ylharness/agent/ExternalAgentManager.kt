@@ -5,6 +5,7 @@ import com.androidharness.app.tools.Tool
 import com.androidharness.app.tools.ToolContext
 import com.androidharness.app.tools.ToolRegistry
 import com.androidharness.app.tools.ToolResult
+import com.androidharness.app.config.ExternalAgentConfig
 import com.androidharness.app.data.env.LinuxEnvironmentManager
 import com.androidharness.app.data.env.ShellTierRouter
 import kotlinx.coroutines.Dispatchers
