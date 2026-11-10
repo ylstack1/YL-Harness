@@ -148,7 +148,7 @@ The repair is request-scoped. Stored history, the chat transcript, and the datab
 
 - Custom headers are limited to 20, cannot override managed authentication or connection headers, must be unique and single-line, and are excluded for managed provider ids. When any header is enabled, redirects are disabled so credentials cannot follow a redirect.
 - `LOCAL_KEY` is a sentinel, not a credential. `buildRequest` omits `Authorization` when the key is blank or equals `LOCAL_KEY`, because some local servers reject an empty bearer.
-- OpenRouter requests add `HTTP-Referer: https://github.com/Sanuu7/AndroidHarness` and `X-Title: Android Harness`.
+- OpenRouter requests add `HTTP-Referer: https://github.com/ylstack1/YL Harness` and `X-Title: YL Harness`.
 - A `Failure` clears accumulated tool calls, so partial arguments never execute even if `[DONE]` follows.
 - Object-shaped tool arguments replace earlier fragments rather than appending, which supports gateways that send one complete JSON snapshot.
 - Responses usage is held until completion and emitted once, so a usage-only event cannot inflate totals.
@@ -166,13 +166,13 @@ The repair is request-scoped. Stored history, the chat transcript, and the datab
 - `parseChunk` contains a `println("HarnessUsage: ...")` diagnostic at `OpenAiCompatProvider.kt#L297`. It prints the raw usage object on every request that reports usage, so log output can be noisy in debug builds.
 - Responses has no `CompatHistory` equivalent. A malformed tool exchange from an older chat may be sent as-is to `/responses`, which relies on `function_call_output` pairing.
 
-Sources: [app/src/main/java/com/androidharness/app/llm/OpenAiCompatProvider.kt](../app/src/main/java/com/androidharness/app/llm/OpenAiCompatProvider.kt)#L39-L575), [app/src/main/java/com/androidharness/app/llm/OpenAiResponsesProvider.kt](../app/src/main/java/com/androidharness/app/llm/OpenAiResponsesProvider.kt)#L31-L353), [app/src/main/java/com/androidharness/app/llm/CompatHistory.kt](../app/src/main/java/com/androidharness/app/llm/CompatHistory.kt)#L8-L41), [app/src/main/java/com/androidharness/app/llm/PromptCachePolicy.kt](../app/src/main/java/com/androidharness/app/llm/PromptCachePolicy.kt)#L5-L15), [app/src/main/java/com/androidharness/app/llm/ProviderHeaders.kt](../app/src/main/java/com/androidharness/app/llm/ProviderHeaders.kt)#L13-L55)
+Sources: [app/src/main/java/com/ylstack1/ylharness/llm/OpenAiCompatProvider.kt](../app/src/main/java/com/ylstack1/ylharness/llm/OpenAiCompatProvider.kt)#L39-L575), [app/src/main/java/com/ylstack1/ylharness/llm/OpenAiResponsesProvider.kt](../app/src/main/java/com/ylstack1/ylharness/llm/OpenAiResponsesProvider.kt)#L31-L353), [app/src/main/java/com/ylstack1/ylharness/llm/CompatHistory.kt](../app/src/main/java/com/ylstack1/ylharness/llm/CompatHistory.kt)#L8-L41), [app/src/main/java/com/ylstack1/ylharness/llm/PromptCachePolicy.kt](../app/src/main/java/com/ylstack1/ylharness/llm/PromptCachePolicy.kt)#L5-L15), [app/src/main/java/com/ylstack1/ylharness/llm/ProviderHeaders.kt](../app/src/main/java/com/ylstack1/ylharness/llm/ProviderHeaders.kt)#L13-L55)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/llm/OpenAiCompatProvider.kt`
-- `app/src/main/java/com/androidharness/app/llm/OpenAiResponsesProvider.kt`
-- `app/src/main/java/com/androidharness/app/llm/CompatHistory.kt`
-- `app/src/main/java/com/androidharness/app/llm/PromptCachePolicy.kt`
-- `app/src/main/java/com/androidharness/app/llm/ProviderHeaders.kt`
-- `app/src/main/java/com/androidharness/app/llm/ProviderNetwork.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/OpenAiCompatProvider.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/OpenAiResponsesProvider.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/CompatHistory.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/PromptCachePolicy.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/ProviderHeaders.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/ProviderNetwork.kt`

@@ -41,7 +41,7 @@ Follow `references/gradle-on-device.md`. In short: use `./gradlew` when it exist
 1. Tell the user the APK path. Copy it somewhere a file manager can reach when needed: `cp <apk> /sdcard/Download/`.
 2. Install, in this order:
    - With Shizuku or root (check `env_status`): `pm install -r <apk>`. Check: output contains `Success`.
-   - Otherwise ask the user to open the APK from the Files screen or any file manager and tap Install. The Play Store build of AndroidHarness cannot install packages itself, a file manager can.
+   - Otherwise ask the user to open the APK from the Files screen or any file manager and tap Install. The Play Store build of YL Harness cannot install packages itself, a file manager can.
 3. Confirm before claiming it is installed: `pm list packages <package>` when privileged, or the user's confirmation.
 4. Launch with `monkey -p <package> -c android.intent.category.LAUNCHER 1` (privileged), or ask the user to open it. Then `read_logcat` with `package_name` and fix crashes with the `android-crash` skill.
 

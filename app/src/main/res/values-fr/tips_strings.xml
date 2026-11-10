@@ -20,8 +20,8 @@
     <string name="tip_chat_instructions">"Ajoutez des instructions suivies par chaque conversation, comme votre ton ou votre langue préférée, dans les options Chat."</string>
     <string name="tip_tts">"Les réponses peuvent être lues automatiquement à haute voix. Choisissez une voix et une vitesse dans les paramètres vocaux."</string>
     <string name="tip_agents_md">"Mettez les règles du projet dans AGENTS.md et l\'agent les suit à chaque exécution."</string>
-    <string name="tip_memory_off">"Activez la mémoire pour que AndroidHarness se souvienne de vos préférences et décisions lors des discussions."</string>
-    <string name="tip_memory_on">"La mémoire est activée. Vous pouvez consulter ou supprimer ce dont AndroidHarness se souvient à tout moment."</string>
+    <string name="tip_memory_off">"Activez la mémoire pour que YL Harness se souvienne de vos préférences et décisions lors des discussions."</string>
+    <string name="tip_memory_on">"La mémoire est activée. Vous pouvez consulter ou supprimer ce dont YL Harness se souvient à tout moment."</string>
     <string name="tip_thinking">"Appuyez sur le niveau de réflexion dans l’en-tête pour échanger la vitesse contre un raisonnement plus approfondi."</string>
     <string name="tip_glass">"Essayez Harness Glass pour des surfaces translucides en couches dans l\'application."</string>
     <string name="tip_compact">"Vous manquez de contexte ? Tapez /compact pour résumer la conversation et continuer."</string>
@@ -30,7 +30,7 @@
     <string name="tip_dual_planning">"Utilisez un modèle pour planifier et un autre, moins cher, pour réaliser le plan."</string>
     <string name="tip_codegraph">"Installez CodeGraph pour que l\'agent trouve les appelants et le code concerné sans lire chaque fichier."</string>
     <string name="tip_whisper">"Dictez avec Groq Whisper pour une saisie vocale rapide et précise dans de nombreuses langues."</string>
-    <string name="tip_app_lock">"Verrouillez le AndroidHarness avec votre empreinte digitale, votre visage ou votre appareil PIN."</string>
+    <string name="tip_app_lock">"Verrouillez le YL Harness avec votre empreinte digitale, votre visage ou votre appareil PIN."</string>
     <string name="tip_mcp">"Connectez les serveurs MCP pour donner à l\'agent plus d\'outils."</string>
     <string name="tip_web_search">"Choisissez votre backend de recherche Web : Keyless, Brave ou Tavily."</string>
     <string name="tip_theme">"Choisissez une palette de couleurs ou créez la vôtre dans Apparence."</string>
@@ -47,7 +47,7 @@
     <string name="tip_config">"Partagez les paramètres du projet avec votre dépôt via harnais.json."</string>
     <string name="tip_shizuku">"Configurez Shizuku pour que l\'agent puisse utiliser un accès shell élevé sur votre appareil."</string>
     <string name="tip_plugins">"Installez les bundles de plugins à partir de la page Plugins pour ajouter des compétences et des outils."</string>
-    <string name="tip_language">"AndroidHarness est disponible en 11 langues. Modifiez-le dans les paramètres de langue."</string>
+    <string name="tip_language">"YL Harness est disponible en 11 langues. Modifiez-le dans les paramètres de langue."</string>
     <string name="tip_backup">"Exportez vos discussions et paramètres en tant que sauvegarde et importez-les sur un autre appareil."</string>
     <string name="tip_progress_bar">"Modifiez le style de la barre de progression du travail dans Apparence."</string>
     <string name="tip_turn_off">"Vous pouvez désactiver ces conseils à tout moment dans Paramètres."</string>

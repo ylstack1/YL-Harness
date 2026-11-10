@@ -62,7 +62,7 @@ void checked_write(FILE * file, const void * data, size_t size) {
 }
 }
 extern "C" JNIEXPORT void JNICALL
-Java_com_androidharness_app_local_LocalNative_convertSafetensors(JNIEnv * env, jobject, jlong handle,
+Java_com_ylstack1_ylharness_local_LocalNative_convertSafetensors(JNIEnv * env, jobject, jlong handle,
     jbyteArray directoryBytes, jbyteArray outputBytes, jint threads) {
     std::string intermediate;
     try {

@@ -20,8 +20,8 @@
     <string name="tip_chat_instructions">"Chat বিকল্পগুলিতে আপনার পছন্দের টোন বা ভাষার মতো প্রতিটি চ্যাট অনুসরণ করে নির্দেশাবলী যোগ করুন।"</string>
     <string name="tip_tts">"উত্তর স্বয়ংক্রিয়ভাবে উচ্চস্বরে পড়া যাবে। ভয়েস সেটিংসে একটি ভয়েস এবং গতি চয়ন করুন।"</string>
     <string name="tip_agents_md">"প্রকল্পের নিয়মগুলি AGENTS.md-এ রাখুন এবং এজেন্ট প্রতিটি দৌড়ে সেগুলি অনুসরণ করে৷"</string>
-    <string name="tip_memory_off">"মেমরি চালু করুন যাতে AndroidHarness চ্যাট জুড়ে আপনার পছন্দ এবং সিদ্ধান্তগুলি মনে রাখে।"</string>
-    <string name="tip_memory_on">"মেমরি চালু আছে। আপনি যেকোনো সময় AndroidHarness যা মনে রেখেছে তা পর্যালোচনা করতে বা মুছতে পারেন।"</string>
+    <string name="tip_memory_off">"মেমরি চালু করুন যাতে YL Harness চ্যাট জুড়ে আপনার পছন্দ এবং সিদ্ধান্তগুলি মনে রাখে।"</string>
+    <string name="tip_memory_on">"মেমরি চালু আছে। আপনি যেকোনো সময় YL Harness যা মনে রেখেছে তা পর্যালোচনা করতে বা মুছতে পারেন।"</string>
     <string name="tip_thinking">"গভীর যুক্তির জন্য গতি ট্রেড করতে হেডারে চিন্তার স্তরে আলতো চাপুন।"</string>
     <string name="tip_glass">"অ্যাপ জুড়ে স্বচ্ছ, স্তরযুক্ত পৃষ্ঠের জন্য Harness Glass ব্যবহার করে দেখুন।"</string>
     <string name="tip_compact">"প্রসঙ্গ কম চলমান? কথোপকথন সংক্ষিপ্ত করতে এবং চালিয়ে যেতে /compact টাইপ করুন।"</string>
@@ -30,7 +30,7 @@
     <string name="tip_dual_planning">"পরিকল্পনা করতে একটি মডেল ব্যবহার করুন এবং অন্যটি, পরিকল্পনাটি বাস্তবায়ন করতে সস্তা।"</string>
     <string name="tip_codegraph">"CodeGraph ইনস্টল করুন যাতে এজেন্ট প্রতিটি ফাইল না পড়ে কলার এবং প্রভাবিত কোড খুঁজে পায়।"</string>
     <string name="tip_whisper">"অনেক ভাষায় দ্রুত, নির্ভুল বক্তৃতা ইনপুটের জন্য Groq Whisper দিয়ে নির্দেশ করুন।"</string>
-    <string name="tip_app_lock">"আপনার আঙুলের ছাপ, মুখ বা ডিভাইস PIN দিয়ে AndroidHarness লক করুন।"</string>
+    <string name="tip_app_lock">"আপনার আঙুলের ছাপ, মুখ বা ডিভাইস PIN দিয়ে YL Harness লক করুন।"</string>
     <string name="tip_mcp">"এজেন্টকে আরও টুল দিতে MCP সার্ভার সংযুক্ত করুন।"</string>
     <string name="tip_web_search">"আপনার ওয়েব অনুসন্ধান ব্যাকএন্ড চয়ন করুন: কীবিহীন, Brave বা Tavily।"</string>
     <string name="tip_theme">"একটি রঙ প্যালেট বাছুন বা চেহারা আপনার নিজস্ব নির্মাণ."</string>
@@ -47,7 +47,7 @@
     <string name="tip_config">"harness.json এর মাধ্যমে আপনার রেপোর সাথে প্রকল্প সেটিংস শেয়ার করুন।"</string>
     <string name="tip_shizuku">"Shizuku সেট আপ করুন যাতে এজেন্ট আপনার ডিভাইসে উন্নত শেল অ্যাক্সেস ব্যবহার করতে পারে।"</string>
     <string name="tip_plugins">"দক্ষতা এবং টুল যোগ করতে প্লাগইন পৃষ্ঠা থেকে প্লাগইন বান্ডিল ইনস্টল করুন।"</string>
-    <string name="tip_language">"AndroidHarness 11টি ভাষায় উপলব্ধ। ভাষা সেটিংসে এটি পরিবর্তন করুন।"</string>
+    <string name="tip_language">"YL Harness 11টি ভাষায় উপলব্ধ। ভাষা সেটিংসে এটি পরিবর্তন করুন।"</string>
     <string name="tip_backup">"ব্যাকআপ হিসাবে আপনার চ্যাট এবং সেটিংস রপ্তানি করুন এবং অন্য ডিভাইসে আমদানি করুন৷"</string>
     <string name="tip_progress_bar">"উপস্থিতিতে কাজের অগ্রগতি বারের শৈলী পরিবর্তন করুন।"</string>
     <string name="tip_turn_off">"আপনি সেটিংস থেকে যেকোনো সময় এই টিপস বন্ধ করতে পারেন।"</string>

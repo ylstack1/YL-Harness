@@ -103,19 +103,19 @@ Previews are not persisted. `Diff.unified` output is recomputed from the entity'
 - `apply_patch` approval previews are the raw patch text capped at 6000 characters (`agent/AgentEngine.kt:1643`), not a computed resulting diff. The approval card therefore shows the patch, not the post-apply file.
 - `ApplyPatchTool.Hunk.context` is populated as `emptyList()` by the parser and never used. Context matching is driven entirely by `Hunk.lines`, so the field is dead state rather than a supported structure.
 
-Sources: [app/src/main/java/com/androidharness/app/tools/PatchTools.kt](../app/src/main/java/com/androidharness/app/tools/PatchTools.kt)#L92-L216), [app/src/main/java/com/androidharness/app/tools/FuzzyEdit.kt](../app/src/main/java/com/androidharness/app/tools/FuzzyEdit.kt)#L18-L95), [app/src/main/java/com/androidharness/app/core/Diff.kt](../app/src/main/java/com/androidharness/app/core/Diff.kt)#L38-L316), [app/src/main/java/com/androidharness/app/agent/AgentEngine.kt](../app/src/main/java/com/androidharness/app/agent/AgentEngine.kt)#L1533-L1644)
+Sources: [app/src/main/java/com/ylstack1/ylharness/tools/PatchTools.kt](../app/src/main/java/com/ylstack1/ylharness/tools/PatchTools.kt)#L92-L216), [app/src/main/java/com/ylstack1/ylharness/tools/FuzzyEdit.kt](../app/src/main/java/com/ylstack1/ylharness/tools/FuzzyEdit.kt)#L18-L95), [app/src/main/java/com/ylstack1/ylharness/core/Diff.kt](../app/src/main/java/com/ylstack1/ylharness/core/Diff.kt)#L38-L316), [app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt](../app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt)#L1533-L1644)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/tools/PatchTools.kt`
-- `app/src/main/java/com/androidharness/app/tools/FuzzyEdit.kt`
-- `app/src/main/java/com/androidharness/app/core/Diff.kt`
-- `app/src/main/java/com/androidharness/app/tools/FileTools.kt`
-- `app/src/main/java/com/androidharness/app/tools/MoreTools.kt`
-- `app/src/main/java/com/androidharness/app/tools/Tool.kt`
-- `app/src/main/java/com/androidharness/app/agent/AgentEngine.kt`
-- `app/src/main/java/com/androidharness/app/agent/RunManager.kt`
-- `app/src/main/java/com/androidharness/app/data/SessionRepository.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/ChangesScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt`
-- `app/src/main/java/com/androidharness/app/workspace/WorkspaceFs.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/PatchTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/FuzzyEdit.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/Diff.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/FileTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/MoreTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/Tool.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/ChangesScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt`
+- `app/src/main/java/com/ylstack1/ylharness/workspace/WorkspaceFs.kt`

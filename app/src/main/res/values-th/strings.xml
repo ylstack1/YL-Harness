@@ -139,9 +139,9 @@
     <string name="settings_search_license_title">"ใบอนุญาต"</string>
     <string name="settings_search_license_desc">"เกี่ยวกับ · ใบอนุญาต MIT และความหมายของส้อม"</string>
     <string name="settings_search_credits_title">"เครดิต"</string>
-    <string name="settings_search_credits_desc">"เกี่ยวกับ · โครงการโอเพ่นซอร์สที่อยู่เบื้องหลัง AndroidHarness"</string>
+    <string name="settings_search_credits_desc">"เกี่ยวกับ · โครงการโอเพ่นซอร์สที่อยู่เบื้องหลัง YL Harness"</string>
     <string name="settings_search_author_title">"ผู้เขียน"</string>
-    <string name="settings_search_author_desc">"เกี่ยวกับ · ใครเป็นผู้สร้าง AndroidHarness และจะหาได้จากที่ไหน"</string>
+    <string name="settings_search_author_desc">"เกี่ยวกับ · ใครเป็นผู้สร้าง YL Harness และจะหาได้จากที่ไหน"</string>
     <string name="settings_anchor_progress_bar_style">"สไตล์แถบความคืบหน้า"</string>
     <string name="settings_anchor_fallbacks">"ทางเลือกสำรอง"</string>
     <string name="settings_anchor_continue_chatgpt">"ต่อด้วย ChatGPT"</string>
@@ -287,10 +287,10 @@
     <string name="settings_restore_reconnect_title">"เชื่อมต่อการแชทที่กู้คืนอีกครั้ง"</string>
     <string name="settings_restore_reconnect_note">"การเข้าถึงแบบอ่านอย่างเดียวยังคงเป็นแบบอ่านอย่างเดียว แชทที่ใช้พื้นที่ทำงานหลายแห่งต้องมีโฟลเดอร์แยกกันสำหรับแต่ละห้อง"</string>
     <string name="settings_accounts_using_plan">"คุณกำลังใช้แผน ChatGPT ของคุณ"</string>
-    <string name="settings_accounts_using_plan_desc">"คำขอที่มีสิทธิ์ใน AndroidHarness ใช้แผนหรือเครดิต ChatGPT ของคุณ ตรวจสอบการใช้งานและจัดการการเข้าถึงของแอปนี้ในการตั้งค่า ChatGPT"</string>
+    <string name="settings_accounts_using_plan_desc">"คำขอที่มีสิทธิ์ใน YL Harness ใช้แผนหรือเครดิต ChatGPT ของคุณ ตรวจสอบการใช้งานและจัดการการเข้าถึงของแอปนี้ในการตั้งค่า ChatGPT"</string>
     <string name="settings_action_got_it">"เข้าใจแล้ว"</string>
     <string name="settings_accounts_signout_title">"ออกจากระบบบัญชีนี้ใช่ไหม"</string>
-    <string name="settings_accounts_signout_message">"การดำเนินการนี้จะยกเลิกการเชื่อมต่อบัญชีจาก AndroidHarness และลบออกจากการสลับอัตโนมัติ คุณสามารถลงชื่อเข้าใช้อีกครั้งในภายหลังได้"</string>
+    <string name="settings_accounts_signout_message">"การดำเนินการนี้จะยกเลิกการเชื่อมต่อบัญชีจาก YL Harness และลบออกจากการสลับอัตโนมัติ คุณสามารถลงชื่อเข้าใช้อีกครั้งในภายหลังได้"</string>
     <string name="settings_action_continue">"ดำเนินการต่อ"</string>
     <string name="settings_progress_bar_subtitle">"เลือกลักษณะของแถบความคืบหน้า สมัครทันที"</string>
     <string name="settings_provider_select">"เลือก"</string>
@@ -904,7 +904,7 @@
     <string name="chat_handoff_picker_note">"เลือกสถานที่ที่จะสร้าง แผน Chat ของคุณมาพร้อมแล้ว"</string>
     <string name="chat_handoff_close">"ปิดตัวเลือกพื้นที่ทำงาน"</string>
     <string name="chat_handoff_no_workspace">"เพิ่มพื้นที่ทำงานใน Code เพื่อดำเนินการต่อ"</string>
-    <string name="chat_share_target">"AndroidHarness Chat"</string>
+    <string name="chat_share_target">"YL Harness Chat"</string>
     <string name="chat_share_title">"แชร์ไปที่ Chat"</string>
     <string name="chat_share_review">"ตรวจสอบรายการที่แบ่งปันของคุณ เลือก Chat และเพิ่มคำถาม ไม่มีการส่งสิ่งใดจนกว่าคุณจะแตะส่งใน Chat"</string>
     <string name="chat_share_new">"Chat ใหม่"</string>
@@ -982,7 +982,7 @@
     <string name="glass_unsupported">"เอฟเฟกต์กระจกต้องใช้ Android 12 หรือใหม่กว่า"</string>
     <string name="glass_liquid_unsupported">"Liquid Glass ต้องใช้ Android 13 หรือใหม่กว่า กระจกฝ้ามีอยู่ในอุปกรณ์นี้"</string>
     <string name="glass_preview_label">"ตัวอย่างแก้ว"</string>
-    <string name="glass_preview_title">"AndroidHarness"</string>
+    <string name="glass_preview_title">"YL Harness"</string>
     <string name="glass_preview_text">"ล้างข้อความ พื้นหลังที่นุ่มนวลยิ่งขึ้น"</string>
     <string name="glass_transparency">"ความโปร่งใส"</string>
     <string name="glass_transparency_percent">"%1$d%%"</string>

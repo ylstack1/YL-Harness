@@ -144,17 +144,17 @@ Persistence:
 - `SkillsScreen` can create and edit only USER skills. PROJECT skills are listed and can be enabled, disabled or previewed, but the UI offers no editor and no workspace-scoped create action; those edits must be made in the workspace files.
 - The manager does not export or import skills as files, so moving a skill between devices relies on the workspace or on copying `filesDir/skills`.
 
-Sources: [app/src/main/java/com/androidharness/app/skills/SkillStore.kt](../app/src/main/java/com/androidharness/app/skills/SkillStore.kt)#L9-L370), [app/src/main/java/com/androidharness/app/skills/SkillParser.kt](../app/src/main/java/com/androidharness/app/skills/SkillParser.kt)#L3-L142), [app/src/main/java/com/androidharness/app/skills/Skill.kt](../app/src/main/java/com/androidharness/app/skills/Skill.kt)#L3-L50), [app/src/main/java/com/androidharness/app/skills/SkillAssets.kt](../app/src/main/java/com/androidharness/app/skills/SkillAssets.kt)#L5-L39), [app/src/main/java/com/androidharness/app/tools/SkillTools.kt](../app/src/main/java/com/androidharness/app/tools/SkillTools.kt)#L8-L177), [app/src/main/java/com/androidharness/app/ui/settings/SkillsScreen.kt](../app/src/main/java/com/androidharness/app/ui/settings/SkillsScreen.kt)#L78-L605), [app/src/main/java/com/androidharness/app/agent/AgentEngine.kt](../app/src/main/java/com/androidharness/app/agent/AgentEngine.kt)#L2274-L2294)
+Sources: [app/src/main/java/com/ylstack1/ylharness/skills/SkillStore.kt](../app/src/main/java/com/ylstack1/ylharness/skills/SkillStore.kt)#L9-L370), [app/src/main/java/com/ylstack1/ylharness/skills/SkillParser.kt](../app/src/main/java/com/ylstack1/ylharness/skills/SkillParser.kt)#L3-L142), [app/src/main/java/com/ylstack1/ylharness/skills/Skill.kt](../app/src/main/java/com/ylstack1/ylharness/skills/Skill.kt)#L3-L50), [app/src/main/java/com/ylstack1/ylharness/skills/SkillAssets.kt](../app/src/main/java/com/ylstack1/ylharness/skills/SkillAssets.kt)#L5-L39), [app/src/main/java/com/ylstack1/ylharness/tools/SkillTools.kt](../app/src/main/java/com/ylstack1/ylharness/tools/SkillTools.kt)#L8-L177), [app/src/main/java/com/ylstack1/ylharness/ui/settings/SkillsScreen.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/SkillsScreen.kt)#L78-L605), [app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt](../app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt)#L2274-L2294)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/skills/Skill.kt`
-- `app/src/main/java/com/androidharness/app/skills/SkillParser.kt`
-- `app/src/main/java/com/androidharness/app/skills/SkillStore.kt`
-- `app/src/main/java/com/androidharness/app/skills/SkillAssets.kt`
-- `app/src/main/java/com/androidharness/app/tools/SkillTools.kt`
-- `app/src/main/java/com/androidharness/app/tools/Tool.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/SkillsScreen.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsRepository.kt`
-- `app/src/main/java/com/androidharness/app/HarnessApp.kt`
+- `app/src/main/java/com/ylstack1/ylharness/skills/Skill.kt`
+- `app/src/main/java/com/ylstack1/ylharness/skills/SkillParser.kt`
+- `app/src/main/java/com/ylstack1/ylharness/skills/SkillStore.kt`
+- `app/src/main/java/com/ylstack1/ylharness/skills/SkillAssets.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/SkillTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/Tool.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SkillsScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/HarnessApp.kt`
 - `app/src/main/assets/skills/plan/SKILL.md`

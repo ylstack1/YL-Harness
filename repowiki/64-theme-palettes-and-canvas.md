@@ -103,26 +103,26 @@ flowchart TD
 - Settings backup validation accepts a valid-looking `imageId` whose file is absent, because the validator cannot see the other device's filesystem. This is handled by a null image at render time, not by a validation error.
 - `ThemePalette.fromStored` silently maps unknown stored values to `BLUE`; there is no diagnostics surface for a downgraded or corrupted palette name.
 
-Sources: [app/src/main/java/com/androidharness/app/ui/theme/Theme.kt](../app/src/main/java/com/androidharness/app/ui/theme/Theme.kt)#L32-L85)
+Sources: [app/src/main/java/com/ylstack1/ylharness/ui/theme/Theme.kt](../app/src/main/java/com/ylstack1/ylharness/ui/theme/Theme.kt)#L32-L85)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/ui/theme/Theme.kt`
-- `app/src/main/java/com/androidharness/app/ui/theme/Color.kt`
-- `app/src/main/java/com/androidharness/app/ui/theme/PaletteColors.kt`
-- `app/src/main/java/com/androidharness/app/ui/theme/PersonalColors.kt`
-- `app/src/main/java/com/androidharness/app/ui/theme/Type.kt`
-- `app/src/main/java/com/androidharness/app/ui/theme/Shape.kt`
-- `app/src/main/java/com/androidharness/app/ui/theme/HarnessCanvas.kt`
-- `app/src/main/java/com/androidharness/app/data/ThemePalette.kt`
-- `app/src/main/java/com/androidharness/app/data/PersonalTheme.kt`
-- `app/src/main/java/com/androidharness/app/data/HarnessCanvasStore.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsRepository.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsBackup.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/ThemeColorSection.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/CustomPaletteSection.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/HarnessCanvasSection.kt`
-- `app/src/main/java/com/androidharness/app/MainActivity.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/Theme.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/Color.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/PaletteColors.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/PersonalColors.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/Type.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/Shape.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/HarnessCanvas.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ThemePalette.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/PersonalTheme.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/HarnessCanvasStore.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsBackup.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/ThemeColorSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/CustomPaletteSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/HarnessCanvasSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/MainActivity.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt`
 - `app/src/main/res/values/theme_color_strings.xml`
 - `app/src/main/res/values/personal_theme_strings.xml`

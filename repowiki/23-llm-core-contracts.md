@@ -43,7 +43,7 @@ The factory is the only place that resolves a `ProviderConfig` to a runtime obje
 
 ## Invocation Chain
 
-1. `AgentEngine` builds the working `List<ChatMessage>`, tool schemas, and `RequestOptions`, then calls `provider.streamChat(config, apiKey, systemPrompt, messages, tools, options)` at `app/src/main/java/com/androidharness/app/agent/AgentEngine.kt#L631` (retry path at line 673, subagent path at line 1784).
+1. `AgentEngine` builds the working `List<ChatMessage>`, tool schemas, and `RequestOptions`, then calls `provider.streamChat(config, apiKey, systemPrompt, messages, tools, options)` at `app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt#L631` (retry path at line 673, subagent path at line 1784).
 2. `ProviderFactory.create(config)` at `Llm.kt#L215` checks ChatGPT, local, and Harness identity, and otherwise calls `RotatingKeyProvider.wrap(config, create(config.type))` at line 221.
 3. `create(type)` at `Llm.kt#L224` instantiates `OpenAiCompatProvider`, `OpenAiResponsesProvider`, `AnthropicProvider`, or `GeminiProvider` with the shared client and `Json { ignoreUnknownKeys = true }`.
 4. The concrete provider serializes messages, builds an OkHttp `Request`, and returns a flow. Most providers call `ProviderFactory.sseJson(request, ProviderHeaders.client(config, client))`.
@@ -73,10 +73,10 @@ The factory is the only place that resolves a `ProviderConfig` to a runtime obje
   - `ProviderChanged(config, reason, persistSelection)` is emitted by fallback routing after the user has consented to an account or model change, before response output.
   - `Retrying(attempt, delayMs, reason)` is emitted by key rotation or fallback before a retry.
   - `Done(finishReason)` is the single terminal event; the reason is the provider's raw code.
-- **`ChatMessage`** (`app/src/main/java/com/androidharness/app/core/Models.kt#L53`): role (`SYSTEM`, `USER`, `ASSISTANT`, `TOOL`), text, `toolCalls`, `toolCallId`, `toolName`, `isError`, thinking text and timing, token counts and timing, `images` (persisted refs), `imageData` (resolved bytes, never persisted), turn id, database id and timestamp, artifact, and `generation`.
+- **`ChatMessage`** (`app/src/main/java/com/ylstack1/ylharness/core/Models.kt#L53`): role (`SYSTEM`, `USER`, `ASSISTANT`, `TOOL`), text, `toolCalls`, `toolCallId`, `toolName`, `isError`, thinking text and timing, token counts and timing, `images` (persisted refs), `imageData` (resolved bytes, never persisted), turn id, database id and timestamp, artifact, and `generation`.
 - **`ToolCallData`** (`Models.kt#L8`): `id`, `name`, `argumentsJson`, opaque `responseReasoning`, `responseProviderId`, measured `codeChanges`, and workspace presentation fields. Only id, name, and arguments are sent as tool arguments.
-- **`ProviderMessageState`** (`app/src/main/java/com/androidharness/app/core/GenerationMetadata.kt#L10`): provider id, endpoint hash, model, format, opaque JSON items, and an optional content digest. `matches` checks all four identity fields, so native state is never replayed to a different endpoint. `of` computes the endpoint hash from the trimmed base URL.
-- **`ModelEntry`** (`app/src/main/java/com/androidharness/app/llm/ModelCatalog.kt#L27`): id, tri-state `reasoning`, context tokens, custom flag, note, display name, reasoning efforts, default effort, `reasoningReported`, and tri-state `tools` and `imageInput`.
+- **`ProviderMessageState`** (`app/src/main/java/com/ylstack1/ylharness/core/GenerationMetadata.kt#L10`): provider id, endpoint hash, model, format, opaque JSON items, and an optional content digest. `matches` checks all four identity fields, so native state is never replayed to a different endpoint. `of` computes the endpoint hash from the trimmed base URL.
+- **`ModelEntry`** (`app/src/main/java/com/ylstack1/ylharness/llm/ModelCatalog.kt#L27`): id, tri-state `reasoning`, context tokens, custom flag, note, display name, reasoning efforts, default effort, `reasoningReported`, and tri-state `tools` and `imageInput`.
 
 ## Error Taxonomy
 
@@ -114,17 +114,17 @@ There is no separate sealed `LlmError` type. Errors take three forms:
 - `endpointPath` includes `/v1` for Responses and Anthropic while the concrete builders append `/responses` or `/v1/messages` to `baseUrl`. The property is display text, not a URL builder, so it should not be used to construct requests.
 - `StreamEvent.ProviderChanged` and `StreamEvent.Retrying` are never emitted by the four wire providers in `llm/`; they come from `FallbackProvider` and `RotatingKeyProvider`. A reader looking only at provider files may conclude they are unused.
 
-Sources: [app/src/main/java/com/androidharness/app/llm/Llm.kt](../app/src/main/java/com/androidharness/app/llm/Llm.kt)#L24-L309), [app/src/main/java/com/androidharness/app/core/Models.kt](../app/src/main/java/com/androidharness/app/core/Models.kt)#L5-L78), [app/src/main/java/com/androidharness/app/core/GenerationMetadata.kt](../app/src/main/java/com/androidharness/app/core/GenerationMetadata.kt)#L8-L41), [app/src/main/java/com/androidharness/app/llm/ModelCapabilities.kt](../app/src/main/java/com/androidharness/app/llm/ModelCapabilities.kt)#L3-L39), [app/src/main/java/com/androidharness/app/llm/ModelReasoning.kt](../app/src/main/java/com/androidharness/app/llm/ModelReasoning.kt)#L3-L19), [app/src/main/java/com/androidharness/app/llm/ProviderRetryAfter.kt](../app/src/main/java/com/androidharness/app/llm/ProviderRetryAfter.kt)#L8-L32), [app/src/main/java/com/androidharness/app/llm/ProviderHeaders.kt](../app/src/main/java/com/androidharness/app/llm/ProviderHeaders.kt)#L8-L56), [app/src/main/java/com/androidharness/app/llm/PromptCachePolicy.kt](../app/src/main/java/com/androidharness/app/llm/PromptCachePolicy.kt)#L5-L15)
+Sources: [app/src/main/java/com/ylstack1/ylharness/llm/Llm.kt](../app/src/main/java/com/ylstack1/ylharness/llm/Llm.kt)#L24-L309), [app/src/main/java/com/ylstack1/ylharness/core/Models.kt](../app/src/main/java/com/ylstack1/ylharness/core/Models.kt)#L5-L78), [app/src/main/java/com/ylstack1/ylharness/core/GenerationMetadata.kt](../app/src/main/java/com/ylstack1/ylharness/core/GenerationMetadata.kt)#L8-L41), [app/src/main/java/com/ylstack1/ylharness/llm/ModelCapabilities.kt](../app/src/main/java/com/ylstack1/ylharness/llm/ModelCapabilities.kt)#L3-L39), [app/src/main/java/com/ylstack1/ylharness/llm/ModelReasoning.kt](../app/src/main/java/com/ylstack1/ylharness/llm/ModelReasoning.kt)#L3-L19), [app/src/main/java/com/ylstack1/ylharness/llm/ProviderRetryAfter.kt](../app/src/main/java/com/ylstack1/ylharness/llm/ProviderRetryAfter.kt)#L8-L32), [app/src/main/java/com/ylstack1/ylharness/llm/ProviderHeaders.kt](../app/src/main/java/com/ylstack1/ylharness/llm/ProviderHeaders.kt)#L8-L56), [app/src/main/java/com/ylstack1/ylharness/llm/PromptCachePolicy.kt](../app/src/main/java/com/ylstack1/ylharness/llm/PromptCachePolicy.kt)#L5-L15)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/llm/Llm.kt`
-- `app/src/main/java/com/androidharness/app/core/Models.kt`
-- `app/src/main/java/com/androidharness/app/core/GenerationMetadata.kt`
-- `app/src/main/java/com/androidharness/app/llm/ModelCapabilities.kt`
-- `app/src/main/java/com/androidharness/app/llm/ModelReasoning.kt`
-- `app/src/main/java/com/androidharness/app/llm/ModelCatalog.kt`
-- `app/src/main/java/com/androidharness/app/llm/ProviderRetryAfter.kt`
-- `app/src/main/java/com/androidharness/app/llm/ProviderHeaders.kt`
-- `app/src/main/java/com/androidharness/app/llm/PromptCachePolicy.kt`
-- `app/src/main/java/com/androidharness/app/agent/AgentEngine.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/Llm.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/Models.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/GenerationMetadata.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/ModelCapabilities.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/ModelReasoning.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/ModelCatalog.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/ProviderRetryAfter.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/ProviderHeaders.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/PromptCachePolicy.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt`

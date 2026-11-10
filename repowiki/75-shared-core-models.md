@@ -98,30 +98,30 @@ In `core/response`, `ResponseAttachment` embeds a serialized selection and conte
 - No literal `CORE-3` marker exists anywhere in the repository. The reasoning chunk file described by that label is `ReasoningTextChunks.kt`; its `Stream` usage is in `ChatActivity.kt:76` and `ChatActivity.kt:129`. The mapping of `CORE-3` to this file is inferred from the topic, not from a source comment.
 - `ChatThinkingMetrics.kt` in the same package is not part of the requested file list, so its totals and compact formatting are only noted here.
 
-Sources: [app/src/main/java/com/androidharness/app/core/Models.kt](../app/src/main/java/com/androidharness/app/core/Models.kt)#L1-L78), [app/src/main/java/com/androidharness/app/core/GenerationMetadata.kt](../app/src/main/java/com/androidharness/app/core/GenerationMetadata.kt)#L1-L69), [app/src/main/java/com/androidharness/app/data/SessionRepository.kt](../app/src/main/java/com/androidharness/app/data/SessionRepository.kt)#L261-L309)
+Sources: [app/src/main/java/com/ylstack1/ylharness/core/Models.kt](../app/src/main/java/com/ylstack1/ylharness/core/Models.kt)#L1-L78), [app/src/main/java/com/ylstack1/ylharness/core/GenerationMetadata.kt](../app/src/main/java/com/ylstack1/ylharness/core/GenerationMetadata.kt)#L1-L69), [app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt](../app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt)#L261-L309)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/core/Models.kt`
-- `app/src/main/java/com/androidharness/app/core/GenerationMetadata.kt`
-- `app/src/main/java/com/androidharness/app/core/ResearchReceipt.kt`
-- `app/src/main/java/com/androidharness/app/core/SettingsReceipt.kt`
-- `app/src/main/java/com/androidharness/app/core/FollowUpSuggestions.kt`
-- `app/src/main/java/com/androidharness/app/core/ChatTurnActions.kt`
-- `app/src/main/java/com/androidharness/app/core/ChatResponseImages.kt`
-- `app/src/main/java/com/androidharness/app/core/ChangeQuestion.kt`
-- `app/src/main/java/com/androidharness/app/core/TextLines.kt`
-- `app/src/main/java/com/androidharness/app/core/ToolOutputText.kt`
-- `app/src/main/java/com/androidharness/app/core/ReasoningTextChunks.kt`
-- `app/src/main/java/com/androidharness/app/core/WorkspaceFileReference.kt`
-- `app/src/main/java/com/androidharness/app/core/LocalPortProbe.kt`
-- `app/src/main/java/com/androidharness/app/core/NpmLaunchShell.kt`
-- `app/src/main/java/com/androidharness/app/core/ProjectLaunch.kt`
-- `app/src/main/java/com/androidharness/app/core/response/ResponseAttachment.kt`
-- `app/src/main/java/com/androidharness/app/core/response/ResponseDiff.kt`
-- `app/src/main/java/com/androidharness/app/core/response/ResponseTableData.kt`
-- `app/src/main/java/com/androidharness/app/core/response/CalculatorMath.kt`
-- `app/src/main/java/com/androidharness/app/core/response/RichResponse.kt`
-- `app/src/main/java/com/androidharness/app/core/response/ChatRichResponse.kt`
-- `app/src/main/java/com/androidharness/app/data/db/Database.kt`
-- `app/src/main/java/com/androidharness/app/data/SessionRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/Models.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/GenerationMetadata.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/ResearchReceipt.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/SettingsReceipt.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/FollowUpSuggestions.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/ChatTurnActions.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/ChatResponseImages.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/ChangeQuestion.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/TextLines.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/ToolOutputText.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/ReasoningTextChunks.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/WorkspaceFileReference.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/LocalPortProbe.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/NpmLaunchShell.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/ProjectLaunch.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/response/ResponseAttachment.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/response/ResponseDiff.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/response/ResponseTableData.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/response/CalculatorMath.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/response/RichResponse.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/response/ChatRichResponse.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt`

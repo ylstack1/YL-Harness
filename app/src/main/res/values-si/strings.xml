@@ -139,9 +139,9 @@
     <string name="settings_search_license_title">"බලපත්රයක්"</string>
     <string name="settings_search_license_desc">"About · MIT බලපත්ර සහ එය forks සඳහා අදහස් කරන්නේ කුමක්ද"</string>
     <string name="settings_search_credits_title">"ණය"</string>
-    <string name="settings_search_credits_desc">"· විවෘත මූලාශ් ර ව්‍යාපෘති පසුපස AndroidHarness"</string>
+    <string name="settings_search_credits_desc">"· විවෘත මූලාශ් ර ව්‍යාපෘති පසුපස YL Harness"</string>
     <string name="settings_search_author_title">"ලේඛකයා"</string>
-    <string name="settings_search_author_desc">"About: කවුද ගොඩනගන්නේ AndroidHarness කොහෙද හොයාගන්නේ"</string>
+    <string name="settings_search_author_desc">"About: කවුද ගොඩනගන්නේ YL Harness කොහෙද හොයාගන්නේ"</string>
     <string name="settings_anchor_progress_bar_style">"ප්‍රගති තීරුවේ විලාසය"</string>
     <string name="settings_anchor_fallbacks">"පිටුපස"</string>
     <string name="settings_anchor_continue_chatgpt">"ChatGPT සමඟ ඉදිරියට යන්න"</string>
@@ -287,10 +287,10 @@
     <string name="settings_restore_reconnect_title">"ආපසු සම්බන්ධ කළ චැට්"</string>
     <string name="settings_restore_reconnect_note">"Read-only access only remains reading-only. විවිධ වැඩපිළිවෙළ භාවිතා කරන චැට් සෑම සඳහාම වෙන් ෆෝල්ඩර් අවශ්ය වේ."</string>
     <string name="settings_accounts_using_plan">"ඔබ ඔබේ භාවිතය ChatGPT සැලැස්ම"</string>
-    <string name="settings_accounts_using_plan_desc">"සුදුසු අයදුම්පත් AndroidHarness ඔබේ භාවිතය ChatGPT සැලසුම් හෝ ක්රෙඩිට්. මෙම යෙදුම ප්‍රවේශය පරික්ෂා හා කළමනාකරණය ChatGPT settings එක"</string>
+    <string name="settings_accounts_using_plan_desc">"සුදුසු අයදුම්පත් YL Harness ඔබේ භාවිතය ChatGPT සැලසුම් හෝ ක්රෙඩිට්. මෙම යෙදුම ප්‍රවේශය පරික්ෂා හා කළමනාකරණය ChatGPT settings එක"</string>
     <string name="settings_action_got_it">"ලැබුනා"</string>
     <string name="settings_accounts_signout_title">"මෙම ගිණුමේ පිටතට ලියාපදිංචි වන්නද?"</string>
-    <string name="settings_accounts_signout_message">"මෙය ගිණුම ඉවත් කරයි AndroidHarness එය ස්වයංක්‍රීය Switching වලින් ඉවත් කරන්න. ඔබට පසුව නැවත ලියාපදිංචි කළ හැකිය."</string>
+    <string name="settings_accounts_signout_message">"මෙය ගිණුම ඉවත් කරයි YL Harness එය ස්වයංක්‍රීය Switching වලින් ඉවත් කරන්න. ඔබට පසුව නැවත ලියාපදිංචි කළ හැකිය."</string>
     <string name="settings_action_continue">"ඉදිරියට යන්න"</string>
     <string name="settings_progress_bar_subtitle">"වැඩසටහන බාර් පෙනුම කෙසේද යන්න තෝරා ගන්න. වහාම අයදුම් කරන්න."</string>
     <string name="settings_provider_select">"තෝරන්න"</string>
@@ -905,7 +905,7 @@
     <string name="chat_handoff_picker_note">"ඔබගේ චැට් සැලැස්ම එකට එයි තෝරා ගන්න."</string>
     <string name="chat_handoff_close">"වැඩපිළිවෙළ picker"</string>
     <string name="chat_handoff_no_workspace">"Continue to Code එකේ වැඩපිළිවෙළක් එකතු කරන්න."</string>
-    <string name="chat_share_target">"AndroidHarness කතාබහ"</string>
+    <string name="chat_share_target">"YL Harness කතාබහ"</string>
     <string name="chat_share_title">"චැට් එකට Share"</string>
     <string name="chat_share_review">"ඔබගේ බෙදාහරින්න අයිතීන් සමාලෝචනය කරන්න, චැට් තෝරන්න, හා ප්රශ්නයක් එකතු කරන්න. ඔබ චැට් යැවීම ටැප් කරන තුරු කිසිවක් යැවිය නොහැක."</string>
     <string name="chat_share_new">"නව කතාබහක්"</string>
@@ -974,7 +974,7 @@
     <string name="glass_unsupported">වීදුරු ප්‍රභා සඳහා Android 12 හෝ ඊට පසු අවශ්‍ය වේ.</string>
     <string name="glass_liquid_unsupported">Liquid Glass සඳහා Android 13 හෝ ඊට පසු අවශ්‍ය වේ. මෙම උපාංගයේ මීදුම් වීදුරු ඇත.</string>
     <string name="glass_preview_label">වීදුරු පෙරදසුන</string>
-    <string name="glass_preview_title">AndroidHarness</string>
+    <string name="glass_preview_title">YL Harness</string>
     <string name="glass_preview_text">පැහැදිලි පෙළ. මෘදු පසුබිමක්.</string>
     <string name="glass_transparency">පාරදෘශ්‍යතාව</string>
     <string name="glass_transparency_percent">%1$d%%</string>

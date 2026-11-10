@@ -2,7 +2,7 @@
 
 > Defines the Gradle toolchain, the two distribution channels, the signing and native packaging rules, the test source sets, and the GitHub Actions jobs that build and publish artifacts.
 
-AndroidHarness is a single `:app` module plus a conditional `:local_gpu` dynamic feature. There are no Android product flavors. Distribution is selected by the `distribution` Gradle property, which adds a delivery source set and a `PLAY_DISTRIBUTION` BuildConfig field. The build pins AGP 9.3.1, Kotlin 2.4.10, Gradle 9.7.0, SDK 37, and a specific NDK, and both CI workflows use JDK 21 to compile Java 17 bytecode.
+YL Harness is a single `:app` module plus a conditional `:local_gpu` dynamic feature. There are no Android product flavors. Distribution is selected by the `distribution` Gradle property, which adds a delivery source set and a `PLAY_DISTRIBUTION` BuildConfig field. The build pins AGP 9.3.1, Kotlin 2.4.10, Gradle 9.7.0, SDK 37, and a specific NDK, and both CI workflows use JDK 21 to compile Java 17 bytecode.
 
 ## Module Responsibilities
 
@@ -131,12 +131,12 @@ There are exactly two workflow files.
 
 - Triggers: cron `0 2 * * *` UTC, `workflow_dispatch`, and pushes to `main` touching `app/**` or the workflow file.
 - Permissions: `contents: write`; concurrency group `nightly-build` with cancel in progress.
-- Steps: checkout v7, Temurin JDK 21, `gradle/actions/setup-gradle@v6`, install NDK `27.2.12479018`, install `glslc`, run `:app:testDebugUnitTest`, upload the test report on failure, run `:app:assembleDebug`, stamp the APK as `AndroidHarness-<UTC yyyymmdd-HHMM>-<shortsha>-debug.apk`, copy GPU `.gz` outputs into `dist/`, optionally publish the GPU packages to release ID 1 of `Sanuu7/AH-GPU-Runtime` when `GPU_RUNTIME_PUBLISH_TOKEN` is set, and upload `dist/*` as an artifact kept 30 days.
+- Steps: checkout v7, Temurin JDK 21, `gradle/actions/setup-gradle@v6`, install NDK `27.2.12479018`, install `glslc`, run `:app:testDebugUnitTest`, upload the test report on failure, run `:app:assembleDebug`, stamp the APK as `YL Harness-<UTC yyyymmdd-HHMM>-<shortsha>-debug.apk`, copy GPU `.gz` outputs into `dist/`, optionally publish the GPU packages to release ID 1 of `ylstack1/AH-GPU-Runtime` when `GPU_RUNTIME_PUBLISH_TOKEN` is set, and upload `dist/*` as an artifact kept 30 days.
 
 **`gpu-runtime.yml`, display name "Publish GPU runtime packages"** ([gpu-runtime.yml:1](../.github/workflows/gpu-runtime.yml)#L1-L43)):
 
 - Trigger: `workflow_dispatch` only, with `contents: write` and the `gpu-runtime-publication` concurrency group.
-- Steps: checkout, JDK 21, Gradle setup, NDK and `glslc` install, `:app:assembleRelease`, upload `app/build/outputs/apk/release/*.apk` and `app/build/outputs/gpuRuntime/release/*.gz` as one artifact, then optionally upload the `.gz` files to release 1 of `Sanuu7/AH-GPU-Runtime`.
+- Steps: checkout, JDK 21, Gradle setup, NDK and `glslc` install, `:app:assembleRelease`, upload `app/build/outputs/apk/release/*.apk` and `app/build/outputs/gpuRuntime/release/*.gz` as one artifact, then optionally upload the `.gz` files to release 1 of `ylstack1/AH-GPU-Runtime`.
 
 Neither workflow runs instrumented tests, publishes to Play, or creates a GitHub release for the app APK. The nightly artifact is the only app artifact produced by a scheduled or push build; the GPU workflow produces its release APK only on manual dispatch.
 
@@ -197,5 +197,5 @@ Sources: [app/build.gradle.kts:8-327](../app/build.gradle.kts)#L8-L327), [build.
 - `scripts/test_legacy_storage.sh`
 - `scripts/test_message_truncation.py`
 - `app/src/androidTest/AndroidManifest.xml`
-- `app/src/test/java/com/androidharness/app/LiveUpdateVendorTest.kt`
-- `app/src/androidTest/java/com/androidharness/app/LiveUpdateDeviceTest.kt`
+- `app/src/test/java/com/ylstack1/ylharness/LiveUpdateVendorTest.kt`
+- `app/src/androidTest/java/com/ylstack1/ylharness/LiveUpdateDeviceTest.kt`

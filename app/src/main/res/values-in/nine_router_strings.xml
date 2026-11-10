@@ -1,7 +1,7 @@
 <resources>
     <string name="nine_router_title">9Router</string>
     <string name="nine_router_description">Pasang dan kelola router model lokal</string>
-    <string name="nine_router_intro">Jalankan 9Router di ponsel ini dan kelola penyedia, model, serta peruteannya di browser. Memakai alat Linux AndroidHarness.</string>
+    <string name="nine_router_intro">Jalankan 9Router di ponsel ini dan kelola penyedia, model, serta peruteannya di browser. Memakai alat Linux YL Harness.</string>
     <string name="nine_router_setup">Siapkan lingkungan Anda</string>
     <string name="nine_router_not_installed">Siap dipasang</string>
     <string name="nine_router_ready">Terpasang · Berhenti</string>
@@ -26,12 +26,12 @@
     <string name="nine_router_checking">Memeriksa…</string>
     <string name="nine_router_update">Perbarui ke %1$s</string>
     <string name="nine_router_auto_start">Mulai 9Router otomatis</string>
-    <string name="nine_router_auto_start_body">Menjalankan router yang terpasang saat AndroidHarness dibuka.</string>
+    <string name="nine_router_auto_start_body">Menjalankan router yang terpasang saat YL Harness dibuka.</string>
     <string name="nine_router_add_provider">Tambahkan 9Router ke penyedia</string>
     <string name="nine_router_refresh_provider">Segarkan penyedia 9Router</string>
     <string name="nine_router_provider_body">Menjalankan 9Router bila perlu dan mengisi endpoint lokal serta kunci API secara otomatis. Model yang terhubung muncul di pemilih model Chat dan Kode.</string>
     <string name="nine_router_remove_provider">Hapus dari penyedia</string>
-    <string name="nine_router_remove_provider_body">Menghapus koneksi 9Router dari AndroidHarness. Router dan akunnya tetap terpasang.</string>
+    <string name="nine_router_remove_provider_body">Menghapus koneksi 9Router dari YL Harness. Router dan akunnya tetap terpasang.</string>
     <string name="nine_router_uninstall">Copot pemasangan 9Router</string>
     <string name="nine_router_uninstall_title">Copot pemasangan 9Router sepenuhnya?</string>
     <string name="nine_router_uninstall_body">Menghentikan 9Router dan menghapus pemasangan, akun tersimpan, kunci API router, konfigurasi, cache, preferensi mulai otomatis, dan koneksi penyedia aplikasi. Ini tidak dapat dibatalkan. Alat Linux bersama tetap tersedia untuk fitur lain.</string>

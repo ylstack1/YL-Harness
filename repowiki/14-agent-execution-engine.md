@@ -138,13 +138,13 @@ Before execution, `checkpointTargets` maps tool names to affected paths, includi
 - **`pluginHooks` and `ConfigRunContext`**: `session.start`, `message.received`, `prompt.before`, `tool.before`, `tool.after`, and `session.end` hooks can inject instructions or deny a tool.
 - **`sideContexts`**: `askAside` and `streamAside` replay the exact system prompt, tools, messages, and options of the last request for side questions, with only read-only tools allowed (lines 879 to 1038).
 
-Sources: [app/src/main/java/com/androidharness/app/agent/AgentEngine.kt](../app/src/main/java/com/androidharness/app/agent/AgentEngine.kt)#L227-L245)
+Sources: [app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt](../app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt)#L227-L245)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/agent/AgentEngine.kt`
-- `app/src/main/java/com/androidharness/app/tools/Tool.kt`
-- `app/src/main/java/com/androidharness/app/agent/Steering.kt`
-- `app/src/main/java/com/androidharness/app/agent/TodoPrompt.kt`
-- `app/src/main/java/com/androidharness/app/agent/HistoryCompactor.kt`
-- `app/src/main/java/com/androidharness/app/llm/Llm.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/Tool.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/Steering.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/TodoPrompt.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/HistoryCompactor.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/Llm.kt`

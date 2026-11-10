@@ -112,16 +112,16 @@ Notification actions call the same completors as the UI: `approve` with or witho
 - `KeepaliveTracker` accepts any acquire, release, and active-change callbacks.
 - `VerificationEvidence` is a pure function over `List<ChatMessage>`, also used by the GitHub pull request body and tool.
 
-Sources: [app/src/main/java/com/androidharness/app/agent/RunManager.kt](../app/src/main/java/com/androidharness/app/agent/RunManager.kt)#L538-L770)
+Sources: [app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt](../app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt)#L538-L770)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/agent/RunManager.kt`
-- `app/src/main/java/com/androidharness/app/agent/RunCompletionStore.kt`
-- `app/src/main/java/com/androidharness/app/agent/RunFollowUps.kt`
-- `app/src/main/java/com/androidharness/app/agent/TaskControl.kt`
-- `app/src/main/java/com/androidharness/app/agent/KeepaliveTracker.kt`
-- `app/src/main/java/com/androidharness/app/agent/VerificationEvidence.kt`
-- `app/src/main/java/com/androidharness/app/data/CheckpointStore.kt`
-- `app/src/main/java/com/androidharness/app/agent/NotificationActionReceiver.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/VerificationCard.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/RunCompletionStore.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/RunFollowUps.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/TaskControl.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/KeepaliveTracker.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/VerificationEvidence.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/CheckpointStore.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/NotificationActionReceiver.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/VerificationCard.kt`

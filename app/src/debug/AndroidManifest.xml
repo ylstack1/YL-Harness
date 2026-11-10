@@ -4,11 +4,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application>
         <activity
-            android:name="com.androidharness.app.ui.chat.ChatListTestActivity"
+            android:name="com.ylstack1.ylharness.ui.chat.ChatListTestActivity"
             android:exported="false"
             android:theme="@android:style/Theme.Material.Light.NoActionBar" />
         <activity
-            android:name="com.androidharness.app.browser.TestHostActivity"
+            android:name="com.ylstack1.ylharness.browser.TestHostActivity"
             android:exported="false"
             android:theme="@android:style/Theme.Material.Light.NoActionBar" />
     </application>

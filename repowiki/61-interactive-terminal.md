@@ -125,23 +125,23 @@ When interactive is off, the screen uses `TerminalManager`. `send` trims the com
 
 ## Known gaps
 
-- `app/src/main/java/com/androidharness/app/ui/chat/components/SidePaneTerminalPane.kt` does not exist at HEAD, and no `SidePane` terminal component is referenced from the chat UI. The Terminal is reached through `TerminalScreen` only.
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/SidePaneTerminalPane.kt` does not exist at HEAD, and no `SidePane` terminal component is referenced from the chat UI. The Terminal is reached through `TerminalScreen` only.
 - Interactive mode is intentionally unavailable for SSH, Shizuku, wireless ADB and root workspaces; those keep command mode, so programs that need a PTY cannot run through them (`TerminalScreen.kt:113-116`).
 
-Sources: [terminal/Pty.kt](../app/src/main/java/com/androidharness/app/terminal/Pty.kt)#L11-L79), [terminal/TerminalSession.kt](../app/src/main/java/com/androidharness/app/terminal/TerminalSession.kt)#L15-L106), [terminal/InteractiveTerminalManager.kt](../app/src/main/java/com/androidharness/app/terminal/InteractiveTerminalManager.kt)#L16-L122), [terminal/TerminalEmulator.kt](../app/src/main/java/com/androidharness/app/terminal/TerminalEmulator.kt)#L61-L908), [terminal/KeyEncoder.kt](../app/src/main/java/com/androidharness/app/terminal/KeyEncoder.kt)#L19-L101), [data/TerminalManager.kt](../app/src/main/java/com/androidharness/app/data/TerminalManager.kt)#L30-L457), [ui/terminal/TerminalScreen.kt](../app/src/main/java/com/androidharness/app/ui/terminal/TerminalScreen.kt)#L77-L391), [ui/terminal/InteractiveTerminalPane.kt](../app/src/main/java/com/androidharness/app/ui/terminal/InteractiveTerminalPane.kt)#L89-L460), [ui/terminal/TerminalCanvasView.kt](../app/src/main/java/com/androidharness/app/ui/terminal/TerminalCanvasView.kt)#L75-L583), [app/src/main/cpp/pty.cpp](../app/src/main/cpp/pty.cpp)#L88-L175)
+Sources: [terminal/Pty.kt](../app/src/main/java/com/ylstack1/ylharness/terminal/Pty.kt)#L11-L79), [terminal/TerminalSession.kt](../app/src/main/java/com/ylstack1/ylharness/terminal/TerminalSession.kt)#L15-L106), [terminal/InteractiveTerminalManager.kt](../app/src/main/java/com/ylstack1/ylharness/terminal/InteractiveTerminalManager.kt)#L16-L122), [terminal/TerminalEmulator.kt](../app/src/main/java/com/ylstack1/ylharness/terminal/TerminalEmulator.kt)#L61-L908), [terminal/KeyEncoder.kt](../app/src/main/java/com/ylstack1/ylharness/terminal/KeyEncoder.kt)#L19-L101), [data/TerminalManager.kt](../app/src/main/java/com/ylstack1/ylharness/data/TerminalManager.kt)#L30-L457), [ui/terminal/TerminalScreen.kt](../app/src/main/java/com/ylstack1/ylharness/ui/terminal/TerminalScreen.kt)#L77-L391), [ui/terminal/InteractiveTerminalPane.kt](../app/src/main/java/com/ylstack1/ylharness/ui/terminal/InteractiveTerminalPane.kt)#L89-L460), [ui/terminal/TerminalCanvasView.kt](../app/src/main/java/com/ylstack1/ylharness/ui/terminal/TerminalCanvasView.kt)#L75-L583), [app/src/main/cpp/pty.cpp](../app/src/main/cpp/pty.cpp)#L88-L175)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/terminal/Pty.kt`
-- `app/src/main/java/com/androidharness/app/terminal/TerminalSession.kt`
-- `app/src/main/java/com/androidharness/app/terminal/TerminalEmulator.kt`
-- `app/src/main/java/com/androidharness/app/terminal/CellStyle.kt`
-- `app/src/main/java/com/androidharness/app/terminal/WcWidth.kt`
-- `app/src/main/java/com/androidharness/app/terminal/KeyEncoder.kt`
-- `app/src/main/java/com/androidharness/app/terminal/InteractiveTerminalManager.kt`
-- `app/src/main/java/com/androidharness/app/data/TerminalManager.kt`
-- `app/src/main/java/com/androidharness/app/ui/terminal/TerminalScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/terminal/InteractiveTerminalPane.kt`
-- `app/src/main/java/com/androidharness/app/ui/terminal/TerminalCanvasView.kt`
+- `app/src/main/java/com/ylstack1/ylharness/terminal/Pty.kt`
+- `app/src/main/java/com/ylstack1/ylharness/terminal/TerminalSession.kt`
+- `app/src/main/java/com/ylstack1/ylharness/terminal/TerminalEmulator.kt`
+- `app/src/main/java/com/ylstack1/ylharness/terminal/CellStyle.kt`
+- `app/src/main/java/com/ylstack1/ylharness/terminal/WcWidth.kt`
+- `app/src/main/java/com/ylstack1/ylharness/terminal/KeyEncoder.kt`
+- `app/src/main/java/com/ylstack1/ylharness/terminal/InteractiveTerminalManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/TerminalManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/terminal/TerminalScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/terminal/InteractiveTerminalPane.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/terminal/TerminalCanvasView.kt`
 - `app/src/main/cpp/pty.cpp`
 - `app/src/main/cpp/CMakeLists.txt`

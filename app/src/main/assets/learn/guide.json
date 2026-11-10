@@ -92,7 +92,7 @@
       "outcome": "You can choose Chat for an explanation and Code for a change to a real project.",
       "limits": [
         "Chat cannot silently edit your workspace or run shell commands. A request for project work may offer a handoff to Code.",
-        "The model you choose affects quality, tool use, vision, cost, and speed. Installing AndroidHarness does not grant access to every AI model."
+        "The model you choose affects quality, tool use, vision, cost, and speed. Installing YL Harness does not grant access to every AI model."
       ],
       "fixes": [
         {
@@ -264,7 +264,7 @@
       "steps": [
         {
           "title": "Understand the key",
-          "body": "An API key is a secret credential. It lets AndroidHarness send requests to your provider account. Creating a key does not itself buy a model, fund an account, or make requests unlimited."
+          "body": "An API key is a secret credential. It lets YL Harness send requests to your provider account. Creating a key does not itself buy a model, fund an account, or make requests unlimited."
         },
         {
           "title": "Check the billing route",
@@ -272,7 +272,7 @@
         },
         {
           "title": "Activate access if needed",
-          "body": "Use the provider’s own checkout to add a payment method, buy credits, or activate a suitable plan. Check automatic top-ups and spending controls before confirming. AndroidHarness does not sell provider API subscriptions."
+          "body": "Use the provider’s own checkout to add a payment method, buy credits, or activate a suitable plan. Check automatic top-ups and spending controls before confirming. YL Harness does not sell provider API subscriptions."
         },
         {
           "title": "Keep an eye on usage",
@@ -287,7 +287,7 @@
       "fixes": [
         {
           "problem": "I paid for a chat app but my API key fails",
-          "solution": "Check the developer console for API access, available credits, and any subscription-credit linking step. Alternatively use a supported sign-in connection in AndroidHarness."
+          "solution": "Check the developer console for API access, available credits, and any subscription-credit linking step. Alternatively use a supported sign-in connection in YL Harness."
         }
       ],
       "related": [
@@ -392,7 +392,7 @@
       "category": "providers",
       "title": "Connect an OpenAI API key",
       "summary": "Set up API access and choose the OpenAI connection type.",
-      "location": "OpenAI developer platform → API keys and Billing; AndroidHarness → Manage providers.",
+      "location": "OpenAI developer platform → API keys and Billing; YL Harness → Manage providers.",
       "before": [
         "Use the OpenAI account and API organization you intend to pay with."
       ],
@@ -406,7 +406,7 @@
           "body": "Create a project API key, give it a recognizable name, and copy the secret while it is displayed. Keep it private."
         },
         {
-          "title": "Add it to AndroidHarness",
+          "title": "Add it to YL Harness",
           "body": "In Manage providers, choose OpenAI or OpenAI (Responses). Paste the key, continue, select an available model, and save."
         },
         {
@@ -458,7 +458,7 @@
       "category": "providers",
       "title": "Connect Claude through the API",
       "summary": "Create an Anthropic key and check its API funding.",
-      "location": "Claude Console → API keys and Billing; AndroidHarness → Manage providers → Anthropic.",
+      "location": "Claude Console → API keys and Billing; YL Harness → Manage providers → Anthropic.",
       "before": [
         "Have access to the intended Claude API organization or workspace."
       ],
@@ -477,7 +477,7 @@
         },
         {
           "title": "Save and test",
-          "body": "Choose Anthropic in AndroidHarness, paste the key, select a model available to your account, and save. Select it in Chat or Code and send a short request."
+          "body": "Choose Anthropic in YL Harness, paste the key, select a model available to your account, and save. Select it in Chat or Code and send a short request."
         }
       ],
       "outcome": "A saved Anthropic connection can answer with the model you selected.",
@@ -488,7 +488,7 @@
       "fixes": [
         {
           "problem": "The provider reports low credits",
-          "solution": "Check the billing page for the organization that owns this key. Adding a key to AndroidHarness does not add funds."
+          "solution": "Check the billing page for the organization that owns this key. Adding a key to YL Harness does not add funds."
         }
       ],
       "related": [
@@ -524,7 +524,7 @@
       "category": "providers",
       "title": "Connect a Gemini API key",
       "summary": "Use Google AI Studio and choose the right project.",
-      "location": "Google AI Studio → API keys; AndroidHarness → Manage providers → Gemini.",
+      "location": "Google AI Studio → API keys; YL Harness → Manage providers → Gemini.",
       "before": [
         "Use a Google account and project eligible for the Gemini API."
       ],
@@ -539,14 +539,14 @@
         },
         {
           "title": "Add the Gemini connection",
-          "body": "Choose Gemini in AndroidHarness, paste the key, continue to the model list, and save a model offered to your account."
+          "body": "Choose Gemini in YL Harness, paste the key, continue to the model list, and save a model offered to your account."
         },
         {
           "title": "Try a short message",
           "body": "Choose the model in Chat or Code. If it fails, check that the key’s project, enabled API, billing status, and model limits match your request."
         }
       ],
-      "outcome": "AndroidHarness can reach Gemini using the key attached to the project you chose.",
+      "outcome": "YL Harness can reach Gemini using the key attached to the project you chose.",
       "limits": [
         "Free and paid tiers have different limits and terms. Check the current official billing page before using sensitive data or making purchases.",
         "A model supporting images does not make every provider feature available through this app. Only implemented conversation and tool capabilities are exposed."
@@ -590,7 +590,7 @@
       "category": "providers",
       "title": "Connect OpenRouter",
       "summary": "Use one connection to choose from OpenRouter’s model catalogue.",
-      "location": "OpenRouter → Settings → Keys and Credits; AndroidHarness → Manage providers → OpenRouter.",
+      "location": "OpenRouter → Settings → Keys and Credits; YL Harness → Manage providers → OpenRouter.",
       "before": [
         "Have an OpenRouter account. Check each chosen model’s price and access requirements."
       ],
@@ -675,7 +675,7 @@
         },
         {
           "title": "Save and select a model",
-          "body": "Paste the key into the matching AndroidHarness connection, choose an offered model, and save. Select that model in the conversation header and test it."
+          "body": "Paste the key into the matching YL Harness connection, choose an offered model, and save. Select that model in the conversation header and test it."
         }
       ],
       "outcome": "The chosen service is available in your model picker.",
@@ -759,13 +759,13 @@
         },
         {
           "title": "Test from the phone",
-          "body": "Make sure the server is listening on a reachable interface and the network allows the connection. Save the provider and send a small request from AndroidHarness."
+          "body": "Make sure the server is listening on a reachable interface and the network allows the connection. Save the provider and send a small request from YL Harness."
         }
       ],
       "outcome": "The phone can talk to the compatible server and receive a model reply.",
       "limits": [
         "A desktop model server is different from the app’s on-device Local models feature.",
-        "AndroidHarness does not start Ollama or LM Studio on your computer or automatically create a network tunnel."
+        "YL Harness does not start Ollama or LM Studio on your computer or automatically create a network tunnel."
       ],
       "fixes": [
         {
@@ -983,7 +983,7 @@
       "steps": [
         {
           "title": "Start sign-in",
-          "body": "Choose Add account or the sign-in action. Finish the official browser authorization and return to AndroidHarness. You can cancel a pending sign-in from the account panel."
+          "body": "Choose Add account or the sign-in action. Finish the official browser authorization and return to YL Harness. You can cancel a pending sign-in from the account panel."
         },
         {
           "title": "Choose the connected account",
@@ -2393,7 +2393,7 @@
       "summary": "Let one task compare or coordinate selected projects.",
       "location": "Code → workspace selector → Workspaces for this chat.",
       "before": [
-        "Add each project to AndroidHarness first.",
+        "Add each project to YL Harness first.",
         "Pause active work before changing the conversation’s file access."
       ],
       "steps": [
@@ -2475,7 +2475,7 @@
       "outcome": "The remote folder appears as a workspace and supported actions operate on the SSH host.",
       "limits": [
         "A remote server’s localhost is not your phone’s localhost. Remote web previews need a URL reachable from the phone or a separately configured connection.",
-        "AndroidHarness does not install or administer the remote SSH server for you."
+        "YL Harness does not install or administer the remote SSH server for you."
       ],
       "fixes": [
         {
@@ -3580,7 +3580,7 @@
       ],
       "outcome": "The executable starts as a local MCP process and advertises tools successfully.",
       "limits": [
-        "A local MCP server is executable software. AndroidHarness does not make arbitrary desktop binaries compatible with your phone.",
+        "A local MCP server is executable software. YL Harness does not make arbitrary desktop binaries compatible with your phone.",
         "Project-provided MCP/plugin configuration needs its workspace trust review. Workspace MCP is not available in multi-workspace chats yet."
       ],
       "fixes": [
@@ -3621,7 +3621,7 @@
       "summary": "Review a bundle before enabling its skills, hooks, and tools.",
       "location": "Settings → Coding → Plugins → Installed / Discover / Add.",
       "before": [
-        "Use a plugin made for AndroidHarness’s supported bundle format.",
+        "Use a plugin made for YL Harness’s supported bundle format.",
         "Choose whether its scope should be this project or global."
       ],
       "steps": [
@@ -4284,10 +4284,10 @@
       "steps": [
         {
           "title": "Start the provider",
-          "body": "Follow the provider app’s own setup so its service is running. AndroidHarness does not activate it just by being installed."
+          "body": "Follow the provider app’s own setup so its service is running. YL Harness does not activate it just by being installed."
         },
         {
-          "title": "Grant AndroidHarness access",
+          "title": "Grant YL Harness access",
           "body": "Open the shell-provider section and request permission. Approve the intended request in the provider, then refresh the connection state."
         },
         {
@@ -4334,7 +4334,7 @@
       "category": "device",
       "title": "Pair wireless debugging",
       "summary": "Connect Android’s wireless ADB route from the app.",
-      "location": "Android Developer options → Wireless debugging; AndroidHarness → Terminal & device → Wireless ADB.",
+      "location": "Android Developer options → Wireless debugging; YL Harness → Terminal & device → Wireless ADB.",
       "before": [
         "A supported Android version with wireless debugging available.",
         "A network/device state that allows Android wireless debugging.",
@@ -4342,7 +4342,7 @@
       ],
       "steps": [
         {
-          "title": "Start pairing from AndroidHarness",
+          "title": "Start pairing from YL Harness",
           "body": "In Wireless ADB, tap the pairing button. Allow the local-network permission if Android requests it. The app starts looking for Android’s pairing service."
         },
         {
@@ -4351,7 +4351,7 @@
         },
         {
           "title": "Enter the code through the notification",
-          "body": "Pull down the notification shade, open AndroidHarness’s pairing notification, use its Enter code action, and submit the six-digit code currently shown by Android. Wait for the pairing/connection result."
+          "body": "Pull down the notification shade, open YL Harness’s pairing notification, use its Enter code action, and submit the six-digit code currently shown by Android. Wait for the pairing/connection result."
         },
         {
           "title": "Use manual pairing if needed",
@@ -4399,7 +4399,7 @@
       "summary": "Keep root connection, project permission, and task mode separate.",
       "location": "Settings → Coding → Terminal & device → Advanced → Root access.",
       "before": [
-        "A device that already has a working root manager. AndroidHarness does not root it."
+        "A device that already has a working root manager. YL Harness does not root it."
       ],
       "steps": [
         {
@@ -4462,7 +4462,7 @@
       "steps": [
         {
           "title": "Check Dhizuku first",
-          "body": "Open its own app and verify that Device Owner activation is complete. AndroidHarness’s card reports whether the service is installed, active, or waiting for permission."
+          "body": "Open its own app and verify that Device Owner activation is complete. YL Harness’s card reports whether the service is installed, active, or waiting for permission."
         },
         {
           "title": "Grant the connection",
@@ -4697,7 +4697,7 @@
       "location": "Settings → Telegram.",
       "before": [
         "A bot you control, created through Telegram’s official BotFather.",
-        "Keep your phone online with AndroidHarness’s Telegram service enabled."
+        "Keep your phone online with YL Harness’s Telegram service enabled."
       ],
       "steps": [
         {
@@ -4706,7 +4706,7 @@
         },
         {
           "title": "Pair your account",
-          "body": "Start pairing in AndroidHarness, open the bot with the provided link/code, and review the Telegram user identity back in the app before approving it."
+          "body": "Start pairing in YL Harness, open the bot with the provided link/code, and review the Telegram user identity back in the app before approving it."
         },
         {
           "title": "Choose the work context",
@@ -4719,7 +4719,7 @@
       ],
       "outcome": "Your paired Telegram account can send work to the chosen app project/chat and receive progress/results.",
       "limits": [
-        "The bot and your phone need network access. Telegram does not host the AndroidHarness task on your behalf.",
+        "The bot and your phone need network access. Telegram does not host the YL Harness task on your behalf.",
         "Pairing, app tool permissions, model billing, and background settings still apply. Do not run another competing consumer of the same bot token."
       ],
       "fixes": [
@@ -5648,7 +5648,7 @@
     {
       "id": "honest-limits",
       "category": "help",
-      "title": "What AndroidHarness can and cannot do",
+      "title": "What YL Harness can and cannot do",
       "summary": "Separate app capabilities from model promises and device permissions.",
       "location": "Use this checklist before choosing a workflow.",
       "before": [
@@ -5905,17 +5905,17 @@
     {
       "id": "share-to-chat",
       "category": "chat",
-      "title": "Share something into AndroidHarness",
+      "title": "Share something into YL Harness",
       "summary": "Bring text, links, and supported attachments from another app into a Chat.",
-      "location": "Another Android app → Share → AndroidHarness.",
+      "location": "Another Android app → Share → YL Harness.",
       "before": [
         "The source app must offer Android sharing for the content.",
         "Review private content and the model destination before sending."
       ],
       "steps": [
         {
-          "title": "Choose AndroidHarness in Share",
-          "body": "Use the source app’s Android share sheet. AndroidHarness opens a review sheet for the shared text and supported attachment previews."
+          "title": "Choose YL Harness in Share",
+          "body": "Use the source app’s Android share sheet. YL Harness opens a review sheet for the shared text and supported attachment previews."
         },
         {
           "title": "Choose the conversation",

@@ -139,9 +139,9 @@
     <string name="settings_search_license_title">"許可證"</string>
     <string name="settings_search_license_desc">"關於 · MIT 許可證及其對分支的意義"</string>
     <string name="settings_search_credits_title">"致謝"</string>
-    <string name="settings_search_credits_desc">"關於 · AndroidHarness 背後的開源專案"</string>
+    <string name="settings_search_credits_desc">"關於 · YL Harness 背後的開源專案"</string>
     <string name="settings_search_author_title">"作者"</string>
-    <string name="settings_search_author_desc">"關於 · 誰在開發 AndroidHarness 以及在哪裡找到它"</string>
+    <string name="settings_search_author_desc">"關於 · 誰在開發 YL Harness 以及在哪裡找到它"</string>
     <string name="settings_anchor_progress_bar_style">"進度條樣式"</string>
     <string name="settings_anchor_fallbacks">"回退"</string>
     <string name="settings_anchor_continue_chatgpt">"使用 ChatGPT 繼續"</string>
@@ -287,10 +287,10 @@
     <string name="settings_restore_reconnect_title">"重新連線已恢復的對話"</string>
     <string name="settings_restore_reconnect_note">"只讀訪問仍保持只讀。使用過多個工作區的對話需要為每個工作區分別指定資料夾。"</string>
     <string name="settings_accounts_using_plan">"你正在使用 ChatGPT 訂閱"</string>
-    <string name="settings_accounts_using_plan_desc">"AndroidHarness 中符合條件的請求會使用你的 ChatGPT 訂閱或額度。可在 ChatGPT 設定中檢視用量並管理本應用的訪問許可權。"</string>
+    <string name="settings_accounts_using_plan_desc">"YL Harness 中符合條件的請求會使用你的 ChatGPT 訂閱或額度。可在 ChatGPT 設定中檢視用量並管理本應用的訪問許可權。"</string>
     <string name="settings_action_got_it">"知道了"</string>
     <string name="settings_accounts_signout_title">"退出此賬戶？"</string>
-    <string name="settings_accounts_signout_message">"這會將賬戶從 AndroidHarness 斷開，並將其從自動切換中移除。你之後可以重新登入。"</string>
+    <string name="settings_accounts_signout_message">"這會將賬戶從 YL Harness 斷開，並將其從自動切換中移除。你之後可以重新登入。"</string>
     <string name="settings_action_continue">"繼續"</string>
     <string name="settings_progress_bar_subtitle">"選擇進度條的顯示樣式。立即生效。"</string>
     <string name="settings_provider_select">"選擇"</string>
@@ -893,7 +893,7 @@
     <string name="chat_handoff_picker_note">"選擇要使用的工作區。聊天中的計劃會一併帶入。"</string>
     <string name="chat_handoff_close">"關閉工作區選擇器"</string>
     <string name="chat_handoff_no_workspace">"請先在程式碼中新增工作區。"</string>
-    <string name="chat_share_target">"AndroidHarness 聊天"</string>
+    <string name="chat_share_target">"YL Harness 聊天"</string>
     <string name="chat_share_title">"分享到聊天"</string>
     <string name="chat_share_review">"檢查分享的內容，選擇聊天並新增問題。只有在聊天中點選傳送後才會傳送。"</string>
     <string name="chat_share_new">"新聊天"</string>
@@ -973,7 +973,7 @@
     <string name="glass_unsupported">"玻璃效果需要 Android 12 或更高版本。"</string>
     <string name="glass_liquid_unsupported">"Liquid Glass 需要 Android 13 或更高版本。此裝置可以使用毛玻璃。"</string>
     <string name="glass_preview_label">"玻璃預覽"</string>
-    <string name="glass_preview_title">"AndroidHarness"</string>
+    <string name="glass_preview_title">"YL Harness"</string>
     <string name="glass_preview_text">"清晰的文字。更柔和的背景。"</string>
     <string name="glass_transparency">"透明度"</string>
     <string name="glass_transparency_percent">"%1$d%%"</string>

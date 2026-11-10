@@ -1,7 +1,7 @@
 <resources>
     <string name="nine_router_title">9Router</string>
     <string name="nine_router_description">نصب و مدیریت یک مسیریاب مدل محلی</string>
-    <string name="nine_router_intro">9Router را روی این گوشی اجرا کنید و ارائه‌دهنده‌ها، مدل‌ها و مسیریابی را در مرورگر مدیریت کنید. از زنجیره ابزار لینوکس AndroidHarness استفاده می‌کند.</string>
+    <string name="nine_router_intro">9Router را روی این گوشی اجرا کنید و ارائه‌دهنده‌ها، مدل‌ها و مسیریابی را در مرورگر مدیریت کنید. از زنجیره ابزار لینوکس YL Harness استفاده می‌کند.</string>
     <string name="nine_router_setup">محیط خود را آماده کنید</string>
     <string name="nine_router_not_installed">آماده نصب</string>
     <string name="nine_router_ready">نصب‌شده · متوقف</string>
@@ -26,12 +26,12 @@
     <string name="nine_router_checking">در حال بررسی…</string>
     <string name="nine_router_update">به‌روزرسانی به %1$s</string>
     <string name="nine_router_auto_start">شروع خودکار 9Router</string>
-    <string name="nine_router_auto_start_body">مسیریاب نصب‌شده را هنگام باز شدن AndroidHarness اجرا می‌کند.</string>
+    <string name="nine_router_auto_start_body">مسیریاب نصب‌شده را هنگام باز شدن YL Harness اجرا می‌کند.</string>
     <string name="nine_router_add_provider">افزودن 9Router به ارائه‌دهنده‌ها</string>
     <string name="nine_router_refresh_provider">به‌روزرسانی ارائه‌دهنده 9Router</string>
     <string name="nine_router_provider_body">در صورت نیاز 9Router را اجرا می‌کند و نشانی محلی و کلید API آن را خودکار پر می‌کند. مدل‌های متصل در انتخاب‌گر مدل گفتگو و کد نمایش داده می‌شوند.</string>
     <string name="nine_router_remove_provider">حذف از ارائه‌دهنده‌ها</string>
-    <string name="nine_router_remove_provider_body">اتصال‌های 9Router را از AndroidHarness حذف می‌کند. مسیریاب و حساب‌های آن نصب‌شده می‌مانند.</string>
+    <string name="nine_router_remove_provider_body">اتصال‌های 9Router را از YL Harness حذف می‌کند. مسیریاب و حساب‌های آن نصب‌شده می‌مانند.</string>
     <string name="nine_router_uninstall">حذف 9Router</string>
     <string name="nine_router_uninstall_title">9Router کاملاً حذف شود؟</string>
     <string name="nine_router_uninstall_body">9Router را متوقف می‌کند و نصب، حساب‌های ذخیره‌شده، کلیدهای API مسیریاب، پیکربندی، حافظه نهان، تنظیم شروع خودکار و اتصال‌های ارائه‌دهنده برنامه را پاک می‌کند. این کار برگشت‌پذیر نیست. زنجیره ابزار لینوکس مشترک برای سایر ویژگی‌ها در دسترس می‌ماند.</string>

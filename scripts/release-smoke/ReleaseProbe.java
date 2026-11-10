@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /** Runs against the actual APK, without adding test entry points or keep rules to it. */
 public final class ReleaseProbe {
-    private static final String LOCAL = "com.androidharness.app.local.LocalNative";
+    private static final String LOCAL = "com.ylstack1.ylharness.local.LocalNative";
 
     public static void main(String[] args) throws Exception {
         try {
@@ -18,7 +18,7 @@ public final class ReleaseProbe {
 
     private static void runChecks(String[] args) throws Exception {
         for (String state : new String[] {"NotInstalled", "Preparing", "Downloading", "Installing", "Ready", "Failed"}) {
-            Class<?> type = Class.forName("com.androidharness.app.data.env.EnvState$" + state);
+            Class<?> type = Class.forName("com.ylstack1.ylharness.data.env.EnvState$" + state);
             if (!type.getSimpleName().equals(state))
                 throw new AssertionError("Environment label changed: " + state + " -> " + type.getSimpleName());
         }
@@ -51,7 +51,7 @@ public final class ReleaseProbe {
 
     private static void checkPairing() throws Exception {
         System.loadLibrary("harness_adb");
-        Class<?> type = Class.forName("com.androidharness.app.data.env.adb.PairingContext");
+        Class<?> type = Class.forName("com.ylstack1.ylharness.data.env.adb.PairingContext");
         Method create = type.getDeclaredMethod("nativeConstructor", boolean.class, byte[].class);
         create.setAccessible(true);
         long pointer = (Long) create.invoke(null, true,

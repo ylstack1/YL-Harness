@@ -139,9 +139,9 @@
     <string name="settings_search_license_title">"Lizenz"</string>
     <string name="settings_search_license_desc">"Über · Die MIT-Lizenz und was sie für Forks bedeutet"</string>
     <string name="settings_search_credits_title">"Danksagungen"</string>
-    <string name="settings_search_credits_desc">"Über · Quelloffene Projekte hinter AndroidHarness"</string>
+    <string name="settings_search_credits_desc">"Über · Quelloffene Projekte hinter YL Harness"</string>
     <string name="settings_search_author_title">"Autor"</string>
-    <string name="settings_search_author_desc">"Über · Wer AndroidHarness entwickelt und wo du es findest"</string>
+    <string name="settings_search_author_desc">"Über · Wer YL Harness entwickelt und wo du es findest"</string>
     <string name="settings_anchor_progress_bar_style">"Stil der Fortschrittsleiste"</string>
     <string name="settings_anchor_fallbacks">"Fallbacks"</string>
     <string name="settings_anchor_continue_chatgpt">"Mit ChatGPT fortfahren"</string>
@@ -287,10 +287,10 @@
     <string name="settings_restore_reconnect_title">"Wiederhergestellte Chats neu verbinden"</string>
     <string name="settings_restore_reconnect_note">"Nur-Lese-Zugriff bleibt Nur-Lese. Chats, die mehrere Arbeitsbereiche genutzt haben, brauchen für jeden einen eigenen Ordner."</string>
     <string name="settings_accounts_using_plan">"Du nutzt deinen ChatGPT-Plan"</string>
-    <string name="settings_accounts_using_plan_desc">"Berechtigte Anfragen in AndroidHarness nutzen deinen ChatGPT-Plan oder Guthaben. Prüfe die Nutzung und verwalte den Zugriff dieser App in den ChatGPT-Einstellungen."</string>
+    <string name="settings_accounts_using_plan_desc">"Berechtigte Anfragen in YL Harness nutzen deinen ChatGPT-Plan oder Guthaben. Prüfe die Nutzung und verwalte den Zugriff dieser App in den ChatGPT-Einstellungen."</string>
     <string name="settings_action_got_it">"Verstanden"</string>
     <string name="settings_accounts_signout_title">"Von diesem Konto abmelden?"</string>
-    <string name="settings_accounts_signout_message">"Das trennt das Konto von AndroidHarness und entfernt es aus der automatischen Umschaltung. Du kannst dich später erneut anmelden."</string>
+    <string name="settings_accounts_signout_message">"Das trennt das Konto von YL Harness und entfernt es aus der automatischen Umschaltung. Du kannst dich später erneut anmelden."</string>
     <string name="settings_action_continue">"Weiter"</string>
     <string name="settings_progress_bar_subtitle">"Wähle, wie Fortschrittsbalken aussehen. Gilt sofort."</string>
     <string name="settings_provider_select">"Auswählen"</string>
@@ -905,7 +905,7 @@
     <string name="chat_handoff_picker_note">"Wähle, wo gebaut wird. Dein Chat-Plan kommt mit."</string>
     <string name="chat_handoff_close">"Arbeitsbereich-Auswahl schließen"</string>
     <string name="chat_handoff_no_workspace">"Füge in Code einen Arbeitsbereich hinzu, um fortzufahren."</string>
-    <string name="chat_share_target">"AndroidHarness Chat"</string>
+    <string name="chat_share_target">"YL Harness Chat"</string>
     <string name="chat_share_title">"In Chat teilen"</string>
     <string name="chat_share_review">"Prüfe deine geteilten Elemente, wähle einen Chat und füge eine Frage hinzu. Es wird nichts gesendet, bis du in Chat auf Senden tippst."</string>
     <string name="chat_share_new">"Neuer Chat"</string>
@@ -974,7 +974,7 @@
     <string name="glass_unsupported">Glas-Effekte benötigen Android 12 oder neuer.</string>
     <string name="glass_liquid_unsupported">Liquid Glass benötigt Android 13 oder neuer. Milchglas ist auf diesem Gerät verfügbar.</string>
     <string name="glass_preview_label">Glasvorschau</string>
-    <string name="glass_preview_title">AndroidHarness</string>
+    <string name="glass_preview_title">YL Harness</string>
     <string name="glass_preview_text">Klarer Text. Ein weicherer Hintergrund.</string>
     <string name="glass_transparency">Transparenz</string>
     <string name="glass_transparency_percent">%1$d%%</string>

@@ -17,7 +17,7 @@ This page covers what happens after a bundle is downloaded and before its conten
 
 `PluginAdapter` handles these layouts (`PluginFormats.kt:11-16`):
 
-- **AndroidHarness**: a root `plugin.json` with array component fields and no Claude-only keys, recognized by `isNative` (`PluginFormats.kt:107-110`).
+- **YL Harness**: a root `plugin.json` with array component fields and no Claude-only keys, recognized by `isNative` (`PluginFormats.kt:107-110`).
 - **Claude Code plugins**: `.claude-plugin/plugin.json`, plus `commands`, `agents`, `skills`, `hooks`, `mcpServers`, `outputStyles` and `lspServers` fields. Also root `plugin.json` with Claude keys.
 - **Codex and Cursor plugins**: `.codex-plugin/plugin.json`, `.cursor-plugin/plugin.json`, and `.agents-plugin/plugin.json`, using the Claude shape.
 - **Gemini CLI extensions**: `gemini-extension.json` with `mcpServers`, `contextFileName` (default `GEMINI.md`), `commands` and `excludeTools`.
@@ -98,7 +98,7 @@ flowchart TD
 Persistence:
 
 - The normalized `plugin.json` is written into the bundle before it is moved into `packages/<uuid>`, so the digest covers the normalized form.
-- When the source was not already `AndroidHarness`, an existing `plugin.json` is renamed to `plugin.original.json` (or `plugin.original.N.json`) before the new one is written (`PluginFormats.kt:377-382`). The original file therefore remains part of the bundle and the digest.
+- When the source was not already `YL Harness`, an existing `plugin.json` is renamed to `plugin.original.json` (or `plugin.original.N.json`) before the new one is written (`PluginFormats.kt:377-382`). The original file therefore remains part of the bundle and the digest.
 - Command hooks store both names: `source` keeps the original event (for example `PreToolUse`) and `event` uses the internal name (`tool.before`), so the stdin payload reports Claude's vocabulary.
 
 Component generation details:
@@ -147,16 +147,16 @@ Component generation details:
 - `prompt.before` is accepted by the manifest and config loader, but `PluginAdapter.hookEvents` has no foreign event mapping to it. Only a native `plugin.json` can declare it.
 - `formatName` labels `.agents-plugin` as "Claude Code plugin", so that ecosystem is not preserved in the displayed format.
 
-Sources: [app/src/main/java/com/androidharness/app/plugins/PluginFormats.kt](../app/src/main/java/com/androidharness/app/plugins/PluginFormats.kt)#L17-L448), [app/src/main/java/com/androidharness/app/plugins/PluginModels.kt](../app/src/main/java/com/androidharness/app/plugins/PluginModels.kt)#L62-L225), [app/src/main/java/com/androidharness/app/plugins/PluginArchives.kt](../app/src/main/java/com/androidharness/app/plugins/PluginArchives.kt)#L13-L175), [app/src/main/java/com/androidharness/app/plugins/PluginInstallers.kt](../app/src/main/java/com/androidharness/app/plugins/PluginInstallers.kt)#L21-L68), [app/src/main/java/com/androidharness/app/config/PluginHooks.kt](../app/src/main/java/com/androidharness/app/config/PluginHooks.kt)#L19-L151), [app/src/main/java/com/androidharness/app/config/HarnessConfig.kt](../app/src/main/java/com/androidharness/app/config/HarnessConfig.kt)#L266-L343), [app/src/main/java/com/androidharness/app/ui/settings/PluginMcpServersSection.kt](../app/src/main/java/com/androidharness/app/ui/settings/PluginMcpServersSection.kt)#L28-L87)
+Sources: [app/src/main/java/com/ylstack1/ylharness/plugins/PluginFormats.kt](../app/src/main/java/com/ylstack1/ylharness/plugins/PluginFormats.kt)#L17-L448), [app/src/main/java/com/ylstack1/ylharness/plugins/PluginModels.kt](../app/src/main/java/com/ylstack1/ylharness/plugins/PluginModels.kt)#L62-L225), [app/src/main/java/com/ylstack1/ylharness/plugins/PluginArchives.kt](../app/src/main/java/com/ylstack1/ylharness/plugins/PluginArchives.kt)#L13-L175), [app/src/main/java/com/ylstack1/ylharness/plugins/PluginInstallers.kt](../app/src/main/java/com/ylstack1/ylharness/plugins/PluginInstallers.kt)#L21-L68), [app/src/main/java/com/ylstack1/ylharness/config/PluginHooks.kt](../app/src/main/java/com/ylstack1/ylharness/config/PluginHooks.kt)#L19-L151), [app/src/main/java/com/ylstack1/ylharness/config/HarnessConfig.kt](../app/src/main/java/com/ylstack1/ylharness/config/HarnessConfig.kt)#L266-L343), [app/src/main/java/com/ylstack1/ylharness/ui/settings/PluginMcpServersSection.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/PluginMcpServersSection.kt)#L28-L87)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/plugins/PluginFormats.kt`
-- `app/src/main/java/com/androidharness/app/plugins/PluginModels.kt`
-- `app/src/main/java/com/androidharness/app/plugins/PluginArchives.kt`
-- `app/src/main/java/com/androidharness/app/plugins/PluginInstallers.kt`
-- `app/src/main/java/com/androidharness/app/plugins/PluginCommands.kt`
-- `app/src/main/java/com/androidharness/app/config/PluginHooks.kt`
-- `app/src/main/java/com/androidharness/app/config/HarnessConfig.kt`
-- `app/src/main/java/com/androidharness/app/tools/mcp/McpManager.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/PluginMcpServersSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/plugins/PluginFormats.kt`
+- `app/src/main/java/com/ylstack1/ylharness/plugins/PluginModels.kt`
+- `app/src/main/java/com/ylstack1/ylharness/plugins/PluginArchives.kt`
+- `app/src/main/java/com/ylstack1/ylharness/plugins/PluginInstallers.kt`
+- `app/src/main/java/com/ylstack1/ylharness/plugins/PluginCommands.kt`
+- `app/src/main/java/com/ylstack1/ylharness/config/PluginHooks.kt`
+- `app/src/main/java/com/ylstack1/ylharness/config/HarnessConfig.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/PluginMcpServersSection.kt`

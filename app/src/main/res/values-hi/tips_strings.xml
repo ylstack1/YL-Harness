@@ -20,8 +20,8 @@
     <string name="tip_chat_instructions">"Chat विकल्पों में प्रत्येक चैट के अनुसरण में आने वाले निर्देश, जैसे आपका पसंदीदा लहजा या भाषा, जोड़ें।"</string>
     <string name="tip_tts">"उत्तरों को स्वचालित रूप से ज़ोर से पढ़ा जा सकता है। वॉयस सेटिंग में आवाज और गति चुनें।"</string>
     <string name="tip_agents_md">"AGENTS.md में प्रोजेक्ट नियम रखें और एजेंट हर रन पर उनका पालन करता है।"</string>
-    <string name="tip_memory_off">"मेमोरी चालू करें ताकि AndroidHarness चैट के दौरान आपकी प्राथमिकताओं और निर्णयों को याद रखे।"</string>
-    <string name="tip_memory_on">"मेमोरी चालू है. आप किसी भी समय AndroidHarness को याद रखने वाली चीज़ों की समीक्षा कर सकते हैं या उन्हें हटा सकते हैं।"</string>
+    <string name="tip_memory_off">"मेमोरी चालू करें ताकि YL Harness चैट के दौरान आपकी प्राथमिकताओं और निर्णयों को याद रखे।"</string>
+    <string name="tip_memory_on">"मेमोरी चालू है. आप किसी भी समय YL Harness को याद रखने वाली चीज़ों की समीक्षा कर सकते हैं या उन्हें हटा सकते हैं।"</string>
     <string name="tip_thinking">"गहन तर्क के लिए गति का व्यापार करने के लिए हेडर में सोच स्तर पर टैप करें।"</string>
     <string name="tip_glass">"ऐप में पारभासी, स्तरित सतहों के लिए Harness Glass आज़माएं।"</string>
     <string name="tip_compact">"संदर्भ कम चल रहा है? बातचीत को सारांशित करने और जारी रखने के लिए /compact टाइप करें।"</string>
@@ -30,7 +30,7 @@
     <string name="tip_dual_planning">"योजना बनाने के लिए एक मॉडल का उपयोग करें और योजना को पूरा करने के लिए दूसरे, सस्ते मॉडल का उपयोग करें।"</string>
     <string name="tip_codegraph">"CodeGraph इंस्टॉल करें ताकि एजेंट हर फ़ाइल को पढ़े बिना कॉल करने वालों और प्रभावित कोड को ढूंढ सके।"</string>
     <string name="tip_whisper">"कई भाषाओं में तेज़, सटीक भाषण इनपुट के लिए Groq Whisper के साथ डिक्टेट करें।"</string>
-    <string name="tip_app_lock">"अपने फिंगरप्रिंट, चेहरे या डिवाइस PIN से AndroidHarness को लॉक करें।"</string>
+    <string name="tip_app_lock">"अपने फिंगरप्रिंट, चेहरे या डिवाइस PIN से YL Harness को लॉक करें।"</string>
     <string name="tip_mcp">"एजेंट को अधिक टूल देने के लिए MCP सर्वर कनेक्ट करें।"</string>
     <string name="tip_web_search">"अपना वेब खोज बैकएंड चुनें: कीलेस, Brave या Tavily।"</string>
     <string name="tip_theme">"एक रंग पैलेट चुनें या उपस्थिति में अपना खुद का बनाएं।"</string>
@@ -47,7 +47,7 @@
     <string name="tip_config">"हार्नेस.जेसन के माध्यम से अपने रेपो के साथ प्रोजेक्ट सेटिंग्स साझा करें।"</string>
     <string name="tip_shizuku">"Shizuku सेट करें ताकि एजेंट आपके डिवाइस पर एलिवेटेड शेल एक्सेस का उपयोग कर सके।"</string>
     <string name="tip_plugins">"कौशल और उपकरण जोड़ने के लिए प्लगइन्स पृष्ठ से प्लगइन बंडल स्थापित करें।"</string>
-    <string name="tip_language">"AndroidHarness 11 भाषाओं में उपलब्ध है। इसे भाषा सेटिंग में बदलें."</string>
+    <string name="tip_language">"YL Harness 11 भाषाओं में उपलब्ध है। इसे भाषा सेटिंग में बदलें."</string>
     <string name="tip_backup">"अपनी चैट और सेटिंग्स को बैकअप के रूप में निर्यात करें, और उन्हें किसी अन्य डिवाइस पर आयात करें।"</string>
     <string name="tip_progress_bar">"उपस्थिति में कार्य प्रगति पट्टी की शैली बदलें।"</string>
     <string name="tip_turn_off">"आप सेटिंग में किसी भी समय इन युक्तियों को बंद कर सकते हैं."</string>

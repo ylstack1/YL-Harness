@@ -34,7 +34,7 @@ flowchart TD
 
 ## Invocation Chain
 
-1. The drawer or in-chat find calls `SessionRepository.searchMessages` or `searchMessagesInSession` (`app/src/main/java/com/androidharness/app/data/SessionRepository.kt` lines 532 to 586).
+1. The drawer or in-chat find calls `SessionRepository.searchMessages` or `searchMessagesInSession` (`app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt` lines 532 to 586).
 2. Each method trims the query, builds either `ChatSearch.ftsMatchQuery` or `ChatSearch.likePattern`, and calls the matching DAO query (`Database.kt` lines 501 to 517).
 3. Results drop assistant rows that carry a `toolCallId`, and for Chat sessions keep only `USER` and `ASSISTANT` roles. Assistant text is converted with `RichResponse.plainText`, user text with `UserMessageContent.visibleText`.
 4. `ChatViewModel.findInConversation` calls the per-session search and returns hits oldest first (`ChatViewModel.kt` lines 2109 to 2113).
@@ -102,20 +102,20 @@ The source ledger is built by `ChatActivityPresentation.sources`, which parses `
 - The action row reads `savedAnswerIds` and the sidebar reads `savedAnswers`, so a new surface can reuse either flow without duplicating storage.
 - Share destinations are supplied by `AppNav`; any future filter only needs to change the `chats` argument of `ShareToChatSheet`.
 
-Sources: [app/src/main/java/com/androidharness/app/data/db/ChatSearch.kt](../app/src/main/java/com/androidharness/app/data/db/ChatSearch.kt)#L9-L108), [app/src/main/java/com/androidharness/app/data/SessionRepository.kt](../app/src/main/java/com/androidharness/app/data/SessionRepository.kt)#L532-L586), [app/src/main/java/com/androidharness/app/tools/ChatRecallTools.kt](../app/src/main/java/com/androidharness/app/tools/ChatRecallTools.kt)#L24-L179), [app/src/main/java/com/androidharness/app/data/PendingShare.kt](../app/src/main/java/com/androidharness/app/data/PendingShare.kt)#L9-L57)
+Sources: [app/src/main/java/com/ylstack1/ylharness/data/db/ChatSearch.kt](../app/src/main/java/com/ylstack1/ylharness/data/db/ChatSearch.kt)#L9-L108), [app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt](../app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt)#L532-L586), [app/src/main/java/com/ylstack1/ylharness/tools/ChatRecallTools.kt](../app/src/main/java/com/ylstack1/ylharness/tools/ChatRecallTools.kt)#L24-L179), [app/src/main/java/com/ylstack1/ylharness/data/PendingShare.kt](../app/src/main/java/com/ylstack1/ylharness/data/PendingShare.kt)#L9-L57)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/data/db/ChatSearch.kt`
-- `app/src/main/java/com/androidharness/app/data/db/Database.kt`
-- `app/src/main/java/com/androidharness/app/data/SessionRepository.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/FindInChatBar.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/SaveAnswerButton.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/QuoteReplySelection.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ChatSourceLibrarySheet.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ShareToChatSheet.kt`
-- `app/src/main/java/com/androidharness/app/data/PendingShare.kt`
-- `app/src/main/java/com/androidharness/app/tools/ChatRecallTools.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/AppNav.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/db/ChatSearch.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/FindInChatBar.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/SaveAnswerButton.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/QuoteReplySelection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatSourceLibrarySheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ShareToChatSheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/PendingShare.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/ChatRecallTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/AppNav.kt`

@@ -2,7 +2,7 @@
 
 > Defines the `Tool` contract, builds the per-run tool registry, dispatches model tool calls, and gates every call through permission modes, approvals, and remembered grants.
 
-Every capability the agent can invoke implements `Tool` in `app/src/main/java/com/androidharness/app/tools/Tool.kt`. The engine in `AgentEngine.kt` turns the model's `ToolCallData` stream into executions: it filters the registry, decides which calls may run concurrently, runs each call through a permission ladder, snapshots files before mutating them, and returns a redacted `ToolResult`. The permission layer is deliberately separate from the tool implementations, so a tool cannot approve itself or quietly widen its sandbox.
+Every capability the agent can invoke implements `Tool` in `app/src/main/java/com/ylstack1/ylharness/tools/Tool.kt`. The engine in `AgentEngine.kt` turns the model's `ToolCallData` stream into executions: it filters the registry, decides which calls may run concurrently, runs each call through a permission ladder, snapshots files before mutating them, and returns a redacted `ToolResult`. The permission layer is deliberately separate from the tool implementations, so a tool cannot approve itself or quietly widen its sandbox.
 
 ## Module Responsibilities
 
@@ -111,16 +111,16 @@ Full access does change project-config enforcement: `ConfigToolPolicy.permission
 
 - FEATURES.md describes four permission modes and fingerprint gating; both are verified. It also says every remembered permission can be revoked individually, which the settings section implements, but grants are not persisted across app restarts by design, so there is no on-disk grant record to audit.
 
-Sources: [app/src/main/java/com/androidharness/app/tools/Tool.kt](../app/src/main/java/com/androidharness/app/tools/Tool.kt)#L12-L77), [app/src/main/java/com/androidharness/app/agent/AgentEngine.kt](../app/src/main/java/com/androidharness/app/agent/AgentEngine.kt)#L42-L84), [app/src/main/java/com/androidharness/app/agent/AgentEngine.kt](../app/src/main/java/com/androidharness/app/agent/AgentEngine.kt)#L1337-L1379), [app/src/main/java/com/androidharness/app/agent/RememberedGrants.kt](../app/src/main/java/com/androidharness/app/agent/RememberedGrants.kt)#L7-L40)
+Sources: [app/src/main/java/com/ylstack1/ylharness/tools/Tool.kt](../app/src/main/java/com/ylstack1/ylharness/tools/Tool.kt)#L12-L77), [app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt](../app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt)#L42-L84), [app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt](../app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt)#L1337-L1379), [app/src/main/java/com/ylstack1/ylharness/agent/RememberedGrants.kt](../app/src/main/java/com/ylstack1/ylharness/agent/RememberedGrants.kt)#L7-L40)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/tools/Tool.kt`
-- `app/src/main/java/com/androidharness/app/agent/AgentEngine.kt`
-- `app/src/main/java/com/androidharness/app/agent/RememberedGrants.kt`
-- `app/src/main/java/com/androidharness/app/tools/InteractiveTools.kt`
-- `app/src/main/java/com/androidharness/app/tools/ShellPolicy.kt`
-- `app/src/main/java/com/androidharness/app/tools/WorkspaceToolRouting.kt`
-- `app/src/main/java/com/androidharness/app/agent/RunManager.kt`
-- `app/src/main/java/com/androidharness/app/config/ConfigRunContext.kt`
-- `app/src/main/java/com/androidharness/app/ui/common/BiometricAuth.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/Tool.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/RememberedGrants.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/InteractiveTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/ShellPolicy.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/WorkspaceToolRouting.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/config/ConfigRunContext.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/common/BiometricAuth.kt`

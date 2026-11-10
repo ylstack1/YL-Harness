@@ -108,17 +108,17 @@ A `Task` can measure roots, an explicit file list, or neither. `optional` omits 
 - **`StorageFiles`**: `contained`, `snapshot`, `candidate`, and `clean` form a reusable reviewed-deletion primitive for any local tree.
 - **`SharedToolStore`**: `preview`, `remove`, `recover`, and `reason` are the package lifecycle boundary used by `LinuxEnvironmentManager`.
 
-Sources: [app/src/main/java/com/androidharness/app/data/storage/StorageScanner.kt](../app/src/main/java/com/androidharness/app/data/storage/StorageScanner.kt)#L130-L372), [app/src/main/java/com/androidharness/app/data/storage/StorageFiles.kt](../app/src/main/java/com/androidharness/app/data/storage/StorageFiles.kt)#L16-L226), [app/src/main/java/com/androidharness/app/data/storage/StorageReport.kt](../app/src/main/java/com/androidharness/app/data/storage/StorageReport.kt)#L4-L161), [app/src/main/java/com/androidharness/app/data/storage/StorageManager.kt](../app/src/main/java/com/androidharness/app/data/storage/StorageManager.kt)#L14-L162), [app/src/main/java/com/androidharness/app/ui/settings/StorageSection.kt](../app/src/main/java/com/androidharness/app/ui/settings/StorageSection.kt)#L69-L585)
+Sources: [app/src/main/java/com/ylstack1/ylharness/data/storage/StorageScanner.kt](../app/src/main/java/com/ylstack1/ylharness/data/storage/StorageScanner.kt)#L130-L372), [app/src/main/java/com/ylstack1/ylharness/data/storage/StorageFiles.kt](../app/src/main/java/com/ylstack1/ylharness/data/storage/StorageFiles.kt)#L16-L226), [app/src/main/java/com/ylstack1/ylharness/data/storage/StorageReport.kt](../app/src/main/java/com/ylstack1/ylharness/data/storage/StorageReport.kt)#L4-L161), [app/src/main/java/com/ylstack1/ylharness/data/storage/StorageManager.kt](../app/src/main/java/com/ylstack1/ylharness/data/storage/StorageManager.kt)#L14-L162), [app/src/main/java/com/ylstack1/ylharness/ui/settings/StorageSection.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/StorageSection.kt)#L69-L585)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/data/storage/StorageScanner.kt`
-- `app/src/main/java/com/androidharness/app/data/storage/StorageReport.kt`
-- `app/src/main/java/com/androidharness/app/data/storage/StorageFiles.kt`
-- `app/src/main/java/com/androidharness/app/data/storage/StorageManager.kt`
-- `app/src/main/java/com/androidharness/app/data/storage/SharedToolStore.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/StorageSection.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/StorageLabels.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/SettingsScreen.kt`
-- `app/src/main/java/com/androidharness/app/data/env/LinuxEnvironment.kt`
-- `app/src/main/java/com/androidharness/app/agent/TaskControl.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/storage/StorageScanner.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/storage/StorageReport.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/storage/StorageFiles.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/storage/StorageManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/storage/SharedToolStore.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/StorageSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/StorageLabels.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/env/LinuxEnvironment.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/TaskControl.kt`

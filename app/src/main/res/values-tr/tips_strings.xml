@@ -20,8 +20,8 @@
     <string name="tip_chat_instructions">"Tercih ettiğiniz ton veya dil gibi her sohbetin takip ettiği talimatları Chat seçeneklerine ekleyin."</string>
     <string name="tip_tts">"Yanıtlar otomatik olarak yüksek sesle okunabilir. Ses ayarlarında bir ses ve hız seçin."</string>
     <string name="tip_agents_md">"Proje kurallarını AGENTS.md\'ye koyun ve ajan her çalıştırmada bunları takip etsin."</string>
-    <string name="tip_memory_off">"AndroidHarness\'nin sohbetler arasındaki tercihlerinizi ve kararlarınızı hatırlaması için belleği açın."</string>
-    <string name="tip_memory_on">"Bellek açık. AndroidHarness\'nin hatırladıklarını istediğiniz zaman inceleyebilir veya silebilirsiniz."</string>
+    <string name="tip_memory_off">"YL Harness\'nin sohbetler arasındaki tercihlerinizi ve kararlarınızı hatırlaması için belleği açın."</string>
+    <string name="tip_memory_on">"Bellek açık. YL Harness\'nin hatırladıklarını istediğiniz zaman inceleyebilir veya silebilirsiniz."</string>
     <string name="tip_thinking">"Daha derin akıl yürütmeye hız kazandırmak için başlıktaki düşünme düzeyine dokunun."</string>
     <string name="tip_glass">"Uygulama genelinde yarı saydam, katmanlı yüzeyler için Harness Glass\'yi deneyin."</string>
     <string name="tip_compact">"İçerik azalıyor mu? Konuşmayı özetlemek ve devam etmek için /compact yazın."</string>
@@ -30,7 +30,7 @@
     <string name="tip_dual_planning">"Planlamak için bir model kullanın ve planı gerçekleştirmek için daha ucuz olan başka bir model kullanın."</string>
     <string name="tip_codegraph">"Ajanın her dosyayı okumadan arayanları ve etkilenen kodu bulmasını sağlamak için CodeGraph\'yi yükleyin."</string>
     <string name="tip_whisper">"Birçok dilde hızlı, doğru konuşma girişi için Groq Whisper ile dikte edin."</string>
-    <string name="tip_app_lock">"AndroidHarness\'yi parmak iziniz, yüzünüz veya cihazınız PIN ile kilitleyin."</string>
+    <string name="tip_app_lock">"YL Harness\'yi parmak iziniz, yüzünüz veya cihazınız PIN ile kilitleyin."</string>
     <string name="tip_mcp">"Ajana daha fazla araç sağlamak için MCP sunucularını bağlayın."</string>
     <string name="tip_web_search">"Web arama arka ucunuzu seçin: Anahtarsız, Brave veya Tavily."</string>
     <string name="tip_theme">"Görünüm\'de bir renk paleti seçin veya kendinizinkini oluşturun."</string>
@@ -47,7 +47,7 @@
     <string name="tip_config">"Proje ayarlarını koşum.json aracılığıyla repo\'nuzla paylaşın."</string>
     <string name="tip_shizuku">"Ajanın cihazınızda yükseltilmiş kabuk erişimini kullanabilmesi için Shizuku\'yi ayarlayın."</string>
     <string name="tip_plugins">"Beceri ve araçlar eklemek için Eklentiler sayfasından eklenti paketlerini yükleyin."</string>
-    <string name="tip_language">"AndroidHarness 11 dilde mevcuttur. Dil ayarlarında bunu değiştirin."</string>
+    <string name="tip_language">"YL Harness 11 dilde mevcuttur. Dil ayarlarında bunu değiştirin."</string>
     <string name="tip_backup">"Sohbetlerinizi ve ayarlarınızı yedek olarak dışa aktarın ve başka bir cihaza aktarın."</string>
     <string name="tip_progress_bar">"Görünüm\'de çalışma ilerleme çubuğunun stilini değiştirin."</string>
     <string name="tip_turn_off">"Bu ipuçlarını istediğiniz zaman Ayarlar\'dan kapatabilirsiniz."</string>

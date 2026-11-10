@@ -97,24 +97,24 @@ Persistence split: credentials live in encrypted preferences, repository content
 - FEATURES.md line 73 lists git status, diff, commit, log, show, branch, checkout, push and pull but does not mention branch deletion or pull request creation. Both exist here (`git_branch_manage` and `github_create_pull_request`), so the feature list is incomplete rather than the implementation.
 - The Commit & push sheet has no merge or rebase action. `git` conflicts are reported and the user must resolve them with the agent or a terminal; only `git_pull` exposes merge and rebase modes.
 
-Sources: [app/src/main/java/com/androidharness/app/tools/GitTools.kt](../app/src/main/java/com/androidharness/app/tools/GitTools.kt)#L25-L273), [app/src/main/java/com/androidharness/app/github/GitHubRepository.kt](../app/src/main/java/com/androidharness/app/github/GitHubRepository.kt)#L69-L196), [app/src/main/java/com/androidharness/app/github/GitHubWorkspaces.kt](../app/src/main/java/com/androidharness/app/github/GitHubWorkspaces.kt)#L18-L139), [app/src/main/java/com/androidharness/app/data/env/GitHubProvision.kt](../app/src/main/java/com/androidharness/app/data/env/GitHubProvision.kt)#L23-L114)
+Sources: [app/src/main/java/com/ylstack1/ylharness/tools/GitTools.kt](../app/src/main/java/com/ylstack1/ylharness/tools/GitTools.kt)#L25-L273), [app/src/main/java/com/ylstack1/ylharness/github/GitHubRepository.kt](../app/src/main/java/com/ylstack1/ylharness/github/GitHubRepository.kt)#L69-L196), [app/src/main/java/com/ylstack1/ylharness/github/GitHubWorkspaces.kt](../app/src/main/java/com/ylstack1/ylharness/github/GitHubWorkspaces.kt)#L18-L139), [app/src/main/java/com/ylstack1/ylharness/data/env/GitHubProvision.kt](../app/src/main/java/com/ylstack1/ylharness/data/env/GitHubProvision.kt)#L23-L114)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/tools/GitTools.kt`
-- `app/src/main/java/com/androidharness/app/tools/GitHubTools.kt`
-- `app/src/main/java/com/androidharness/app/tools/GitHubPullRequestTool.kt`
-- `app/src/main/java/com/androidharness/app/github/GitHubAuth.kt`
-- `app/src/main/java/com/androidharness/app/github/GitHubRepository.kt`
-- `app/src/main/java/com/androidharness/app/github/GitHubWorkspaces.kt`
-- `app/src/main/java/com/androidharness/app/github/GitHubPullRequests.kt`
-- `app/src/main/java/com/androidharness/app/github/GitChangeTree.kt`
-- `app/src/main/java/com/androidharness/app/ui/github/GitHubDialogs.kt`
-- `app/src/main/java/com/androidharness/app/ui/github/GitHubChangePicker.kt`
-- `app/src/main/java/com/androidharness/app/ui/github/GitHubImportPicker.kt`
-- `app/src/main/java/com/androidharness/app/ui/github/PullRequestUi.kt`
-- `app/src/main/java/com/androidharness/app/data/env/GitHubProvision.kt`
-- `app/src/main/java/com/androidharness/app/data/env/LinuxEnvironment.kt`
-- `app/src/main/java/com/androidharness/app/HarnessApp.kt`
-- `app/src/main/java/com/androidharness/app/tools/Tool.kt`
-- `app/src/main/java/com/androidharness/app/automation/AutomationManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/GitTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/GitHubTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/GitHubPullRequestTool.kt`
+- `app/src/main/java/com/ylstack1/ylharness/github/GitHubAuth.kt`
+- `app/src/main/java/com/ylstack1/ylharness/github/GitHubRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/github/GitHubWorkspaces.kt`
+- `app/src/main/java/com/ylstack1/ylharness/github/GitHubPullRequests.kt`
+- `app/src/main/java/com/ylstack1/ylharness/github/GitChangeTree.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/github/GitHubDialogs.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/github/GitHubChangePicker.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/github/GitHubImportPicker.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/github/PullRequestUi.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/env/GitHubProvision.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/env/LinuxEnvironment.kt`
+- `app/src/main/java/com/ylstack1/ylharness/HarnessApp.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/Tool.kt`
+- `app/src/main/java/com/ylstack1/ylharness/automation/AutomationManager.kt`

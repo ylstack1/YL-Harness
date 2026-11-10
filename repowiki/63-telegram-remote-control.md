@@ -1,6 +1,6 @@
 # Telegram Remote Control
 
-> Pairs a private Telegram bot with one account so the agent, its chats and its tool approvals can be driven from a phone chat while AndroidHarness runs in the background.
+> Pairs a private Telegram bot with one account so the agent, its chats and its tool approvals can be driven from a phone chat while YL Harness runs in the background.
 
 `TelegramSetupRepository` stores the bot token and owner identity, `TelegramManager` starts and pauses the runtime, and `TelegramGateway` owns four loops: polling, command processing, agent work and reply delivery. `TelegramGatewayStore` makes requests and replies durable in one JSON file, and `AndroidTelegramAgentBridge` connects the gateway to the same `RunManager`, Room history, model settings and approval prompts as the app UI. The service is single-owner: only the paired private chat can issue commands, and the bot token is never sent to a model or shown in a log.
 
@@ -150,18 +150,18 @@ The label combines setup, runtime and pairing state: pairing candidate, waiting 
 - There is no attachment, image or voice message support in either direction; Telegram is text, buttons and callback queries only.
 - The runtime label is derived from text matching on `action` ("approval", "answer"), not from a typed enum (`TelegramGateway.kt:13-15`).
 
-Sources: [telegram/TelegramGateway.kt](../app/src/main/java/com/androidharness/app/telegram/TelegramGateway.kt)#L19-L433), [telegram/TelegramGatewayStore.kt](../app/src/main/java/com/androidharness/app/telegram/TelegramGatewayStore.kt)#L53-L145), [telegram/TelegramManager.kt](../app/src/main/java/com/androidharness/app/telegram/TelegramManager.kt)#L14-L179), [telegram/TelegramSetupRepository.kt](../app/src/main/java/com/androidharness/app/telegram/TelegramSetupRepository.kt)#L12-L169), [telegram/TelegramBotClient.kt](../app/src/main/java/com/androidharness/app/telegram/TelegramBotClient.kt)#L37-L171), [telegram/TelegramAgentBridge.kt](../app/src/main/java/com/androidharness/app/telegram/TelegramAgentBridge.kt)#L21-L156), [telegram/TelegramService.kt](../app/src/main/java/com/androidharness/app/telegram/TelegramService.kt)#L19-L98), [ui/settings/TelegramSection.kt](../app/src/main/java/com/androidharness/app/ui/settings/TelegramSection.kt)#L66-L334)
+Sources: [telegram/TelegramGateway.kt](../app/src/main/java/com/ylstack1/ylharness/telegram/TelegramGateway.kt)#L19-L433), [telegram/TelegramGatewayStore.kt](../app/src/main/java/com/ylstack1/ylharness/telegram/TelegramGatewayStore.kt)#L53-L145), [telegram/TelegramManager.kt](../app/src/main/java/com/ylstack1/ylharness/telegram/TelegramManager.kt)#L14-L179), [telegram/TelegramSetupRepository.kt](../app/src/main/java/com/ylstack1/ylharness/telegram/TelegramSetupRepository.kt)#L12-L169), [telegram/TelegramBotClient.kt](../app/src/main/java/com/ylstack1/ylharness/telegram/TelegramBotClient.kt)#L37-L171), [telegram/TelegramAgentBridge.kt](../app/src/main/java/com/ylstack1/ylharness/telegram/TelegramAgentBridge.kt)#L21-L156), [telegram/TelegramService.kt](../app/src/main/java/com/ylstack1/ylharness/telegram/TelegramService.kt)#L19-L98), [ui/settings/TelegramSection.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/TelegramSection.kt)#L66-L334)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/telegram/TelegramGateway.kt`
-- `app/src/main/java/com/androidharness/app/telegram/TelegramGatewayStore.kt`
-- `app/src/main/java/com/androidharness/app/telegram/TelegramManager.kt`
-- `app/src/main/java/com/androidharness/app/telegram/TelegramSetupRepository.kt`
-- `app/src/main/java/com/androidharness/app/telegram/TelegramBotClient.kt`
-- `app/src/main/java/com/androidharness/app/telegram/TelegramAgentBridge.kt`
-- `app/src/main/java/com/androidharness/app/telegram/TelegramService.kt`
-- `app/src/main/java/com/androidharness/app/telegram/TelegramFormatting.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/TelegramSection.kt`
-- `app/src/main/java/com/androidharness/app/data/KeyStoreManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/telegram/TelegramGateway.kt`
+- `app/src/main/java/com/ylstack1/ylharness/telegram/TelegramGatewayStore.kt`
+- `app/src/main/java/com/ylstack1/ylharness/telegram/TelegramManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/telegram/TelegramSetupRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/telegram/TelegramBotClient.kt`
+- `app/src/main/java/com/ylstack1/ylharness/telegram/TelegramAgentBridge.kt`
+- `app/src/main/java/com/ylstack1/ylharness/telegram/TelegramService.kt`
+- `app/src/main/java/com/ylstack1/ylharness/telegram/TelegramFormatting.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/TelegramSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/KeyStoreManager.kt`
 - `app/src/main/AndroidManifest.xml`

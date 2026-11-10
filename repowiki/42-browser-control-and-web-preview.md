@@ -45,7 +45,7 @@ flowchart TD
     C --> W[DisposableEffect -> adoptWebView]
 ```
 
-The two entry points share one controller and therefore one page. When the user taps Watch, `ChatScreen.watchBrowser` sets `webPreviewUrl` from the tool's target or from `browser.getActiveUrl()` and opens the sheet (`ui/chat/ChatScreen.kt:309`). The sheet binds its WebView with `browserController.bindActiveWebView(this)`, so agent actions now run against the visible view. On dispose it calls `adoptWebView`, which keeps the page, scroll position and back/forward list alive in a headless view instead of destroying them (`app/src/main/java/com/androidharness/app/browser/BrowserController.kt:257`). A blank or uninitialized view is destroyed rather than adopted.
+The two entry points share one controller and therefore one page. When the user taps Watch, `ChatScreen.watchBrowser` sets `webPreviewUrl` from the tool's target or from `browser.getActiveUrl()` and opens the sheet (`ui/chat/ChatScreen.kt:309`). The sheet binds its WebView with `browserController.bindActiveWebView(this)`, so agent actions now run against the visible view. On dispose it calls `adoptWebView`, which keeps the page, scroll position and back/forward list alive in a headless view instead of destroying them (`app/src/main/java/com/ylstack1/ylharness/browser/BrowserController.kt:257`). A blank or uninitialized view is destroyed rather than adopted.
 
 Every action captures a baseline before it runs and waits for a real document afterward. `PageLoadTracker` increments a generation on `onPageStarted`, marks the finished generation only while a load is in flight, and records errors and downloads. `awaitNavigation` first waits for the generation to move or the in-page document to change, then waits for the new document to report complete. When the WebView's client is not the controller's, `readDocumentProbe` asks the page for `location.href` and `readyState`, because `WebView.url` becomes provisional as soon as a navigation starts (`browser/PageLoadTracker.kt:143`). This is what stops a slow page from being reported as loaded with the previous document's URL and DOM.
 
@@ -89,7 +89,7 @@ Console logs, the action trail and the DOM state are in memory only. Screenshots
 - JavaScript dialogs are auto-handled and reported as browser notices: `alert` confirms, `confirm` returns false, `prompt` returns null, `beforeunload` confirms. Popups are blocked and reported, so a target that opens a new window must be loaded in place (`browser/BrowserController.kt:118` to `143`).
 - `browser_screenshot` requires an attached, visible, focused preview. A hidden or detached surface throws rather than returning a blank image. `captureReadPage` for `browser_read` additionally samples a 64 by 64 downscale and rejects a uniform frame.
 - Full-page capture is capped at 8192 px of height and 8 megapixels, and reports `truncated` when the page exceeds it.
-- The visible preview allows mixed content (`MIXED_CONTENT_ALWAYS_ALLOW`) and enables zoom, while file and content access are disabled. The headless view also disables file and content access and appends `AndroidHarnessAgent/1.0` to the user agent.
+- The visible preview allows mixed content (`MIXED_CONTENT_ALWAYS_ALLOW`) and enables zoom, while file and content access are disabled. The headless view also disables file and content access and appends `YL HarnessAgent/1.0` to the user agent.
 - Console messages are deduplicated when the same level, text, source and line arrive within 150 ms, because both clients can dispatch one message. The buffer drops the oldest entry past 200.
 - The sheet keeps its own console list, capped at 200, separate from the controller's buffer. The error badge reads the sheet list, while `browser_get_logs` reads the controller list.
 - The agent stop button is enabled only while `agentRunning` is true and calls `viewModel.stop()`; it does not close the sheet.
@@ -110,21 +110,21 @@ Console logs, the action trail and the DOM state are in memory only. Screenshots
 - History, console logs and the action trail do not survive process death. Only screenshots and workspace files persist.
 - `browser_screenshot` cannot capture a headless page. It intentionally fails unless the preview is open and visible, which means an agent cannot take a screenshot without user-visible UI.
 
-Sources: [app/src/main/java/com/androidharness/app/browser/BrowserController.kt](../app/src/main/java/com/androidharness/app/browser/BrowserController.kt)#L175-L360), [app/src/main/java/com/androidharness/app/tools/BrowserTools.kt](../app/src/main/java/com/androidharness/app/tools/BrowserTools.kt)#L241-L378), [app/src/main/java/com/androidharness/app/ui/chat/components/WebPreviewSheet.kt](../app/src/main/java/com/androidharness/app/ui/chat/components/WebPreviewSheet.kt)#L178-L309), [app/src/main/java/com/androidharness/app/browser/HistoryStep.kt](../app/src/main/java/com/androidharness/app/browser/HistoryStep.kt)#L44-L108)
+Sources: [app/src/main/java/com/ylstack1/ylharness/browser/BrowserController.kt](../app/src/main/java/com/ylstack1/ylharness/browser/BrowserController.kt)#L175-L360), [app/src/main/java/com/ylstack1/ylharness/tools/BrowserTools.kt](../app/src/main/java/com/ylstack1/ylharness/tools/BrowserTools.kt)#L241-L378), [app/src/main/java/com/ylstack1/ylharness/ui/chat/components/WebPreviewSheet.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/components/WebPreviewSheet.kt)#L178-L309), [app/src/main/java/com/ylstack1/ylharness/browser/HistoryStep.kt](../app/src/main/java/com/ylstack1/ylharness/browser/HistoryStep.kt)#L44-L108)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/tools/BrowserTools.kt`
-- `app/src/main/java/com/androidharness/app/tools/BrowserOpenExternalTool.kt`
-- `app/src/main/java/com/androidharness/app/browser/BrowserController.kt`
-- `app/src/main/java/com/androidharness/app/browser/PageLoadTracker.kt`
-- `app/src/main/java/com/androidharness/app/browser/HistoryStep.kt`
-- `app/src/main/java/com/androidharness/app/browser/PreviewSelection.kt`
-- `app/src/main/java/com/androidharness/app/browser/BrowserToolActivity.kt`
-- `app/src/main/java/com/androidharness/app/browser/WorkspacePathHandler.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/WebPreviewSheet.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/BrowserToolCard.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/WebPreviewAvailability.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt`
-- `app/src/main/java/com/androidharness/app/core/LocalPortProbe.kt`
-- `app/src/main/java/com/androidharness/app/tools/Tool.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/BrowserTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/BrowserOpenExternalTool.kt`
+- `app/src/main/java/com/ylstack1/ylharness/browser/BrowserController.kt`
+- `app/src/main/java/com/ylstack1/ylharness/browser/PageLoadTracker.kt`
+- `app/src/main/java/com/ylstack1/ylharness/browser/HistoryStep.kt`
+- `app/src/main/java/com/ylstack1/ylharness/browser/PreviewSelection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/browser/BrowserToolActivity.kt`
+- `app/src/main/java/com/ylstack1/ylharness/browser/WorkspacePathHandler.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/WebPreviewSheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/BrowserToolCard.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/WebPreviewAvailability.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/LocalPortProbe.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/Tool.kt`

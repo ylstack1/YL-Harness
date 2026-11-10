@@ -2,7 +2,7 @@
 <resources>
     <string name="nine_router_title">"9Router"</string>
     <string name="nine_router_description">"Yerel model yönlendiriciyi kurun ve yönetin"</string>
-    <string name="nine_router_intro">"Bu telefonda 9Router\'yi çalıştırın ve sağlayıcılarını, modellerini ve yönlendirmesini tarayıcınızda yönetin. AndroidHarness Linux araç zincirini kullanır."</string>
+    <string name="nine_router_intro">"Bu telefonda 9Router\'yi çalıştırın ve sağlayıcılarını, modellerini ve yönlendirmesini tarayıcınızda yönetin. YL Harness Linux araç zincirini kullanır."</string>
     <string name="nine_router_setup">"Ortamınızı ayarlayın"</string>
     <string name="nine_router_not_installed">"Kuruluma hazır"</string>
     <string name="nine_router_ready">"Yüklendi · Durduruldu"</string>
@@ -27,12 +27,12 @@
     <string name="nine_router_checking">"Kontrol ediliyor…"</string>
     <string name="nine_router_update">"%1$s\'ye güncelleme"</string>
     <string name="nine_router_auto_start">"Otomatik başlatma 9Router"</string>
-    <string name="nine_router_auto_start_body">"AndroidHarness açıldığında kurulu yönlendiriciyi başlatın."</string>
+    <string name="nine_router_auto_start_body">"YL Harness açıldığında kurulu yönlendiriciyi başlatın."</string>
     <string name="nine_router_add_provider">"Sağlayıcılara 9Router ekleyin"</string>
     <string name="nine_router_refresh_provider">"9Router sağlayıcısını yenileyin"</string>
     <string name="nine_router_provider_body">"Gerekirse 9Router\'yi başlatır ve yerel uç noktasını ve API anahtarını otomatik olarak doldurur. Bağlı modeller Chat ve Code model seçicilerde kullanılabilir hale gelir."</string>
     <string name="nine_router_remove_provider">"Sağlayıcılardan kaldır"</string>
-    <string name="nine_router_remove_provider_body">"9Router bağlantılarını AndroidHarness\'den çıkarın. Yönlendirici ve hesapları yüklü kalacaktır."</string>
+    <string name="nine_router_remove_provider_body">"9Router bağlantılarını YL Harness\'den çıkarın. Yönlendirici ve hesapları yüklü kalacaktır."</string>
     <string name="nine_router_uninstall">"9Router\'yi kaldırın"</string>
     <string name="nine_router_uninstall_title">"9Router tamamen kaldırılsın mı?"</string>
     <string name="nine_router_uninstall_body">"9Router\'yi durdurur ve kurulumunu, kayıtlı hesaplarını, yönlendirici API anahtarlarını, yapılandırmayı, önbelleği, otomatik başlatma tercihini ve uygulama sağlayıcı bağlantılarını siler. Bu geri alınamaz. Paylaşılan Linux araç zinciri diğer özellikler için kullanılabilir durumda kalır."</string>

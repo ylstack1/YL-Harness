@@ -2,7 +2,7 @@
 
 > Starts, tracks, lists, and kills long-running shell jobs, keeping durable records and log files across app restarts.
 
-`ShellBackgroundTool`, `BgListTool`, and `BgKillTool` in `app/src/main/java/com/androidharness/app/tools/BgShell.kt` are thin wrappers over `BgProcessStore`. The store owns the job registry, chooses between an app-child process, a Shizuku-detached process, a direct-root detached process, or an SSH job, writes stdout and stderr to a log file, and persists a JSON record so a restarted app can still report what is running and what already exited.
+`ShellBackgroundTool`, `BgListTool`, and `BgKillTool` in `app/src/main/java/com/ylstack1/ylharness/tools/BgShell.kt` are thin wrappers over `BgProcessStore`. The store owns the job registry, chooses between an app-child process, a Shizuku-detached process, a direct-root detached process, or an SSH job, writes stdout and stderr to a log file, and persists a JSON record so a restarted app can still report what is running and what already exited.
 
 ## Module Responsibilities
 
@@ -125,12 +125,12 @@ Finished entries are retained so `bg_list` can explain what exited. `listLocked`
 
 - FEATURES.md and the tool description imply the agent can inspect background output. The implemented inspection is a fixed tail of 800 characters in `bg_list`; reading further requires a separate file read. No paging parameters exist on `bg_list` itself.
 
-Sources: [app/src/main/java/com/androidharness/app/tools/BgShell.kt](../app/src/main/java/com/androidharness/app/tools/BgShell.kt)#L11-L130), [app/src/main/java/com/androidharness/app/data/BgProcessStore.kt](../app/src/main/java/com/androidharness/app/data/BgProcessStore.kt)#L18-L176), [app/src/main/java/com/androidharness/app/data/BgProcessStore.kt](../app/src/main/java/com/androidharness/app/data/BgProcessStore.kt)#L232-L381)
+Sources: [app/src/main/java/com/ylstack1/ylharness/tools/BgShell.kt](../app/src/main/java/com/ylstack1/ylharness/tools/BgShell.kt)#L11-L130), [app/src/main/java/com/ylstack1/ylharness/data/BgProcessStore.kt](../app/src/main/java/com/ylstack1/ylharness/data/BgProcessStore.kt)#L18-L176), [app/src/main/java/com/ylstack1/ylharness/data/BgProcessStore.kt](../app/src/main/java/com/ylstack1/ylharness/data/BgProcessStore.kt)#L232-L381)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/tools/BgShell.kt`
-- `app/src/main/java/com/androidharness/app/data/BgProcessStore.kt`
-- `app/src/main/java/com/androidharness/app/workspace/SshJobs.kt`
-- `app/src/main/java/com/androidharness/app/data/env/DeviceAccessManager.kt`
-- `app/src/main/java/com/androidharness/app/HarnessApp.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/BgShell.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/BgProcessStore.kt`
+- `app/src/main/java/com/ylstack1/ylharness/workspace/SshJobs.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/env/DeviceAccessManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/HarnessApp.kt`

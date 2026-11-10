@@ -139,9 +139,9 @@
     <string name="settings_search_license_title">"ライセンス"</string>
     <string name="settings_search_license_desc">"このアプリについて · MITライセンスとフォークへの意味"</string>
     <string name="settings_search_credits_title">"クレジット"</string>
-    <string name="settings_search_credits_desc">"このアプリについて · AndroidHarnessを支えるオープンソースプロジェクト"</string>
+    <string name="settings_search_credits_desc">"このアプリについて · YL Harnessを支えるオープンソースプロジェクト"</string>
     <string name="settings_search_author_title">"作者"</string>
-    <string name="settings_search_author_desc">"このアプリについて · AndroidHarnessを作成している人、および入手先"</string>
+    <string name="settings_search_author_desc">"このアプリについて · YL Harnessを作成している人、および入手先"</string>
     <string name="settings_anchor_progress_bar_style">"プログレスバーのスタイル"</string>
     <string name="settings_anchor_fallbacks">"フォールバック"</string>
     <string name="settings_anchor_continue_chatgpt">"ChatGPTで続行"</string>
@@ -287,10 +287,10 @@
     <string name="settings_restore_reconnect_title">"復元したチャットを再接続"</string>
     <string name="settings_restore_reconnect_note">"読み取り専用アクセスは読み取り専用のままです。複数ワークスペースを使用したチャットには、それぞれ別のフォルダが必要です。"</string>
     <string name="settings_accounts_using_plan">"ChatGPTプランを使用中です"</string>
-    <string name="settings_accounts_using_plan_desc">"AndroidHarnessの対象リクエストはChatGPTプランまたはクレジットを使用します。使用量の確認とこのアプリのアクセス管理はChatGPT設定で行ってください。"</string>
+    <string name="settings_accounts_using_plan_desc">"YL Harnessの対象リクエストはChatGPTプランまたはクレジットを使用します。使用量の確認とこのアプリのアクセス管理はChatGPT設定で行ってください。"</string>
     <string name="settings_action_got_it">"了解"</string>
     <string name="settings_accounts_signout_title">"このアカウントからサインアウトしますか？"</string>
-    <string name="settings_accounts_signout_message">"AndroidHarnessからアカウントを切断し、自動切り替えから削除します。後で再サインインできます。"</string>
+    <string name="settings_accounts_signout_message">"YL Harnessからアカウントを切断し、自動切り替えから削除します。後で再サインインできます。"</string>
     <string name="settings_action_continue">"続行"</string>
     <string name="settings_progress_bar_subtitle">"進捗バーの表示方法を選択します。すぐに適用されます。"</string>
     <string name="settings_provider_select">"選択"</string>
@@ -904,7 +904,7 @@
     <string name="chat_handoff_picker_note">"構築場所を選択してください。Chatの計画も引き継がれます。"</string>
     <string name="chat_handoff_close">"ワークスペース選択を閉じる"</string>
     <string name="chat_handoff_no_workspace">"続行するにはCodeでワークスペースを追加してください。"</string>
-    <string name="chat_share_target">"AndroidHarnessのチャット"</string>
+    <string name="chat_share_target">"YL Harnessのチャット"</string>
     <string name="chat_share_title">"Chatに共有"</string>
     <string name="chat_share_review">"共有アイテムを確認し、Chatを選択して質問を追加してください。Chatで送信をタップするまで送信されません。"</string>
     <string name="chat_share_new">"新しいチャット"</string>
@@ -973,7 +973,7 @@
     <string name="glass_unsupported">ガラス効果には Android 12 以降が必要です。</string>
     <string name="glass_liquid_unsupported">Liquid Glass には Android 13 以降が必要です。この端末ではすりガラスを利用できます。</string>
     <string name="glass_preview_label">ガラスのプレビュー</string>
-    <string name="glass_preview_title">AndroidHarness</string>
+    <string name="glass_preview_title">YL Harness</string>
     <string name="glass_preview_text">くっきりした文字。やわらかな背景。</string>
     <string name="glass_transparency">透明度</string>
     <string name="glass_transparency_percent">%1$d%%</string>

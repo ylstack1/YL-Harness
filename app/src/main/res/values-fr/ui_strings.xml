@@ -637,7 +637,7 @@
     <string name="ui_shizuku_is_disabled">"Shizuku est désactivé"</string>
     <string name="ui_shizuku_is_no_longer_available_its_server">"Shizuku n\'est plus disponible. Son serveur a peut-être été arrêté ou tué "</string>
     <string name="ui_in_the_background_or_this_app_s">"en arrière-plan, ou l\'accès à cette application a peut-être été révoqué. "</string>
-    <string name="ui_start_shizuku_and_allow_androidharness_access_to">"Démarrez Shizuku et autorisez l\'accès à AndroidHarness pour l\'utiliser à nouveau."</string>
+    <string name="ui_start_shizuku_and_allow_ylharness_access_to">"Démarrez Shizuku et autorisez l\'accès à YL Harness pour l\'utiliser à nouveau."</string>
     <string name="ui_never_show_this_message_again">"Ne plus jamais afficher ce message"</string>
     <string name="ui_limits_resets">"Limites et réinitialisations"</string>
     <string name="ui_view_live_limits_in_chatgpt">"Afficher les limites en direct dans ChatGPT"</string>
@@ -1110,7 +1110,7 @@
     <string name="ui_the_app_needs_node_python_from_the">"l\'application. Nécessite node/python de l’environnement Linux."</string>
     <string name="ui_not_installed_optional">"Non installé : facultatif."</string>
     <string name="ui_installed_not_running">"Installé, ne fonctionne pas."</string>
-    <string name="ui_running_grant_androidharness_access">"En cours d\'exécution : accordez l\'accès à AndroidHarness."</string>
+    <string name="ui_running_grant_ylharness_access">"En cours d\'exécution : accordez l\'accès à YL Harness."</string>
     <string name="ui_connected_shell_privileges_ready">"Connecté : les privilèges shell sont prêts."</string>
     <string name="ui_connected_in_compatibility_mode_shell_privileges_ready">"Connecté en mode compatibilité : privilèges shell prêts."</string>
     <string name="ui_access_granted_connecting_to_the_shell_runner">"Accès accordé. Connexion au shell runner…"</string>
@@ -1157,10 +1157,10 @@
     <string name="ui_open_source">"Source ouverte"</string>
     <string name="ui_use_it_change_it_ship_it_even">"Utilisez-le, modifiez-le, expédiez-le, même dans une application commerciale. La seule condition est que le "</string>
     <string name="ui_copyright_notice_and_the_license_text_travel">"la notice de copyright et le texte de la licence voyagent avec le code. Il est livré sans garantie."</string>
-    <string name="ui_androidharness_is_built_on_open_source_work">"AndroidHarness est construit sur un travail open source et emprunte des idées aux agents qui l\'ont précédé."</string>
+    <string name="ui_ylharness_is_built_on_open_source_work">"YL Harness est construit sur un travail open source et emprunte des idées aux agents qui l\'ont précédé."</string>
     <string name="ui_built_with">"Construit avec"</string>
     <string name="ui_inspired_by">"Inspiré par"</string>
-    <string name="ui_every_project_keeps_its_own_license_androidharness">"Chaque projet conserve sa propre licence. AndroidHarness n’est pas affilié à eux."</string>
+    <string name="ui_every_project_keeps_its_own_license_ylharness">"Chaque projet conserve sa propre licence. YL Harness n’est pas affilié à eux."</string>
     <string name="ui_exported_chats_messages">"Chats %1$s exportés (messages %2$s, mémoires %3$s)."</string>
     <string name="ui_export_failed">"L\'exportation a échoué."</string>
     <string name="ui_export_failed_1230">"Échec de l\'exportation : %1$s"</string>
@@ -1249,7 +1249,7 @@
     <string name="ui_status">"Statut"</string>
     <string name="ui_retry_resume">"Réessayer/reprendre"</string>
     <string name="ui_pause_telegram">"Pause Telegram"</string>
-    <string name="ui_welcome_to_androidharness">"Bienvenue à AndroidHarness"</string>
+    <string name="ui_welcome_to_ylharness">"Bienvenue à YL Harness"</string>
     <string name="ui_grant_storage_access_to_start_coding_notifications">"Accordez l’accès au stockage pour commencer le codage. Les notifications et autres outils sont facultatifs."</string>
     <string name="ui_device_storage_access_granted">"Accès au stockage de l\'appareil accordé"</string>
     <string name="ui_required_allow_access_to_device_files_and">"Obligatoire : autoriser l\'accès aux fichiers et dossiers de l\'appareil"</string>
@@ -1587,7 +1587,7 @@
     <string name="ui_access_mode">"Mode d\'accès : %1$s"</string>
     <string name="ui_scheduled_tasks">"Tâches planifiées"</string>
     <string name="ui_project_and_chat_sidebar">"Barre latérale du projet et du chat"</string>
-    <string name="ui_androidharness_icon">"Icône AndroidHarness"</string>
+    <string name="ui_ylharness_icon">"Icône YL Harness"</string>
     <string name="ui_collapse_sidebar">"Réduire la barre latérale"</string>
     <string name="ui_search_chats_and_messages">"Rechercher des discussions et des messages"</string>
     <string name="ui_search_chats">"Rechercher des discussions"</string>
@@ -1641,7 +1641,7 @@
         <item quantity="many">"Lignes %1$d"</item>
     </plurals>
     <string name="voice_transcribing">"Transcription…"</string>
-    <string name="donate_funding_message">"Nous manquons de fonds pour poursuivre le développement de AndroidHarness. Votre soutien nous aide à continuer à construire."</string>
+    <string name="donate_funding_message">"Nous manquons de fonds pour poursuivre le développement de YL Harness. Votre soutien nous aide à continuer à construire."</string>
     <string name="donate_dismiss_message">"Ignorer le message de don"</string>
     <string name="background_settings_title">"Contexte et notifications"</string>
     <string name="background_settings_description">"Gérez le travail en arrière-plan et les notifications."</string>
@@ -1651,10 +1651,10 @@
     <string name="background_notifications_description">"Autoriser les alertes d\'application. Android gère les avis de service."</string>
     <string name="background_android_title">"Paramètres de notification Android"</string>
     <string name="background_android_description">"Gérez tous les paramètres de notification Android."</string>
-    <string name="background_run_blocked">"L\'exécution en arrière-plan est désactivée. Ouvrez AndroidHarness pour démarrer ou poursuivre une tâche."</string>
+    <string name="background_run_blocked">"L\'exécution en arrière-plan est désactivée. Ouvrez YL Harness pour démarrer ou poursuivre une tâche."</string>
     <string name="background_service_notice">"Le service en arrière-plan est en cours d\'exécution"</string>
     <string name="local_gpu_download_title">"Prise en charge de GPU"</string>
-    <string name="local_gpu_runtime_repository">"Source : Sanuu7/AH-GPU-Runtime"</string>
+    <string name="local_gpu_runtime_repository">"Source : ylstack1/AH-GPU-Runtime"</string>
     <string name="local_gpu_delivery_play">"Installé en toute sécurité via Google Play."</string>
     <string name="local_gpu_delivery_github">"Télécharge le package GPU correspondant à cette application et à cet appareil à partir de GitHub."</string>
     <string name="local_gpu_optional_download">"Téléchargement facultatif. L\'inférence CPU fonctionne sans cela ; La prise en charge de GPU reste disponible hors ligne après l\'installation."</string>

@@ -18,7 +18,7 @@ body:
   - type: input
     id: android
     attributes:
-      label: Android version and AndroidHarness version
+      label: Android version and YL Harness version
     validations:
       required: true
   - type: textarea

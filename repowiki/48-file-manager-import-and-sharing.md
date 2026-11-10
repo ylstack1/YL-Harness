@@ -92,16 +92,16 @@ Sharing differs by selection size. A single item's action sheet offers Share and
 - **`TransferFiles` is the substitution point for remote transports.** FTP and SFTP implement the same `stat`, `list`, `read`, `mkdir`, and `writeAtomic` contract.
 - **`ChatViewModel.importAttachment` is the shared attachment entry.** `attachImage`, `attachFile`, and `attachSharedFile` all delegate to it, so progress and failure states stay consistent.
 
-Sources: [app/src/main/java/com/androidharness/app/ui/files/FilesScreen.kt](../app/src/main/java/com/androidharness/app/ui/files/FilesScreen.kt)#L113-L1078), [app/src/main/java/com/androidharness/app/ui/files/FileOps.kt](../app/src/main/java/com/androidharness/app/ui/files/FileOps.kt)#L20-L311), [app/src/main/java/com/androidharness/app/ui/files/DestinationPickerDialog.kt](../app/src/main/java/com/androidharness/app/ui/files/DestinationPickerDialog.kt)#L41-L154), [app/src/main/java/com/androidharness/app/data/transfer/TransferFiles.kt](../app/src/main/java/com/androidharness/app/data/transfer/TransferFiles.kt)#L11-L184)
+Sources: [app/src/main/java/com/ylstack1/ylharness/ui/files/FilesScreen.kt](../app/src/main/java/com/ylstack1/ylharness/ui/files/FilesScreen.kt)#L113-L1078), [app/src/main/java/com/ylstack1/ylharness/ui/files/FileOps.kt](../app/src/main/java/com/ylstack1/ylharness/ui/files/FileOps.kt)#L20-L311), [app/src/main/java/com/ylstack1/ylharness/ui/files/DestinationPickerDialog.kt](../app/src/main/java/com/ylstack1/ylharness/ui/files/DestinationPickerDialog.kt)#L41-L154), [app/src/main/java/com/ylstack1/ylharness/data/transfer/TransferFiles.kt](../app/src/main/java/com/ylstack1/ylharness/data/transfer/TransferFiles.kt)#L11-L184)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/ui/files/FilesScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/FileOps.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/DestinationPickerDialog.kt`
-- `app/src/main/java/com/androidharness/app/data/transfer/TransferFiles.kt`
-- `app/src/main/java/com/androidharness/app/data/transfer/FtpShareManager.kt`
-- `app/src/main/java/com/androidharness/app/data/transfer/SyncManager.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/FileAttachments.kt`
-- `app/src/main/java/com/androidharness/app/ui/AppNav.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/FilesScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/FileOps.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/DestinationPickerDialog.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/transfer/TransferFiles.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/transfer/FtpShareManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/transfer/SyncManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/FileAttachments.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/AppNav.kt`

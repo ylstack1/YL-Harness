@@ -151,22 +151,22 @@ The editor has two modes. Ask AI keeps a turn list and needs a draft before Save
 - `AutomationStatus.FAILED` is defined and rendered as a problem state, but no code path assigns it; verification exhaustion and exceptions use `BLOCKED` (`AutomationRepository.kt:15`; `AutomationManager.kt:307`, `338`).
 - `FEATURES.md:65` describes a "cron-like schedule", but the implementation supports only manual, once, hourly and daily (`AutomationRepository.kt:11-12`).
 
-Sources: [automation/AutomationRepository.kt](../app/src/main/java/com/androidharness/app/automation/AutomationRepository.kt)#L11-L134), [automation/AutomationManager.kt](../app/src/main/java/com/androidharness/app/automation/AutomationManager.kt)#L18-L363), [automation/AutomationWorker.kt](../app/src/main/java/com/androidharness/app/automation/AutomationWorker.kt)#L17-L74), [automation/AutomationNetwork.kt](../app/src/main/java/com/androidharness/app/automation/AutomationNetwork.kt)#L10-L42), [automation/AutomationRecovery.kt](../app/src/main/java/com/androidharness/app/automation/AutomationRecovery.kt)#L5-L13), [automation/AutomationAiPlanner.kt](../app/src/main/java/com/androidharness/app/automation/AutomationAiPlanner.kt)#L22-L201), [ui/automation/AutomationScreen.kt](../app/src/main/java/com/androidharness/app/ui/automation/AutomationScreen.kt)#L70-L654)
+Sources: [automation/AutomationRepository.kt](../app/src/main/java/com/ylstack1/ylharness/automation/AutomationRepository.kt)#L11-L134), [automation/AutomationManager.kt](../app/src/main/java/com/ylstack1/ylharness/automation/AutomationManager.kt)#L18-L363), [automation/AutomationWorker.kt](../app/src/main/java/com/ylstack1/ylharness/automation/AutomationWorker.kt)#L17-L74), [automation/AutomationNetwork.kt](../app/src/main/java/com/ylstack1/ylharness/automation/AutomationNetwork.kt)#L10-L42), [automation/AutomationRecovery.kt](../app/src/main/java/com/ylstack1/ylharness/automation/AutomationRecovery.kt)#L5-L13), [automation/AutomationAiPlanner.kt](../app/src/main/java/com/ylstack1/ylharness/automation/AutomationAiPlanner.kt)#L22-L201), [ui/automation/AutomationScreen.kt](../app/src/main/java/com/ylstack1/ylharness/ui/automation/AutomationScreen.kt)#L70-L654)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/automation/AutomationRepository.kt`
-- `app/src/main/java/com/androidharness/app/automation/AutomationManager.kt`
-- `app/src/main/java/com/androidharness/app/automation/AutomationWorker.kt`
-- `app/src/main/java/com/androidharness/app/automation/AutomationNetwork.kt`
-- `app/src/main/java/com/androidharness/app/automation/AutomationRecovery.kt`
-- `app/src/main/java/com/androidharness/app/automation/AutomationAiPlanner.kt`
-- `app/src/main/java/com/androidharness/app/automation/AutomationActionReceiver.kt`
-- `app/src/main/java/com/androidharness/app/ui/automation/AutomationScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/automation/ScheduleMessageSheet.kt`
-- `app/src/main/java/com/androidharness/app/ui/automation/ScheduledMessageRow.kt`
-- `app/src/main/java/com/androidharness/app/agent/RunManager.kt`
-- `app/src/main/java/com/androidharness/app/workspace/ProjectDeletion.kt`
-- `app/src/main/java/com/androidharness/app/ui/AppNav.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/automation/AutomationRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/automation/AutomationManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/automation/AutomationWorker.kt`
+- `app/src/main/java/com/ylstack1/ylharness/automation/AutomationNetwork.kt`
+- `app/src/main/java/com/ylstack1/ylharness/automation/AutomationRecovery.kt`
+- `app/src/main/java/com/ylstack1/ylharness/automation/AutomationAiPlanner.kt`
+- `app/src/main/java/com/ylstack1/ylharness/automation/AutomationActionReceiver.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/automation/AutomationScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/automation/ScheduleMessageSheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/automation/ScheduledMessageRow.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/workspace/ProjectDeletion.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/AppNav.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt`
 - `app/src/main/AndroidManifest.xml`

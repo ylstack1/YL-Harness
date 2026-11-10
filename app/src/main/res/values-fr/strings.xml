@@ -139,9 +139,9 @@
     <string name="settings_search_license_title">"Licence"</string>
     <string name="settings_search_license_desc">"À propos · La licence MIT et ce qu\'elle signifie pour les forks"</string>
     <string name="settings_search_credits_title">"Crédits"</string>
-    <string name="settings_search_credits_desc">"À propos · Projets open source derrière AndroidHarness"</string>
+    <string name="settings_search_credits_desc">"À propos · Projets open source derrière YL Harness"</string>
     <string name="settings_search_author_title">"Auteur"</string>
-    <string name="settings_search_author_desc">"À propos · Qui construit le AndroidHarness et où le trouver"</string>
+    <string name="settings_search_author_desc">"À propos · Qui construit le YL Harness et où le trouver"</string>
     <string name="settings_anchor_progress_bar_style">"Style de barre de progression"</string>
     <string name="settings_anchor_fallbacks">"Solutions de repli"</string>
     <string name="settings_anchor_continue_chatgpt">"Continuer avec ChatGPT"</string>
@@ -287,10 +287,10 @@
     <string name="settings_restore_reconnect_title">"Reconnecter les discussions restaurées"</string>
     <string name="settings_restore_reconnect_note">"L\'accès en lecture seule reste en lecture seule. Les discussions qui utilisaient plusieurs espaces de travail nécessitent des dossiers distincts pour chacun."</string>
     <string name="settings_accounts_using_plan">"Vous utilisez votre forfait ChatGPT"</string>
-    <string name="settings_accounts_using_plan_desc">"Les demandes éligibles dans AndroidHarness utilisent votre forfait ou vos crédits ChatGPT. Vérifiez l\'utilisation et gérez l\'accès à cette application dans les paramètres ChatGPT."</string>
+    <string name="settings_accounts_using_plan_desc">"Les demandes éligibles dans YL Harness utilisent votre forfait ou vos crédits ChatGPT. Vérifiez l\'utilisation et gérez l\'accès à cette application dans les paramètres ChatGPT."</string>
     <string name="settings_action_got_it">"Je l\'ai compris"</string>
     <string name="settings_accounts_signout_title">"Se déconnecter de ce compte ?"</string>
-    <string name="settings_accounts_signout_message">"Cela déconnecte le compte de AndroidHarness et le supprime de la commutation automatique. Vous pourrez vous reconnecter plus tard."</string>
+    <string name="settings_accounts_signout_message">"Cela déconnecte le compte de YL Harness et le supprime de la commutation automatique. Vous pourrez vous reconnecter plus tard."</string>
     <string name="settings_action_continue">"Continuer"</string>
     <string name="settings_progress_bar_subtitle">"Choisissez l\'apparence des barres de progression. S\'applique immédiatement."</string>
     <string name="settings_provider_select">"Sélectionnez"</string>
@@ -906,7 +906,7 @@
     <string name="chat_handoff_picker_note">"Choisissez où construire. Votre plan Chat arrive."</string>
     <string name="chat_handoff_close">"Fermer le sélecteur d\'espace de travail"</string>
     <string name="chat_handoff_no_workspace">"Ajoutez un espace de travail dans Code pour continuer."</string>
-    <string name="chat_share_target">"AndroidHarness Chat"</string>
+    <string name="chat_share_target">"YL Harness Chat"</string>
     <string name="chat_share_title">"Partager sur Chat"</string>
     <string name="chat_share_review">"Passez en revue vos éléments partagés, choisissez un Chat et ajoutez une question. Rien n\'est envoyé jusqu\'à ce que vous appuyiez sur Envoyer dans Chat."</string>
     <string name="chat_share_new">"Nouveau Chat"</string>
@@ -984,7 +984,7 @@
     <string name="glass_unsupported">"Les effets de verre nécessitent Android 12 ou version ultérieure."</string>
     <string name="glass_liquid_unsupported">"Liquid Glass nécessite Android 13 ou version ultérieure. Le verre dépoli est disponible sur cet appareil."</string>
     <string name="glass_preview_label">"Aperçu du verre"</string>
-    <string name="glass_preview_title">"AndroidHarness"</string>
+    <string name="glass_preview_title">"YL Harness"</string>
     <string name="glass_preview_text">"Texte clair. Un fond plus doux."</string>
     <string name="glass_transparency">"Transparence"</string>
     <string name="glass_transparency_percent">"%1$d%%"</string>

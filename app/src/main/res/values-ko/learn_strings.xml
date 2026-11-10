@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="learn_title">"AndroidHarness 알아보기"</string>
+    <string name="learn_title">"YL Harness 알아보기"</string>
     <string name="learn_description">"여기에서 할 수 있는 모든 것에 대한 친절하고 단계별 안내가 제공됩니다."</string>
     <string name="learn_group">"여기서 시작하세요"</string>
     <string name="learn_entry_hint">"귀하의 속도에 맞춰 귀하의 가이드"</string>

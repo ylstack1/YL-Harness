@@ -139,9 +139,9 @@
     <string name="settings_search_license_title">"লাইসেন্স"</string>
     <string name="settings_search_license_desc">"সম্পর্কে · MIT লাইসেন্স এবং কাঁটাচামচের জন্য এর অর্থ কী"</string>
     <string name="settings_search_credits_title">"ক্রেডিট"</string>
-    <string name="settings_search_credits_desc">"সম্পর্কে · AndroidHarness পিছনে ওপেন সোর্স প্রকল্প"</string>
+    <string name="settings_search_credits_desc">"সম্পর্কে · YL Harness পিছনে ওপেন সোর্স প্রকল্প"</string>
     <string name="settings_search_author_title">"লেখক"</string>
-    <string name="settings_search_author_desc">"সম্পর্কে · কে AndroidHarness তৈরি করে এবং কোথায় এটি খুঁজে পাবে"</string>
+    <string name="settings_search_author_desc">"সম্পর্কে · কে YL Harness তৈরি করে এবং কোথায় এটি খুঁজে পাবে"</string>
     <string name="settings_anchor_progress_bar_style">"অগ্রগতি বার শৈলী"</string>
     <string name="settings_anchor_fallbacks">"ফলব্যাকস"</string>
     <string name="settings_anchor_continue_chatgpt">"ChatGPT দিয়ে চালিয়ে যান"</string>
@@ -287,10 +287,10 @@
     <string name="settings_restore_reconnect_title">"পুনরুদ্ধার করা চ্যাট পুনরায় সংযোগ করুন"</string>
     <string name="settings_restore_reconnect_note">"পঠন-পাঠন অ্যাক্সেস কেবল-পঠনই থাকে। একাধিক ওয়ার্কস্পেস ব্যবহার করা চ্যাটের প্রতিটির জন্য আলাদা ফোল্ডার প্রয়োজন।"</string>
     <string name="settings_accounts_using_plan">"আপনি আপনার ChatGPT প্ল্যান ব্যবহার করছেন৷"</string>
-    <string name="settings_accounts_using_plan_desc">"AndroidHarness-এ যোগ্য অনুরোধ আপনার ChatGPT প্ল্যান বা ক্রেডিট ব্যবহার করুন। ব্যবহার পর্যালোচনা করুন এবং ChatGPT সেটিংসে এই অ্যাপের অ্যাক্সেস পরিচালনা করুন।"</string>
+    <string name="settings_accounts_using_plan_desc">"YL Harness-এ যোগ্য অনুরোধ আপনার ChatGPT প্ল্যান বা ক্রেডিট ব্যবহার করুন। ব্যবহার পর্যালোচনা করুন এবং ChatGPT সেটিংসে এই অ্যাপের অ্যাক্সেস পরিচালনা করুন।"</string>
     <string name="settings_action_got_it">"বুঝেছি"</string>
     <string name="settings_accounts_signout_title">"এই অ্যাকাউন্ট থেকে সাইন আউট করবেন?"</string>
-    <string name="settings_accounts_signout_message">"এটি AndroidHarness থেকে অ্যাকাউন্টটি সংযোগ বিচ্ছিন্ন করে এবং এটি স্বয়ংক্রিয় স্যুইচিং থেকে সরিয়ে দেয়। আপনি পরে আবার সাইন ইন করতে পারেন।"</string>
+    <string name="settings_accounts_signout_message">"এটি YL Harness থেকে অ্যাকাউন্টটি সংযোগ বিচ্ছিন্ন করে এবং এটি স্বয়ংক্রিয় স্যুইচিং থেকে সরিয়ে দেয়। আপনি পরে আবার সাইন ইন করতে পারেন।"</string>
     <string name="settings_action_continue">"চালিয়ে যান"</string>
     <string name="settings_progress_bar_subtitle">"অগ্রগতি বারগুলি দেখতে কেমন তা চয়ন করুন। অবিলম্বে প্রযোজ্য."</string>
     <string name="settings_provider_select">"নির্বাচন করুন"</string>
@@ -905,7 +905,7 @@
     <string name="chat_handoff_picker_note">"কোথায় নির্মাণ করতে হবে তা চয়ন করুন। আপনার Chat প্ল্যান আসে।"</string>
     <string name="chat_handoff_close">"ওয়ার্কস্পেস পিকার বন্ধ করুন"</string>
     <string name="chat_handoff_no_workspace">"চালিয়ে যেতে Code-এ একটি ওয়ার্কস্পেস যোগ করুন।"</string>
-    <string name="chat_share_target">"AndroidHarness Chat"</string>
+    <string name="chat_share_target">"YL Harness Chat"</string>
     <string name="chat_share_title">"Chat এ শেয়ার করুন"</string>
     <string name="chat_share_review">"আপনার শেয়ার করা আইটেমগুলি পর্যালোচনা করুন, একটি Chat চয়ন করুন এবং একটি প্রশ্ন যোগ করুন৷ আপনি Chat এ পাঠান এ ট্যাপ না করা পর্যন্ত কিছুই পাঠানো হয় না।"</string>
     <string name="chat_share_new">"নতুন Chat"</string>
@@ -983,7 +983,7 @@
     <string name="glass_unsupported">"গ্লাস এফেক্টের জন্য Android 12 বা তার পরে প্রয়োজন।"</string>
     <string name="glass_liquid_unsupported">"লিকুইড গ্লাসের প্রয়োজন Android 13 বা তার পরে। এই ডিভাইসে ফ্রস্টেড গ্লাস পাওয়া যায়।"</string>
     <string name="glass_preview_label">"গ্লাস প্রিভিউ"</string>
-    <string name="glass_preview_title">"AndroidHarness"</string>
+    <string name="glass_preview_title">"YL Harness"</string>
     <string name="glass_preview_text">"পাঠ্য পরিষ্কার করুন। একটি নরম পটভূমি."</string>
     <string name="glass_transparency">"স্বচ্ছতা"</string>
     <string name="glass_transparency_percent">"%1$d%%"</string>

@@ -64,7 +64,7 @@ jobs:
         run: |
           STAMP=$(date -u +%Y%m%d-%H%M)
           SHA=$(git rev-parse --short HEAD)
-          NAME="AndroidHarness-${STAMP}-${SHA}-debug.apk"
+          NAME="YL Harness-${STAMP}-${SHA}-debug.apk"
           mkdir dist && cp app/build/outputs/apk/debug/app-debug.apk "dist/${NAME}"
           cp app/build/outputs/gpuRuntime/debug/*.gz dist/
           echo "name=${NAME}" >> "$GITHUB_OUTPUT"
@@ -77,10 +77,10 @@ jobs:
             echo 'GPU packages are included in the build artifact. Publish them from AH-GPU-Runtime, or configure GPU_RUNTIME_PUBLISH_TOKEN for automatic cross-repository uploads.'
             exit 0
           fi
-          if ! gh release view 1 --repo Sanuu7/AH-GPU-Runtime >/dev/null 2>&1; then
-            gh release create 1 --repo Sanuu7/AH-GPU-Runtime --title 'Optional local GPU runtime' --notes 'Verified GPU packages downloaded by AndroidHarness when requested.' --latest=false
+          if ! gh release view 1 --repo ylstack1/AH-GPU-Runtime >/dev/null 2>&1; then
+            gh release create 1 --repo ylstack1/AH-GPU-Runtime --title 'Optional local GPU runtime' --notes 'Verified GPU packages downloaded by YL Harness when requested.' --latest=false
           fi
-          gh release upload 1 --repo Sanuu7/AH-GPU-Runtime app/build/outputs/gpuRuntime/debug/*.gz --clobber
+          gh release upload 1 --repo ylstack1/AH-GPU-Runtime app/build/outputs/gpuRuntime/debug/*.gz --clobber
 
       - name: Upload artifact (Actions tab, kept 30 days)
         uses: actions/upload-artifact@v7

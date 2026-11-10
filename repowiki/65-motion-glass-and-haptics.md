@@ -121,26 +121,26 @@ flowchart LR
 - Spacing is tracked per player instance, not process-wide, so the settings preview and the chat get independent `lastPlayed` clocks.
 - The flow waits are fixed by `FlowSpec`; spacing affects discrete cues only.
 
-Sources: [app/src/main/java/com/androidharness/app/ui/theme/HarnessGlass.kt](../app/src/main/java/com/androidharness/app/ui/theme/HarnessGlass.kt)#L44-L281)
+Sources: [app/src/main/java/com/ylstack1/ylharness/ui/theme/HarnessGlass.kt](../app/src/main/java/com/ylstack1/ylharness/ui/theme/HarnessGlass.kt)#L44-L281)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/ui/theme/Motion.kt`
-- `app/src/main/java/com/androidharness/app/ui/theme/Shape.kt`
-- `app/src/main/java/com/androidharness/app/ui/theme/HarnessGlass.kt`
-- `app/src/main/java/com/androidharness/app/ui/theme/HarnessGlassDialogs.kt`
-- `app/src/main/java/com/androidharness/app/ui/theme/HarnessGlassSheets.kt`
-- `app/src/main/java/com/androidharness/app/ui/theme/HarnessGlassSwitch.kt`
-- `app/src/main/java/com/androidharness/app/ui/common/ExpressiveButtons.kt`
-- `app/src/main/java/com/androidharness/app/ui/common/ExpressiveMenu.kt`
-- `app/src/main/java/com/androidharness/app/ui/common/ExpressiveControls.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/HarnessGlassSection.kt`
-- `app/src/main/java/com/androidharness/app/data/Rumble.kt`
-- `app/src/main/java/com/androidharness/app/ui/common/Rumble.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/RumbleDirector.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/RumbleSection.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ChatActivity.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsRepository.kt`
-- `app/src/main/java/com/androidharness/app/data/FeatureAvailability.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/Motion.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/Shape.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/HarnessGlass.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/HarnessGlassDialogs.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/HarnessGlassSheets.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/HarnessGlassSwitch.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/common/ExpressiveButtons.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/common/ExpressiveMenu.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/common/ExpressiveControls.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/HarnessGlassSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/Rumble.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/common/Rumble.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/RumbleDirector.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/RumbleSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatActivity.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/FeatureAvailability.kt`
 - `app/src/main/res/values/chat_rumble_strings.xml`

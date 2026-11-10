@@ -139,9 +139,9 @@
     <string name="settings_search_license_title">"உரிமம்"</string>
     <string name="settings_search_license_desc">"பற்றி · MIT உரிமம் மற்றும் ஃபோர்க்குகளுக்கு என்ன அர்த்தம்"</string>
     <string name="settings_search_credits_title">"கடன்கள்"</string>
-    <string name="settings_search_credits_desc">"பற்றி · AndroidHarness க்கு பின்னால் திறந்த மூல திட்டங்கள்"</string>
+    <string name="settings_search_credits_desc">"பற்றி · YL Harness க்கு பின்னால் திறந்த மூல திட்டங்கள்"</string>
     <string name="settings_search_author_title">"ஆசிரியர்"</string>
-    <string name="settings_search_author_desc">"பற்றி · யார் AndroidHarness ஐ உருவாக்குகிறார்கள் மற்றும் அதை எங்கே கண்டுபிடிப்பது"</string>
+    <string name="settings_search_author_desc">"பற்றி · யார் YL Harness ஐ உருவாக்குகிறார்கள் மற்றும் அதை எங்கே கண்டுபிடிப்பது"</string>
     <string name="settings_anchor_progress_bar_style">"முன்னேற்றப் பட்டை பாணி"</string>
     <string name="settings_anchor_fallbacks">"வீழ்ச்சியடைகிறது"</string>
     <string name="settings_anchor_continue_chatgpt">"ChatGPT உடன் தொடரவும்"</string>
@@ -287,10 +287,10 @@
     <string name="settings_restore_reconnect_title">"மீட்டெடுக்கப்பட்ட அரட்டைகளை மீண்டும் இணைக்கவும்"</string>
     <string name="settings_restore_reconnect_note">"படிக்க மட்டும் அணுகல் படிக்க மட்டுமே இருக்கும். பல பணியிடங்களைப் பயன்படுத்திய அரட்டைகளுக்கு ஒவ்வொன்றிற்கும் தனித்தனி கோப்புறைகள் தேவை."</string>
     <string name="settings_accounts_using_plan">"உங்கள் ChatGPT திட்டத்தைப் பயன்படுத்துகிறீர்கள்"</string>
-    <string name="settings_accounts_using_plan_desc">"AndroidHarness இல் உள்ள தகுதியான கோரிக்கைகள் உங்கள் ChatGPT திட்டம் அல்லது கிரெடிட்களைப் பயன்படுத்துகின்றன. ChatGPT அமைப்புகளில் பயன்பாட்டை மதிப்பாய்வு செய்து இந்த பயன்பாட்டின் அணுகலை நிர்வகிக்கவும்."</string>
+    <string name="settings_accounts_using_plan_desc">"YL Harness இல் உள்ள தகுதியான கோரிக்கைகள் உங்கள் ChatGPT திட்டம் அல்லது கிரெடிட்களைப் பயன்படுத்துகின்றன. ChatGPT அமைப்புகளில் பயன்பாட்டை மதிப்பாய்வு செய்து இந்த பயன்பாட்டின் அணுகலை நிர்வகிக்கவும்."</string>
     <string name="settings_action_got_it">"கிடைத்தது"</string>
     <string name="settings_accounts_signout_title">"இந்தக் கணக்கிலிருந்து வெளியேறவா?"</string>
-    <string name="settings_accounts_signout_message">"இது AndroidHarness இலிருந்து கணக்கைத் துண்டித்து, தானியங்கி மாறுதலில் இருந்து நீக்குகிறது. நீங்கள் பின்னர் மீண்டும் உள்நுழையலாம்."</string>
+    <string name="settings_accounts_signout_message">"இது YL Harness இலிருந்து கணக்கைத் துண்டித்து, தானியங்கி மாறுதலில் இருந்து நீக்குகிறது. நீங்கள் பின்னர் மீண்டும் உள்நுழையலாம்."</string>
     <string name="settings_action_continue">"தொடர்"</string>
     <string name="settings_progress_bar_subtitle">"முன்னேற்றப் பட்டைகள் எப்படி இருக்கும் என்பதைத் தேர்வு செய்யவும். உடனடியாக பொருந்தும்."</string>
     <string name="settings_provider_select">"தேர்ந்தெடு"</string>
@@ -905,7 +905,7 @@
     <string name="chat_handoff_picker_note">"எங்கு கட்ட வேண்டும் என்பதை தேர்வு செய்யவும். உங்கள் Chat திட்டம் வருகிறது."</string>
     <string name="chat_handoff_close">"பணியிடத் தேர்வியை மூடு"</string>
     <string name="chat_handoff_no_workspace">"தொடர, Code இல் பணியிடத்தைச் சேர்க்கவும்."</string>
-    <string name="chat_share_target">"AndroidHarness Chat"</string>
+    <string name="chat_share_target">"YL Harness Chat"</string>
     <string name="chat_share_title">"Chat இல் பகிரவும்"</string>
     <string name="chat_share_review">"நீங்கள் பகிரப்பட்ட உருப்படிகளை மதிப்பாய்வு செய்து, Chat ஐத் தேர்வுசெய்து, கேள்வியைச் சேர்க்கவும். Chat இல் அனுப்பு என்பதைத் தட்டும் வரை எதுவும் அனுப்பப்படாது."</string>
     <string name="chat_share_new">"புதிய Chat"</string>
@@ -983,7 +983,7 @@
     <string name="glass_unsupported">"கண்ணாடி விளைவுகளுக்கு Android 12 அல்லது அதற்குப் பிறகு தேவை."</string>
     <string name="glass_liquid_unsupported">"திரவக் கண்ணாடிக்கு Android 13 அல்லது அதற்குப் பிறகு தேவை. இந்த சாதனத்தில் உறைந்த கண்ணாடி கிடைக்கிறது."</string>
     <string name="glass_preview_label">"கண்ணாடி முன்னோட்டம்"</string>
-    <string name="glass_preview_title">"AndroidHarness"</string>
+    <string name="glass_preview_title">"YL Harness"</string>
     <string name="glass_preview_text">"தெளிவான உரை. மென்மையான பின்னணி."</string>
     <string name="glass_transparency">"வெளிப்படைத்தன்மை"</string>
     <string name="glass_transparency_percent">"%1$d%%"</string>

@@ -134,15 +134,15 @@ There is no age-based retention for file history. Versions are added on edit, re
 
 - FEATURES.md says file history copies survive chat truncation and restarts, which the file-backed store does. It also implies retention management; no automatic pruning of history files exists in `WorkspaceFileHistory`, only the 32 MiB per-file cap and SHA deduplication.
 
-Sources: [app/src/main/java/com/androidharness/app/tools/FileTools.kt](../app/src/main/java/com/androidharness/app/tools/FileTools.kt)#L101-L191), [app/src/main/java/com/androidharness/app/tools/FileTools.kt](../app/src/main/java/com/androidharness/app/tools/FileTools.kt)#L767-L917), [app/src/main/java/com/androidharness/app/data/WorkspaceFileHistory.kt](../app/src/main/java/com/androidharness/app/data/WorkspaceFileHistory.kt)#L59-L129), [app/src/main/java/com/androidharness/app/workspace/WorkspaceFs.kt](../app/src/main/java/com/androidharness/app/workspace/WorkspaceFs.kt)#L188-L216)
+Sources: [app/src/main/java/com/ylstack1/ylharness/tools/FileTools.kt](../app/src/main/java/com/ylstack1/ylharness/tools/FileTools.kt)#L101-L191), [app/src/main/java/com/ylstack1/ylharness/tools/FileTools.kt](../app/src/main/java/com/ylstack1/ylharness/tools/FileTools.kt)#L767-L917), [app/src/main/java/com/ylstack1/ylharness/data/WorkspaceFileHistory.kt](../app/src/main/java/com/ylstack1/ylharness/data/WorkspaceFileHistory.kt)#L59-L129), [app/src/main/java/com/ylstack1/ylharness/workspace/WorkspaceFs.kt](../app/src/main/java/com/ylstack1/ylharness/workspace/WorkspaceFs.kt)#L188-L216)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/tools/FileTools.kt`
-- `app/src/main/java/com/androidharness/app/tools/FileHistoryTools.kt`
-- `app/src/main/java/com/androidharness/app/tools/ReadToolOutputTool.kt`
-- `app/src/main/java/com/androidharness/app/data/WorkspaceFileHistory.kt`
-- `app/src/main/java/com/androidharness/app/data/CheckpointStore.kt`
-- `app/src/main/java/com/androidharness/app/tools/MoreTools.kt`
-- `app/src/main/java/com/androidharness/app/tools/PatchTools.kt`
-- `app/src/main/java/com/androidharness/app/workspace/WorkspaceFs.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/FileTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/FileHistoryTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/ReadToolOutputTool.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/WorkspaceFileHistory.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/CheckpointStore.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/MoreTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/PatchTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/workspace/WorkspaceFs.kt`

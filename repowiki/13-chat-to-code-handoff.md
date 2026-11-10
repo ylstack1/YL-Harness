@@ -36,8 +36,8 @@ flowchart TD
 
 ## Invocation Chain
 
-1. `AgentEngine` exposes `offer_code_handoff` as part of `ChatExperience.tools` and prompts the model to call it only when the user explicitly wants Code or the next step needs project editing or execution (`app/src/main/java/com/androidharness/app/core/ChatExperience.kt` line 39).
-2. `OfferCodeHandoffTool.execute` validates a title of at most 80 characters and a required reason of at most 400, then returns a text receipt stating the user must choose before a Code conversation exists (`app/src/main/java/com/androidharness/app/tools/ChatTools.kt` lines 80 to 95).
+1. `AgentEngine` exposes `offer_code_handoff` as part of `ChatExperience.tools` and prompts the model to call it only when the user explicitly wants Code or the next step needs project editing or execution (`app/src/main/java/com/ylstack1/ylharness/core/ChatExperience.kt` line 39).
+2. `OfferCodeHandoffTool.execute` validates a title of at most 80 characters and a required reason of at most 400, then returns a text receipt stating the user must choose before a Code conversation exists (`app/src/main/java/com/ylstack1/ylharness/tools/ChatTools.kt` lines 80 to 95).
 3. `ChatScreen` computes `codeHandoff` from `ChatExperience.codeHandoffOffer` on every message change (`ChatScreen.kt` lines 245 to 248).
 4. When not busy and an offer exists, the transcript adds a `ChatListContentType.Handoff` item rendering `ChatCodeHandoffCard` (lines 2332 to 2338).
 5. Tapping the card sets `showCodeHandoff`, which opens `ChatCodeHandoffSheet` with all projects and the active workspace as the initial choice (lines 249 to 256).
@@ -52,7 +52,7 @@ The returned copy is `CodeHandoffOffer(title, reason)`, both nullable. The title
 
 ## Carrying the Discussion into Code
 
-`SessionRepository.continueInCode` runs in one `db.withTransaction`. It loads the source session, requires it to be a Chat, and creates a new session with the same title, the chosen project id, and a `ConversationConfig(sourceChatId = sourceId)`. That `sourceChatId` is how the Code session records where it came from. It then collects only `USER` and `ASSISTANT` rows that are not tool calls and have non-blank text, formats them as `role: text` pairs, keeps the last 32,000 characters, and writes that string plus a header saying it is reference context, not new instructions, through `setCompaction` (`app/src/main/java/com/androidharness/app/data/SessionRepository.kt` lines 243 to 256).
+`SessionRepository.continueInCode` runs in one `db.withTransaction`. It loads the source session, requires it to be a Chat, and creates a new session with the same title, the chosen project id, and a `ConversationConfig(sourceChatId = sourceId)`. That `sourceChatId` is how the Code session records where it came from. It then collects only `USER` and `ASSISTANT` rows that are not tool calls and have non-blank text, formats them as `role: text` pairs, keeps the last 32,000 characters, and writes that string plus a header saying it is reference context, not new instructions, through `setCompaction` (`app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt` lines 243 to 256).
 
 The same transaction copies `modelSelectionJson` when present, so the Code chat starts on the model the Chat used. It then inserts an assistant message beginning with `CONTINUED_IN_CODE_PREFIX`, which is `"Continuing in Code."`, and says the discussion was carried over as reference. No tool call, shell command, or file write runs during the handoff. `ChatFromChatBadge` is rendered on that first Code message and navigates back to the source chat (`ChatCodeHandoff.kt` lines 99 to 110; `ChatScreen.kt` line 2019).
 
@@ -60,7 +60,7 @@ The word "plan" in the user-facing feature description maps to this transcript c
 
 ## Workspace Selection Model
 
-`ChatWorkspaceGrant(projectId, canEdit)` defaults `canEdit` to false. `ChatWorkspaceSelection(primaryId, grants)` requires at least one grant, unique non-blank project ids, and a primary id that is one of the grants. `validated()` throws on any violation, and `encode` always validates before writing (`app/src/main/java/com/androidharness/app/workspace/ChatWorkspaces.kt` lines 10 to 31). `ChatWorkspaceSelection.single(id)` produces one editable grant, which is the shape used by a chat that has never opened Workspaces.
+`ChatWorkspaceGrant(projectId, canEdit)` defaults `canEdit` to false. `ChatWorkspaceSelection(primaryId, grants)` requires at least one grant, unique non-blank project ids, and a primary id that is one of the grants. `validated()` throws on any violation, and `encode` always validates before writing (`app/src/main/java/com/ylstack1/ylharness/workspace/ChatWorkspaces.kt` lines 10 to 31). `ChatWorkspaceSelection.single(id)` produces one editable grant, which is the shape used by a chat that has never opened Workspaces.
 
 `WorkspaceManager.selectionForChat` returns a single selection from the current project when the session id is null. For a real session it first ensures a project binding, then reads `workspaceSelectionJson`, decoding it when present and falling back to the saved `projectId`, or null when the stored JSON is present but invalid (`WorkspaceManager.kt` lines 74 to 83). `forChat` combines the session flow with the available project list and calls `scopedFs` on every change (lines 85 to 92).
 
@@ -80,7 +80,7 @@ Plain paths resolve against the primary binding. `target` also accepts the `@wor
 
 `ChatWorkspacesSheet` keeps a JSON draft, allows an empty grant list while the user is choosing, and validates only on Save. It shows a checkbox per project, an access menu with Read only or Can edit, a primary radio, missing grants with a remove action, and an optional Add workspace. It warns when any grant is read-only that commands and integrations require edit access, and when more than one workspace is selected that workspace MCP servers are unavailable (`ChatWorkspacesSheet.kt` lines 67 to 165).
 
-`RunManager.assignWorkspaces` takes `workspaceGuard` and refuses while the chat is running, has active subagents, or has a resumable task. If the chat has saved checkpoints or file changes, it requires the same primary and a superset of the existing project ids, so undo stays valid. It then calls `workspace.assignSelection` and clears the chat's cached allowed tools (`app/src/main/java/com/androidharness/app/agent/RunManager.kt` lines 164 to 181).
+`RunManager.assignWorkspaces` takes `workspaceGuard` and refuses while the chat is running, has active subagents, or has a resumable task. If the chat has saved checkpoints or file changes, it requires the same primary and a superset of the existing project ids, so undo stays valid. It then calls `workspace.assignSelection` and clears the chat's cached allowed tools (`app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt` lines 164 to 181).
 
 `assignSelection` validates the selection and writes `workspaceSelectionJson` plus the primary `projectId`, with `qualifyLegacy` true when no prior JSON existed (`WorkspaceManager.kt` lines 126 to 131). `validateSelection` resolves the whole selection as if loaded from storage and rejects any pair of bindings whose canonical workspace paths overlap, using `workspacePathsOverlap` (lines 133 to 145). That check keeps a chat from granting the same folder twice through nested projects.
 
@@ -113,19 +113,19 @@ Switching a chat between sections or starting an agent chat explicitly saves the
 - `WorkspaceManager.validateSelection` is the single policy point for availability and overlap checks, used both by normal saves and restores.
 - The handoff card copy is model-supplied through the tool's `title` and `reason` parameters; the sheet and destination behavior stay in `ChatCodeHandoffSheet` and `SessionRepository.continueInCode`.
 
-Sources: [app/src/main/java/com/androidharness/app/core/ChatExperience.kt](../app/src/main/java/com/androidharness/app/core/ChatExperience.kt)#L54-L76), [app/src/main/java/com/androidharness/app/workspace/ChatWorkspaces.kt](../app/src/main/java/com/androidharness/app/workspace/ChatWorkspaces.kt)#L10-L176), [app/src/main/java/com/androidharness/app/workspace/WorkspaceManager.kt](../app/src/main/java/com/androidharness/app/workspace/WorkspaceManager.kt)#L62-L145), [app/src/main/java/com/androidharness/app/agent/RunManager.kt](../app/src/main/java/com/androidharness/app/agent/RunManager.kt)#L164-L181)
+Sources: [app/src/main/java/com/ylstack1/ylharness/core/ChatExperience.kt](../app/src/main/java/com/ylstack1/ylharness/core/ChatExperience.kt)#L54-L76), [app/src/main/java/com/ylstack1/ylharness/workspace/ChatWorkspaces.kt](../app/src/main/java/com/ylstack1/ylharness/workspace/ChatWorkspaces.kt)#L10-L176), [app/src/main/java/com/ylstack1/ylharness/workspace/WorkspaceManager.kt](../app/src/main/java/com/ylstack1/ylharness/workspace/WorkspaceManager.kt)#L62-L145), [app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt](../app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt)#L164-L181)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ChatCodeHandoff.kt`
-- `app/src/main/java/com/androidharness/app/core/ChatExperience.kt`
-- `app/src/main/java/com/androidharness/app/tools/ChatTools.kt`
-- `app/src/main/java/com/androidharness/app/data/SessionRepository.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt`
-- `app/src/main/java/com/androidharness/app/workspace/ChatWorkspaces.kt`
-- `app/src/main/java/com/androidharness/app/workspace/WorkspaceManager.kt`
-- `app/src/main/java/com/androidharness/app/agent/RunManager.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ChatWorkspacesSheet.kt`
-- `app/src/main/java/com/androidharness/app/data/db/Database.kt`
-- `app/src/main/java/com/androidharness/app/ui/AppNav.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatCodeHandoff.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/ChatExperience.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/ChatTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/workspace/ChatWorkspaces.kt`
+- `app/src/main/java/com/ylstack1/ylharness/workspace/WorkspaceManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatWorkspacesSheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/AppNav.kt`

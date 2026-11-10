@@ -6,7 +6,7 @@
 
 // Driver discovery only. This does not create models or run NPU inference.
 extern "C" JNIEXPORT jobjectArray JNICALL
-Java_com_androidharness_app_local_DeviceHardware_neuralDevices(JNIEnv * env, jobject) {
+Java_com_ylstack1_ylharness_local_DeviceHardware_neuralDevices(JNIEnv * env, jobject) {
     std::vector<std::string> result;
     void * lib = dlopen("libneuralnetworks.so", RTLD_NOW | RTLD_LOCAL);
     if (lib) {

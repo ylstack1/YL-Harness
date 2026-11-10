@@ -41,7 +41,7 @@ Runtime layout under the app prefix is fixed by getters: `bin/codegraph` (launch
 
 ## Invocation Chain
 
-1. `ToolRegistry.default` registers the five static CodeGraph tools at `app/src/main/java/com/androidharness/app/tools/Tool.kt:150-154`.
+1. `ToolRegistry.default` registers the five static CodeGraph tools at `app/src/main/java/com/ylstack1/ylharness/tools/Tool.kt:150-154`.
 2. `WorkspaceToolRouting.available` consults each tool's `isAvailable(ctx)` override, which delegates to `CodeGraphManager.isAvailable(workspace)` (`tools/CodeGraphTools.kt:13`).
 3. `CodeGraphManager.isAvailable` (`data/env/CodeGraphManager.kt:376-381`): SSH workspaces return true; local workspaces require `linuxEnv.isReady`, `bin/codegraph` existing, and `shellRoot/.codegraph` being a directory. It also calls `ensureLauncherCurrent()`.
 4. `codegraph_explore` executes `codeGraph.explore` (`CodeGraphManager.kt:542`), which calls `queryWorkspace` (860).
@@ -85,16 +85,16 @@ Runtime layout under the app prefix is fixed by getters: `bin/codegraph` (launch
 - `tools/SearchBackends.kt` does not contain code-indexing logic. It implements web search backends (`KeylessSearchBackend`, `BraveApiBackend`, `TavilyApiBackend`) and `WebResultCache` (`SearchBackends.kt:113-541`). Repository text search is performed separately by `SearchFilesTool` (`tools/FileTools.kt:501`) and `GrepTool` (`FileTools.kt:767`), not by CodeGraph.
 - The repo map is intentionally shallow: it extracts declaration lines only. It has no call graph, no cross-file resolution, and no relation to the CodeGraph index.
 
-Sources: [app/src/main/java/com/androidharness/app/data/env/CodeGraphManager.kt](../app/src/main/java/com/androidharness/app/data/env/CodeGraphManager.kt)#L288-L1051), [app/src/main/java/com/androidharness/app/data/env/CodeGraphMcp.kt](../app/src/main/java/com/androidharness/app/data/env/CodeGraphMcp.kt)#L23-L122), [app/src/main/java/com/androidharness/app/data/env/CodeGraphPatches.kt](../app/src/main/java/com/androidharness/app/data/env/CodeGraphPatches.kt)#L25-L1637), [app/src/main/java/com/androidharness/app/tools/CodeGraphTools.kt](../app/src/main/java/com/androidharness/app/tools/CodeGraphTools.kt)#L10-L113), [app/src/main/java/com/androidharness/app/repomap/RepoMapCache.kt](../app/src/main/java/com/androidharness/app/repomap/RepoMapCache.kt)#L8-L70), [app/src/main/java/com/androidharness/app/repomap/RepoMapGenerator.kt](../app/src/main/java/com/androidharness/app/repomap/RepoMapGenerator.kt)#L8-L93), [app/src/main/java/com/androidharness/app/repomap/RepoSymbolExtractor.kt](../app/src/main/java/com/androidharness/app/repomap/RepoSymbolExtractor.kt)#L12-L123), [app/src/main/java/com/androidharness/app/agent/AgentEngine.kt](../app/src/main/java/com/androidharness/app/agent/AgentEngine.kt)#L2313-L2319)
+Sources: [app/src/main/java/com/ylstack1/ylharness/data/env/CodeGraphManager.kt](../app/src/main/java/com/ylstack1/ylharness/data/env/CodeGraphManager.kt)#L288-L1051), [app/src/main/java/com/ylstack1/ylharness/data/env/CodeGraphMcp.kt](../app/src/main/java/com/ylstack1/ylharness/data/env/CodeGraphMcp.kt)#L23-L122), [app/src/main/java/com/ylstack1/ylharness/data/env/CodeGraphPatches.kt](../app/src/main/java/com/ylstack1/ylharness/data/env/CodeGraphPatches.kt)#L25-L1637), [app/src/main/java/com/ylstack1/ylharness/tools/CodeGraphTools.kt](../app/src/main/java/com/ylstack1/ylharness/tools/CodeGraphTools.kt)#L10-L113), [app/src/main/java/com/ylstack1/ylharness/repomap/RepoMapCache.kt](../app/src/main/java/com/ylstack1/ylharness/repomap/RepoMapCache.kt)#L8-L70), [app/src/main/java/com/ylstack1/ylharness/repomap/RepoMapGenerator.kt](../app/src/main/java/com/ylstack1/ylharness/repomap/RepoMapGenerator.kt)#L8-L93), [app/src/main/java/com/ylstack1/ylharness/repomap/RepoSymbolExtractor.kt](../app/src/main/java/com/ylstack1/ylharness/repomap/RepoSymbolExtractor.kt)#L12-L123), [app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt](../app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt)#L2313-L2319)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/tools/CodeGraphTools.kt`
-- `app/src/main/java/com/androidharness/app/data/env/CodeGraphManager.kt`
-- `app/src/main/java/com/androidharness/app/data/env/CodeGraphMcp.kt`
-- `app/src/main/java/com/androidharness/app/data/env/CodeGraphPatches.kt`
-- `app/src/main/java/com/androidharness/app/repomap/RepoMapCache.kt`
-- `app/src/main/java/com/androidharness/app/repomap/RepoMapGenerator.kt`
-- `app/src/main/java/com/androidharness/app/repomap/RepoSymbolExtractor.kt`
-- `app/src/main/java/com/androidharness/app/tools/SearchBackends.kt`
-- `app/src/main/java/com/androidharness/app/tools/mcp/McpManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/CodeGraphTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/env/CodeGraphManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/env/CodeGraphMcp.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/env/CodeGraphPatches.kt`
+- `app/src/main/java/com/ylstack1/ylharness/repomap/RepoMapCache.kt`
+- `app/src/main/java/com/ylstack1/ylharness/repomap/RepoMapGenerator.kt`
+- `app/src/main/java/com/ylstack1/ylharness/repomap/RepoSymbolExtractor.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/SearchBackends.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpManager.kt`

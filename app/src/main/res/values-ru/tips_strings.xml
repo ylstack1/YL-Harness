@@ -20,8 +20,8 @@
     <string name="tip_chat_instructions">Добавьте в параметрах чата инструкции, которым следует каждый чат, например тон или язык.</string>
     <string name="tip_tts">Ответы можно озвучивать автоматически. Выберите голос и скорость в настройках голоса.</string>
     <string name="tip_agents_md">Запишите правила проекта в AGENTS.md, и агент будет следовать им при каждом запуске.</string>
-    <string name="tip_memory_off">Включите память, чтобы AndroidHarness запоминал ваши предпочтения и решения во всех чатах.</string>
-    <string name="tip_memory_on">Память включена. Вы в любой момент можете просмотреть или удалить то, что запомнил AndroidHarness.</string>
+    <string name="tip_memory_off">Включите память, чтобы YL Harness запоминал ваши предпочтения и решения во всех чатах.</string>
+    <string name="tip_memory_on">Память включена. Вы в любой момент можете просмотреть или удалить то, что запомнил YL Harness.</string>
     <string name="tip_thinking">Нажмите на уровень размышлений в заголовке, чтобы обменять скорость на более глубокое мышление.</string>
     <string name="tip_glass">Попробуйте Harness Glass: полупрозрачные многослойные поверхности во всём приложении.</string>
     <string name="tip_compact">Заканчивается контекст? Введите /compact, чтобы сжать разговор и продолжить.</string>
@@ -30,7 +30,7 @@
     <string name="tip_dual_planning">Используйте одну модель для планирования, а другую, дешевле, для выполнения плана.</string>
     <string name="tip_codegraph">Установите CodeGraph, чтобы агент находил вызовы и затронутый код, не читая каждый файл.</string>
     <string name="tip_whisper">Диктуйте с Groq Whisper для быстрого и точного голосового ввода на многих языках.</string>
-    <string name="tip_app_lock">Блокируйте AndroidHarness отпечатком пальца, лицом или PIN-кодом устройства.</string>
+    <string name="tip_app_lock">Блокируйте YL Harness отпечатком пальца, лицом или PIN-кодом устройства.</string>
     <string name="tip_mcp">Подключите серверы MCP, чтобы дать агенту больше инструментов.</string>
     <string name="tip_web_search">Выберите движок веб-поиска: Keyless, Brave или Tavily.</string>
     <string name="tip_theme">Выберите цветовую палитру или создайте свою в разделе «Оформление».</string>
@@ -47,7 +47,7 @@
     <string name="tip_config">Делитесь настройками проекта с репозиторием через harness.json.</string>
     <string name="tip_shizuku">Настройте Shizuku, чтобы агент мог использовать расширенный доступ к оболочке на устройстве.</string>
     <string name="tip_plugins">Устанавливайте пакеты плагинов на странице «Плагины», чтобы добавить навыки и инструменты.</string>
-    <string name="tip_language">AndroidHarness доступен на 11 языках. Смените язык в настройках языка.</string>
+    <string name="tip_language">YL Harness доступен на 11 языках. Смените язык в настройках языка.</string>
     <string name="tip_backup">Экспортируйте чаты и настройки в резервную копию и импортируйте их на другом устройстве.</string>
     <string name="tip_progress_bar">Измените стиль индикатора выполнения в разделе «Оформление».</string>
     <string name="tip_turn_off">Эти советы можно отключить в любой момент в настройках.</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="learn_title">"Pelajari AndroidHarness"</string>
+    <string name="learn_title">"Pelajari YL Harness"</string>
     <string name="learn_description">"Panduan mudah langkah demi langkah tentang semua yang boleh anda lakukan di sini."</string>
     <string name="learn_group">"Mulakan di sini"</string>
     <string name="learn_entry_hint">"Panduan mengikut rentak anda"</string>

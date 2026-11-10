@@ -103,18 +103,18 @@ On commit, `ChatViewModel.selectModelForTarget` calls `ChatModelRepository.selec
 - The picker does not have a separate persisted "staging" object. Staging is `rememberSaveable` UI state inside the sheet and disappears on dismissal without a commit.
 - `ModelShortcuts` is device-local and is not part of `SettingsBackup`. Favourites and recents do not travel with a settings backup.
 
-Sources: [app/src/main/java/com/androidharness/app/ui/chat/components/ModelPickerSheet.kt](../app/src/main/java/com/androidharness/app/ui/chat/components/ModelPickerSheet.kt)#L74-L170), [app/src/main/java/com/androidharness/app/ui/chat/components/ModelPickerSheet.kt](../app/src/main/java/com/androidharness/app/ui/chat/components/ModelPickerSheet.kt)#L262-L398), [app/src/main/java/com/androidharness/app/data/ChatModelSelection.kt](../app/src/main/java/com/androidharness/app/data/ChatModelSelection.kt)#L14-L170), [app/src/main/java/com/androidharness/app/data/ModelShortcuts.kt](../app/src/main/java/com/androidharness/app/data/ModelShortcuts.kt)#L10-L50), [app/src/main/java/com/androidharness/app/llm/ProviderModelSearch.kt](../app/src/main/java/com/androidharness/app/llm/ProviderModelSearch.kt)#L10-L45), [app/src/main/java/com/androidharness/app/data/ProviderListPreferences.kt](../app/src/main/java/com/androidharness/app/data/ProviderListPreferences.kt)#L7-L34), [app/src/main/java/com/androidharness/app/data/SessionRepository.kt](../app/src/main/java/com/androidharness/app/data/SessionRepository.kt)#L208-L229), [app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt](../app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt)#L2244-L2261), [app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt](../app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt)#L1440-L1488), [app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt](../app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt)#L749-L794)
+Sources: [app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ModelPickerSheet.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ModelPickerSheet.kt)#L74-L170), [app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ModelPickerSheet.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ModelPickerSheet.kt)#L262-L398), [app/src/main/java/com/ylstack1/ylharness/data/ChatModelSelection.kt](../app/src/main/java/com/ylstack1/ylharness/data/ChatModelSelection.kt)#L14-L170), [app/src/main/java/com/ylstack1/ylharness/data/ModelShortcuts.kt](../app/src/main/java/com/ylstack1/ylharness/data/ModelShortcuts.kt)#L10-L50), [app/src/main/java/com/ylstack1/ylharness/llm/ProviderModelSearch.kt](../app/src/main/java/com/ylstack1/ylharness/llm/ProviderModelSearch.kt)#L10-L45), [app/src/main/java/com/ylstack1/ylharness/data/ProviderListPreferences.kt](../app/src/main/java/com/ylstack1/ylharness/data/ProviderListPreferences.kt)#L7-L34), [app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt](../app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt)#L208-L229), [app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt)#L2244-L2261), [app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt)#L1440-L1488), [app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt)#L749-L794)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ModelPickerSheet.kt`
-- `app/src/main/java/com/androidharness/app/data/ChatModelSelection.kt`
-- `app/src/main/java/com/androidharness/app/data/ModelShortcuts.kt`
-- `app/src/main/java/com/androidharness/app/data/ModelVisibility.kt`
-- `app/src/main/java/com/androidharness/app/data/ProviderListPreferences.kt`
-- `app/src/main/java/com/androidharness/app/llm/ProviderModelSearch.kt`
-- `app/src/main/java/com/androidharness/app/data/SessionRepository.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsRepository.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/FallbackEditorSheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ModelPickerSheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ChatModelSelection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ModelShortcuts.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ModelVisibility.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ProviderListPreferences.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/ProviderModelSearch.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/FallbackEditorSheet.kt`

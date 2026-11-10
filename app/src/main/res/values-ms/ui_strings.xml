@@ -637,7 +637,7 @@
     <string name="ui_shizuku_is_disabled">"Shizuku dilumpuhkan"</string>
     <string name="ui_shizuku_is_no_longer_available_its_server">"Shizuku tidak lagi tersedia. Pelayannya mungkin telah berhenti atau terbunuh "</string>
     <string name="ui_in_the_background_or_this_app_s">"di latar belakang, atau akses apl ini mungkin telah dibatalkan. "</string>
-    <string name="ui_start_shizuku_and_allow_androidharness_access_to">"Mulakan Shizuku dan benarkan akses AndroidHarness untuk menggunakannya semula."</string>
+    <string name="ui_start_shizuku_and_allow_ylharness_access_to">"Mulakan Shizuku dan benarkan akses YL Harness untuk menggunakannya semula."</string>
     <string name="ui_never_show_this_message_again">"Jangan tunjukkan mesej ini lagi"</string>
     <string name="ui_limits_resets">"Had &amp; set semula"</string>
     <string name="ui_view_live_limits_in_chatgpt">"Lihat had langsung dalam ChatGPT"</string>
@@ -1110,7 +1110,7 @@
     <string name="ui_the_app_needs_node_python_from_the">"aplikasinya. Memerlukan node/python daripada persekitaran Linux."</string>
     <string name="ui_not_installed_optional">"Tidak dipasang: pilihan."</string>
     <string name="ui_installed_not_running">"Dipasang, tidak berjalan."</string>
-    <string name="ui_running_grant_androidharness_access">"Berjalan: berikan AndroidHarness akses."</string>
+    <string name="ui_running_grant_ylharness_access">"Berjalan: berikan YL Harness akses."</string>
     <string name="ui_connected_shell_privileges_ready">"Disambungkan: keistimewaan shell sedia."</string>
     <string name="ui_connected_in_compatibility_mode_shell_privileges_ready">"Disambungkan dalam mod keserasian: keistimewaan shell sedia."</string>
     <string name="ui_access_granted_connecting_to_the_shell_runner">"Akses diberikan. Menyambung kepada pelari cengkerang…"</string>
@@ -1157,10 +1157,10 @@
     <string name="ui_open_source">"Sumber terbuka"</string>
     <string name="ui_use_it_change_it_ship_it_even">"Gunakannya, ubahnya, hantarkannya, walaupun di dalam apl komersial. Satu syarat ialah "</string>
     <string name="ui_copyright_notice_and_the_license_text_travel">"notis hak cipta dan perjalanan teks lesen dengan kod. Ia datang tanpa jaminan."</string>
-    <string name="ui_androidharness_is_built_on_open_source_work">"AndroidHarness dibina atas kerja sumber terbuka dan meminjam idea daripada ejen yang datang sebelum itu."</string>
+    <string name="ui_ylharness_is_built_on_open_source_work">"YL Harness dibina atas kerja sumber terbuka dan meminjam idea daripada ejen yang datang sebelum itu."</string>
     <string name="ui_built_with">"Dibina dengan"</string>
     <string name="ui_inspired_by">"Diinspirasikan oleh"</string>
-    <string name="ui_every_project_keeps_its_own_license_androidharness">"Setiap projek menyimpan lesennya sendiri. AndroidHarness tidak bergabung dengan mereka."</string>
+    <string name="ui_every_project_keeps_its_own_license_ylharness">"Setiap projek menyimpan lesennya sendiri. YL Harness tidak bergabung dengan mereka."</string>
     <string name="ui_exported_chats_messages">"Sembang %1$s yang dieksport (mesej %2$s, kenangan %3$s)."</string>
     <string name="ui_export_failed">"Eksport gagal."</string>
     <string name="ui_export_failed_1230">"Eksport gagal: %1$s"</string>
@@ -1249,7 +1249,7 @@
     <string name="ui_status">"Status"</string>
     <string name="ui_retry_resume">"Cuba semula / sambung semula"</string>
     <string name="ui_pause_telegram">"Jeda Telegram"</string>
-    <string name="ui_welcome_to_androidharness">"Selamat datang ke AndroidHarness"</string>
+    <string name="ui_welcome_to_ylharness">"Selamat datang ke YL Harness"</string>
     <string name="ui_grant_storage_access_to_start_coding_notifications">"Berikan akses storan untuk memulakan pengekodan. Pemberitahuan dan alatan lain adalah pilihan."</string>
     <string name="ui_device_storage_access_granted">"Akses storan peranti diberikan"</string>
     <string name="ui_required_allow_access_to_device_files_and">"Diperlukan: benarkan akses kepada fail dan folder peranti"</string>
@@ -1587,7 +1587,7 @@
     <string name="ui_access_mode">"Mod akses: %1$s"</string>
     <string name="ui_scheduled_tasks">"Tugas yang dijadualkan"</string>
     <string name="ui_project_and_chat_sidebar">"Bar sisi projek dan sembang"</string>
-    <string name="ui_androidharness_icon">"ikon AndroidHarness"</string>
+    <string name="ui_ylharness_icon">"ikon YL Harness"</string>
     <string name="ui_collapse_sidebar">"Runtuhkan bar sisi"</string>
     <string name="ui_search_chats_and_messages">"Cari sembang dan mesej"</string>
     <string name="ui_search_chats">"Cari sembang"</string>
@@ -1637,7 +1637,7 @@
         <item quantity="other">"baris %1$d"</item>
     </plurals>
     <string name="voice_transcribing">"Mentranskripsi…"</string>
-    <string name="donate_funding_message">"Kami kekurangan dana untuk meneruskan pembangunan AndroidHarness. Sokongan anda membantu kami terus membina."</string>
+    <string name="donate_funding_message">"Kami kekurangan dana untuk meneruskan pembangunan YL Harness. Sokongan anda membantu kami terus membina."</string>
     <string name="donate_dismiss_message">"Tolak mesej derma"</string>
     <string name="background_settings_title">"Latar belakang &amp; pemberitahuan"</string>
     <string name="background_settings_description">"Urus kerja latar belakang dan pemberitahuan."</string>
@@ -1647,10 +1647,10 @@
     <string name="background_notifications_description">"Benarkan makluman apl. Android menguruskan notis perkhidmatan."</string>
     <string name="background_android_title">"Tetapan pemberitahuan Android"</string>
     <string name="background_android_description">"Urus semua tetapan pemberitahuan Android."</string>
-    <string name="background_run_blocked">"Latar belakang berjalan dimatikan. Buka AndroidHarness untuk memulakan atau meneruskan tugas."</string>
+    <string name="background_run_blocked">"Latar belakang berjalan dimatikan. Buka YL Harness untuk memulakan atau meneruskan tugas."</string>
     <string name="background_service_notice">"Perkhidmatan latar belakang sedang berjalan"</string>
     <string name="local_gpu_download_title">"Sokongan GPU"</string>
-    <string name="local_gpu_runtime_repository">"Sumber: Sanuu7/AH-GPU-Rtime"</string>
+    <string name="local_gpu_runtime_repository">"Sumber: ylstack1/AH-GPU-Rtime"</string>
     <string name="local_gpu_delivery_play">"Dipasang dengan selamat melalui Google Play."</string>
     <string name="local_gpu_delivery_github">"Memuat turun pakej GPU yang sepadan dengan apl dan peranti ini daripada GitHub."</string>
     <string name="local_gpu_optional_download">"Muat turun pilihan. inferens CPU berfungsi tanpanya; Sokongan GPU kekal tersedia di luar talian selepas pemasangan."</string>

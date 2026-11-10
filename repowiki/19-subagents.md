@@ -97,20 +97,20 @@ Matching accepts exact ids, case-insensitive ids (catalog casing wins), and an u
 - Runtime: any code holding `RunManager.subagents` can call `stop`, `stopSession`, `stopSessionAndJoin`, `stopAllAndJoin`, `waitFor`, `pending`, and `acknowledge`.
 - Notifications: `onFinished` posts a `RunResultNotification` when completion notifications are enabled (`agent/RunManager.kt` lines 227-235).
 
-Sources: [app/src/main/java/com/androidharness/app/tools/SubagentTools.kt](../app/src/main/java/com/androidharness/app/tools/SubagentTools.kt)#L10-L52)
+Sources: [app/src/main/java/com/ylstack1/ylharness/tools/SubagentTools.kt](../app/src/main/java/com/ylstack1/ylharness/tools/SubagentTools.kt)#L10-L52)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/tools/SubagentTools.kt`
-- `app/src/main/java/com/androidharness/app/tools/SubagentControlTools.kt`
-- `app/src/main/java/com/androidharness/app/agent/SubagentRuns.kt`
-- `app/src/main/java/com/androidharness/app/agent/SubagentModelResolver.kt`
-- `app/src/main/java/com/androidharness/app/agent/SubagentConfiguration.kt`
-- `app/src/main/java/com/androidharness/app/agent/AgentEngine.kt`
-- `app/src/main/java/com/androidharness/app/agent/RunManager.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/SubagentCard.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/FloatingSubagentDeck.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/SubagentBubbleState.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/SubagentBubblePositionStore.kt`
-- `app/src/main/java/com/androidharness/app/ui/subagent/SubagentScreen.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/SubagentTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/SubagentControlTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/SubagentRuns.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/SubagentModelResolver.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/SubagentConfiguration.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/SubagentCard.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/FloatingSubagentDeck.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/SubagentBubbleState.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/SubagentBubblePositionStore.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/subagent/SubagentScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt`

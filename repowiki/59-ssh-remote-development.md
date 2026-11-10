@@ -108,22 +108,22 @@ Settings diagnostics summarize the same flow: not checked when no statuses exist
 - `TermuxSshConfig`, `termuxSharedPath` and `termuxCommand` are declared in `data/env/TermuxSsh.kt` but have no call sites in `app/src/main/java`; the Termux option in the dialog is implemented by connecting to `127.0.0.1:8022` with the normal SSH path (`SshWorkspaceDialog.kt:64`).
 - Ed25519 is claimed by the build dependency and ProGuard comment, but no explicit provider registration or Ed25519 test exists in app code.
 
-Sources: [workspace/SshConnections.kt](../app/src/main/java/com/androidharness/app/workspace/SshConnections.kt)#L18-L217), [workspace/SshFs.kt](../app/src/main/java/com/androidharness/app/workspace/SshFs.kt)#L11-L138), [workspace/SshJobs.kt](../app/src/main/java/com/androidharness/app/workspace/SshJobs.kt)#L6-L40), [data/env/TermuxSsh.kt](../app/src/main/java/com/androidharness/app/data/env/TermuxSsh.kt)#L13-L79), [ui/common/SshWorkspaceDialog.kt](../app/src/main/java/com/androidharness/app/ui/common/SshWorkspaceDialog.kt)#L20-L144), [ui/common/SshWorkspaceBar.kt](../app/src/main/java/com/androidharness/app/ui/common/SshWorkspaceBar.kt)#L19-L79)
+Sources: [workspace/SshConnections.kt](../app/src/main/java/com/ylstack1/ylharness/workspace/SshConnections.kt)#L18-L217), [workspace/SshFs.kt](../app/src/main/java/com/ylstack1/ylharness/workspace/SshFs.kt)#L11-L138), [workspace/SshJobs.kt](../app/src/main/java/com/ylstack1/ylharness/workspace/SshJobs.kt)#L6-L40), [data/env/TermuxSsh.kt](../app/src/main/java/com/ylstack1/ylharness/data/env/TermuxSsh.kt)#L13-L79), [ui/common/SshWorkspaceDialog.kt](../app/src/main/java/com/ylstack1/ylharness/ui/common/SshWorkspaceDialog.kt)#L20-L144), [ui/common/SshWorkspaceBar.kt](../app/src/main/java/com/ylstack1/ylharness/ui/common/SshWorkspaceBar.kt)#L19-L79)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/workspace/SshConnections.kt`
-- `app/src/main/java/com/androidharness/app/workspace/SshFs.kt`
-- `app/src/main/java/com/androidharness/app/workspace/SshJobs.kt`
-- `app/src/main/java/com/androidharness/app/data/env/TermuxSsh.kt`
-- `app/src/main/java/com/androidharness/app/ui/common/SshWorkspaceDialog.kt`
-- `app/src/main/java/com/androidharness/app/ui/common/SshWorkspaceBar.kt`
-- `app/src/main/java/com/androidharness/app/workspace/WorkspaceManager.kt`
-- `app/src/main/java/com/androidharness/app/data/KeyStoreManager.kt`
-- `app/src/main/java/com/androidharness/app/data/env/ShellTierRouter.kt`
-- `app/src/main/java/com/androidharness/app/tools/BgShell.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/TroubleshootingSection.kt`
-- `app/src/main/java/com/androidharness/app/ui/AppNav.kt`
-- `app/src/main/java/com/androidharness/app/ui/projects/ProjectsScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/workspace/SshConnections.kt`
+- `app/src/main/java/com/ylstack1/ylharness/workspace/SshFs.kt`
+- `app/src/main/java/com/ylstack1/ylharness/workspace/SshJobs.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/env/TermuxSsh.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/common/SshWorkspaceDialog.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/common/SshWorkspaceBar.kt`
+- `app/src/main/java/com/ylstack1/ylharness/workspace/WorkspaceManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/KeyStoreManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/env/ShellTierRouter.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/BgShell.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/TroubleshootingSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/AppNav.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/projects/ProjectsScreen.kt`
 - `app/build.gradle.kts`
 - `app/proguard-rules.pro`

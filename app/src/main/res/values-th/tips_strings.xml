@@ -20,8 +20,8 @@
     <string name="tip_chat_instructions">"เพิ่มคำแนะนำทุกครั้งที่แชทตามมา เช่น น้ำเสียงหรือภาษาที่คุณต้องการ ในตัวเลือก Chat"</string>
     <string name="tip_tts">"การตอบกลับสามารถอ่านออกเสียงได้โดยอัตโนมัติ เลือกเสียงและความเร็วในการตั้งค่าเสียง"</string>
     <string name="tip_agents_md">"ใส่กฎของโปรเจ็กต์ใน AGENTS.md และเอเจนต์จะติดตามกฎเหล่านั้นทุกครั้งที่รัน"</string>
-    <string name="tip_memory_off">"เปิดหน่วยความจำเพื่อให้ AndroidHarness จดจำการตั้งค่าและการตัดสินใจของคุณในการแชท"</string>
-    <string name="tip_memory_on">"หน่วยความจำเปิดอยู่ คุณสามารถตรวจสอบหรือลบสิ่งที่ AndroidHarness จดจำได้ตลอดเวลา"</string>
+    <string name="tip_memory_off">"เปิดหน่วยความจำเพื่อให้ YL Harness จดจำการตั้งค่าและการตัดสินใจของคุณในการแชท"</string>
+    <string name="tip_memory_on">"หน่วยความจำเปิดอยู่ คุณสามารถตรวจสอบหรือลบสิ่งที่ YL Harness จดจำได้ตลอดเวลา"</string>
     <string name="tip_thinking">"แตะระดับการคิดในส่วนหัวเพื่อความเร็วในการซื้อขายเพื่อเหตุผลเชิงลึก"</string>
     <string name="tip_glass">"ลองใช้ Harness Glass สำหรับพื้นผิวโปร่งแสงเป็นชั้นทั่วทั้งแอป"</string>
     <string name="tip_compact">"เหลือบริบทน้อยใช่ไหม? พิมพ์ /compact เพื่อสรุปการสนทนาและดำเนินการต่อ"</string>
@@ -30,7 +30,7 @@
     <string name="tip_dual_planning">"ใช้แบบจำลองหนึ่งเพื่อวางแผน และอีกแบบจำลองหนึ่งที่ถูกกว่าเพื่อดำเนินการตามแผน"</string>
     <string name="tip_codegraph">"ติดตั้ง CodeGraph เพื่อให้เอเจนต์ค้นหาผู้โทรและโค้ดที่ได้รับผลกระทบโดยไม่ต้องอ่านทุกไฟล์"</string>
     <string name="tip_whisper">"การเขียนตามคำบอกด้วย Groq Whisper เพื่อการป้อนคำพูดที่รวดเร็วและแม่นยำในหลายภาษา"</string>
-    <string name="tip_app_lock">"ล็อค AndroidHarness ด้วยลายนิ้วมือ ใบหน้า หรืออุปกรณ์ของคุณ PIN"</string>
+    <string name="tip_app_lock">"ล็อค YL Harness ด้วยลายนิ้วมือ ใบหน้า หรืออุปกรณ์ของคุณ PIN"</string>
     <string name="tip_mcp">"เชื่อมต่อเซิร์ฟเวอร์ MCP เพื่อให้เอเจนต์มีเครื่องมือเพิ่มเติม"</string>
     <string name="tip_web_search">"เลือกแบ็กเอนด์การค้นหาเว็บของคุณ: Keyless, Brave หรือ Tavily"</string>
     <string name="tip_theme">"เลือกชุดสีหรือสร้างของคุณเองในลักษณะที่ปรากฏ"</string>
@@ -47,7 +47,7 @@
     <string name="tip_config">"แชร์การตั้งค่าโปรเจ็กต์กับ repo ของคุณผ่าน harness.json"</string>
     <string name="tip_shizuku">"ตั้งค่า Shizuku เพื่อให้เอเจนต์ใช้การเข้าถึงเชลล์แบบยกระดับบนอุปกรณ์ของคุณได้"</string>
     <string name="tip_plugins">"ติดตั้งชุดปลั๊กอินจากหน้าปลั๊กอินเพื่อเพิ่มทักษะและเครื่องมือ"</string>
-    <string name="tip_language">"AndroidHarness ให้บริการใน 11 ภาษา เปลี่ยนในการตั้งค่าภาษา"</string>
+    <string name="tip_language">"YL Harness ให้บริการใน 11 ภาษา เปลี่ยนในการตั้งค่าภาษา"</string>
     <string name="tip_backup">"ส่งออกการแชทและการตั้งค่าของคุณเป็นข้อมูลสำรอง และนำเข้าบนอุปกรณ์อื่น"</string>
     <string name="tip_progress_bar">"เปลี่ยนสไตล์ของแถบความคืบหน้าการทำงานในลักษณะที่ปรากฏ"</string>
     <string name="tip_turn_off">"คุณปิดเคล็ดลับเหล่านี้ได้ทุกเมื่อในการตั้งค่า"</string>

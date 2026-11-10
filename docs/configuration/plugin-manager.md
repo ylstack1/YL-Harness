@@ -12,7 +12,7 @@ Changes apply to the next Code run. Running turns keep their captured configurat
 
 ## Sources
 
-**npm:** enter `plugin-name`, `@team/plugin`, `plugin-name@1.2.0` or `@team/plugin@beta`. Exact versions and tags are supported; dependency ranges, shell commands such as `npx …`, arbitrary registry URLs and dependency installation are not. The installer uses the registry API and checks the archive against its published integrity hash. It never executes npm lifecycle scripts. For community discovery, publishers can add `"keywords": ["androidharness-plugin"]` to `package.json`.
+**npm:** enter `plugin-name`, `@team/plugin`, `plugin-name@1.2.0` or `@team/plugin@beta`. Exact versions and tags are supported; dependency ranges, shell commands such as `npx …`, arbitrary registry URLs and dependency installation are not. The installer uses the registry API and checks the archive against its published integrity hash. It never executes npm lifecycle scripts. For community discovery, publishers can add `"keywords": ["ylharness-plugin"]` to `package.json`.
 
 **GitHub:** enter `owner/repository` or its `https://github.com/owner/repository` URL. Optional fields select a branch, tag, commit and bundle subfolder. The requested ref is resolved to an immutable commit before the archive is downloaded. A connected GitHub account supplies access to private repositories when its token permits it. Updates explicitly resolve the chosen ref again; there is no silent background code update.
 
@@ -70,4 +70,4 @@ MCP startup and executable hooks retain the existing exact-definition project ap
 
 Hooks require a standalone JavaScript entry. They run in Android's isolated JavaScript runtime, with no Node `require`, filesystem or network bridge. Supported events, return values, time and memory limits are described in the [configuration guide](README.md#restricted-plugins). Skills and static instructions do not require that runtime.
 
-Packages written for another harness are not automatically compatible. Repackage their supported skills, instructions and MCP definitions with this manifest, and adapt executable hooks to AndroidHarness's restricted API. An incompatible package is reported instead of being installed with missing functionality.
+Packages written for another harness are not automatically compatible. Repackage their supported skills, instructions and MCP definitions with this manifest, and adapt executable hooks to YL Harness's restricted API. An incompatible package is reported instead of being installed with missing functionality.

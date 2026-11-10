@@ -81,15 +81,15 @@ flowchart TD
 
 - None of the routing code verifies that a `SHELL` project path still exists at tool time beyond the `scopedFs` directory check and per-node existence checks. A folder removed while a chat is open surfaces as a tool error, not a selection invalidation.
 
-Sources: [app/src/main/java/com/androidharness/app/workspace/WorkspaceManager.kt](../app/src/main/java/com/androidharness/app/workspace/WorkspaceManager.kt)#L39-L436), [app/src/main/java/com/androidharness/app/workspace/ChatWorkspaces.kt](../app/src/main/java/com/androidharness/app/workspace/ChatWorkspaces.kt)#L10-L176), [app/src/main/java/com/androidharness/app/workspace/ProjectDeletion.kt](../app/src/main/java/com/androidharness/app/workspace/ProjectDeletion.kt)#L10-L57), [app/src/main/java/com/androidharness/app/data/storage/StorageManager.kt](../app/src/main/java/com/androidharness/app/data/storage/StorageManager.kt)#L14-L163), [app/src/main/java/com/androidharness/app/tools/WorkspaceToolRouting.kt](../app/src/main/java/com/androidharness/app/tools/WorkspaceToolRouting.kt)#L9-L69), [app/src/main/java/com/androidharness/app/data/db/Database.kt](../app/src/main/java/com/androidharness/app/data/db/Database.kt)#L111-L117)
+Sources: [app/src/main/java/com/ylstack1/ylharness/workspace/WorkspaceManager.kt](../app/src/main/java/com/ylstack1/ylharness/workspace/WorkspaceManager.kt)#L39-L436), [app/src/main/java/com/ylstack1/ylharness/workspace/ChatWorkspaces.kt](../app/src/main/java/com/ylstack1/ylharness/workspace/ChatWorkspaces.kt)#L10-L176), [app/src/main/java/com/ylstack1/ylharness/workspace/ProjectDeletion.kt](../app/src/main/java/com/ylstack1/ylharness/workspace/ProjectDeletion.kt)#L10-L57), [app/src/main/java/com/ylstack1/ylharness/data/storage/StorageManager.kt](../app/src/main/java/com/ylstack1/ylharness/data/storage/StorageManager.kt)#L14-L163), [app/src/main/java/com/ylstack1/ylharness/tools/WorkspaceToolRouting.kt](../app/src/main/java/com/ylstack1/ylharness/tools/WorkspaceToolRouting.kt)#L9-L69), [app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt](../app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt)#L111-L117)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/workspace/WorkspaceManager.kt`
-- `app/src/main/java/com/androidharness/app/workspace/ChatWorkspaces.kt`
-- `app/src/main/java/com/androidharness/app/workspace/ProjectDeletion.kt`
-- `app/src/main/java/com/androidharness/app/data/storage/StorageManager.kt`
-- `app/src/main/java/com/androidharness/app/data/env/StorageAccess.kt`
-- `app/src/main/java/com/androidharness/app/tools/WorkspaceToolRouting.kt`
-- `app/src/main/java/com/androidharness/app/agent/RunManager.kt`
-- `app/src/main/java/com/androidharness/app/data/db/Database.kt`
+- `app/src/main/java/com/ylstack1/ylharness/workspace/WorkspaceManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/workspace/ChatWorkspaces.kt`
+- `app/src/main/java/com/ylstack1/ylharness/workspace/ProjectDeletion.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/storage/StorageManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/env/StorageAccess.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/WorkspaceToolRouting.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt`

@@ -162,18 +162,18 @@ The catalog uses this for Glass (`minSdk` S and TIRAMISU), Live Updates (`BAKLAV
 - `SettingsSearchCatalog` is maintained by hand. A control without an entry is still reachable by page search, but cannot be found by its own label or scrolled to.
 - `settingsRevealFor` supports only the disclosures named in `within`. A control hidden behind a second, unlisted level will land on a collapsed section.
 
-Sources: [app/src/main/java/com/androidharness/app/ui/settings/SettingsNavigation.kt](../app/src/main/java/com/androidharness/app/ui/settings/SettingsNavigation.kt)#L20-L455), [app/src/main/java/com/androidharness/app/ui/settings/SettingsScreen.kt](../app/src/main/java/com/androidharness/app/ui/settings/SettingsScreen.kt)#L154-L426), [app/src/main/java/com/androidharness/app/ui/settings/SettingsHome.kt](../app/src/main/java/com/androidharness/app/ui/settings/SettingsHome.kt)#L36-L243), [app/src/main/java/com/androidharness/app/ui/settings/SettingsSearch.kt](../app/src/main/java/com/androidharness/app/ui/settings/SettingsSearch.kt)#L18-L98), [app/src/main/java/com/androidharness/app/ui/settings/SettingsAnchor.kt](../app/src/main/java/com/androidharness/app/ui/settings/SettingsAnchor.kt)#L33-L190), [app/src/main/java/com/androidharness/app/ui/settings/SettingsExperience.kt](../app/src/main/java/com/androidharness/app/ui/settings/SettingsExperience.kt)#L52-L72), [app/src/main/java/com/androidharness/app/ui/settings/SettingsSearchCatalog.kt](../app/src/main/java/com/androidharness/app/ui/settings/SettingsSearchCatalog.kt)#L19-L549), [app/src/main/java/com/androidharness/app/ui/settings/DeviceSupport.kt](../app/src/main/java/com/androidharness/app/ui/settings/DeviceSupport.kt)#L25-L77), [app/src/main/java/com/androidharness/app/data/SettingsRepository.kt](../app/src/main/java/com/androidharness/app/data/SettingsRepository.kt)#L16-L520), [app/src/main/java/com/androidharness/app/ui/settings/AgentSettingsCatalog.kt](../app/src/main/java/com/androidharness/app/ui/settings/AgentSettingsCatalog.kt)#L27-L130)
+Sources: [app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsNavigation.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsNavigation.kt)#L20-L455), [app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsScreen.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsScreen.kt)#L154-L426), [app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsHome.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsHome.kt)#L36-L243), [app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsSearch.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsSearch.kt)#L18-L98), [app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsAnchor.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsAnchor.kt)#L33-L190), [app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsExperience.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsExperience.kt)#L52-L72), [app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsSearchCatalog.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsSearchCatalog.kt)#L19-L549), [app/src/main/java/com/ylstack1/ylharness/ui/settings/DeviceSupport.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/DeviceSupport.kt)#L25-L77), [app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt](../app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt)#L16-L520), [app/src/main/java/com/ylstack1/ylharness/ui/settings/AgentSettingsCatalog.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/AgentSettingsCatalog.kt)#L27-L130)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/ui/settings/SettingsScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/SettingsNavigation.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/SettingsHome.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/SettingsSearch.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/SettingsSearchCatalog.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/SettingsAnchor.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/SettingsExperience.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/DeviceSupport.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/AgentSettingsCatalog.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/BackgroundSettingsSection.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsNavigation.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsHome.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsSearch.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsSearchCatalog.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsAnchor.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsExperience.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/DeviceSupport.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/AgentSettingsCatalog.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/BackgroundSettingsSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt`

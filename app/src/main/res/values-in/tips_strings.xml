@@ -20,8 +20,8 @@
     <string name="tip_chat_instructions">Tambahkan instruksi yang diikuti setiap chat, seperti gaya bahasa atau bahasa pilihan, di Opsi chat.</string>
     <string name="tip_tts">Balasan bisa dibacakan otomatis. Pilih suara dan kecepatan di setelan Suara.</string>
     <string name="tip_agents_md">Tulis aturan proyek di AGENTS.md dan agen akan mengikutinya di setiap proses.</string>
-    <string name="tip_memory_off">Aktifkan memori agar AndroidHarness mengingat preferensi dan keputusan Anda di semua chat.</string>
-    <string name="tip_memory_on">Memori aktif. Anda bisa meninjau atau menghapus apa yang diingat AndroidHarness kapan saja.</string>
+    <string name="tip_memory_off">Aktifkan memori agar YL Harness mengingat preferensi dan keputusan Anda di semua chat.</string>
+    <string name="tip_memory_on">Memori aktif. Anda bisa meninjau atau menghapus apa yang diingat YL Harness kapan saja.</string>
     <string name="tip_thinking">Ketuk tingkat berpikir di header untuk menukar kecepatan dengan penalaran yang lebih dalam.</string>
     <string name="tip_glass">Coba Harness Glass untuk permukaan tembus pandang dan berlapis di seluruh aplikasi.</string>
     <string name="tip_compact">Konteks hampir habis? Ketik /compact untuk merangkum percakapan dan melanjutkan.</string>
@@ -30,7 +30,7 @@
     <string name="tip_dual_planning">Gunakan satu model untuk merencanakan dan model lain yang lebih murah untuk menjalankan rencana.</string>
     <string name="tip_codegraph">Pasang CodeGraph agar agen menemukan pemanggil dan kode terdampak tanpa membaca setiap file.</string>
     <string name="tip_whisper">Diktekan dengan Groq Whisper untuk input suara yang cepat dan akurat dalam banyak bahasa.</string>
-    <string name="tip_app_lock">Kunci AndroidHarness dengan sidik jari, wajah, atau PIN perangkat.</string>
+    <string name="tip_app_lock">Kunci YL Harness dengan sidik jari, wajah, atau PIN perangkat.</string>
     <string name="tip_mcp">Hubungkan server MCP untuk memberi agen lebih banyak alat.</string>
     <string name="tip_web_search">Pilih backend pencarian web: Keyless, Brave, atau Tavily.</string>
     <string name="tip_theme">Pilih palet warna atau buat sendiri di Tampilan.</string>
@@ -47,7 +47,7 @@
     <string name="tip_config">Bagikan setelan proyek dengan repositori Anda melalui harness.json.</string>
     <string name="tip_shizuku">Siapkan Shizuku agar agen bisa memakai akses shell tingkat tinggi di perangkat Anda.</string>
     <string name="tip_plugins">Pasang paket plugin dari halaman Plugins untuk menambah skill dan alat.</string>
-    <string name="tip_language">AndroidHarness tersedia dalam 11 bahasa. Ubah di setelan Bahasa.</string>
+    <string name="tip_language">YL Harness tersedia dalam 11 bahasa. Ubah di setelan Bahasa.</string>
     <string name="tip_backup">Ekspor chat dan setelan Anda sebagai cadangan, lalu impor di perangkat lain.</string>
     <string name="tip_progress_bar">Ubah gaya bilah progres di Tampilan.</string>
     <string name="tip_turn_off">Anda bisa mematikan tips ini kapan saja di Setelan.</string>

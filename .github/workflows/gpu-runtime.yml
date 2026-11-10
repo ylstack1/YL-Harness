@@ -37,7 +37,7 @@ jobs:
             echo 'Matching packages are attached to this build. Publish them from AH-GPU-Runtime, or configure GPU_RUNTIME_PUBLISH_TOKEN for automatic cross-repository uploads.'
             exit 0
           fi
-          if ! gh release view 1 --repo Sanuu7/AH-GPU-Runtime >/dev/null 2>&1; then
-            gh release create 1 --repo Sanuu7/AH-GPU-Runtime --title 'Optional local GPU runtime' --notes 'Verified, device-specific GPU packages for AndroidHarness. The app contains the expected content hash.' --latest=false
+          if ! gh release view 1 --repo ylstack1/AH-GPU-Runtime >/dev/null 2>&1; then
+            gh release create 1 --repo ylstack1/AH-GPU-Runtime --title 'Optional local GPU runtime' --notes 'Verified, device-specific GPU packages for YL Harness. The app contains the expected content hash.' --latest=false
           fi
-          gh release upload 1 --repo Sanuu7/AH-GPU-Runtime app/build/outputs/gpuRuntime/release/*.gz --clobber
+          gh release upload 1 --repo ylstack1/AH-GPU-Runtime app/build/outputs/gpuRuntime/release/*.gz --clobber

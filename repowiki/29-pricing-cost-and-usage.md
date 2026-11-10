@@ -104,17 +104,17 @@ DeepSeek has two shaping rules. `estimateAt` doubles the price during the peak w
 - `StatsBundle.peakHitRate` is computed and never consumed by the current UI. Only the aggregate `cached / input` rate is displayed.
 - `GenerationMetadata` has no price field. Prices are recomputed from token rows and current rates, so historical costs change when catalog prices change unless explicit `inputPrice`, `cacheReadPrice` and `cacheWritePrice` were saved on the usage row.
 
-Sources: [app/src/main/java/com/androidharness/app/llm/ModelPrices.kt](../app/src/main/java/com/androidharness/app/llm/ModelPrices.kt)#L3-L159), [app/src/main/java/com/androidharness/app/llm/ModelsDev.kt](../app/src/main/java/com/androidharness/app/llm/ModelsDev.kt)#L251-L313), [app/src/main/java/com/androidharness/app/data/db/Database.kt](../app/src/main/java/com/androidharness/app/data/db/Database.kt)#L159-L200), [app/src/main/java/com/androidharness/app/data/db/Database.kt](../app/src/main/java/com/androidharness/app/data/db/Database.kt)#L238-L278), [app/src/main/java/com/androidharness/app/data/db/Database.kt](../app/src/main/java/com/androidharness/app/data/db/Database.kt)#L603-L656), [app/src/main/java/com/androidharness/app/data/SessionRepository.kt](../app/src/main/java/com/androidharness/app/data/SessionRepository.kt)#L583-L618), [app/src/main/java/com/androidharness/app/ui/stats/StatsData.kt](../app/src/main/java/com/androidharness/app/ui/stats/StatsData.kt)#L9-L65), [app/src/main/java/com/androidharness/app/ui/stats/StatsScreen.kt](../app/src/main/java/com/androidharness/app/ui/stats/StatsScreen.kt)#L47-L184), [app/src/main/java/com/androidharness/app/agent/RunManager.kt](../app/src/main/java/com/androidharness/app/agent/RunManager.kt)#L625-L646), [app/src/main/java/com/androidharness/app/core/GenerationMetadata.kt](../app/src/main/java/com/androidharness/app/core/GenerationMetadata.kt)#L46-L69)
+Sources: [app/src/main/java/com/ylstack1/ylharness/llm/ModelPrices.kt](../app/src/main/java/com/ylstack1/ylharness/llm/ModelPrices.kt)#L3-L159), [app/src/main/java/com/ylstack1/ylharness/llm/ModelsDev.kt](../app/src/main/java/com/ylstack1/ylharness/llm/ModelsDev.kt)#L251-L313), [app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt](../app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt)#L159-L200), [app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt](../app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt)#L238-L278), [app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt](../app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt)#L603-L656), [app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt](../app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt)#L583-L618), [app/src/main/java/com/ylstack1/ylharness/ui/stats/StatsData.kt](../app/src/main/java/com/ylstack1/ylharness/ui/stats/StatsData.kt)#L9-L65), [app/src/main/java/com/ylstack1/ylharness/ui/stats/StatsScreen.kt](../app/src/main/java/com/ylstack1/ylharness/ui/stats/StatsScreen.kt)#L47-L184), [app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt](../app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt)#L625-L646), [app/src/main/java/com/ylstack1/ylharness/core/GenerationMetadata.kt](../app/src/main/java/com/ylstack1/ylharness/core/GenerationMetadata.kt)#L46-L69)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/llm/ModelPrices.kt`
-- `app/src/main/java/com/androidharness/app/llm/ModelsDev.kt`
-- `app/src/main/java/com/androidharness/app/data/db/Database.kt`
-- `app/src/main/java/com/androidharness/app/data/SessionRepository.kt`
-- `app/src/main/java/com/androidharness/app/ui/stats/StatsData.kt`
-- `app/src/main/java/com/androidharness/app/ui/stats/StatsScreen.kt`
-- `app/src/main/java/com/androidharness/app/agent/RunManager.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ContextPanel.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt`
-- `app/src/main/java/com/androidharness/app/core/GenerationMetadata.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/ModelPrices.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/ModelsDev.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/stats/StatsData.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/stats/StatsScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ContextPanel.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/GenerationMetadata.kt`

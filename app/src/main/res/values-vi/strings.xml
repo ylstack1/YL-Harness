@@ -139,9 +139,9 @@
     <string name="settings_search_license_title">"Giấy phép"</string>
     <string name="settings_search_license_desc">"Giới thiệu · Giấy phép MIT và ý nghĩa của nó đối với fork"</string>
     <string name="settings_search_credits_title">"Tín dụng"</string>
-    <string name="settings_search_credits_desc">"Giới thiệu · Các dự án nguồn mở đằng sau AndroidHarness"</string>
+    <string name="settings_search_credits_desc">"Giới thiệu · Các dự án nguồn mở đằng sau YL Harness"</string>
     <string name="settings_search_author_title">"Tác giả"</string>
-    <string name="settings_search_author_desc">"Giới thiệu · Ai xây dựng AndroidHarness và tìm nó ở đâu"</string>
+    <string name="settings_search_author_desc">"Giới thiệu · Ai xây dựng YL Harness và tìm nó ở đâu"</string>
     <string name="settings_anchor_progress_bar_style">"Kiểu thanh tiến trình"</string>
     <string name="settings_anchor_fallbacks">"Dự phòng"</string>
     <string name="settings_anchor_continue_chatgpt">"Tiếp tục với ChatGPT"</string>
@@ -287,10 +287,10 @@
     <string name="settings_restore_reconnect_title">"Kết nối lại các cuộc trò chuyện đã khôi phục"</string>
     <string name="settings_restore_reconnect_note">"Quyền truy cập chỉ đọc vẫn ở chế độ chỉ đọc. Các cuộc trò chuyện sử dụng nhiều không gian làm việc cần có các thư mục riêng cho từng cuộc trò chuyện."</string>
     <string name="settings_accounts_using_plan">"Bạn đang sử dụng ChatGPT kế hoạch của mình"</string>
-    <string name="settings_accounts_using_plan_desc">"Các yêu cầu đủ điều kiện trong AndroidHarness sử dụng ChatGPT kế hoạch hoặc tín dụng của bạn. Xem lại việc sử dụng và quản lý quyền truy cập của ứng dụng này trong cài đặt ChatGPT."</string>
+    <string name="settings_accounts_using_plan_desc">"Các yêu cầu đủ điều kiện trong YL Harness sử dụng ChatGPT kế hoạch hoặc tín dụng của bạn. Xem lại việc sử dụng và quản lý quyền truy cập của ứng dụng này trong cài đặt ChatGPT."</string>
     <string name="settings_action_got_it">"Hiểu rồi"</string>
     <string name="settings_accounts_signout_title">"Đăng xuất khỏi tài khoản này?"</string>
-    <string name="settings_accounts_signout_message">"Thao tác này sẽ ngắt kết nối tài khoản khỏi AndroidHarness và xóa tài khoản đó khỏi chế độ chuyển đổi tự động. Bạn có thể đăng nhập lại sau."</string>
+    <string name="settings_accounts_signout_message">"Thao tác này sẽ ngắt kết nối tài khoản khỏi YL Harness và xóa tài khoản đó khỏi chế độ chuyển đổi tự động. Bạn có thể đăng nhập lại sau."</string>
     <string name="settings_action_continue">"Tiếp tục"</string>
     <string name="settings_progress_bar_subtitle">"Chọn giao diện của thanh tiến trình. Áp dụng ngay lập tức."</string>
     <string name="settings_provider_select">"Chọn"</string>
@@ -904,7 +904,7 @@
     <string name="chat_handoff_picker_note">"Chọn nơi để xây dựng. Chat kế hoạch của bạn đi kèm."</string>
     <string name="chat_handoff_close">"Đóng bộ chọn không gian làm việc"</string>
     <string name="chat_handoff_no_workspace">"Thêm không gian làm việc vào Code để tiếp tục."</string>
-    <string name="chat_share_target">"AndroidHarness Chat"</string>
+    <string name="chat_share_target">"YL Harness Chat"</string>
     <string name="chat_share_title">"Chia sẻ lên Chat"</string>
     <string name="chat_share_review">"Xem lại các mục được chia sẻ của bạn, chọn Chat và thêm câu hỏi. Không có gì được gửi cho đến khi bạn nhấn Gửi trong Chat."</string>
     <string name="chat_share_new">"Chat mới"</string>
@@ -982,7 +982,7 @@
     <string name="glass_unsupported">"Hiệu ứng kính cần Android 12 trở lên."</string>
     <string name="glass_liquid_unsupported">"Kính lỏng cần Android 13 trở lên. Kính mờ có sẵn trên thiết bị này."</string>
     <string name="glass_preview_label">"Xem trước kính"</string>
-    <string name="glass_preview_title">"AndroidHarness"</string>
+    <string name="glass_preview_title">"YL Harness"</string>
     <string name="glass_preview_text">"Xóa văn bản. Nền mềm hơn."</string>
     <string name="glass_transparency">"Minh bạch"</string>
     <string name="glass_transparency_percent">"%1$d%%"</string>

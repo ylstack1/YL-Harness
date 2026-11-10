@@ -637,7 +637,7 @@
     <string name="ui_shizuku_is_disabled">"Shizuku is disabled"</string>
     <string name="ui_shizuku_is_no_longer_available_its_server">"Shizuku is no longer available. Its server may have stopped or been killed "</string>
     <string name="ui_in_the_background_or_this_app_s">"in the background, or this app\'s access may have been revoked. "</string>
-    <string name="ui_start_shizuku_and_allow_androidharness_access_to">"Start Shizuku and allow AndroidHarness access to use it again."</string>
+    <string name="ui_start_shizuku_and_allow_ylharness_access_to">"Start Shizuku and allow YL Harness access to use it again."</string>
     <string name="ui_never_show_this_message_again">"Never show this message again"</string>
     <string name="ui_limits_resets">"Limits &amp; resets"</string>
     <string name="ui_view_live_limits_in_chatgpt">"View live limits in ChatGPT"</string>
@@ -1110,7 +1110,7 @@
     <string name="ui_the_app_needs_node_python_from_the">"the app. Needs node/python from the Linux environment."</string>
     <string name="ui_not_installed_optional">"Not installed: optional."</string>
     <string name="ui_installed_not_running">"Installed, not running."</string>
-    <string name="ui_running_grant_androidharness_access">"Running: grant AndroidHarness access."</string>
+    <string name="ui_running_grant_ylharness_access">"Running: grant YL Harness access."</string>
     <string name="ui_connected_shell_privileges_ready">"Connected: shell privileges ready."</string>
     <string name="ui_connected_in_compatibility_mode_shell_privileges_ready">"Connected in compatibility mode: shell privileges ready."</string>
     <string name="ui_access_granted_connecting_to_the_shell_runner">"Access granted. Connecting to the shell runner…"</string>
@@ -1157,10 +1157,10 @@
     <string name="ui_open_source">"Open source"</string>
     <string name="ui_use_it_change_it_ship_it_even">"Use it, change it, ship it, even inside a commercial app. The one condition is that the "</string>
     <string name="ui_copyright_notice_and_the_license_text_travel">"copyright notice and the license text travel with the code. It comes with no warranty."</string>
-    <string name="ui_androidharness_is_built_on_open_source_work">"AndroidHarness is built on open source work and borrows ideas from the agents that came before it."</string>
+    <string name="ui_ylharness_is_built_on_open_source_work">"YL Harness is built on open source work and borrows ideas from the agents that came before it."</string>
     <string name="ui_built_with">"Built with"</string>
     <string name="ui_inspired_by">"Inspired by"</string>
-    <string name="ui_every_project_keeps_its_own_license_androidharness">"Every project keeps its own license. AndroidHarness is not affiliated with them."</string>
+    <string name="ui_every_project_keeps_its_own_license_ylharness">"Every project keeps its own license. YL Harness is not affiliated with them."</string>
     <string name="ui_exported_chats_messages">"Exported %1$s chats (%2$s messages, %3$s memories)."</string>
     <string name="ui_export_failed">"Export failed."</string>
     <string name="ui_export_failed_1230">"Export failed: %1$s"</string>
@@ -1249,7 +1249,7 @@
     <string name="ui_status">"Status"</string>
     <string name="ui_retry_resume">"Retry / resume"</string>
     <string name="ui_pause_telegram">"Pause Telegram"</string>
-    <string name="ui_welcome_to_androidharness">"Welcome to AndroidHarness"</string>
+    <string name="ui_welcome_to_ylharness">"Welcome to YL Harness"</string>
     <string name="ui_grant_storage_access_to_start_coding_notifications">"Grant storage access to start coding. Notifications and other tools are optional."</string>
     <string name="ui_device_storage_access_granted">"Device storage access granted"</string>
     <string name="ui_required_allow_access_to_device_files_and">"Required: allow access to device files and folders"</string>
@@ -1587,7 +1587,7 @@
     <string name="ui_access_mode">"Access mode: %1$s"</string>
     <string name="ui_scheduled_tasks">"Scheduled tasks"</string>
     <string name="ui_project_and_chat_sidebar">"Project and chat sidebar"</string>
-    <string name="ui_androidharness_icon">"AndroidHarness icon"</string>
+    <string name="ui_ylharness_icon">"YL Harness icon"</string>
     <string name="ui_collapse_sidebar">"Collapse sidebar"</string>
     <string name="ui_search_chats_and_messages">"Search chats and messages"</string>
     <string name="ui_search_chats">"Search chats"</string>
@@ -1633,7 +1633,7 @@
     <plurals name="answer_table_columns"><item quantity="one">%1$d column</item><item quantity="other">%1$d columns</item></plurals>
     <plurals name="answer_table_rows"><item quantity="one">%1$d row</item><item quantity="other">%1$d rows</item></plurals>
     <string name="voice_transcribing">Transcribing…</string>
-    <string name="donate_funding_message">We’re short on funds to keep AndroidHarness development going. Your support helps us keep building.</string>
+    <string name="donate_funding_message">We’re short on funds to keep YL Harness development going. Your support helps us keep building.</string>
     <string name="donate_dismiss_message">Dismiss donation message</string>
     <string name="discord_join_title">Join our Discord community</string>
     <string name="discord_join_subtitle">Get help, share feedback, and meet other users</string>
@@ -1647,10 +1647,10 @@
     <string name="background_notifications_description">Allow app alerts. Android manages service notices.</string>
     <string name="background_android_title">Android notification settings</string>
     <string name="background_android_description">Manage all Android notification settings.</string>
-    <string name="background_run_blocked">Background running is off. Open AndroidHarness to start or continue a task.</string>
+    <string name="background_run_blocked">Background running is off. Open YL Harness to start or continue a task.</string>
     <string name="background_service_notice">Background service is running</string>
     <string name="local_gpu_download_title">GPU support</string>
-    <string name="local_gpu_runtime_repository">Source: Sanuu7/AH-GPU-Runtime</string>
+    <string name="local_gpu_runtime_repository">Source: ylstack1/AH-GPU-Runtime</string>
     <string name="local_gpu_delivery_play">Installed securely through Google Play.</string>
     <string name="local_gpu_delivery_github">Downloads the GPU package matching this app and device from GitHub.</string>
     <string name="local_gpu_optional_download">Optional download. CPU inference works without it; GPU support stays available offline after installation.</string>

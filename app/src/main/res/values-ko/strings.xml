@@ -139,9 +139,9 @@
     <string name="settings_search_license_title">"라이센스"</string>
     <string name="settings_search_license_desc">"정보 · MIT 라이센스와 포크의 의미"</string>
     <string name="settings_search_credits_title">"크레딧"</string>
-    <string name="settings_search_credits_desc">"정보 · AndroidHarness 뒤에 있는 오픈 소스 프로젝트"</string>
+    <string name="settings_search_credits_desc">"정보 · YL Harness 뒤에 있는 오픈 소스 프로젝트"</string>
     <string name="settings_search_author_title">"작성자"</string>
-    <string name="settings_search_author_desc">"정보 · AndroidHarness를 만든 사람과 찾을 수 있는 곳"</string>
+    <string name="settings_search_author_desc">"정보 · YL Harness를 만든 사람과 찾을 수 있는 곳"</string>
     <string name="settings_anchor_progress_bar_style">"진행률 표시줄 스타일"</string>
     <string name="settings_anchor_fallbacks">"폴백"</string>
     <string name="settings_anchor_continue_chatgpt">"ChatGPT로 계속하기"</string>
@@ -287,10 +287,10 @@
     <string name="settings_restore_reconnect_title">"복원된 채팅 다시 연결"</string>
     <string name="settings_restore_reconnect_note">"읽기 전용 액세스는 읽기 전용으로 유지됩니다. 여러 작업 공간을 사용한 채팅에는 각 작업 공간마다 별도의 폴더가 필요합니다."</string>
     <string name="settings_accounts_using_plan">"ChatGPT 요금제를 사용 중입니다."</string>
-    <string name="settings_accounts_using_plan_desc">"AndroidHarness의 적격 요청에는 ChatGPT 요금제 또는 크레딧이 사용됩니다. ChatGPT 설정에서 사용량을 검토하고 이 앱의 액세스를 관리하세요."</string>
+    <string name="settings_accounts_using_plan_desc">"YL Harness의 적격 요청에는 ChatGPT 요금제 또는 크레딧이 사용됩니다. ChatGPT 설정에서 사용량을 검토하고 이 앱의 액세스를 관리하세요."</string>
     <string name="settings_action_got_it">"알았어요"</string>
     <string name="settings_accounts_signout_title">"이 계정에서 로그아웃하시겠습니까?"</string>
-    <string name="settings_accounts_signout_message">"이렇게 하면 AndroidHarness에서 계정 연결이 끊어지고 자동 전환에서 제거됩니다. 나중에 다시 로그인할 수 있습니다."</string>
+    <string name="settings_accounts_signout_message">"이렇게 하면 YL Harness에서 계정 연결이 끊어지고 자동 전환에서 제거됩니다. 나중에 다시 로그인할 수 있습니다."</string>
     <string name="settings_action_continue">"계속"</string>
     <string name="settings_progress_bar_subtitle">"진행률 표시줄의 모양을 선택합니다. 즉시 적용됩니다."</string>
     <string name="settings_provider_select">"선택"</string>
@@ -904,7 +904,7 @@
     <string name="chat_handoff_picker_note">"빌드할 위치를 선택하세요. 귀하의 Chat 계획이 함께 제공됩니다."</string>
     <string name="chat_handoff_close">"작업공간 선택기 닫기"</string>
     <string name="chat_handoff_no_workspace">"계속하려면 Code에 작업공간을 추가하세요."</string>
-    <string name="chat_share_target">"AndroidHarness Chat"</string>
+    <string name="chat_share_target">"YL Harness Chat"</string>
     <string name="chat_share_title">"Chat에 공유"</string>
     <string name="chat_share_review">"공유 항목을 검토하고 Chat를 선택한 후 질문을 추가하세요. Chat에서 보내기를 탭하기 전까지는 아무 것도 전송되지 않습니다."</string>
     <string name="chat_share_new">"새로운 Chat"</string>
@@ -982,7 +982,7 @@
     <string name="glass_unsupported">"유리 효과에는 Android 12 이상이 필요합니다."</string>
     <string name="glass_liquid_unsupported">"액체 유리에는 Android 13 이상이 필요합니다. 이 장치에서는 젖빛 유리를 사용할 수 있습니다."</string>
     <string name="glass_preview_label">"유리 미리보기"</string>
-    <string name="glass_preview_title">"AndroidHarness"</string>
+    <string name="glass_preview_title">"YL Harness"</string>
     <string name="glass_preview_text">"텍스트를 지우세요. 좀 더 부드러운 배경."</string>
     <string name="glass_transparency">"투명성"</string>
     <string name="glass_transparency_percent">"%1$d%%"</string>

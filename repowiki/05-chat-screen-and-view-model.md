@@ -125,16 +125,16 @@ The composer holds a `TextFieldValue` in `rememberSaveable` (lines 327 to 339), 
 - `FEATURES.md` line 45 says paging keeps complete turns and does not change model context. The page start is snapped to the first message of a turn (`completeTurnStart`, `SessionRepository.kt` lines 94 to 96), and the model path reads `historyFor` independently, so the claim holds. No gap found.
 - `FEATURES.md` line 13 says Chat does not create saved artifacts. Confirmed by `ChatExperience.tools`, which omits `create_artifact` (`core/ChatExperience.kt` lines 9 to 16).
 
-Sources: [app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt](../app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt)#L189-L212), [app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt](../app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt)#L85-L262), [app/src/main/java/com/androidharness/app/ui/chat/ChatListState.kt](../app/src/main/java/com/androidharness/app/ui/chat/ChatListState.kt)#L20-L37)
+Sources: [app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt)#L189-L212), [app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt)#L85-L262), [app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatListState.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatListState.kt)#L20-L37)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatListState.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatDetailScroll.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/UserScrollObserver.kt`
-- `app/src/main/java/com/androidharness/app/data/ChatModelSelection.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ChatActivity.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/MessageComposer.kt`
-- `app/src/main/java/com/androidharness/app/data/SessionRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatListState.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatDetailScroll.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/UserScrollObserver.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ChatModelSelection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatActivity.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/MessageComposer.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt`

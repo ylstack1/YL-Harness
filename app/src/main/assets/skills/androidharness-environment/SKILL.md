@@ -1,10 +1,10 @@
 ---
-name: androidharness-environment
-description: AndroidHarness workspaces, execution tiers, runtime paths and tool workflows.
+name: ylharness-environment
+description: YL Harness workspaces, execution tiers, runtime paths and tool workflows.
 category: environment
 ---
 
-# Working inside AndroidHarness
+# Working inside YL Harness
 
 You run inside an Android app. The live environment section and the tool schemas attached to the current request describe this run. A reference explains how a capability works; it does not make that capability available or authorize its use.
 
@@ -19,7 +19,7 @@ You run inside an Android app. The live environment section and the tool schemas
 
 ## Load only the relevant details
 
-Use `skill_view(name="androidharness-environment", file_path="…")`:
+Use `skill_view(name="ylharness-environment", file_path="…")`:
 
 - Files, project selection, storage or skills: `references/workspaces-and-paths.md`.
 - Shizuku, root, normal access, verified identity or system commands: `references/device-access.md`.

@@ -1,7 +1,7 @@
 <resources>
     <string name="nine_router_title">9Router</string>
     <string name="nine_router_description">දේශීය ආකෘති රවුටරයක් ස්ථාපනය කර කළමනාකරණය කරන්න</string>
-    <string name="nine_router_intro">මෙම දුරකථනයේ 9Router ධාවනය කර එහි සපයන්නන්, ආකෘති සහ මාර්ගකරණය බ්‍රව්සරයෙන් කළමනාකරණය කරන්න. AndroidHarness හි Linux මෙවලම භාවිත කරයි.</string>
+    <string name="nine_router_intro">මෙම දුරකථනයේ 9Router ධාවනය කර එහි සපයන්නන්, ආකෘති සහ මාර්ගකරණය බ්‍රව්සරයෙන් කළමනාකරණය කරන්න. YL Harness හි Linux මෙවලම භාවිත කරයි.</string>
     <string name="nine_router_setup">ඔබේ පරිසරය සකසන්න</string>
     <string name="nine_router_not_installed">ස්ථාපනයට සූදානම්</string>
     <string name="nine_router_ready">ස්ථාපිතයි · නතර කර ඇත</string>
@@ -26,12 +26,12 @@
     <string name="nine_router_checking">පරීක්ෂා කරමින්…</string>
     <string name="nine_router_update">%1$s වෙත යාවත්කාලීන කරන්න</string>
     <string name="nine_router_auto_start">9Router ස්වයංක්‍රීයව අරඹන්න</string>
-    <string name="nine_router_auto_start_body">AndroidHarness විවෘත වන විට ස්ථාපිත රවුටරය අරඹයි.</string>
+    <string name="nine_router_auto_start_body">YL Harness විවෘත වන විට ස්ථාපිත රවුටරය අරඹයි.</string>
     <string name="nine_router_add_provider">9Router සපයන්නන්ට එකතු කරන්න</string>
     <string name="nine_router_refresh_provider">9Router සපයන්නා යාවත්කාලීන කරන්න</string>
     <string name="nine_router_provider_body">අවශ්‍ය නම් 9Router අරඹා එහි දේශීය අන්ත ලක්ෂ්‍යය සහ API යතුර ස්වයංක්‍රීයව පුරවයි. සම්බන්ධිත ආකෘති චැට් සහ කේත ආකෘති තේරීම් තුළ දිස්වේ.</string>
     <string name="nine_router_remove_provider">සපයන්නන්ගෙන් ඉවත් කරන්න</string>
-    <string name="nine_router_remove_provider_body">AndroidHarness වෙතින් 9Router සම්බන්ධතා ඉවත් කරයි. රවුටරය සහ එහි ගිණුම් ස්ථාපිතව පවතී.</string>
+    <string name="nine_router_remove_provider_body">YL Harness වෙතින් 9Router සම්බන්ධතා ඉවත් කරයි. රවුටරය සහ එහි ගිණුම් ස්ථාපිතව පවතී.</string>
     <string name="nine_router_uninstall">9Router ඉවත් කරන්න</string>
     <string name="nine_router_uninstall_title">9Router සම්පූර්ණයෙන් ඉවත් කරන්නද?</string>
     <string name="nine_router_uninstall_body">9Router නවත්වා එහි ස්ථාපනය, සුරකින ලද ගිණුම්, රවුටර API යතුරු, වින්‍යාසය, හැඹිලිය, ස්වයංක්‍රීය ආරම්භක මනාපය සහ යෙදුම් සපයන්නා සම්බන්ධතා මකා දමයි. මෙය ආපසු හැරවිය නොහැක. හවුල් Linux මෙවලම වෙනත් විශේෂාංග සඳහා තවමත් ලබාගත හැක.</string>

@@ -101,22 +101,22 @@ bool complete_utf8(const std::string & s) {
 }
 }
 extern "C" JNIEXPORT void JNICALL
-Java_com_androidharness_app_local_LocalNative_releaseCachedModel(JNIEnv *, jobject) {
+Java_com_ylstack1_ylharness_local_LocalNative_releaseCachedModel(JNIEnv *, jobject) {
     std::lock_guard<std::mutex> lock(model_mutex);
     clear_model();
 }
 extern "C" JNIEXPORT jboolean JNICALL
-Java_com_androidharness_app_local_LocalNative_isModelCached(JNIEnv * env, jobject, jbyteArray path) {
+Java_com_ylstack1_ylharness_local_LocalNative_isModelCached(JNIEnv * env, jobject, jbyteArray path) {
     std::lock_guard<std::mutex> lock(model_mutex);
     return cached_model && cached_path == jbytes(env, path);
 }
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_androidharness_app_local_LocalNative_cachedModelPath(JNIEnv * env, jobject) {
+Java_com_ylstack1_ylharness_local_LocalNative_cachedModelPath(JNIEnv * env, jobject) {
     std::lock_guard<std::mutex> lock(model_mutex);
     return env->NewStringUTF(cached_path.c_str());
 }
 extern "C" JNIEXPORT void JNICALL
-Java_com_androidharness_app_local_LocalNative_loadModel(JNIEnv * env, jobject, jlong handle, jbyteArray path, jboolean gpu) {
+Java_com_ylstack1_ylharness_local_LocalNative_loadModel(JNIEnv * env, jobject, jlong handle, jbyteArray path, jboolean gpu) {
     try {
         std::lock_guard<std::mutex> lock(model_mutex);
         initialize_backend();
@@ -126,7 +126,7 @@ Java_com_androidharness_app_local_LocalNative_loadModel(JNIEnv * env, jobject, j
     }
 }
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_androidharness_app_local_LocalNative_benchmark(JNIEnv * env, jobject, jlong handle, jbyteArray path,
+Java_com_ylstack1_ylharness_local_LocalNative_benchmark(JNIEnv * env, jobject, jlong handle, jbyteArray path,
                                                         jboolean gpu, jint threads, jint promptThreads, jobject callback, jbyteArray promptBytes) {
     try {
         std::lock_guard<std::mutex> lock(model_mutex);
@@ -216,7 +216,7 @@ Java_com_androidharness_app_local_LocalNative_benchmark(JNIEnv * env, jobject, j
     }
 }
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_androidharness_app_local_LocalNative_generateChat(
+Java_com_ylstack1_ylharness_local_LocalNative_generateChat(
     JNIEnv * env, jobject, jlong handle, jbyteArray path, jbyteArray projector,
     jbyteArray requestBytes, jobjectArray imageBytes, jint requestedContext, jint inputLimit,
     jint outputLimit, jint threads, jint promptThreads, jboolean useGpu, jbyteArray cacheKey, jobject callback) {
@@ -450,7 +450,7 @@ Java_com_androidharness_app_local_LocalNative_generateChat(
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_androidharness_app_local_LocalNative_gpuDevice(JNIEnv * env, jobject) {
+Java_com_ylstack1_ylharness_local_LocalNative_gpuDevice(JNIEnv * env, jobject) {
     try {
         llama_backend_init();
         for (size_t i = 0; i < ggml_backend_dev_count(); ++i) {

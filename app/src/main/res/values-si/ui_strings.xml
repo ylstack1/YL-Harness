@@ -637,7 +637,7 @@
     <string name="ui_shizuku_is_disabled">"Shizuku අසාර්ථකයි"</string>
     <string name="ui_shizuku_is_no_longer_available_its_server">"Shizuku තවදුරටත් ලබා ගත නොහැක. එහි සේවාදායකය නතර වී ඇති හෝ මරා දැම්මා "</string>
     <string name="ui_in_the_background_or_this_app_s">"පසුබිම තුළ, හෝ මෙම යෙදුම ප්‍රවේශය අවලංගු විය හැකිය. "</string>
-    <string name="ui_start_shizuku_and_allow_androidharness_access_to">"ආරම්භ කරන්න Shizuku අවසරය AndroidHarness නැවතත් එය භාවිතා කිරීම සඳහා පිවිසෙන්න."</string>
+    <string name="ui_start_shizuku_and_allow_ylharness_access_to">"ආරම්භ කරන්න Shizuku අවසරය YL Harness නැවතත් එය භාවිතා කිරීම සඳහා පිවිසෙන්න."</string>
     <string name="ui_never_show_this_message_again">"නැවතත් මෙම පණිවිඩය පෙන්වන්න එපා"</string>
     <string name="ui_limits_resets">"සීමාවන් සහ Resets"</string>
     <string name="ui_view_live_limits_in_chatgpt">"Live limits in බලන්න ChatGPT"</string>
@@ -1110,7 +1110,7 @@
     <string name="ui_the_app_needs_node_python_from_the">"පරිගණක: අවශ් ය node/python සිට The Linux පරිසරය"</string>
     <string name="ui_not_installed_optional">"ස්ථාපනය නොකළේ: Optional"</string>
     <string name="ui_installed_not_running">"වැඩ කරන්න, වැඩ කරන්න එපා."</string>
-    <string name="ui_running_grant_androidharness_access">"ප් රවේශය : Grant AndroidHarness access එක"</string>
+    <string name="ui_running_grant_ylharness_access">"ප් රවේශය : Grant YL Harness access එක"</string>
     <string name="ui_connected_shell_privileges_ready">"Link: ෂෙල් ප් රමුඛතා සූදානම්"</string>
     <string name="ui_connected_in_compatibility_mode_shell_privileges_ready">"අනුකූලතාව තත්වයේ සම්බන්ධ වී ඇත: ෂෙල් ප් රමුඛතා සූදානම්."</string>
     <string name="ui_access_granted_connecting_to_the_shell_runner">"ප්‍රවේශය ලබා දෙන ලදී. shell runner වෙත සම්බන්ධ වීම..."</string>
@@ -1157,10 +1157,10 @@
     <string name="ui_open_source">"විවෘත මූලාශ්රය"</string>
     <string name="ui_use_it_change_it_ship_it_even">"එය භාවිතා කරන්න, එය වෙනස් කරන්න, එය නැව්ගත කරන්න, ව්යාපාරික යෙදුමක් ඇතුළත පවා. එක් තත්වයක් වන්නේ "</string>
     <string name="ui_copyright_notice_and_the_license_text_travel">"ප්රකාශන හිමිකම් ප්රකාශනය සහ බලපත්ර පෙළ කේතය සමඟ ගමන්. එය කිසිදු වගකීමක් සමඟ පැමිණේ."</string>
-    <string name="ui_androidharness_is_built_on_open_source_work">"AndroidHarness එය විවෘත මූලාශ් ර වැඩ මත ගොඩනැගීම සහ එය පෙර පැමිණ ඇති නියෝජිතයින්ගෙන් අදහස් ණය කරයි."</string>
+    <string name="ui_ylharness_is_built_on_open_source_work">"YL Harness එය විවෘත මූලාශ් ර වැඩ මත ගොඩනැගීම සහ එය පෙර පැමිණ ඇති නියෝජිතයින්ගෙන් අදහස් ණය කරයි."</string>
     <string name="ui_built_with">"ගොඩනැගීම සමග"</string>
     <string name="ui_inspired_by">"ආකර්ෂණීය"</string>
-    <string name="ui_every_project_keeps_its_own_license_androidharness">"සෑම ව්‍යාපෘතියකටම තමන්ගේම බලපත් රයක් තියෙනවා. AndroidHarness ඔවුන්ට සම්බන්ධ වී නැත."</string>
+    <string name="ui_every_project_keeps_its_own_license_ylharness">"සෑම ව්‍යාපෘතියකටම තමන්ගේම බලපත් රයක් තියෙනවා. YL Harness ඔවුන්ට සම්බන්ධ වී නැත."</string>
     <string name="ui_exported_chats_messages">"අපනයන %1$s චැට් (%2$s පණිවිඩය , %3$s මතකයන් )"</string>
     <string name="ui_export_failed">"අපනයන අසාර්ථකයි"</string>
     <string name="ui_export_failed_1230">"අපනයන අසාර්ථක : %1$s"</string>
@@ -1249,7 +1249,7 @@
     <string name="ui_status">"තත්ත්වය"</string>
     <string name="ui_retry_resume">"නැවත උත්සාහ කරන්න / ඉදිරියට ගෙනයන්න"</string>
     <string name="ui_pause_telegram">"විවේකය Telegram"</string>
-    <string name="ui_welcome_to_androidharness">"සාදරයෙන් පිළිගනිමු AndroidHarness"</string>
+    <string name="ui_welcome_to_ylharness">"සාදරයෙන් පිළිගනිමු YL Harness"</string>
     <string name="ui_grant_storage_access_to_start_coding_notifications">"කේතය ආරම්භ කිරීම සඳහා ගබඩා ප්‍රවේශය ලබා දීම. දැනුම් දීමනා සහ අනෙකුත් මෙවලම් විකල්ප වේ."</string>
     <string name="ui_device_storage_access_granted">"උපාංග ගබඩා කිරීමේ ප්‍රවේශය ලබා දෙයි"</string>
     <string name="ui_required_allow_access_to_device_files_and">"අවශ් යතාවය: උපකරණ ගොනු හා ෆෝල්ඩර් වෙත ප්‍රවේශය ලබා දෙයි"</string>
@@ -1587,7 +1587,7 @@
     <string name="ui_access_mode">"Access Mode එක: %1$s"</string>
     <string name="ui_scheduled_tasks">"වැඩසටහන"</string>
     <string name="ui_project_and_chat_sidebar">"ව්‍යාපෘතිය සහ චැට් සයිඩ්බාර්"</string>
-    <string name="ui_androidharness_icon">"AndroidHarness අයිකන්"</string>
+    <string name="ui_ylharness_icon">"YL Harness අයිකන්"</string>
     <string name="ui_collapse_sidebar">"පිටුපස පිටුපසය"</string>
     <string name="ui_search_chats_and_messages">"චැට් සහ පණිවිඩ සෙවීම"</string>
     <string name="ui_search_chats">"සෙවීම චැට්"</string>
@@ -1636,7 +1636,7 @@
         <item quantity="other">"%1$d රේඛාව"</item>
     </plurals>
     <string name="voice_transcribing">"පරිවර්තනය කිරීම..."</string>
-    <string name="donate_funding_message">"අපි පවත්වාගෙන යාමට මුදල් අඩුයි. AndroidHarness සංවර්ධනය යනවා.ඔබගේ සහාය අපට ගොඩනැගීමට උදව් කරයි."</string>
+    <string name="donate_funding_message">"අපි පවත්වාගෙන යාමට මුදල් අඩුයි. YL Harness සංවර්ධනය යනවා.ඔබගේ සහාය අපට ගොඩනැගීමට උදව් කරයි."</string>
     <string name="donate_dismiss_message">"Dismiss තෑග්ග පණිවිඩය"</string>
     <string name="background_settings_title">"පසුබිම &amp; දැනුම් දීමනා"</string>
     <string name="background_settings_description">"පසුබිම වැඩ සහ දැනුම් දීම කළමනාකරණය කරන්න."</string>
@@ -1646,10 +1646,10 @@
     <string name="background_notifications_description">"යෙදුම් අනතුරු ඇඟවීම් ඉඩ දෙන්න.අන්ඩ්රොයිඩ් සේවා අනතුරු ඇඟවීම් කළමනාකරණය."</string>
     <string name="background_android_title">"Android දැනුම්දීමේ සැකසුම්"</string>
     <string name="background_android_description">"සියලු Android දැනුම් දත්ත සැකසුම් කළමනාකරණය කරන්න."</string>
-    <string name="background_run_blocked">"පසුබිම ක්‍රියාත්මක වන අතර, විවෘත AndroidHarness වැඩ ආරම්භ කිරීම හෝ දිගටම කිරීම."</string>
+    <string name="background_run_blocked">"පසුබිම ක්‍රියාත්මක වන අතර, විවෘත YL Harness වැඩ ආරම්භ කිරීම හෝ දිගටම කිරීම."</string>
     <string name="background_service_notice">"Background සේවා ක්‍රියාත්මක වේ"</string>
     <string name="local_gpu_download_title">GPU සහාය</string>
-    <string name="local_gpu_runtime_repository">මූලාශ්‍ර: Sanuu7/AH-GPU-Runtime</string>
+    <string name="local_gpu_runtime_repository">මූලාශ්‍ර: ylstack1/AH-GPU-Runtime</string>
     <string name="local_gpu_delivery_play">Google Play හරහා ආරක්ෂිතව ස්ථාපනය කෙරේ.</string>
     <string name="local_gpu_delivery_github">මෙම යෙදුමට සහ උපාංගයට ගැළපෙන GPU පැකේජය GitHub වෙතින් බාගනී.</string>
     <string name="local_gpu_optional_download">විකල්ප බාගැනීමකි. මෙය නොමැතිව CPU මත ධාවනය කළ හැක. ස්ථාපනයෙන් පසු අන්තර්ජාලය නොමැතිව GPU සහාය භාවිත කළ හැක.</string>

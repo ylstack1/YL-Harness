@@ -111,14 +111,14 @@ The pending channels are deliberately in memory: they carry an intent from one s
 - Startup has no explicit ordered phase list. Ordering is whatever Kotlin property initializers and the five `init` blocks produce, plus independent coroutine launches that can finish in any order.
 - The only boot restore receivers are `TelegramBootReceiver` for `BOOT_COMPLETED` and `MY_PACKAGE_REPLACED`, and `WirelessAdbReconnectReceiver` for `MY_PACKAGE_REPLACED`. Agent runs are not restored at boot.
 
-Sources: [app/src/main/java/com/androidharness/app/HarnessApp.kt](../app/src/main/java/com/androidharness/app/HarnessApp.kt)#L32-L477), [app/src/main/java/com/androidharness/app/MainActivity.kt](../app/src/main/java/com/androidharness/app/MainActivity.kt)#L59-L229), [app/src/main/java/com/androidharness/app/data/db/Database.kt](../app/src/main/java/com/androidharness/app/data/db/Database.kt)#L740-L880), [app/src/main/java/com/androidharness/app/data/SettingsRepository.kt](../app/src/main/java/com/androidharness/app/data/SettingsRepository.kt)#L16-L479), [app/src/main/java/com/androidharness/app/data/KeyStoreManager.kt](../app/src/main/java/com/androidharness/app/data/KeyStoreManager.kt)#L9-L42), [app/src/main/java/com/androidharness/app/AppRuntimePolicy.kt](../app/src/main/java/com/androidharness/app/AppRuntimePolicy.kt)#L13-L85)
+Sources: [app/src/main/java/com/ylstack1/ylharness/HarnessApp.kt](../app/src/main/java/com/ylstack1/ylharness/HarnessApp.kt)#L32-L477), [app/src/main/java/com/ylstack1/ylharness/MainActivity.kt](../app/src/main/java/com/ylstack1/ylharness/MainActivity.kt)#L59-L229), [app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt](../app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt)#L740-L880), [app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt](../app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt)#L16-L479), [app/src/main/java/com/ylstack1/ylharness/data/KeyStoreManager.kt](../app/src/main/java/com/ylstack1/ylharness/data/KeyStoreManager.kt)#L9-L42), [app/src/main/java/com/ylstack1/ylharness/AppRuntimePolicy.kt](../app/src/main/java/com/ylstack1/ylharness/AppRuntimePolicy.kt)#L13-L85)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/HarnessApp.kt`
-- `app/src/main/java/com/androidharness/app/MainActivity.kt`
-- `app/src/main/java/com/androidharness/app/AppRuntimePolicy.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsRepository.kt`
-- `app/src/main/java/com/androidharness/app/data/KeyStoreManager.kt`
-- `app/src/main/java/com/androidharness/app/data/db/Database.kt`
+- `app/src/main/java/com/ylstack1/ylharness/HarnessApp.kt`
+- `app/src/main/java/com/ylstack1/ylharness/MainActivity.kt`
+- `app/src/main/java/com/ylstack1/ylharness/AppRuntimePolicy.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/KeyStoreManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt`
 - `app/src/main/AndroidManifest.xml`

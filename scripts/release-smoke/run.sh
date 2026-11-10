@@ -13,8 +13,8 @@ release_java=${JAVA_HOME:-$HOME/.local/share/android-toolchain/jdk17}
 release_tools=$(printf '%s\n' "$release_sdk"/build-tools/* | sort -V | tail -1)
 release_platform=$(printf '%s\n' "$release_sdk"/platforms/* | sort -V | tail -1)
 release_here=$(cd "$(dirname "$0")" && pwd)
-release_work=$(mktemp -d -t androidharness-release-probe.XXXXXXXX)
-release_stage="/data/local/tmp/androidharness-release-probe-$$"
+release_work=$(mktemp -d -t ylharness-release-probe.XXXXXXXX)
+release_stage="/data/local/tmp/ylharness-release-probe-$$"
 release_abi=$(adb -s "$release_serial" shell getprop ro.product.cpu.abi | tr -d '\r')
 
 mkdir -p "$release_work/classes"

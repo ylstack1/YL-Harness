@@ -66,7 +66,7 @@ flowchart TD
 | `DEFAULT_MODEL` | `kilo-auto/free` |
 | `KEYLESS` | `harness-keyless` |
 | `SESSION_HEADER` | `x-opencode-session` |
-| `USER_AGENT` | `AndroidHarness` |
+| `USER_AGENT` | `YL Harness` |
 
 `config` is `ProviderConfig(ID, "Harness", OPENAI_COMPAT, BASE_URL, DEFAULT_MODEL)`. The model field is replaced at read time by `ProviderRepository` with the sanitized saved or default model.
 
@@ -81,7 +81,7 @@ The pool has two sources:
 
 ## Live Catalog from Kilo
 
-`ModelCatalog.listModels` (`ModelCatalog.kt#L89`) special-cases the Harness id. It calls `buildRequest`, which for Harness is a `GET https://api.kilo.ai/api/gateway/models` with only `User-Agent: AndroidHarness` and no key (`ModelCatalog.kt#L119`). The body is passed to `HarnessProvider.parseKiloCatalog`.
+`ModelCatalog.listModels` (`ModelCatalog.kt#L89`) special-cases the Harness id. It calls `buildRequest`, which for Harness is a `GET https://api.kilo.ai/api/gateway/models` with only `User-Agent: YL Harness` and no key (`ModelCatalog.kt#L119`). The body is passed to `HarnessProvider.parseKiloCatalog`.
 
 `parseKiloCatalog` (`HarnessProvider.kt#L65`) requires a root `data` array. For each object it keeps the entry only when:
 
@@ -126,7 +126,7 @@ The first successful response wins. A probe counts only if HTTP succeeds and the
 - `x-opencode-request`: a fresh UUID per request.
 - `x-opencode-client`: `harness`.
 - `x-opencode-project`: `default`.
-- `User-Agent`: `AndroidHarness`.
+- `User-Agent`: `YL Harness`.
 
 Missing identity headers can cause `FreeTierError` or HTTP 500 from the relay. Pooled requests strip `Authorization` at the client. The anonymous Zen client removes `Authorization` and `x-api-key`, adds `HTTP-Referer` and `X-Title`, and reapplies the session headers. The keyed client keeps `Authorization` and has no stripping interceptor.
 
@@ -173,18 +173,18 @@ The dialog is `ProviderFailureNotice` (`ProviderFailureNotice.kt#L22`). It looks
 - The `kilo-auto/free` behavior itself is owned by Kilo. The app only routes the id to `KILO_BASE_URL` and treats its thinking spec as automatic; it cannot report which backing model answered.
 - The live catalog is fetched when the catalog refresh runs and restored from DataStore at startup. Offline on first launch, only the two fallback entries exist until a refresh succeeds.
 
-Sources: [app/src/main/java/com/androidharness/app/llm/HarnessProvider.kt](../app/src/main/java/com/androidharness/app/llm/HarnessProvider.kt)#L22-L259), [app/src/main/java/com/androidharness/app/llm/HarnessFreeLimit.kt](../app/src/main/java/com/androidharness/app/llm/HarnessFreeLimit.kt)#L3-L57), [app/src/main/java/com/androidharness/app/llm/ModelCatalog.kt](../app/src/main/java/com/androidharness/app/llm/ModelCatalog.kt)#L73-L146), [app/src/main/java/com/androidharness/app/data/ProviderRepository.kt](../app/src/main/java/com/androidharness/app/data/ProviderRepository.kt)#L42-L56), [app/src/main/java/com/androidharness/app/data/ProviderRepository.kt](../app/src/main/java/com/androidharness/app/data/ProviderRepository.kt)#L225-L238), [app/src/main/java/com/androidharness/app/data/ProviderRepository.kt](../app/src/main/java/com/androidharness/app/data/ProviderRepository.kt)#L339-L372), [app/src/main/java/com/androidharness/app/ui/chat/components/ProviderFailureNotice.kt](../app/src/main/java/com/androidharness/app/ui/chat/components/ProviderFailureNotice.kt)#L20-L67), [app/src/main/java/com/androidharness/app/agent/ThinkingSpecs.kt](../app/src/main/java/com/androidharness/app/agent/ThinkingSpecs.kt)#L91-L134)
+Sources: [app/src/main/java/com/ylstack1/ylharness/llm/HarnessProvider.kt](../app/src/main/java/com/ylstack1/ylharness/llm/HarnessProvider.kt)#L22-L259), [app/src/main/java/com/ylstack1/ylharness/llm/HarnessFreeLimit.kt](../app/src/main/java/com/ylstack1/ylharness/llm/HarnessFreeLimit.kt)#L3-L57), [app/src/main/java/com/ylstack1/ylharness/llm/ModelCatalog.kt](../app/src/main/java/com/ylstack1/ylharness/llm/ModelCatalog.kt)#L73-L146), [app/src/main/java/com/ylstack1/ylharness/data/ProviderRepository.kt](../app/src/main/java/com/ylstack1/ylharness/data/ProviderRepository.kt)#L42-L56), [app/src/main/java/com/ylstack1/ylharness/data/ProviderRepository.kt](../app/src/main/java/com/ylstack1/ylharness/data/ProviderRepository.kt)#L225-L238), [app/src/main/java/com/ylstack1/ylharness/data/ProviderRepository.kt](../app/src/main/java/com/ylstack1/ylharness/data/ProviderRepository.kt)#L339-L372), [app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ProviderFailureNotice.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ProviderFailureNotice.kt)#L20-L67), [app/src/main/java/com/ylstack1/ylharness/agent/ThinkingSpecs.kt](../app/src/main/java/com/ylstack1/ylharness/agent/ThinkingSpecs.kt)#L91-L134)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/llm/HarnessProvider.kt`
-- `app/src/main/java/com/androidharness/app/llm/HarnessFreeLimit.kt`
-- `app/src/main/java/com/androidharness/app/llm/ModelCatalog.kt`
-- `app/src/main/java/com/androidharness/app/llm/OpenAiCompatProvider.kt`
-- `app/src/main/java/com/androidharness/app/data/ProviderRepository.kt`
-- `app/src/main/java/com/androidharness/app/agent/ThinkingSpecs.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ProviderFailureNotice.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt`
-- `app/src/main/java/com/androidharness/app/llm/FallbackProvider.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/HarnessProvider.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/HarnessFreeLimit.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/ModelCatalog.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/OpenAiCompatProvider.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ProviderRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/ThinkingSpecs.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ProviderFailureNotice.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/FallbackProvider.kt`
 - `app/src/main/res/values/strings.xml`

@@ -142,29 +142,29 @@ Theme values come from `rememberArtifactTheme` (`ui/chat/rich/ArtifactThemeState
 - `FEATURES.md` line 13 says Chat does not create saved artifacts, and line 32 says existing artifacts remain available. Confirmed: `create_artifact` is absent from `ChatExperience.tools`, and `ArtifactCard` still renders stored `artifactJson`.
 - `FEATURES.md` line 34 says a titled placeholder holds the space while a visual streams. Confirmed by `Part.PendingVisual` and `PendingVisualCard`.
 
-Sources: [app/src/main/java/com/androidharness/app/core/response/RichResponse.kt](../app/src/main/java/com/androidharness/app/core/response/RichResponse.kt)#L8-L137), [app/src/main/java/com/androidharness/app/ui/chat/rich/RichResponseContent.kt](../app/src/main/java/com/androidharness/app/ui/chat/rich/RichResponseContent.kt)#L58-L226), [app/src/main/java/com/androidharness/app/ui/chat/rich/InlineResponsePreview.kt](../app/src/main/java/com/androidharness/app/ui/chat/rich/InlineResponsePreview.kt)#L33-L103), [app/src/main/java/com/androidharness/app/artifacts/ArtifactSandbox.kt](../app/src/main/java/com/androidharness/app/artifacts/ArtifactSandbox.kt)#L4-L55)
+Sources: [app/src/main/java/com/ylstack1/ylharness/core/response/RichResponse.kt](../app/src/main/java/com/ylstack1/ylharness/core/response/RichResponse.kt)#L8-L137), [app/src/main/java/com/ylstack1/ylharness/ui/chat/rich/RichResponseContent.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/rich/RichResponseContent.kt)#L58-L226), [app/src/main/java/com/ylstack1/ylharness/ui/chat/rich/InlineResponsePreview.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/rich/InlineResponsePreview.kt)#L33-L103), [app/src/main/java/com/ylstack1/ylharness/artifacts/ArtifactSandbox.kt](../app/src/main/java/com/ylstack1/ylharness/artifacts/ArtifactSandbox.kt)#L4-L55)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/core/response/RichResponse.kt`
-- `app/src/main/java/com/androidharness/app/core/response/ChatRichResponse.kt`
-- `app/src/main/java/com/androidharness/app/core/response/CalculatorMath.kt`
-- `app/src/main/java/com/androidharness/app/core/response/ResponseAttachment.kt`
-- `app/src/main/java/com/androidharness/app/core/response/ResponseTableData.kt`
-- `app/src/main/java/com/androidharness/app/core/response/ResponseDiff.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/rich/RichResponseContent.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/rich/ResponseChart.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/rich/ResponseCalculator.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/rich/ResponseDataComponents.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/rich/ResponseMediaComponents.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/rich/ResponseProfile.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/rich/InlineResponsePreview.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/rich/ArtifactThemeState.kt`
-- `app/src/main/java/com/androidharness/app/artifacts/ArtifactSandbox.kt`
-- `app/src/main/java/com/androidharness/app/artifacts/ArtifactTheme.kt`
-- `app/src/main/java/com/androidharness/app/artifacts/ArtifactWebView.kt`
-- `app/src/main/java/com/androidharness/app/artifacts/ChatArtifact.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ArtifactCard.kt`
-- `app/src/main/java/com/androidharness/app/tools/ArtifactTools.kt`
-- `app/src/main/java/com/androidharness/app/tools/VisualGuideTool.kt`
-- `app/src/main/java/com/androidharness/app/core/ChatExperience.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/response/RichResponse.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/response/ChatRichResponse.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/response/CalculatorMath.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/response/ResponseAttachment.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/response/ResponseTableData.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/response/ResponseDiff.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/rich/RichResponseContent.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/rich/ResponseChart.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/rich/ResponseCalculator.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/rich/ResponseDataComponents.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/rich/ResponseMediaComponents.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/rich/ResponseProfile.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/rich/InlineResponsePreview.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/rich/ArtifactThemeState.kt`
+- `app/src/main/java/com/ylstack1/ylharness/artifacts/ArtifactSandbox.kt`
+- `app/src/main/java/com/ylstack1/ylharness/artifacts/ArtifactTheme.kt`
+- `app/src/main/java/com/ylstack1/ylharness/artifacts/ArtifactWebView.kt`
+- `app/src/main/java/com/ylstack1/ylharness/artifacts/ChatArtifact.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ArtifactCard.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/ArtifactTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/VisualGuideTool.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/ChatExperience.kt`

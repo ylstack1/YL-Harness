@@ -2,7 +2,7 @@
 
 > Chat renders every thought, commentary line, and tool call of a turn as one expandable chronological disclosure, while the final answer stays outside it.
 
-`ChatActivity` in `app/src/main/java/com/androidharness/app/ui/chat/components/ChatActivity.kt` is the single entry point for this disclosure. It does not inspect raw messages itself. It calls `ChatActivityPresentation.timeline` from `app/src/main/java/com/androidharness/app/core/ChatActivityPresentation.kt`, which turns this turn's assistant rows, tool results, and live streams into ordered `Entry` values. Each entry renders through `ChatToolActivity` or plain text rows, and any tool result can be opened in `ActivityReader` or `ToolActivityReader` for a full-screen, paged view. `ToolPresentation` supplies human titles for tool names, and `LiveCodeCard` shows code that is still being generated.
+`ChatActivity` in `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatActivity.kt` is the single entry point for this disclosure. It does not inspect raw messages itself. It calls `ChatActivityPresentation.timeline` from `app/src/main/java/com/ylstack1/ylharness/core/ChatActivityPresentation.kt`, which turns this turn's assistant rows, tool results, and live streams into ordered `Entry` values. Each entry renders through `ChatToolActivity` or plain text rows, and any tool result can be opened in `ActivityReader` or `ToolActivityReader` for a full-screen, paged view. `ToolPresentation` supplies human titles for tool names, and `LiveCodeCard` shows code that is still being generated.
 
 ## Module Responsibilities
 
@@ -39,7 +39,7 @@ flowchart TD
 
 ## Invocation Chain
 
-1. `ChatScreen` declares `chatActivityItem` at `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt` lines 1736 to 1751 and calls `ChatActivity(messages, live = running, ...)`.
+1. `ChatScreen` declares `chatActivityItem` at `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt` lines 1736 to 1751 and calls `ChatActivity(messages, live = running, ...)`.
 2. `ChatActivity` calls `ChatActivityPresentation.timeline(messages, runningCalls, streamingThinking, streamId, streamingCommentary)`.
 3. `timeline` indexes this turn's `Role.TOOL` rows by `toolCallId`, finds parent assistant rows with no `toolCallId`, identifies the final answer index, and emits entries in order: thought, commentary, then each call, then streamed thought and commentary, then any running call not yet seen (lines 67 to 88).
 4. `ChatToolActivity` maps the call to a title using `activityLabel` (lines 592 to 613), computes sources, images, and recall text, then calls `ChatActivityRow` with an inline body.
@@ -53,7 +53,7 @@ flowchart TD
 - **`ChatActivityPresentation.Source`**: `title`, `url`, `host`, `read`. Built from successful web search and page read results, deduplicated by `canonicalResultUrl`, capped at 100 by default.
 - **`ToolPresentation`**: `title`, `action`, `detail`, `kind` where kind is one of `READ`, `SEARCH`, `EDIT`, `COMMAND`, `VERIFY`, `WEB`, `QUESTION`, `SUBAGENT`, `MEMORY`, `OTHER` (ToolPresentation lines 10 to 17).
 - **`ToolCallData`**: call id, name, arguments JSON, optional workspace id and name, captured code changes, and opaque response reasoning for replay. The workspace name is prefixed onto the title and action at ToolPresentation lines 244 to 245.
-- **`LiveCodeDraft`**: `id`, `tool`, `stage`, `files`, `estimatedTokens`, `responseOutputTokens`, `comparisonAvailable`, `limited`, `workspaceName`. Stage is `GENERATING`, `READY`, `WRITING`, `SAVED`, or `FAILED` (`app/src/main/java/com/androidharness/app/agent/LiveCode.kt` line 12).
+- **`LiveCodeDraft`**: `id`, `tool`, `stage`, `files`, `estimatedTokens`, `responseOutputTokens`, `comparisonAvailable`, `limited`, `workspaceName`. Stage is `GENERATING`, `READY`, `WRITING`, `SAVED`, or `FAILED` (`app/src/main/java/com/ylstack1/ylharness/agent/LiveCode.kt` line 12).
 
 ## Per-Call Status and Rollups
 
@@ -61,13 +61,13 @@ A call is running only when its id is in `runningIds` and no result exists for i
 
 `ToolCallCard` derives its status from `running && result == null` and `result.isError`. A `Crossfade` selects one of four keys: active, success, failure, or neutral, drawing a check or cross in the right slot (`ToolCallCard.kt` lines 208 to 234). While active it shows `ToolCallProgress` (lines 245 to 251). The detail disclosure prints the tool name, then either a `VisualDiffViewer` for an `apply_patch` payload or a monospace block of pretty arguments, then up to 4000 characters of result (lines 270 to 295). `grep`, `search_files`, and `web_search` results use clickable output so paths can open the file viewer (lines 289 to 293).
 
-`ToolGroupCard` appears when `ChatScreen` sees three or more other calls on one assistant row and none are browser, package, GitHub pull request, or live-code tools (`ChatScreen.kt` lines 2148 to 2164). It counts `doneCount`, `failedCount`, and `activeIds`, and its header reads either "Spawned N subagents" when every call is `task`, "Running tools", or "Ran N tools" (lines 361 to 368). Expanding lists each call through `CardHistory` (lines 449 to 471). `CardHistory` composes a plain column for twelve or fewer rows and a height-bounded `LazyColumn` above twelve (`app/src/main/java/com/androidharness/app/ui/chat/components/CardHistory.kt` lines 14 to 38).
+`ToolGroupCard` appears when `ChatScreen` sees three or more other calls on one assistant row and none are browser, package, GitHub pull request, or live-code tools (`ChatScreen.kt` lines 2148 to 2164). It counts `doneCount`, `failedCount`, and `activeIds`, and its header reads either "Spawned N subagents" when every call is `task`, "Running tools", or "Ran N tools" (lines 361 to 368). Expanding lists each call through `CardHistory` (lines 449 to 471). `CardHistory` composes a plain column for twelve or fewer rows and a height-bounded `LazyColumn` above twelve (`app/src/main/java/com/ylstack1/ylharness/ui/chat/components/CardHistory.kt` lines 14 to 38).
 
 ## Full-Screen Reader, Paging, and Diffs
 
 `ToolActivityReader` starts on Output when a result exists, otherwise on Input. It pretty prints JSON with `Json { prettyPrint = true }` off the main thread, and it chunks the chosen text through `ToolOutputText.chunks` (2048-character targets, newline boundaries, surrogate pair guard). Each chunk is its own list item inside a `SelectionContainer`, so a very long log stays responsive and remains selectable. A copy action writes the full text to the clipboard and swaps its icon label to "Copied". The reader registers itself with `LocalChatDetailScroll` through `begin` and `end` so the parent transcript does not scroll under it (`ActivityReader.kt` lines 71 to 100).
 
-`ChatFileDiffSheet` is a separate bottom sheet used from `ChatScreen` lines 643 to 650. It loads `viewModel.fileDiff(turnId, path)` in a `produceState`, handles cancellation explicitly, and renders `VisualDiffViewer` at 55 percent of screen height. Failure shows the exception message, and a toolbar action opens the current file (`app/src/main/java/com/androidharness/app/ui/chat/ChatFileDiffSheet.kt` lines 18 to 69).
+`ChatFileDiffSheet` is a separate bottom sheet used from `ChatScreen` lines 643 to 650. It loads `viewModel.fileDiff(turnId, path)` in a `produceState`, handles cancellation explicitly, and renders `VisualDiffViewer` at 55 percent of screen height. Failure shows the exception message, and a toolbar action opens the current file (`app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatFileDiffSheet.kt` lines 18 to 69).
 
 `LiveCodeCard` shows the code write itself. Its action text depends on approval and stage: "Awaiting approval", "Not saved", "Write" or "Writing", "Edit" or "Editing" (lines 53 to 58). Each file row exposes added and removed counts with `AnimatedLineCount`, a chevron, and an expandable preview capped at 220 dp. The preview follows new lines while generating unless the user scrolls, tokenizes through `CodeTokenizer`, and shows estimated tokens plus a note when the comparison is unavailable or the preview is bounded (`LiveCodeCard.kt` lines 49 to 138). `codeLanguage` maps extensions to labels such as Kotlin, Python, and TypeScript (lines 191 to 199).
 
@@ -91,19 +91,19 @@ A call is running only when its id is in `runningIds` and no result exists for i
 - `LocalActivityInteraction` lets nested cards pause the parent's follow behavior (ChatActivity lines 228 and 355).
 - `ToolCallCard` delegates special tools before its generic body: `pkg_install`, `android_sdk_install`, `github_create_pull_request`, any browser tool, and any `LiveCodePreview.tools` entry each get a dedicated card (`ToolCallCard.kt` lines 99 to 122).
 
-Sources: [app/src/main/java/com/androidharness/app/ui/chat/components/ChatActivity.kt](../app/src/main/java/com/androidharness/app/ui/chat/components/ChatActivity.kt)#L56-L146), [app/src/main/java/com/androidharness/app/core/ChatActivityPresentation.kt](../app/src/main/java/com/androidharness/app/core/ChatActivityPresentation.kt)#L59-L114), [app/src/main/java/com/androidharness/app/ui/chat/components/ToolCallCard.kt](../app/src/main/java/com/androidharness/app/ui/chat/components/ToolCallCard.kt)#L86-L475), [app/src/main/java/com/androidharness/app/ui/chat/components/ActivityReader.kt](../app/src/main/java/com/androidharness/app/ui/chat/components/ActivityReader.kt)#L71-L131)
+Sources: [app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatActivity.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatActivity.kt)#L56-L146), [app/src/main/java/com/ylstack1/ylharness/core/ChatActivityPresentation.kt](../app/src/main/java/com/ylstack1/ylharness/core/ChatActivityPresentation.kt)#L59-L114), [app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ToolCallCard.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ToolCallCard.kt)#L86-L475), [app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ActivityReader.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ActivityReader.kt)#L71-L131)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ChatActivity.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ToolCallCard.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ActivityReader.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ToolActivityState.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/LiveCodeCard.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/CardHistory.kt`
-- `app/src/main/java/com/androidharness/app/agent/ToolPresentation.kt`
-- `app/src/main/java/com/androidharness/app/core/ChatActivityPresentation.kt`
-- `app/src/main/java/com/androidharness/app/core/ToolOutputText.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatFileDiffSheet.kt`
-- `app/src/main/java/com/androidharness/app/agent/LiveCode.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatActivity.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ToolCallCard.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ActivityReader.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ToolActivityState.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/LiveCodeCard.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/CardHistory.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/ToolPresentation.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/ChatActivityPresentation.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/ToolOutputText.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatFileDiffSheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/LiveCode.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt`

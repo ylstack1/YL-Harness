@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="learn_title">Знакомство с AndroidHarness</string>
+    <string name="learn_title">Знакомство с YL Harness</string>
     <string name="learn_description">Понятные пошаговые руководства ко всем возможностям приложения.</string>
     <string name="learn_group">Начните здесь</string>
     <string name="learn_entry_hint">Ваше руководство в вашем темпе</string>

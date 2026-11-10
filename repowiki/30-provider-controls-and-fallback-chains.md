@@ -114,25 +114,25 @@ Local models and ChatGPT connections are explicitly excluded. `withoutLocalModel
 - There is no separate "backup portability" subsystem. Portability is implemented by `SettingsBackupPolicy` and `BackupProvider` inside the general settings backup.
 - Proxy and key pool values are encrypted at rest, but the backup file itself is only protected by the general backup format. This page does not claim additional encryption for provider credentials beyond what `SettingsBackup` and `BackupEncryption` provide.
 
-Sources: [app/src/main/java/com/androidharness/app/data/ProviderRepository.kt](../app/src/main/java/com/androidharness/app/data/ProviderRepository.kt)#L27-L154), [app/src/main/java/com/androidharness/app/data/ProviderRepository.kt](../app/src/main/java/com/androidharness/app/data/ProviderRepository.kt)#L240-L327), [app/src/main/java/com/androidharness/app/data/ProviderListPreferences.kt](../app/src/main/java/com/androidharness/app/data/ProviderListPreferences.kt)#L7-L34), [app/src/main/java/com/androidharness/app/llm/ProviderControls.kt](../app/src/main/java/com/androidharness/app/llm/ProviderControls.kt)#L6-L75), [app/src/main/java/com/androidharness/app/llm/ProviderHeaders.kt](../app/src/main/java/com/androidharness/app/llm/ProviderHeaders.kt)#L8-L56), [app/src/main/java/com/androidharness/app/llm/RotatingKeyProvider.kt](../app/src/main/java/com/androidharness/app/llm/RotatingKeyProvider.kt)#L11-L83), [app/src/main/java/com/androidharness/app/llm/FallbackPolicy.kt](../app/src/main/java/com/androidharness/app/llm/FallbackPolicy.kt)#L8-L48), [app/src/main/java/com/androidharness/app/llm/FallbackProvider.kt](../app/src/main/java/com/androidharness/app/llm/FallbackProvider.kt)#L35-L178), [app/src/main/java/com/androidharness/app/ui/settings/FallbackEditorSheet.kt](../app/src/main/java/com/androidharness/app/ui/settings/FallbackEditorSheet.kt)#L33-L270), [app/src/main/java/com/androidharness/app/ui/settings/ProviderManagerSheet.kt](../app/src/main/java/com/androidharness/app/ui/settings/ProviderManagerSheet.kt)#L42-L187)
+Sources: [app/src/main/java/com/ylstack1/ylharness/data/ProviderRepository.kt](../app/src/main/java/com/ylstack1/ylharness/data/ProviderRepository.kt)#L27-L154), [app/src/main/java/com/ylstack1/ylharness/data/ProviderRepository.kt](../app/src/main/java/com/ylstack1/ylharness/data/ProviderRepository.kt)#L240-L327), [app/src/main/java/com/ylstack1/ylharness/data/ProviderListPreferences.kt](../app/src/main/java/com/ylstack1/ylharness/data/ProviderListPreferences.kt)#L7-L34), [app/src/main/java/com/ylstack1/ylharness/llm/ProviderControls.kt](../app/src/main/java/com/ylstack1/ylharness/llm/ProviderControls.kt)#L6-L75), [app/src/main/java/com/ylstack1/ylharness/llm/ProviderHeaders.kt](../app/src/main/java/com/ylstack1/ylharness/llm/ProviderHeaders.kt)#L8-L56), [app/src/main/java/com/ylstack1/ylharness/llm/RotatingKeyProvider.kt](../app/src/main/java/com/ylstack1/ylharness/llm/RotatingKeyProvider.kt)#L11-L83), [app/src/main/java/com/ylstack1/ylharness/llm/FallbackPolicy.kt](../app/src/main/java/com/ylstack1/ylharness/llm/FallbackPolicy.kt)#L8-L48), [app/src/main/java/com/ylstack1/ylharness/llm/FallbackProvider.kt](../app/src/main/java/com/ylstack1/ylharness/llm/FallbackProvider.kt)#L35-L178), [app/src/main/java/com/ylstack1/ylharness/ui/settings/FallbackEditorSheet.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/FallbackEditorSheet.kt)#L33-L270), [app/src/main/java/com/ylstack1/ylharness/ui/settings/ProviderManagerSheet.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/ProviderManagerSheet.kt)#L42-L187)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/data/ProviderRepository.kt`
-- `app/src/main/java/com/androidharness/app/data/ProviderListPreferences.kt`
-- `app/src/main/java/com/androidharness/app/llm/ProviderControls.kt`
-- `app/src/main/java/com/androidharness/app/llm/ProviderHeaders.kt`
-- `app/src/main/java/com/androidharness/app/llm/ProviderModelSearch.kt`
-- `app/src/main/java/com/androidharness/app/llm/RotatingKeyProvider.kt`
-- `app/src/main/java/com/androidharness/app/llm/FallbackPolicy.kt`
-- `app/src/main/java/com/androidharness/app/llm/FallbackProvider.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/FallbackEditorSheet.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/ProviderManagerSheet.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/ProviderSheet.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/ProviderListCard.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/ProviderBulkActions.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/ProviderKeysEditor.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/ProviderControlsSheet.kt`
-- `app/src/main/java/com/androidharness/app/data/KeyStoreManager.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsBackup.kt`
-- `app/src/main/java/com/androidharness/app/agent/TaskControl.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ProviderRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ProviderListPreferences.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/ProviderControls.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/ProviderHeaders.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/ProviderModelSearch.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/RotatingKeyProvider.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/FallbackPolicy.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/FallbackProvider.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/FallbackEditorSheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/ProviderManagerSheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/ProviderSheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/ProviderListCard.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/ProviderBulkActions.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/ProviderKeysEditor.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/ProviderControlsSheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/KeyStoreManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsBackup.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/TaskControl.kt`

@@ -134,13 +134,13 @@ Assignment rules are two-stage. A generic `NAME = value` regex captures a 16-cha
 - The page brief names `agent/ContextHygiene.kt` as a redaction layer. The file contains no redaction call. It only truncates stale tool text and strips image payloads, so redaction boundaries must be described through `SecretRedactor` and `HarnessConfig.redact` (verified at `ContextHygiene.kt` lines 1-129).
 - Shell policy applies to shell tools only. File tools rely on `WorkspaceFs.resolve` for containment, which is outside this page.
 
-Sources: [app/src/main/java/com/androidharness/app/tools/ShellPolicy.kt](../app/src/main/java/com/androidharness/app/tools/ShellPolicy.kt)#L13-L103), [app/src/main/java/com/androidharness/app/tools/ShellPolicy.kt](../app/src/main/java/com/androidharness/app/tools/ShellPolicy.kt)#L575-L604), [app/src/main/java/com/androidharness/app/tools/SecretRedactor.kt](../app/src/main/java/com/androidharness/app/tools/SecretRedactor.kt)#L19-L141), [app/src/main/java/com/androidharness/app/config/HarnessConfig.kt](../app/src/main/java/com/androidharness/app/config/HarnessConfig.kt)#L40-L45)
+Sources: [app/src/main/java/com/ylstack1/ylharness/tools/ShellPolicy.kt](../app/src/main/java/com/ylstack1/ylharness/tools/ShellPolicy.kt)#L13-L103), [app/src/main/java/com/ylstack1/ylharness/tools/ShellPolicy.kt](../app/src/main/java/com/ylstack1/ylharness/tools/ShellPolicy.kt)#L575-L604), [app/src/main/java/com/ylstack1/ylharness/tools/SecretRedactor.kt](../app/src/main/java/com/ylstack1/ylharness/tools/SecretRedactor.kt)#L19-L141), [app/src/main/java/com/ylstack1/ylharness/config/HarnessConfig.kt](../app/src/main/java/com/ylstack1/ylharness/config/HarnessConfig.kt)#L40-L45)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/tools/ShellPolicy.kt`
-- `app/src/main/java/com/androidharness/app/tools/SecretRedactor.kt`
-- `app/src/main/java/com/androidharness/app/agent/ContextHygiene.kt`
-- `app/src/main/java/com/androidharness/app/agent/AgentEngine.kt`
-- `app/src/main/java/com/androidharness/app/config/HarnessConfig.kt`
-- `app/src/main/java/com/androidharness/app/tools/ReadToolOutputTool.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/ShellPolicy.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/SecretRedactor.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/ContextHygiene.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt`
+- `app/src/main/java/com/ylstack1/ylharness/config/HarnessConfig.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/ReadToolOutputTool.kt`

@@ -76,7 +76,7 @@ void closeInheritedFds() {
 }  // namespace
 
 extern "C" JNIEXPORT jint JNICALL
-Java_com_androidharness_app_terminal_Pty_nativeStart(
+Java_com_ylstack1_ylharness_terminal_Pty_nativeStart(
     JNIEnv *env, jclass, jstring jpath, jobjectArray jargv, jobjectArray jenvp,
     jstring jcwd, jint rows, jint cols, jintArray jpid) {
     char *path = copyString(env, jpath);
@@ -145,7 +145,7 @@ Java_com_androidharness_app_terminal_Pty_nativeStart(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_androidharness_app_terminal_Pty_nativeResize(
+Java_com_ylstack1_ylharness_terminal_Pty_nativeResize(
     JNIEnv *, jclass, jint fd, jint rows, jint cols, jint widthPx, jint heightPx) {
     struct winsize size{};
     size.ws_row = (unsigned short) rows;
@@ -157,7 +157,7 @@ Java_com_androidharness_app_terminal_Pty_nativeResize(
 
 // Blocks until the child exits. Returns the exit code, or 128 + signal.
 extern "C" JNIEXPORT jint JNICALL
-Java_com_androidharness_app_terminal_Pty_nativeWaitFor(JNIEnv *, jclass, jint pid) {
+Java_com_ylstack1_ylharness_terminal_Pty_nativeWaitFor(JNIEnv *, jclass, jint pid) {
     int status = 0;
     while (waitpid(pid, &status, 0) < 0) {
         if (errno != EINTR) return -1;
@@ -169,6 +169,6 @@ Java_com_androidharness_app_terminal_Pty_nativeWaitFor(JNIEnv *, jclass, jint pi
 
 // Process group of the terminal's foreground job, or -1.
 extern "C" JNIEXPORT jint JNICALL
-Java_com_androidharness_app_terminal_Pty_nativeForegroundGroup(JNIEnv *, jclass, jint fd) {
+Java_com_ylstack1_ylharness_terminal_Pty_nativeForegroundGroup(JNIEnv *, jclass, jint fd) {
     return tcgetpgrp(fd);
 }

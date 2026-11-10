@@ -2,7 +2,7 @@
 
 > Room database `harness.db` holds chat history, workspaces, memories, undo checkpoints, usage and code-change stats, saved answers, and the FTS search index.
 
-All persistent chat state lives in one Room database defined in `app/src/main/java/com/androidharness/app/data/db/Database.kt`. There are no separate per-feature databases. `AppDatabase` declares 13 entities, `HarnessDao` exposes the queries, and `HarnessApp` builds the singleton with every migration. Feature repositories (`SessionRepository`, `MemoryRepository`, `CheckpointStore`, `WorkspaceManager`, `ChatBackupManager`) call the DAO and own the transaction boundaries that span more than one statement.
+All persistent chat state lives in one Room database defined in `app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt`. There are no separate per-feature databases. `AppDatabase` declares 13 entities, `HarnessDao` exposes the queries, and `HarnessApp` builds the singleton with every migration. Feature repositories (`SessionRepository`, `MemoryRepository`, `CheckpointStore`, `WorkspaceManager`, `ChatBackupManager`) call the DAO and own the transaction boundaries that span more than one statement.
 
 ## Module Responsibilities
 
@@ -144,15 +144,15 @@ There is no time-based row expiry. Rows live until a user or feature deletes the
 - `truncateFrom` keeps checkpoints for removed turns. It does not prune them by turn id.
 - There is no retention policy for `usage_events` or `code_activity`; both grow for the life of the install unless the user clears app data.
 
-Sources: [data/db/Database.kt](../app/src/main/java/com/androidharness/app/data/db/Database.kt)#L18-L1001), [HarnessApp.kt](../app/src/main/java/com/androidharness/app/HarnessApp.kt)#L138-L148), [data/SessionRepository.kt](../app/src/main/java/com/androidharness/app/data/SessionRepository.kt)#L876-L922), [data/CheckpointStore.kt](../app/src/main/java/com/androidharness/app/data/CheckpointStore.kt)#L13-L49), [data/db/ChatSearch.kt](../app/src/main/java/com/androidharness/app/data/db/ChatSearch.kt)#L12-L41)
+Sources: [data/db/Database.kt](../app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt)#L18-L1001), [HarnessApp.kt](../app/src/main/java/com/ylstack1/ylharness/HarnessApp.kt)#L138-L148), [data/SessionRepository.kt](../app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt)#L876-L922), [data/CheckpointStore.kt](../app/src/main/java/com/ylstack1/ylharness/data/CheckpointStore.kt)#L13-L49), [data/db/ChatSearch.kt](../app/src/main/java/com/ylstack1/ylharness/data/db/ChatSearch.kt)#L12-L41)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/data/db/Database.kt`
-- `app/src/main/java/com/androidharness/app/data/db/ChatSearch.kt`
-- `app/src/main/java/com/androidharness/app/data/SessionRepository.kt`
-- `app/src/main/java/com/androidharness/app/data/CheckpointStore.kt`
-- `app/src/main/java/com/androidharness/app/data/MemoryRepository.kt`
-- `app/src/main/java/com/androidharness/app/data/ChatBackup.kt`
-- `app/src/main/java/com/androidharness/app/data/storage/StorageManager.kt`
-- `app/src/main/java/com/androidharness/app/HarnessApp.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/db/ChatSearch.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/CheckpointStore.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/MemoryRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ChatBackup.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/storage/StorageManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/HarnessApp.kt`

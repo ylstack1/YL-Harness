@@ -637,7 +637,7 @@
     <string name="ui_shizuku_is_disabled">"Shizukuは無効です"</string>
     <string name="ui_shizuku_is_no_longer_available_its_server">"Shizukuは利用できなくなりました。サーバーが停止または強制終了された可能性があります "</string>
     <string name="ui_in_the_background_or_this_app_s">"バックグラウンドで、またはこのアプリのアクセスが取り消された可能性があります。 "</string>
-    <string name="ui_start_shizuku_and_allow_androidharness_access_to">"Shizukuを起動し、AndroidHarnessのアクセスを許可して再度使用してください。"</string>
+    <string name="ui_start_shizuku_and_allow_ylharness_access_to">"Shizukuを起動し、YL Harnessのアクセスを許可して再度使用してください。"</string>
     <string name="ui_never_show_this_message_again">"このメッセージを今後表示しない"</string>
     <string name="ui_limits_resets">"制限とリセット"</string>
     <string name="ui_view_live_limits_in_chatgpt">"ChatGPTでライブ制限を表示"</string>
@@ -1110,7 +1110,7 @@
     <string name="ui_the_app_needs_node_python_from_the">"アプリ終了時に終了します。Linux環境のnode/pythonが必要です。"</string>
     <string name="ui_not_installed_optional">"未インストール: 任意。"</string>
     <string name="ui_installed_not_running">"インストール済み、未実行。"</string>
-    <string name="ui_running_grant_androidharness_access">"実行中: AndroidHarnessにアクセスを許可してください。"</string>
+    <string name="ui_running_grant_ylharness_access">"実行中: YL Harnessにアクセスを許可してください。"</string>
     <string name="ui_connected_shell_privileges_ready">"接続済み: シェル権限準備完了。"</string>
     <string name="ui_connected_in_compatibility_mode_shell_privileges_ready">"互換モードで接続済み: シェル権限準備完了。"</string>
     <string name="ui_access_granted_connecting_to_the_shell_runner">"アクセスを許可しました。シェルランナーに接続中…"</string>
@@ -1157,10 +1157,10 @@
     <string name="ui_open_source">"オープンソース"</string>
     <string name="ui_use_it_change_it_ship_it_even">"商用アプリ内でも利用、変更、配布できます。条件は"</string>
     <string name="ui_copyright_notice_and_the_license_text_travel">"著作権表示とライセンステキストをコードと一緒に配布することです。保証はありません。"</string>
-    <string name="ui_androidharness_is_built_on_open_source_work">"AndroidHarnessはオープンソースの成果を基に構築され、先行するエージェントのアイデアも取り入れています。"</string>
+    <string name="ui_ylharness_is_built_on_open_source_work">"YL Harnessはオープンソースの成果を基に構築され、先行するエージェントのアイデアも取り入れています。"</string>
     <string name="ui_built_with">"使用技術"</string>
     <string name="ui_inspired_by">"インスピレーション"</string>
-    <string name="ui_every_project_keeps_its_own_license_androidharness">"各プロジェクトはそれぞれのライセンスを保持します。AndroidHarnessはそれらと提携していません。"</string>
+    <string name="ui_every_project_keeps_its_own_license_ylharness">"各プロジェクトはそれぞれのライセンスを保持します。YL Harnessはそれらと提携していません。"</string>
     <string name="ui_exported_chats_messages">"%1$s件のチャットをエクスポートしました（%2$s件のメッセージ、%3$s件のメモリ）。"</string>
     <string name="ui_export_failed">"エクスポートに失敗しました。"</string>
     <string name="ui_export_failed_1230">"エクスポートに失敗しました: %1$s"</string>
@@ -1249,7 +1249,7 @@
     <string name="ui_status">"ステータス"</string>
     <string name="ui_retry_resume">"再試行 / 再開"</string>
     <string name="ui_pause_telegram">"Telegram を一時停止"</string>
-    <string name="ui_welcome_to_androidharness">"AndroidHarness へようこそ"</string>
+    <string name="ui_welcome_to_ylharness">"YL Harness へようこそ"</string>
     <string name="ui_grant_storage_access_to_start_coding_notifications">"コーディングを始めるにはストレージアクセスを許可してください。通知やその他のツールは任意です。"</string>
     <string name="ui_device_storage_access_granted">"デバイスストレージへのアクセスが許可されました"</string>
     <string name="ui_required_allow_access_to_device_files_and">"必須: デバイスのファイルとフォルダーへのアクセスを許可"</string>
@@ -1587,7 +1587,7 @@
     <string name="ui_access_mode">"アクセスモード: %1$s"</string>
     <string name="ui_scheduled_tasks">"スケジュールされたタスク"</string>
     <string name="ui_project_and_chat_sidebar">"プロジェクトとチャットのサイドバー"</string>
-    <string name="ui_androidharness_icon">"AndroidHarnessアイコン"</string>
+    <string name="ui_ylharness_icon">"YL Harnessアイコン"</string>
     <string name="ui_collapse_sidebar">"サイドバーを折りたたむ"</string>
     <string name="ui_search_chats_and_messages">"チャットとメッセージを検索"</string>
     <string name="ui_search_chats">"チャットを検索"</string>
@@ -1634,7 +1634,7 @@
         <item quantity="other">"%1$d行"</item>
     </plurals>
     <string name="voice_transcribing">"文字起こし中…"</string>
-    <string name="donate_funding_message">"AndroidHarnessの開発を続ける資金が不足しています。ご支援いただけると開発を続けられます。"</string>
+    <string name="donate_funding_message">"YL Harnessの開発を続ける資金が不足しています。ご支援いただけると開発を続けられます。"</string>
     <string name="donate_dismiss_message">"寄付メッセージを閉じる"</string>
     <string name="background_settings_title">バックグラウンドと通知</string>
     <string name="background_settings_description">バックグラウンド処理と通知を管理します。</string>
@@ -1644,10 +1644,10 @@
     <string name="background_notifications_description">通知を許可します。サービスの通知は Android が管理します。</string>
     <string name="background_android_title">Android の通知設定</string>
     <string name="background_android_description">Android のすべての通知設定を管理します。</string>
-    <string name="background_run_blocked">バックグラウンド実行はオフです。タスクを開始または続行するには AndroidHarness を開いてください。</string>
+    <string name="background_run_blocked">バックグラウンド実行はオフです。タスクを開始または続行するには YL Harness を開いてください。</string>
     <string name="background_service_notice">バックグラウンドサービスを実行中</string>
     <string name="local_gpu_download_title">GPU サポート</string>
-    <string name="local_gpu_runtime_repository">ソース: Sanuu7/AH-GPU-Runtime</string>
+    <string name="local_gpu_runtime_repository">ソース: ylstack1/AH-GPU-Runtime</string>
     <string name="local_gpu_delivery_play">Google Play から安全にインストールされます。</string>
     <string name="local_gpu_delivery_github">このアプリとデバイスに一致する GPU パッケージを GitHub からダウンロードします。</string>
     <string name="local_gpu_optional_download">任意のダウンロードです。CPU 推論はこれがなくても動作し、インストール後は GPU サポートをオフラインで利用できます。</string>

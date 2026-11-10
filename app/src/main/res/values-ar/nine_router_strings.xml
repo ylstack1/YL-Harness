@@ -1,7 +1,7 @@
 <resources>
     <string name="nine_router_title">9Router</string>
     <string name="nine_router_description">تثبيت موجّه نماذج محلي وإدارته</string>
-    <string name="nine_router_intro">شغّل 9Router على هذا الهاتف وأدر موفّريه ونماذجه والتوجيه من المتصفح. يستخدم أدوات Linux في AndroidHarness.</string>
+    <string name="nine_router_intro">شغّل 9Router على هذا الهاتف وأدر موفّريه ونماذجه والتوجيه من المتصفح. يستخدم أدوات Linux في YL Harness.</string>
     <string name="nine_router_setup">جهّز بيئتك</string>
     <string name="nine_router_not_installed">جاهز للتثبيت</string>
     <string name="nine_router_ready">مثبَّت · متوقف</string>
@@ -26,12 +26,12 @@
     <string name="nine_router_checking">جارٍ التحقق…</string>
     <string name="nine_router_update">التحديث إلى %1$s</string>
     <string name="nine_router_auto_start">تشغيل 9Router تلقائيًا</string>
-    <string name="nine_router_auto_start_body">يشغّل الموجّه المثبَّت عند فتح AndroidHarness.</string>
+    <string name="nine_router_auto_start_body">يشغّل الموجّه المثبَّت عند فتح YL Harness.</string>
     <string name="nine_router_add_provider">إضافة 9Router إلى الموفّرين</string>
     <string name="nine_router_refresh_provider">تحديث موفّر 9Router</string>
     <string name="nine_router_provider_body">يشغّل 9Router عند الحاجة ويملأ نقطة النهاية المحلية ومفتاح API تلقائيًا. تصبح النماذج المتصلة متاحة في منتقي النماذج في الدردشة والرمز.</string>
     <string name="nine_router_remove_provider">الإزالة من الموفّرين</string>
-    <string name="nine_router_remove_provider_body">يزيل اتصالات 9Router من AndroidHarness. يبقى الموجّه وحساباته مثبّتين.</string>
+    <string name="nine_router_remove_provider_body">يزيل اتصالات 9Router من YL Harness. يبقى الموجّه وحساباته مثبّتين.</string>
     <string name="nine_router_uninstall">إلغاء تثبيت 9Router</string>
     <string name="nine_router_uninstall_title">إلغاء تثبيت 9Router بالكامل؟</string>
     <string name="nine_router_uninstall_body">يوقف 9Router ويحذف تثبيته والحسابات المحفوظة ومفاتيح API الخاصة بالموجّه والإعدادات والذاكرة المؤقتة وتفضيل التشغيل التلقائي واتصالات الموفّرين في التطبيق. لا يمكن التراجع عن ذلك. تبقى أدوات Linux المشتركة متاحة للميزات الأخرى.</string>

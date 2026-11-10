@@ -20,8 +20,8 @@
     <string name="tip_chat_instructions">ඔබ කැමති ස්වරය හෝ භාෂාව වැනි, සෑම චැට් එකක්ම අනුගමනය කරන උපදෙස් චැට් විකල්පවල එක් කරන්න.</string>
     <string name="tip_tts">පිළිතුරු ස්වයංක්‍රීයව හඬින් කියවිය හැක. හඬ සහ වේගය හඬ සැකසුම්වල තෝරන්න.</string>
     <string name="tip_agents_md">ව්‍යාපෘති නීති AGENTS.md හි ලියන්න, එවිට නියෝජිතයා සෑම ධාවනයකදීම ඒවා අනුගමනය කරයි.</string>
-    <string name="tip_memory_off">AndroidHarness ඔබේ මනාපයන් සහ තීරණ සියලු චැට් පුරා මතක තබා ගැනීමට මතකය සක්‍රිය කරන්න.</string>
-    <string name="tip_memory_on">මතකය සක්‍රියයි. AndroidHarness මතක තබාගත් දේ ඕනෑම වේලාවක බැලීමට හෝ මකා දැමීමට ඔබට හැක.</string>
+    <string name="tip_memory_off">YL Harness ඔබේ මනාපයන් සහ තීරණ සියලු චැට් පුරා මතක තබා ගැනීමට මතකය සක්‍රිය කරන්න.</string>
+    <string name="tip_memory_on">මතකය සක්‍රියයි. YL Harness මතක තබාගත් දේ ඕනෑම වේලාවක බැලීමට හෝ මකා දැමීමට ඔබට හැක.</string>
     <string name="tip_thinking">වේගය වෙනුවට ගැඹුරු තර්කනය ලබා ගැනීමට ශීර්ෂයේ සිතීමේ මට්ටම තට්ටු කරන්න.</string>
     <string name="tip_glass">යෙදුම පුරා විනිවිද පෙනෙන, ස්ථර සහිත මතුපිට සඳහා Harness Glass උත්සාහ කරන්න.</string>
     <string name="tip_compact">සන්දර්භය අඩු වෙමින්ද? සංවාදය සාරාංශ කර දිගටම යාමට /compact ටයිප් කරන්න.</string>
@@ -30,7 +30,7 @@
     <string name="tip_dual_planning">සැලසුම් කිරීමට එක් මාදිලියක් සහ සැලැස්ම ක්‍රියාත්මක කිරීමට වඩා ලාභ තවත් මාදිලියක් භාවිත කරන්න.</string>
     <string name="tip_codegraph">සෑම ගොනුවක්ම කියවන්නේ නැතිව ඇමතුම්කරුවන් සහ බලපෑමට ලක් වූ කේතය සොයා ගැනීමට CodeGraph ස්ථාපනය කරන්න.</string>
     <string name="tip_whisper">බොහෝ භාෂාවලින් වේගවත්, නිවැරදි හඬ ආදානයක් සඳහා Groq Whisper සමඟ කියවන්න.</string>
-    <string name="tip_app_lock">ඇඟිලි සලකුණ, මුහුණ හෝ උපාංග PIN එකෙන් AndroidHarness අගුළු දමන්න.</string>
+    <string name="tip_app_lock">ඇඟිලි සලකුණ, මුහුණ හෝ උපාංග PIN එකෙන් YL Harness අගුළු දමන්න.</string>
     <string name="tip_mcp">නියෝජිතයාට තවත් මෙවලම් ලබා දීමට MCP සේවාදායක සම්බන්ධ කරන්න.</string>
     <string name="tip_web_search">ඔබේ වෙබ් සෙවුම් පසුබිම තෝරන්න: Keyless, Brave හෝ Tavily.</string>
     <string name="tip_theme">පෙනුම තුළ වර්ණ තලයක් තෝරන්න හෝ ඔබේම එකක් සාදන්න.</string>
@@ -47,7 +47,7 @@
     <string name="tip_config">harness.json හරහා ව්‍යාපෘති සැකසුම් ඔබේ ගබඩාව සමඟ බෙදා ගන්න.</string>
     <string name="tip_shizuku">නියෝජිතයාට ඔබේ උපාංගයේ ඉහළ shell ප්‍රවේශය භාවිත කිරීමට Shizuku සකසන්න.</string>
     <string name="tip_plugins">skills සහ මෙවලම් එක් කිරීමට Plugins පිටුවෙන් plugin බණ්ඩල ස්ථාපනය කරන්න.</string>
-    <string name="tip_language">AndroidHarness භාෂා 11 කින් ලබා ගත හැක. භාෂා සැකසුම්වල එය වෙනස් කරන්න.</string>
+    <string name="tip_language">YL Harness භාෂා 11 කින් ලබා ගත හැක. භාෂා සැකසුම්වල එය වෙනස් කරන්න.</string>
     <string name="tip_backup">ඔබේ චැට් සහ සැකසුම් උපස්ථයක් ලෙස අපනයනය කර වෙනත් උපාංගයක ආයාත කරන්න.</string>
     <string name="tip_progress_bar">පෙනුම තුළ වැඩ ප්‍රගති තීරුවේ විලාසය වෙනස් කරන්න.</string>
     <string name="tip_turn_off">ඔබට ඕනෑම වේලාවක සැකසුම්වලින් මෙම ඉඟි අක්‍රිය කළ හැක.</string>

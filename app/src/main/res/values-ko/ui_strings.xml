@@ -637,7 +637,7 @@
     <string name="ui_shizuku_is_disabled">"Shizuku가 비활성화되었습니다."</string>
     <string name="ui_shizuku_is_no_longer_available_its_server">"Shizuku는 더 이상 사용할 수 없습니다. 서버가 중지되었거나 종료되었을 수 있습니다. "</string>
     <string name="ui_in_the_background_or_this_app_s">"또는 이 앱의 접근 권한이 취소되었을 수 있습니다. "</string>
-    <string name="ui_start_shizuku_and_allow_androidharness_access_to">"Shizuku를 시작하고 AndroidHarness 액세스를 허용하여 다시 사용할 수 있습니다."</string>
+    <string name="ui_start_shizuku_and_allow_ylharness_access_to">"Shizuku를 시작하고 YL Harness 액세스를 허용하여 다시 사용할 수 있습니다."</string>
     <string name="ui_never_show_this_message_again">"이 메시지를 다시 표시하지 않음"</string>
     <string name="ui_limits_resets">"한도 및 재설정"</string>
     <string name="ui_view_live_limits_in_chatgpt">"ChatGPT에서 실시간 한도 보기"</string>
@@ -1110,7 +1110,7 @@
     <string name="ui_the_app_needs_node_python_from_the">"앱. Linux 환경의 node/python가 필요합니다."</string>
     <string name="ui_not_installed_optional">"설치되지 않음: 선택 사항입니다."</string>
     <string name="ui_installed_not_running">"설치되었으나 실행되지 않습니다."</string>
-    <string name="ui_running_grant_androidharness_access">"실행 중: AndroidHarness 액세스 권한을 부여합니다."</string>
+    <string name="ui_running_grant_ylharness_access">"실행 중: YL Harness 액세스 권한을 부여합니다."</string>
     <string name="ui_connected_shell_privileges_ready">"연결됨: 쉘 권한이 준비되었습니다."</string>
     <string name="ui_connected_in_compatibility_mode_shell_privileges_ready">"호환 모드로 연결됨: 쉘 권한이 준비되었습니다."</string>
     <string name="ui_access_granted_connecting_to_the_shell_runner">"액세스 권한이 부여되었습니다. 쉘 러너에 연결 중…"</string>
@@ -1157,10 +1157,10 @@
     <string name="ui_open_source">"오픈 소스"</string>
     <string name="ui_use_it_change_it_ship_it_even">"상용 앱 내에서도 사용하고, 변경하고, 배송하세요. 조건 중 하나는 "</string>
     <string name="ui_copyright_notice_and_the_license_text_travel">"저작권 표시 및 라이센스 텍스트는 코드와 함께 이동됩니다. 보증은 제공되지 않습니다."</string>
-    <string name="ui_androidharness_is_built_on_open_source_work">"AndroidHarness는 오픈 소스 작업을 기반으로 구축되었으며 이전 에이전트의 아이디어를 차용했습니다."</string>
+    <string name="ui_ylharness_is_built_on_open_source_work">"YL Harness는 오픈 소스 작업을 기반으로 구축되었으며 이전 에이전트의 아이디어를 차용했습니다."</string>
     <string name="ui_built_with">"다음으로 제작됨"</string>
     <string name="ui_inspired_by">"영감을 받은 것"</string>
-    <string name="ui_every_project_keeps_its_own_license_androidharness">"모든 프로젝트는 자체 라이센스를 유지합니다. AndroidHarness는 그들과 제휴하지 않습니다."</string>
+    <string name="ui_every_project_keeps_its_own_license_ylharness">"모든 프로젝트는 자체 라이센스를 유지합니다. YL Harness는 그들과 제휴하지 않습니다."</string>
     <string name="ui_exported_chats_messages">"%1$s 채팅을 내보냈습니다(%2$s 메시지, %3$s 메모리)."</string>
     <string name="ui_export_failed">"내보내기에 실패했습니다."</string>
     <string name="ui_export_failed_1230">"내보내기 실패: %1$s"</string>
@@ -1249,7 +1249,7 @@
     <string name="ui_status">"상태"</string>
     <string name="ui_retry_resume">"재시도/재개"</string>
     <string name="ui_pause_telegram">"일시중지 Telegram"</string>
-    <string name="ui_welcome_to_androidharness">"AndroidHarness에 오신 것을 환영합니다"</string>
+    <string name="ui_welcome_to_ylharness">"YL Harness에 오신 것을 환영합니다"</string>
     <string name="ui_grant_storage_access_to_start_coding_notifications">"코딩을 시작하려면 저장소 액세스 권한을 부여하세요. 알림 및 기타 도구는 선택 사항입니다."</string>
     <string name="ui_device_storage_access_granted">"기기 저장소 액세스 권한이 부여되었습니다."</string>
     <string name="ui_required_allow_access_to_device_files_and">"필수: 장치 파일 및 폴더에 대한 액세스를 허용합니다."</string>
@@ -1587,7 +1587,7 @@
     <string name="ui_access_mode">"액세스 모드: %1$s"</string>
     <string name="ui_scheduled_tasks">"예약된 작업"</string>
     <string name="ui_project_and_chat_sidebar">"프로젝트 및 채팅 사이드바"</string>
-    <string name="ui_androidharness_icon">"AndroidHarness 아이콘"</string>
+    <string name="ui_ylharness_icon">"YL Harness 아이콘"</string>
     <string name="ui_collapse_sidebar">"사이드바 접기"</string>
     <string name="ui_search_chats_and_messages">"채팅 및 메시지 검색"</string>
     <string name="ui_search_chats">"채팅 검색"</string>
@@ -1637,7 +1637,7 @@
         <item quantity="other">"%1$d 행"</item>
     </plurals>
     <string name="voice_transcribing">"스크립트 작성 중…"</string>
-    <string name="donate_funding_message">"AndroidHarness 개발을 계속 진행하기 위한 자금이 부족합니다. 귀하의 지원은 우리가 계속해서 발전하는 데 도움이 됩니다."</string>
+    <string name="donate_funding_message">"YL Harness 개발을 계속 진행하기 위한 자금이 부족합니다. 귀하의 지원은 우리가 계속해서 발전하는 데 도움이 됩니다."</string>
     <string name="donate_dismiss_message">"기부 메시지 닫기"</string>
     <string name="background_settings_title">"배경 및 알림"</string>
     <string name="background_settings_description">"백그라운드 작업 및 알림을 관리합니다."</string>
@@ -1647,10 +1647,10 @@
     <string name="background_notifications_description">"앱 알림을 허용합니다. Android는 서비스 공지를 관리합니다."</string>
     <string name="background_android_title">"Android 알림 설정"</string>
     <string name="background_android_description">"모든 Android 알림 설정을 관리합니다."</string>
-    <string name="background_run_blocked">"백그라운드 실행이 꺼져 있습니다. 작업을 시작하거나 계속하려면 AndroidHarness를 엽니다."</string>
+    <string name="background_run_blocked">"백그라운드 실행이 꺼져 있습니다. 작업을 시작하거나 계속하려면 YL Harness를 엽니다."</string>
     <string name="background_service_notice">"백그라운드 서비스가 실행 중입니다."</string>
     <string name="local_gpu_download_title">"GPU 지원"</string>
-    <string name="local_gpu_runtime_repository">"출처: Sanuu7/AH-GPU-런타임"</string>
+    <string name="local_gpu_runtime_repository">"출처: ylstack1/AH-GPU-런타임"</string>
     <string name="local_gpu_delivery_play">"Google Play를 통해 안전하게 설치되었습니다."</string>
     <string name="local_gpu_delivery_github">"GitHub에서 이 앱 및 장치와 일치하는 GPU 패키지를 다운로드합니다."</string>
     <string name="local_gpu_optional_download">"선택적 다운로드. CPU 추론은 그것 없이도 작동합니다. GPU 지원은 설치 후에도 오프라인으로 계속 사용할 수 있습니다."</string>

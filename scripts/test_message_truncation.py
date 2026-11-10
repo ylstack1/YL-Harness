@@ -5,7 +5,7 @@ import re
 import sqlite3
 import unittest
 
-SOURCE = (Path(__file__).resolve().parents[1] / 'app/src/main/java/com/androidharness/app/data/db/Database.kt').read_text()
+SOURCE = (Path(__file__).resolve().parents[1] / 'app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt').read_text()
 QUERY = ''.join(ast.literal_eval(part) for part in re.findall(
     r'"(?:[^"\\]|\\.)*"', SOURCE[SOURCE.index('"DELETE FROM messages WHERE sessionId = :sessionId AND (createdAt'):SOURCE.index('suspend fun deleteMessagesFrom')]))
 

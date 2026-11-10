@@ -20,8 +20,8 @@
     <string name="tip_chat_instructions">Añade en Opciones de chat instrucciones que siga cada chat, como tu tono o idioma preferido.</string>
     <string name="tip_tts">Las respuestas pueden leerse en voz alta automáticamente. Elige voz y velocidad en los ajustes de voz.</string>
     <string name="tip_agents_md">Pon las reglas del proyecto en AGENTS.md y el agente las seguirá en cada ejecución.</string>
-    <string name="tip_memory_off">Activa la memoria para que AndroidHarness recuerde tus preferencias y decisiones entre chats.</string>
-    <string name="tip_memory_on">La memoria está activada. Puedes revisar o borrar lo que AndroidHarness recuerda en cualquier momento.</string>
+    <string name="tip_memory_off">Activa la memoria para que YL Harness recuerde tus preferencias y decisiones entre chats.</string>
+    <string name="tip_memory_on">La memoria está activada. Puedes revisar o borrar lo que YL Harness recuerda en cualquier momento.</string>
     <string name="tip_thinking">Toca el nivel de razonamiento en la cabecera para cambiar velocidad por un razonamiento más profundo.</string>
     <string name="tip_glass">Prueba Harness Glass para superficies translúcidas y en capas en toda la app.</string>
     <string name="tip_compact">¿Te queda poco contexto? Escribe /compact para resumir la conversación y seguir.</string>
@@ -30,7 +30,7 @@
     <string name="tip_dual_planning">Usa un modelo para planificar y otro más barato para ejecutar el plan.</string>
     <string name="tip_codegraph">Instala CodeGraph para que el agente encuentre llamadas y código afectado sin leer cada archivo.</string>
     <string name="tip_whisper">Dicta con Groq Whisper para una entrada de voz rápida y precisa en muchos idiomas.</string>
-    <string name="tip_app_lock">Bloquea AndroidHarness con tu huella, tu rostro o el PIN del dispositivo.</string>
+    <string name="tip_app_lock">Bloquea YL Harness con tu huella, tu rostro o el PIN del dispositivo.</string>
     <string name="tip_mcp">Conecta servidores MCP para darle más herramientas al agente.</string>
     <string name="tip_web_search">Elige tu motor de búsqueda web: Keyless, Brave o Tavily.</string>
     <string name="tip_theme">Elige una paleta de colores o crea la tuya en Apariencia.</string>
@@ -47,7 +47,7 @@
     <string name="tip_config">Comparte los ajustes del proyecto con tu repositorio mediante harness.json.</string>
     <string name="tip_shizuku">Configura Shizuku para que el agente use acceso elevado a la shell en tu dispositivo.</string>
     <string name="tip_plugins">Instala paquetes de plugins desde la página Plugins para añadir skills y herramientas.</string>
-    <string name="tip_language">AndroidHarness está disponible en 11 idiomas. Cámbialo en los ajustes de idioma.</string>
+    <string name="tip_language">YL Harness está disponible en 11 idiomas. Cámbialo en los ajustes de idioma.</string>
     <string name="tip_backup">Exporta tus chats y ajustes como copia de seguridad e impórtalos en otro dispositivo.</string>
     <string name="tip_progress_bar">Cambia el estilo de la barra de progreso en Apariencia.</string>
     <string name="tip_turn_off">Puedes desactivar estos consejos en cualquier momento en Ajustes.</string>

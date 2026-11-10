@@ -137,16 +137,16 @@ Multi-select selection state is cleared when the drawer closes on phone layouts 
 - `FEATURES.md` line 9 says batch delete deletes histories "in one transaction". Confirmed in `deleteSessions`.
 - `FEATURES.md` line 45 says paging does not change the context used by the model. The model reads `historyFor`, which uses `messagesSince(compactionBefore)` (lines 167 to 178), independent of the UI window. No gap found.
 
-Sources: [app/src/main/java/com/androidharness/app/data/SessionRepository.kt](../app/src/main/java/com/androidharness/app/data/SessionRepository.kt)#L81-L102), [app/src/main/java/com/androidharness/app/data/ConversationStartup.kt](../app/src/main/java/com/androidharness/app/data/ConversationStartup.kt)#L41-L55), [app/src/main/java/com/androidharness/app/data/db/Database.kt](../app/src/main/java/com/androidharness/app/data/db/Database.kt)#L406-L422), [app/src/main/java/com/androidharness/app/ui/ProjectNavigationSidebar.kt](../app/src/main/java/com/androidharness/app/ui/ProjectNavigationSidebar.kt)#L79-L93)
+Sources: [app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt](../app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt)#L81-L102), [app/src/main/java/com/ylstack1/ylharness/data/ConversationStartup.kt](../app/src/main/java/com/ylstack1/ylharness/data/ConversationStartup.kt)#L41-L55), [app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt](../app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt)#L406-L422), [app/src/main/java/com/ylstack1/ylharness/ui/ProjectNavigationSidebar.kt](../app/src/main/java/com/ylstack1/ylharness/ui/ProjectNavigationSidebar.kt)#L79-L93)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/data/SessionRepository.kt`
-- `app/src/main/java/com/androidharness/app/data/ConversationConfig.kt`
-- `app/src/main/java/com/androidharness/app/data/ConversationStartup.kt`
-- `app/src/main/java/com/androidharness/app/data/db/Database.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsRepository.kt`
-- `app/src/main/java/com/androidharness/app/ui/AppNav.kt`
-- `app/src/main/java/com/androidharness/app/ui/ProjectNavigationSidebar.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SessionRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ConversationConfig.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ConversationStartup.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/db/Database.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/AppNav.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/ProjectNavigationSidebar.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt`

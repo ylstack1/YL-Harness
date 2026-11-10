@@ -37,7 +37,7 @@ flowchart TD
 
 ## Invocation Chain
 
-1. `ChatScreen` builds `MessageComposer` at `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt` lines 2489 to 2629, passing `sendAllowed = viewModel.attachmentBlockReason() == null` (line 2501) and the attachment slot (lines 2502 to 2518).
+1. `ChatScreen` builds `MessageComposer` at `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt` lines 2489 to 2629, passing `sendAllowed = viewModel.attachmentBlockReason() == null` (line 2501) and the attachment slot (lines 2502 to 2518).
 2. The plus menu in `ComposerLeadingButton` launches the gallery or file picker through the callbacks (`MessageComposer.kt` lines 880 to 957).
 3. The launchers call `viewModel.attachImage(uri)` or `viewModel.attachFile(uri)`, both of which route to `importAttachment` (`ChatViewModel.kt` lines 1205, 1221, and 1297).
 4. `importAttachment` reads the display name and MIME type, queries the size, and chooses the image, PDF, text, or binary path. It adds a temporary `AttachmentImport` row immediately so the composer shows "Reading" while work proceeds.
@@ -47,7 +47,7 @@ flowchart TD
 
 ## Attachment States and Limits
 
-`AttachmentImportStatus` has exactly four values: `READING`, `FAILED`, `TOO_LARGE`, and `UNSUPPORTED` (`app/src/main/java/com/androidharness/app/ui/chat/AttachmentReadiness.kt` line 6). `ChatAttachmentReadiness` translates them to resource strings and marks an error color for everything except `READING`, which shows a small spinner (`ChatAttachmentReadiness.kt` lines 22 to 31). Picked images use `imageInputSupport()` to choose "Ready", "Model cannot view images", or "Image support unconfirmed" (lines 32 to 36). The helper returns null when the catalog has no provider-confirmed capability, and `send` treats null as allowed but false as blocked (`ChatViewModel.kt` lines 1211 to 1217).
+`AttachmentImportStatus` has exactly four values: `READING`, `FAILED`, `TOO_LARGE`, and `UNSUPPORTED` (`app/src/main/java/com/ylstack1/ylharness/ui/chat/AttachmentReadiness.kt` line 6). `ChatAttachmentReadiness` translates them to resource strings and marks an error color for everything except `READING`, which shows a small spinner (`ChatAttachmentReadiness.kt` lines 22 to 31). Picked images use `imageInputSupport()` to choose "Ready", "Model cannot view images", or "Image support unconfirmed" (lines 32 to 36). The helper returns null when the catalog has no provider-confirmed capability, and `send` treats null as allowed but false as blocked (`ChatViewModel.kt` lines 1211 to 1217).
 
 Two numeric limits govern import:
 
@@ -60,7 +60,7 @@ Workspace copies land in `.harness/attachments/` with a sanitized name, an `MMdd
 
 ## PDF Text Extraction
 
-`PdfTextExtractor.extract` first checks for a `%PDF-` header in the first 1024 bytes. On a real Android runtime at API 35 or newer it tries `android.graphics.pdf.PdfRenderer`, opens each page, concatenates `page.textContents`, and writes `--- Page N ---` separators. It stops after 30 pages or 32,000 characters. On older Android or under a JVM test runtime it falls back to `extractFromStreams` (`app/src/main/java/com/androidharness/app/ui/chat/PdfTextExtractor.kt` lines 34 to 55).
+`PdfTextExtractor.extract` first checks for a `%PDF-` header in the first 1024 bytes. On a real Android runtime at API 35 or newer it tries `android.graphics.pdf.PdfRenderer`, opens each page, concatenates `page.textContents`, and writes `--- Page N ---` separators. It stops after 30 pages or 32,000 characters. On older Android or under a JVM test runtime it falls back to `extractFromStreams` (`app/src/main/java/com/ylstack1/ylharness/ui/chat/PdfTextExtractor.kt` lines 34 to 55).
 
 The fallback scans raw bytes for `stream` and `endstream`, detects `/FlateDecode`, honors an explicit `/Length`, and inflates zlib or raw deflate with a 512 KB output cap (`inflateSafely`, lines 186 to 201). `parseContentStream` then tracks `BT` and `ET`, reads literal and hex strings, honors `Tj`, `TJ`, `'`, and `"`, joins array elements, and inserts a space on large negative kerning. `cleanExtractedText` trims every line, drops blanks, and collapses more than two newlines (lines 224 to 451). A scanned image-only PDF returns null, which the caller reports as unreadable.
 
@@ -107,19 +107,19 @@ The composer's right-side slot has these states in `MessageComposer`: locked rec
 - The transcription call is injectable: `VoiceInputController` takes a `transcribe: suspend (File, String, String) -> Result<String>` parameter defaulting to `GroqWhisperClient.transcribe`.
 - Attachment readiness labels are resource-driven, so a new status requires both an enum value and a branch in `ChatAttachmentReadiness`.
 
-Sources: [app/src/main/java/com/androidharness/app/ui/chat/components/MessageComposer.kt](../app/src/main/java/com/androidharness/app/ui/chat/components/MessageComposer.kt)#L157-L616), [app/src/main/java/com/androidharness/app/ui/chat/FileAttachments.kt](../app/src/main/java/com/androidharness/app/ui/chat/FileAttachments.kt)#L10-L145), [app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt](../app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt)#L1205-L1394), [app/src/main/java/com/androidharness/app/ui/chat/VoiceInput.kt](../app/src/main/java/com/androidharness/app/ui/chat/VoiceInput.kt)#L47-L325)
+Sources: [app/src/main/java/com/ylstack1/ylharness/ui/chat/components/MessageComposer.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/components/MessageComposer.kt)#L157-L616), [app/src/main/java/com/ylstack1/ylharness/ui/chat/FileAttachments.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/FileAttachments.kt)#L10-L145), [app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt)#L1205-L1394), [app/src/main/java/com/ylstack1/ylharness/ui/chat/VoiceInput.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/VoiceInput.kt)#L47-L325)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/ui/chat/components/MessageComposer.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/FileAttachments.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ChatAttachmentReadiness.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/AttachmentReadiness.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/PdfTextExtractor.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/VoiceRecorderCapsule.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/VoiceInput.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ChatResponseImage.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ImageViewer.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/MessageComposer.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/FileAttachments.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatAttachmentReadiness.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/AttachmentReadiness.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/PdfTextExtractor.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/VoiceRecorderCapsule.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/VoiceInput.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatResponseImage.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ImageViewer.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt`

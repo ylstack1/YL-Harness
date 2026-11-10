@@ -42,7 +42,7 @@ val hasNdk: Boolean = run {
 android {
     if (distributionChannel == "play") dynamicFeatures += setOf(":local_gpu")
     sourceSets.getByName("main").java.srcDir("src/${distributionChannel}Delivery/java")
-    namespace = "com.androidharness.app"
+    namespace = "com.ylstack1.ylharness"
     // The in-app picker must be able to switch languages without a Play download.
     bundle { language { enableSplit = false } }
     compileSdk = 37
@@ -59,7 +59,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.androidharness.app"
+        applicationId = "com.ylstack1.ylharness"
         minSdk = 26
         targetSdk = 36
         versionCode = 38

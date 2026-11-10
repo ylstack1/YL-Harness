@@ -1,5 +1,5 @@
 # SPAKE2 registers these private native methods against a literal class name.
--keep class com.androidharness.app.data.env.adb.PairingContext { *; }
+-keep class com.ylstack1.ylharness.data.env.adb.PairingContext { *; }
 
 # JavaScript calls these methods by name rather than through JVM references.
 -keepclassmembers class * {
@@ -13,8 +13,8 @@
 # description, so obfuscating them would change user/model-visible text.
 -keepattributes InnerClasses,EnclosingMethod
 -keepnames class * extends java.lang.Throwable
--keep class com.androidharness.app.data.env.EnvState { *; }
--keep class com.androidharness.app.data.env.EnvState$* { *; }
+-keep class com.ylstack1.ylharness.data.env.EnvState { *; }
+-keep class com.ylstack1.ylharness.data.env.EnvState$* { *; }
 
 # SSH algorithms and security providers instantiate implementations by name.
 -keep class com.jcraft.jsch.** { *; }

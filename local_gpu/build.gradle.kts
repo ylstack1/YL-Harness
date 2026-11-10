@@ -1,6 +1,6 @@
 plugins { alias(libs.plugins.android.dynamic.feature) }
 android {
-    namespace = "com.androidharness.gpu"
+    namespace = "com.ylstack1.ylharness.gpu"
     compileSdk = 37
     defaultConfig { minSdk = 26 }
     buildTypes { release { isMinifyEnabled = false } }

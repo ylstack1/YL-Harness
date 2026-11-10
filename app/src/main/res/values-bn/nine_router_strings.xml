@@ -2,7 +2,7 @@
 <resources>
     <string name="nine_router_title">"9Router"</string>
     <string name="nine_router_description">"একটি স্থানীয় মডেল রাউটার ইনস্টল এবং পরিচালনা করুন"</string>
-    <string name="nine_router_intro">"এই ফোনে 9Router চালান এবং আপনার ব্রাউজারে এর প্রদানকারী, মডেল এবং রাউটিং পরিচালনা করুন। AndroidHarness Linux টুলচেন ব্যবহার করে।"</string>
+    <string name="nine_router_intro">"এই ফোনে 9Router চালান এবং আপনার ব্রাউজারে এর প্রদানকারী, মডেল এবং রাউটিং পরিচালনা করুন। YL Harness Linux টুলচেন ব্যবহার করে।"</string>
     <string name="nine_router_setup">"আপনার পরিবেশ সেট আপ করুন"</string>
     <string name="nine_router_not_installed">"ইনস্টল করার জন্য প্রস্তুত"</string>
     <string name="nine_router_ready">"ইনস্টল করা হয়েছে · বন্ধ হয়েছে"</string>
@@ -27,12 +27,12 @@
     <string name="nine_router_checking">"পরীক্ষা করা হচ্ছে..."</string>
     <string name="nine_router_update">"%1$s-এ আপডেট করুন"</string>
     <string name="nine_router_auto_start">"স্বতঃ-শুরু 9Router"</string>
-    <string name="nine_router_auto_start_body">"AndroidHarness খুললে ইনস্টল করা রাউটারটি চালু করুন।"</string>
+    <string name="nine_router_auto_start_body">"YL Harness খুললে ইনস্টল করা রাউটারটি চালু করুন।"</string>
     <string name="nine_router_add_provider">"প্রদানকারীদের 9Router যোগ করুন"</string>
     <string name="nine_router_refresh_provider">"রিফ্রেশ 9Router প্রদানকারী"</string>
     <string name="nine_router_provider_body">"প্রয়োজনে 9Router শুরু করে এবং স্বয়ংক্রিয়ভাবে এর স্থানীয় শেষ পয়েন্ট এবং API কী পূরণ করে। সংযুক্ত মডেলগুলি Chat এবং Code মডেল বাছাইকারীদের মধ্যে উপলব্ধ।"</string>
     <string name="nine_router_remove_provider">"প্রদানকারীদের থেকে সরান"</string>
-    <string name="nine_router_remove_provider_body">"AndroidHarness থেকে 9Router সংযোগগুলি সরান৷ রাউটার এবং এর অ্যাকাউন্ট ইনস্টল থাকবে।"</string>
+    <string name="nine_router_remove_provider_body">"YL Harness থেকে 9Router সংযোগগুলি সরান৷ রাউটার এবং এর অ্যাকাউন্ট ইনস্টল থাকবে।"</string>
     <string name="nine_router_uninstall">"9Router আনইনস্টল করুন"</string>
     <string name="nine_router_uninstall_title">"9Router সম্পূর্ণরূপে আনইনস্টল করবেন?"</string>
     <string name="nine_router_uninstall_body">"9Router বন্ধ করে এবং এর ইনস্টলেশন, সংরক্ষিত অ্যাকাউন্ট, রাউটার API কী, কনফিগারেশন, ক্যাশে, স্বয়ংক্রিয়-শুরু পছন্দ এবং অ্যাপ প্রদানকারী সংযোগগুলি মুছে দেয়। এটি পূর্বাবস্থায় ফেরানো যাবে না। শেয়ার করা Linux টুলচেন অন্যান্য বৈশিষ্ট্যের জন্য উপলব্ধ থাকে।"</string>

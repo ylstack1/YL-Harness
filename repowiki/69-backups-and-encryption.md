@@ -18,7 +18,7 @@
 
 ```mermaid
 flowchart TD
-    A[Settings export button] --> B[CreateDocument androidharness-settings.hbackup]
+    A[Settings export button] --> B[CreateDocument ylharness-settings.hbackup]
     B --> C[SettingsBackup.exportTo]
     C --> D[SettingsBackupPolicy.exportSettings]
     C --> E[Gather providers, MCP, search keys, groq, memories]
@@ -39,7 +39,7 @@ flowchart TD
 
 ## Invocation Chain
 
-1. `SettingsBackupSection` launches `CreateDocument("application/octet-stream")` with the suggested name `androidharness-settings.hbackup` (`SettingsBackupSection.kt:58-60`, `79`).
+1. `SettingsBackupSection` launches `CreateDocument("application/octet-stream")` with the suggested name `ylharness-settings.hbackup` (`SettingsBackupSection.kt:58-60`, `79`).
 2. The dialog collects a password, a confirmation, and the `includeKeys` checkbox; confirm is disabled unless the password is at least 6 characters and both entries match (`SettingsBackupSection.kt:129-156`).
 3. `SettingsBackup.exportTo(uri, chars, includeKeys)` reads current settings and providers, filters through `SettingsBackupPolicy.canExport`, builds each `BackupProvider`, then validates (`SettingsBackup.kt:211-234`).
 4. The file is serialized with `encodeDefaults = true`, encrypted, and written with mode `"wt"` (`SettingsBackup.kt:235-239`).
@@ -49,7 +49,7 @@ flowchart TD
 
 ## Chat Export and Import Format
 
-`ChatBackupFile` has `format = "androidharness-chats"`, `version = 5`, `exportedAt`, `sessions`, `workspaces`, `memories`, and `snippets` (`ChatBackup.kt:25-33`, `113-114`). `BackupSession` mirrors the `sessions` row including token totals, `projectId`, compaction fields, `modelSelectionJson`, `workspaceSelectionJson` and `conversationJson` (`ChatBackup.kt:68-87`). `BackupMessage` mirrors `messages`, including `toolCallsJson`, `imagesJson`, `artifactJson` and `generationJson` (`ChatBackup.kt:89-109`). Those JSON strings ride along exactly as stored, so a later app version that changes their shape still restores older chats losslessly.
+`ChatBackupFile` has `format = "ylharness-chats"`, `version = 5`, `exportedAt`, `sessions`, `workspaces`, `memories`, and `snippets` (`ChatBackup.kt:25-33`, `113-114`). `BackupSession` mirrors the `sessions` row including token totals, `projectId`, compaction fields, `modelSelectionJson`, `workspaceSelectionJson` and `conversationJson` (`ChatBackup.kt:68-87`). `BackupMessage` mirrors `messages`, including `toolCallsJson`, `imagesJson`, `artifactJson` and `generationJson` (`ChatBackup.kt:89-109`). Those JSON strings ride along exactly as stored, so a later app version that changes their shape still restores older chats losslessly.
 
 The export writes no API keys, provider configuration, MCP servers, settings, checkpoints, file history or saved answers (`ChatBackup.kt:17-23`, `162-219`). Memories and snippets are included because they are user content, not credentials. The file is plain UTF-8 JSON, so anyone holding it can read the chats.
 
@@ -134,15 +134,15 @@ Export and unlock errors are mapped, never passed through raw. `settingsBackupEx
 - The settings backup does not include chat history, and the chat backup does not include settings. Moving a full install requires both files.
 - `SettingsBackup.restore` imports MCP servers with `enabled = false`; the user must re-enable each one after restore (`SettingsBackup.kt:285`).
 
-Sources: [data/SettingsBackup.kt](../app/src/main/java/com/androidharness/app/data/SettingsBackup.kt)#L17-L304), [data/BackupEncryption.kt](../app/src/main/java/com/androidharness/app/data/BackupEncryption.kt)#L10-L50), [data/ChatBackup.kt](../app/src/main/java/com/androidharness/app/data/ChatBackup.kt)#L24-L318), [data/MemoryBackup.kt](../app/src/main/java/com/androidharness/app/data/MemoryBackup.kt)#L7-L145), [ui/settings/SettingsBackupSection.kt](../app/src/main/java/com/androidharness/app/ui/settings/SettingsBackupSection.kt)#L42-L219), [ui/settings/ChatRestoreDialog.kt](../app/src/main/java/com/androidharness/app/ui/settings/ChatRestoreDialog.kt)#L23-L83)
+Sources: [data/SettingsBackup.kt](../app/src/main/java/com/ylstack1/ylharness/data/SettingsBackup.kt)#L17-L304), [data/BackupEncryption.kt](../app/src/main/java/com/ylstack1/ylharness/data/BackupEncryption.kt)#L10-L50), [data/ChatBackup.kt](../app/src/main/java/com/ylstack1/ylharness/data/ChatBackup.kt)#L24-L318), [data/MemoryBackup.kt](../app/src/main/java/com/ylstack1/ylharness/data/MemoryBackup.kt)#L7-L145), [ui/settings/SettingsBackupSection.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsBackupSection.kt)#L42-L219), [ui/settings/ChatRestoreDialog.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/ChatRestoreDialog.kt)#L23-L83)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/data/SettingsBackup.kt`
-- `app/src/main/java/com/androidharness/app/data/BackupEncryption.kt`
-- `app/src/main/java/com/androidharness/app/data/ChatBackup.kt`
-- `app/src/main/java/com/androidharness/app/data/MemoryBackup.kt`
-- `app/src/main/java/com/androidharness/app/data/KeyStoreManager.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/SettingsBackupSection.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/ChatRestoreDialog.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/SettingsScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsBackup.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/BackupEncryption.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ChatBackup.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/MemoryBackup.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/KeyStoreManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsBackupSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/ChatRestoreDialog.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsScreen.kt`

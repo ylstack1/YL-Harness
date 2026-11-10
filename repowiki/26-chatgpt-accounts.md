@@ -153,20 +153,20 @@ The app-level settings backup has a second layer. `SettingsBackupPolicy.canExpor
 - There is no periodic background token refresh. Connected accounts are refreshed once in `ChatGptAccounts.init` and then on demand through `accessToken`, model refresh, or a provider 401.
 - `ChatGptUsageLimits` and the panel's Limits & usage link open the ChatGPT settings page. The app does not read or display remaining plan limits or reset times from an API.
 
-Sources: [app/src/main/java/com/androidharness/app/chatgpt/ChatGptAccounts.kt](../app/src/main/java/com/androidharness/app/chatgpt/ChatGptAccounts.kt)#L25-L362), [app/src/main/java/com/androidharness/app/chatgpt/ChatGptProtocol.kt](../app/src/main/java/com/androidharness/app/chatgpt/ChatGptProtocol.kt)#L22-L215), [app/src/main/java/com/androidharness/app/chatgpt/ChatGptProvider.kt](../app/src/main/java/com/androidharness/app/chatgpt/ChatGptProvider.kt)#L15-L165), [app/src/main/java/com/androidharness/app/chatgpt/ChatGptThinking.kt](../app/src/main/java/com/androidharness/app/chatgpt/ChatGptThinking.kt)#L7-L50), [app/src/main/java/com/androidharness/app/ui/settings/ChatGptAccountsPanel.kt](../app/src/main/java/com/androidharness/app/ui/settings/ChatGptAccountsPanel.kt)#L22-L115), [app/src/main/java/com/androidharness/app/ui/settings/ConnectedAccountsSection.kt](../app/src/main/java/com/androidharness/app/ui/settings/ConnectedAccountsSection.kt)#L18-L74), [app/src/main/java/com/androidharness/app/data/KeyStoreManager.kt](../app/src/main/java/com/androidharness/app/data/KeyStoreManager.kt)#L9-L42), [app/src/main/java/com/androidharness/app/data/SettingsBackup.kt](../app/src/main/java/com/androidharness/app/data/SettingsBackup.kt)#L43-L75), [app/src/main/res/xml/backup_rules.xml](../app/src/main/res/xml/backup_rules.xml)#L12-L21), [app/src/main/res/xml/data_extraction_rules.xml](../app/src/main/res/xml/data_extraction_rules.xml)#L13-L34)
+Sources: [app/src/main/java/com/ylstack1/ylharness/chatgpt/ChatGptAccounts.kt](../app/src/main/java/com/ylstack1/ylharness/chatgpt/ChatGptAccounts.kt)#L25-L362), [app/src/main/java/com/ylstack1/ylharness/chatgpt/ChatGptProtocol.kt](../app/src/main/java/com/ylstack1/ylharness/chatgpt/ChatGptProtocol.kt)#L22-L215), [app/src/main/java/com/ylstack1/ylharness/chatgpt/ChatGptProvider.kt](../app/src/main/java/com/ylstack1/ylharness/chatgpt/ChatGptProvider.kt)#L15-L165), [app/src/main/java/com/ylstack1/ylharness/chatgpt/ChatGptThinking.kt](../app/src/main/java/com/ylstack1/ylharness/chatgpt/ChatGptThinking.kt)#L7-L50), [app/src/main/java/com/ylstack1/ylharness/ui/settings/ChatGptAccountsPanel.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/ChatGptAccountsPanel.kt)#L22-L115), [app/src/main/java/com/ylstack1/ylharness/ui/settings/ConnectedAccountsSection.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/ConnectedAccountsSection.kt)#L18-L74), [app/src/main/java/com/ylstack1/ylharness/data/KeyStoreManager.kt](../app/src/main/java/com/ylstack1/ylharness/data/KeyStoreManager.kt)#L9-L42), [app/src/main/java/com/ylstack1/ylharness/data/SettingsBackup.kt](../app/src/main/java/com/ylstack1/ylharness/data/SettingsBackup.kt)#L43-L75), [app/src/main/res/xml/backup_rules.xml](../app/src/main/res/xml/backup_rules.xml)#L12-L21), [app/src/main/res/xml/data_extraction_rules.xml](../app/src/main/res/xml/data_extraction_rules.xml)#L13-L34)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/chatgpt/ChatGptAccounts.kt`
-- `app/src/main/java/com/androidharness/app/chatgpt/ChatGptProtocol.kt`
-- `app/src/main/java/com/androidharness/app/chatgpt/ChatGptProvider.kt`
-- `app/src/main/java/com/androidharness/app/chatgpt/ChatGptThinking.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/ChatGptAccountsPanel.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/ConnectedAccountsSection.kt`
-- `app/src/main/java/com/androidharness/app/ui/common/ChatGptUsageLimits.kt`
-- `app/src/main/java/com/androidharness/app/data/KeyStoreManager.kt`
-- `app/src/main/java/com/androidharness/app/data/ProviderRepository.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsBackup.kt`
-- `app/src/main/java/com/androidharness/app/HarnessApp.kt`
+- `app/src/main/java/com/ylstack1/ylharness/chatgpt/ChatGptAccounts.kt`
+- `app/src/main/java/com/ylstack1/ylharness/chatgpt/ChatGptProtocol.kt`
+- `app/src/main/java/com/ylstack1/ylharness/chatgpt/ChatGptProvider.kt`
+- `app/src/main/java/com/ylstack1/ylharness/chatgpt/ChatGptThinking.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/ChatGptAccountsPanel.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/ConnectedAccountsSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/common/ChatGptUsageLimits.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/KeyStoreManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ProviderRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsBackup.kt`
+- `app/src/main/java/com/ylstack1/ylharness/HarnessApp.kt`
 - `app/src/main/res/xml/backup_rules.xml`
 - `app/src/main/res/xml/data_extraction_rules.xml`

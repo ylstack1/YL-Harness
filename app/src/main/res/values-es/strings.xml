@@ -139,9 +139,9 @@
     <string name="settings_search_license_title">"Licencia"</string>
     <string name="settings_search_license_desc">"Acerca de · La licencia MIT y lo que significa para los forks"</string>
     <string name="settings_search_credits_title">"Créditos"</string>
-    <string name="settings_search_credits_desc">"Acerca de · Proyectos de código abierto detrás de AndroidHarness"</string>
+    <string name="settings_search_credits_desc">"Acerca de · Proyectos de código abierto detrás de YL Harness"</string>
     <string name="settings_search_author_title">"Autor"</string>
-    <string name="settings_search_author_desc">"Acerca de · Quién crea AndroidHarness y dónde encontrarlo"</string>
+    <string name="settings_search_author_desc">"Acerca de · Quién crea YL Harness y dónde encontrarlo"</string>
     <string name="settings_anchor_progress_bar_style">"Estilo de barra de progreso"</string>
     <string name="settings_anchor_fallbacks">"Alternativas"</string>
     <string name="settings_anchor_continue_chatgpt">"Continuar con ChatGPT"</string>
@@ -287,10 +287,10 @@
     <string name="settings_restore_reconnect_title">"Reconectar chats restaurados"</string>
     <string name="settings_restore_reconnect_note">"El acceso de solo lectura sigue siendo de solo lectura. Los chats que usaron varios espacios de trabajo necesitan carpetas separadas para cada uno."</string>
     <string name="settings_accounts_using_plan">"Estás usando tu plan de ChatGPT"</string>
-    <string name="settings_accounts_using_plan_desc">"Las solicitudes elegibles en AndroidHarness usan tu plan o créditos de ChatGPT. Revisa el uso y gestiona el acceso de esta app en la configuración de ChatGPT."</string>
+    <string name="settings_accounts_using_plan_desc">"Las solicitudes elegibles en YL Harness usan tu plan o créditos de ChatGPT. Revisa el uso y gestiona el acceso de esta app en la configuración de ChatGPT."</string>
     <string name="settings_action_got_it">"Entendido"</string>
     <string name="settings_accounts_signout_title">"¿Cerrar sesión de esta cuenta?"</string>
-    <string name="settings_accounts_signout_message">"Esto desconecta la cuenta de AndroidHarness y la elimina del cambio automático. Puedes iniciar sesión de nuevo más tarde."</string>
+    <string name="settings_accounts_signout_message">"Esto desconecta la cuenta de YL Harness y la elimina del cambio automático. Puedes iniciar sesión de nuevo más tarde."</string>
     <string name="settings_action_continue">"Continuar"</string>
     <string name="settings_progress_bar_subtitle">"Elige cómo se ven las barras de progreso. Se aplica de inmediato."</string>
     <string name="settings_provider_select">"Seleccionar"</string>
@@ -905,7 +905,7 @@
     <string name="chat_handoff_picker_note">"Elige dónde construir. Tu plan de Chat se incluye."</string>
     <string name="chat_handoff_close">"Cerrar selector de espacio de trabajo"</string>
     <string name="chat_handoff_no_workspace">"Añade un espacio de trabajo en Code para continuar."</string>
-    <string name="chat_share_target">"AndroidHarness Chat"</string>
+    <string name="chat_share_target">"YL Harness Chat"</string>
     <string name="chat_share_title">"Compartir en Chat"</string>
     <string name="chat_share_review">"Revisa los elementos compartidos, elige un Chat y añade una pregunta. No se envía nada hasta que toques Enviar en Chat."</string>
     <string name="chat_share_new">"Nuevo Chat"</string>
@@ -974,7 +974,7 @@
     <string name="glass_unsupported">Los efectos de cristal necesitan Android 12 o posterior.</string>
     <string name="glass_liquid_unsupported">Liquid Glass necesita Android 13 o posterior. El cristal esmerilado está disponible en este dispositivo.</string>
     <string name="glass_preview_label">Vista previa del cristal</string>
-    <string name="glass_preview_title">AndroidHarness</string>
+    <string name="glass_preview_title">YL Harness</string>
     <string name="glass_preview_text">Texto nítido. Un fondo más suave.</string>
     <string name="glass_transparency">Transparencia</string>
     <string name="glass_transparency_percent">%1$d%%</string>

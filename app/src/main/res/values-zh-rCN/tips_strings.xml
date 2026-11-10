@@ -20,8 +20,8 @@
     <string name="tip_chat_instructions">在聊天选项中添加每个聊天都遵循的指令，比如偏好的语气或语言。</string>
     <string name="tip_tts">回复可以自动朗读。在语音设置中选择声音和语速。</string>
     <string name="tip_agents_md">把项目规则写进 AGENTS.md，智能体每次运行都会遵守。</string>
-    <string name="tip_memory_off">开启记忆，让 AndroidHarness 在所有聊天中记住你的偏好和决定。</string>
-    <string name="tip_memory_on">记忆已开启。你可以随时查看或删除 AndroidHarness 记住的内容。</string>
+    <string name="tip_memory_off">开启记忆，让 YL Harness 在所有聊天中记住你的偏好和决定。</string>
+    <string name="tip_memory_on">记忆已开启。你可以随时查看或删除 YL Harness 记住的内容。</string>
     <string name="tip_thinking">点按顶部的思考等级，用速度换取更深入的推理。</string>
     <string name="tip_glass">试试 Harness Glass，让整个应用呈现半透明的层叠效果。</string>
     <string name="tip_compact">上下文快不够了？输入 /compact 总结对话后继续。</string>
@@ -30,7 +30,7 @@
     <string name="tip_dual_planning">用一个模型做规划，再用另一个更便宜的模型执行计划。</string>
     <string name="tip_codegraph">安装 CodeGraph，智能体无需读遍每个文件就能找到调用方和受影响的代码。</string>
     <string name="tip_whisper">用 Groq Whisper 听写，多种语言都能快速准确地输入。</string>
-    <string name="tip_app_lock">用指纹、面容或设备 PIN 锁定 AndroidHarness。</string>
+    <string name="tip_app_lock">用指纹、面容或设备 PIN 锁定 YL Harness。</string>
     <string name="tip_mcp">连接 MCP 服务器，为智能体提供更多工具。</string>
     <string name="tip_web_search">选择网络搜索后端：Keyless、Brave 或 Tavily。</string>
     <string name="tip_theme">在外观中选择配色方案，或自己创建一个。</string>
@@ -47,7 +47,7 @@
     <string name="tip_config">通过 harness.json 与仓库共享项目设置。</string>
     <string name="tip_shizuku">设置 Shizuku，让智能体在你的设备上使用更高权限的 shell。</string>
     <string name="tip_plugins">在插件页面安装插件包，添加技能和工具。</string>
-    <string name="tip_language">AndroidHarness 支持 11 种语言，可在语言设置中切换。</string>
+    <string name="tip_language">YL Harness 支持 11 种语言，可在语言设置中切换。</string>
     <string name="tip_backup">将聊天和设置导出为备份，并在另一台设备上导入。</string>
     <string name="tip_progress_bar">在外观中更改工作进度条的样式。</string>
     <string name="tip_turn_off">你可以随时在设置中关闭这些提示。</string>

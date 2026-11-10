@@ -101,17 +101,17 @@ Persistence and lifetime:
 - `PluginStarters.listings` (`PluginManager.kt:291-294`) is defined but `PluginManager.search` never adds it to any `CatalogSection`. The two starter bundles are therefore only reachable if code supplies a `PluginOrigin(kind = "builtin")`; Discover does not show them.
 - `PluginCatalog.setup` distinguishes only skills, remote MCP servers and local MCP servers. A plugin bundle's runtimes are unknown until `PluginManifest.inspect` runs, which is why the filter intentionally returns null for plugin listings (`PluginCatalog.kt:106-116`).
 
-Sources: [app/src/main/java/com/androidharness/app/plugins/PluginManager.kt](../app/src/main/java/com/androidharness/app/plugins/PluginManager.kt)#L34-L287), [app/src/main/java/com/androidharness/app/plugins/PluginStore.kt](../app/src/main/java/com/androidharness/app/plugins/PluginStore.kt)#L14-L113), [app/src/main/java/com/androidharness/app/plugins/PluginCatalog.kt](../app/src/main/java/com/androidharness/app/plugins/PluginCatalog.kt)#L38-L153), [app/src/main/java/com/androidharness/app/plugins/PluginDownloads.kt](../app/src/main/java/com/androidharness/app/plugins/PluginDownloads.kt)#L18-L268), [app/src/main/java/com/androidharness/app/plugins/PluginMarketplaces.kt](../app/src/main/java/com/androidharness/app/plugins/PluginMarketplaces.kt)#L12-L97), [app/src/main/java/com/androidharness/app/ui/settings/PluginManagerSection.kt](../app/src/main/java/com/androidharness/app/ui/settings/PluginManagerSection.kt)#L52-L473), [app/src/main/java/com/androidharness/app/ui/settings/PluginDiscover.kt](../app/src/main/java/com/androidharness/app/ui/settings/PluginDiscover.kt)#L146-L317)
+Sources: [app/src/main/java/com/ylstack1/ylharness/plugins/PluginManager.kt](../app/src/main/java/com/ylstack1/ylharness/plugins/PluginManager.kt)#L34-L287), [app/src/main/java/com/ylstack1/ylharness/plugins/PluginStore.kt](../app/src/main/java/com/ylstack1/ylharness/plugins/PluginStore.kt)#L14-L113), [app/src/main/java/com/ylstack1/ylharness/plugins/PluginCatalog.kt](../app/src/main/java/com/ylstack1/ylharness/plugins/PluginCatalog.kt)#L38-L153), [app/src/main/java/com/ylstack1/ylharness/plugins/PluginDownloads.kt](../app/src/main/java/com/ylstack1/ylharness/plugins/PluginDownloads.kt)#L18-L268), [app/src/main/java/com/ylstack1/ylharness/plugins/PluginMarketplaces.kt](../app/src/main/java/com/ylstack1/ylharness/plugins/PluginMarketplaces.kt)#L12-L97), [app/src/main/java/com/ylstack1/ylharness/ui/settings/PluginManagerSection.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/PluginManagerSection.kt)#L52-L473), [app/src/main/java/com/ylstack1/ylharness/ui/settings/PluginDiscover.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/PluginDiscover.kt)#L146-L317)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/plugins/PluginManager.kt`
-- `app/src/main/java/com/androidharness/app/plugins/PluginStore.kt`
-- `app/src/main/java/com/androidharness/app/plugins/PluginCatalog.kt`
-- `app/src/main/java/com/androidharness/app/plugins/PluginDownloads.kt`
-- `app/src/main/java/com/androidharness/app/plugins/PluginMarketplaces.kt`
-- `app/src/main/java/com/androidharness/app/plugins/PluginModels.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/PluginManagerSection.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/PluginDiscover.kt`
-- `app/src/main/java/com/androidharness/app/config/HarnessConfig.kt`
-- `app/src/main/java/com/androidharness/app/HarnessApp.kt`
+- `app/src/main/java/com/ylstack1/ylharness/plugins/PluginManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/plugins/PluginStore.kt`
+- `app/src/main/java/com/ylstack1/ylharness/plugins/PluginCatalog.kt`
+- `app/src/main/java/com/ylstack1/ylharness/plugins/PluginDownloads.kt`
+- `app/src/main/java/com/ylstack1/ylharness/plugins/PluginMarketplaces.kt`
+- `app/src/main/java/com/ylstack1/ylharness/plugins/PluginModels.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/PluginManagerSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/PluginDiscover.kt`
+- `app/src/main/java/com/ylstack1/ylharness/config/HarnessConfig.kt`
+- `app/src/main/java/com/ylstack1/ylharness/HarnessApp.kt`

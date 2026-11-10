@@ -139,9 +139,9 @@
     <string name="settings_search_license_title">"Lisans"</string>
     <string name="settings_search_license_desc">"Hakkında · MIT lisansı ve bunun çatallar için anlamı"</string>
     <string name="settings_search_credits_title">"Kredi"</string>
-    <string name="settings_search_credits_desc">"Hakkında · AndroidHarness\'nin arkasındaki açık kaynaklı projeler"</string>
+    <string name="settings_search_credits_desc">"Hakkında · YL Harness\'nin arkasındaki açık kaynaklı projeler"</string>
     <string name="settings_search_author_title">"Yazar"</string>
-    <string name="settings_search_author_desc">"Hakkında · AndroidHarness\'yi kim oluşturur ve nerede bulunur?"</string>
+    <string name="settings_search_author_desc">"Hakkında · YL Harness\'yi kim oluşturur ve nerede bulunur?"</string>
     <string name="settings_anchor_progress_bar_style">"İlerleme çubuğu stili"</string>
     <string name="settings_anchor_fallbacks">"Geri dönüşler"</string>
     <string name="settings_anchor_continue_chatgpt">"ChatGPT ile devam edin"</string>
@@ -287,10 +287,10 @@
     <string name="settings_restore_reconnect_title">"Geri yüklenen sohbetleri yeniden bağlayın"</string>
     <string name="settings_restore_reconnect_note">"Salt okunur erişim salt okunur olarak kalır. Birden fazla çalışma alanı kullanan sohbetlerin her biri için ayrı klasörlere ihtiyacı vardır."</string>
     <string name="settings_accounts_using_plan">"ChatGPT planınızı kullanıyorsunuz"</string>
-    <string name="settings_accounts_using_plan_desc">"AndroidHarness\'deki uygun istekler ChatGPT planınızı veya kredilerinizi kullanır. ChatGPT ayarlarında kullanımı inceleyin ve bu uygulamanın erişimini yönetin."</string>
+    <string name="settings_accounts_using_plan_desc">"YL Harness\'deki uygun istekler ChatGPT planınızı veya kredilerinizi kullanır. ChatGPT ayarlarında kullanımı inceleyin ve bu uygulamanın erişimini yönetin."</string>
     <string name="settings_action_got_it">"Anladım"</string>
     <string name="settings_accounts_signout_title">"Bu hesaptaki oturum kapatılsın mı?"</string>
-    <string name="settings_accounts_signout_message">"Bu, hesabın AndroidHarness ile bağlantısını keser ve otomatik geçişten kaldırır. Daha sonra tekrar oturum açabilirsiniz."</string>
+    <string name="settings_accounts_signout_message">"Bu, hesabın YL Harness ile bağlantısını keser ve otomatik geçişten kaldırır. Daha sonra tekrar oturum açabilirsiniz."</string>
     <string name="settings_action_continue">"Devam et"</string>
     <string name="settings_progress_bar_subtitle">"İlerleme çubuklarının nasıl görüneceğini seçin. Hemen uygulanır."</string>
     <string name="settings_provider_select">"Seç"</string>
@@ -905,7 +905,7 @@
     <string name="chat_handoff_picker_note">"Nerede inşa edileceğini seçin. Chat planınız geliyor."</string>
     <string name="chat_handoff_close">"Çalışma alanı seçiciyi kapat"</string>
     <string name="chat_handoff_no_workspace">"Devam etmek için Code\'ye bir çalışma alanı ekleyin."</string>
-    <string name="chat_share_target">"AndroidHarness Chat"</string>
+    <string name="chat_share_target">"YL Harness Chat"</string>
     <string name="chat_share_title">"Chat\'de paylaş"</string>
     <string name="chat_share_review">"Paylaşılan öğelerinizi inceleyin, bir Chat seçin ve bir soru ekleyin. Siz Chat\'de Gönder\'e dokunana kadar hiçbir şey gönderilmez."</string>
     <string name="chat_share_new">"Yeni Chat"</string>
@@ -983,7 +983,7 @@
     <string name="glass_unsupported">"Cam efektleri için Android 12 veya üzeri gerekir."</string>
     <string name="glass_liquid_unsupported">"Liquid Glass\'ın Android 13 veya üzeri bir sürüme ihtiyacı vardır. Bu cihazda buzlu cam mevcuttur."</string>
     <string name="glass_preview_label">"Cam önizlemesi"</string>
-    <string name="glass_preview_title">"AndroidHarness"</string>
+    <string name="glass_preview_title">"YL Harness"</string>
     <string name="glass_preview_text">"Metni temizle. Daha yumuşak bir arka plan."</string>
     <string name="glass_transparency">"Şeffaflık"</string>
     <string name="glass_transparency_percent">"%1$d%%"</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="learn_title">"Matuto AndroidHarness"</string>
+    <string name="learn_title">"Matuto YL Harness"</string>
     <string name="learn_description">"Friendly, step-by-step na mga gabay sa lahat ng magagawa mo dito."</string>
     <string name="learn_group">"Magsimula dito"</string>
     <string name="learn_entry_hint">"Ang iyong gabay, sa iyong bilis"</string>

@@ -139,9 +139,9 @@
     <string name="settings_search_license_title">"Lisensya"</string>
     <string name="settings_search_license_desc">"Tungkol sa · Ang lisensyang MIT at kung ano ang ibig sabihin nito para sa mga tinidor"</string>
     <string name="settings_search_credits_title">"Mga kredito"</string>
-    <string name="settings_search_credits_desc">"Tungkol sa · Open source na mga proyekto sa likod ng AndroidHarness"</string>
+    <string name="settings_search_credits_desc">"Tungkol sa · Open source na mga proyekto sa likod ng YL Harness"</string>
     <string name="settings_search_author_title">"May-akda"</string>
-    <string name="settings_search_author_desc">"Tungkol sa · Sino ang bumuo ng AndroidHarness at kung saan ito mahahanap"</string>
+    <string name="settings_search_author_desc">"Tungkol sa · Sino ang bumuo ng YL Harness at kung saan ito mahahanap"</string>
     <string name="settings_anchor_progress_bar_style">"Istilo ng progress bar"</string>
     <string name="settings_anchor_fallbacks">"Mga fallback"</string>
     <string name="settings_anchor_continue_chatgpt">"Magpatuloy sa ChatGPT"</string>
@@ -287,10 +287,10 @@
     <string name="settings_restore_reconnect_title">"Muling ikonekta ang mga naibalik na chat"</string>
     <string name="settings_restore_reconnect_note">"Ang read-only na access ay nananatiling read-only. Ang mga chat na gumamit ng maraming workspace ay nangangailangan ng hiwalay na mga folder para sa bawat isa."</string>
     <string name="settings_accounts_using_plan">"Ginagamit mo ang iyong ChatGPT plan"</string>
-    <string name="settings_accounts_using_plan_desc">"Ginagamit ng mga kwalipikadong kahilingan sa AndroidHarness ang iyong ChatGPT plan o mga credit. Suriin ang paggamit at pamahalaan ang access ng app na ito sa mga setting ng ChatGPT."</string>
+    <string name="settings_accounts_using_plan_desc">"Ginagamit ng mga kwalipikadong kahilingan sa YL Harness ang iyong ChatGPT plan o mga credit. Suriin ang paggamit at pamahalaan ang access ng app na ito sa mga setting ng ChatGPT."</string>
     <string name="settings_action_got_it">"Nakuha ko"</string>
     <string name="settings_accounts_signout_title">"Mag-sign out sa account na ito?"</string>
-    <string name="settings_accounts_signout_message">"Dinidiskonekta nito ang account mula sa AndroidHarness at inaalis ito sa awtomatikong paglipat. Maaari kang mag-sign in muli sa ibang pagkakataon."</string>
+    <string name="settings_accounts_signout_message">"Dinidiskonekta nito ang account mula sa YL Harness at inaalis ito sa awtomatikong paglipat. Maaari kang mag-sign in muli sa ibang pagkakataon."</string>
     <string name="settings_action_continue">"Magpatuloy"</string>
     <string name="settings_progress_bar_subtitle">"Piliin kung ano ang hitsura ng mga progress bar. Nalalapat kaagad."</string>
     <string name="settings_provider_select">"Pumili"</string>
@@ -905,7 +905,7 @@
     <string name="chat_handoff_picker_note">"Piliin kung saan itatayo. Ang iyong Chat plan ay kasama."</string>
     <string name="chat_handoff_close">"Isara ang workspace picker"</string>
     <string name="chat_handoff_no_workspace">"Magdagdag ng workspace sa Code upang magpatuloy."</string>
-    <string name="chat_share_target">"AndroidHarness Chat"</string>
+    <string name="chat_share_target">"YL Harness Chat"</string>
     <string name="chat_share_title">"Ibahagi sa Chat"</string>
     <string name="chat_share_review">"Suriin ang iyong mga nakabahaging item, pumili ng Chat, at magdagdag ng tanong. Walang maipapadala hanggang sa i-tap mo ang Ipadala sa Chat."</string>
     <string name="chat_share_new">"Bagong Chat"</string>
@@ -983,7 +983,7 @@
     <string name="glass_unsupported">"Ang mga glass effect ay nangangailangan ng Android 12 o mas bago."</string>
     <string name="glass_liquid_unsupported">"Kailangan ng Liquid Glass ng Android 13 o mas bago. Available ang frosted glass sa device na ito."</string>
     <string name="glass_preview_label">"Preview ng salamin"</string>
-    <string name="glass_preview_title">"AndroidHarness"</string>
+    <string name="glass_preview_title">"YL Harness"</string>
     <string name="glass_preview_text">"I-clear ang text. Isang mas malambot na background."</string>
     <string name="glass_transparency">"Transparency"</string>
     <string name="glass_transparency_percent">"%1$d%%"</string>

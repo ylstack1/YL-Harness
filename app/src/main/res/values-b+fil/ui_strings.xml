@@ -637,7 +637,7 @@
     <string name="ui_shizuku_is_disabled">"Ang Shizuku ay hindi pinagana"</string>
     <string name="ui_shizuku_is_no_longer_available_its_server">"Hindi na available ang Shizuku. Maaaring tumigil o napatay ang server nito "</string>
     <string name="ui_in_the_background_or_this_app_s">"sa background, o maaaring binawi ang access ng app na ito. "</string>
-    <string name="ui_start_shizuku_and_allow_androidharness_access_to">"Simulan ang Shizuku at payagan ang AndroidHarness na access na magamit itong muli."</string>
+    <string name="ui_start_shizuku_and_allow_ylharness_access_to">"Simulan ang Shizuku at payagan ang YL Harness na access na magamit itong muli."</string>
     <string name="ui_never_show_this_message_again">"Huwag kailanman ipakita muli ang mensaheng ito"</string>
     <string name="ui_limits_resets">"Mga limitasyon at pag-reset"</string>
     <string name="ui_view_live_limits_in_chatgpt">"Tingnan ang mga live na limitasyon sa ChatGPT"</string>
@@ -1110,7 +1110,7 @@
     <string name="ui_the_app_needs_node_python_from_the">"ang app. Kailangan ng node/python mula sa Linux na kapaligiran."</string>
     <string name="ui_not_installed_optional">"Hindi naka-install: opsyonal."</string>
     <string name="ui_installed_not_running">"Naka-install, hindi tumatakbo."</string>
-    <string name="ui_running_grant_androidharness_access">"Tumatakbo: bigyan ng AndroidHarness access."</string>
+    <string name="ui_running_grant_ylharness_access">"Tumatakbo: bigyan ng YL Harness access."</string>
     <string name="ui_connected_shell_privileges_ready">"Nakakonekta: handa na ang mga pribilehiyo ng shell."</string>
     <string name="ui_connected_in_compatibility_mode_shell_privileges_ready">"Nakakonekta sa compatibility mode: handa na ang mga pribilehiyo ng shell."</string>
     <string name="ui_access_granted_connecting_to_the_shell_runner">"Ibinigay ang access. Kumokonekta sa shell runner…"</string>
@@ -1157,10 +1157,10 @@
     <string name="ui_open_source">"Open source"</string>
     <string name="ui_use_it_change_it_ship_it_even">"Gamitin ito, baguhin ito, ipadala ito, kahit sa loob ng isang komersyal na app. Ang isang kundisyon ay ang "</string>
     <string name="ui_copyright_notice_and_the_license_text_travel">"abiso sa copyright at ang text ng lisensya na naglalakbay kasama ang code. Wala itong warranty."</string>
-    <string name="ui_androidharness_is_built_on_open_source_work">"Ang AndroidHarness ay binuo sa open source na trabaho at humihiram ng mga ideya mula sa mga ahente na nauna rito."</string>
+    <string name="ui_ylharness_is_built_on_open_source_work">"Ang YL Harness ay binuo sa open source na trabaho at humihiram ng mga ideya mula sa mga ahente na nauna rito."</string>
     <string name="ui_built_with">"Itinayo gamit ang"</string>
     <string name="ui_inspired_by">"May inspirasyon ng"</string>
-    <string name="ui_every_project_keeps_its_own_license_androidharness">"Ang bawat proyekto ay nagpapanatili ng sarili nitong lisensya. Ang AndroidHarness ay hindi kaakibat sa kanila."</string>
+    <string name="ui_every_project_keeps_its_own_license_ylharness">"Ang bawat proyekto ay nagpapanatili ng sarili nitong lisensya. Ang YL Harness ay hindi kaakibat sa kanila."</string>
     <string name="ui_exported_chats_messages">"Na-export na %1$s chat (%2$s messages, %3$s memories)."</string>
     <string name="ui_export_failed">"Nabigo ang pag-export."</string>
     <string name="ui_export_failed_1230">"Nabigo ang pag-export: %1$s"</string>
@@ -1249,7 +1249,7 @@
     <string name="ui_status">"Katayuan"</string>
     <string name="ui_retry_resume">"Subukan muli / ipagpatuloy"</string>
     <string name="ui_pause_telegram">"I-pause ang Telegram"</string>
-    <string name="ui_welcome_to_androidharness">"Maligayang pagdating sa AndroidHarness"</string>
+    <string name="ui_welcome_to_ylharness">"Maligayang pagdating sa YL Harness"</string>
     <string name="ui_grant_storage_access_to_start_coding_notifications">"Bigyan ng access ang storage para simulan ang coding. Ang mga abiso at iba pang mga tool ay opsyonal."</string>
     <string name="ui_device_storage_access_granted">"Ibinigay ang access sa storage ng device"</string>
     <string name="ui_required_allow_access_to_device_files_and">"Kinakailangan: payagan ang pag-access sa mga file at folder ng device"</string>
@@ -1587,7 +1587,7 @@
     <string name="ui_access_mode">"Access mode: %1$s"</string>
     <string name="ui_scheduled_tasks">"Mga naka-iskedyul na gawain"</string>
     <string name="ui_project_and_chat_sidebar">"Project at chat sidebar"</string>
-    <string name="ui_androidharness_icon">"AndroidHarness icon"</string>
+    <string name="ui_ylharness_icon">"YL Harness icon"</string>
     <string name="ui_collapse_sidebar">"I-collapse ang sidebar"</string>
     <string name="ui_search_chats_and_messages">"Maghanap ng mga chat at mensahe"</string>
     <string name="ui_search_chats">"Maghanap ng mga chat"</string>
@@ -1639,7 +1639,7 @@
         <item quantity="other">"%1$d na mga hilera"</item>
     </plurals>
     <string name="voice_transcribing">"Tina-transcribe..."</string>
-    <string name="donate_funding_message">"Kapos kami sa pondo para mapanatili ang pag-unlad ng AndroidHarness. Ang iyong suporta ay tumutulong sa amin na magpatuloy sa pagbuo."</string>
+    <string name="donate_funding_message">"Kapos kami sa pondo para mapanatili ang pag-unlad ng YL Harness. Ang iyong suporta ay tumutulong sa amin na magpatuloy sa pagbuo."</string>
     <string name="donate_dismiss_message">"I-dismiss ang mensahe ng donasyon"</string>
     <string name="background_settings_title">"Background at mga notification"</string>
     <string name="background_settings_description">"Pamahalaan ang background work at mga notification."</string>
@@ -1649,10 +1649,10 @@
     <string name="background_notifications_description">"Payagan ang mga alerto sa app. Ang Android ay namamahala sa mga paunawa sa serbisyo."</string>
     <string name="background_android_title">"Mga setting ng notification ng Android"</string>
     <string name="background_android_description">"Pamahalaan ang lahat ng mga setting ng notification ng Android."</string>
-    <string name="background_run_blocked">"Naka-off ang background running. Buksan ang AndroidHarness upang simulan o ipagpatuloy ang isang gawain."</string>
+    <string name="background_run_blocked">"Naka-off ang background running. Buksan ang YL Harness upang simulan o ipagpatuloy ang isang gawain."</string>
     <string name="background_service_notice">"Ang serbisyo sa background ay tumatakbo"</string>
     <string name="local_gpu_download_title">"Suporta sa GPU"</string>
-    <string name="local_gpu_runtime_repository">"Pinagmulan: Sanuu7/AH-GPU-Runtime"</string>
+    <string name="local_gpu_runtime_repository">"Pinagmulan: ylstack1/AH-GPU-Runtime"</string>
     <string name="local_gpu_delivery_play">"Naka-install nang secure sa pamamagitan ng Google Play."</string>
     <string name="local_gpu_delivery_github">"Nagda-download ng GPU package na tumutugma sa app at device na ito mula sa GitHub."</string>
     <string name="local_gpu_optional_download">"Opsyonal na pag-download. Gumagana ang CPU inference nang wala ito; Ang suporta ng GPU ay mananatiling available offline pagkatapos ng pag-install."</string>

@@ -1,0 +1,370 @@
+package com.ylstack1.ylharness.skills
+
+import java.io.File
+
+/**
+ * Three-layer skill tree. Project wins, then user, then bundled.
+ * Disabled names stay on disk but drop out of the catalog and slash picker.
+ */
+class SkillStore(
+    private val bundled: Map<String, BundledSkill>,
+    private val userDir: File,
+    private val projectDir: () -> File?,
+    private val disabled: () -> Set<String>,
+    private val optionalBundled: () -> Map<String, BundledSkill> = { emptyMap() },
+    private val configuredSkills: Map<String, BundledSkill> = emptyMap(),
+    private val configuration: com.ylstack1.ylharness.config.HarnessConfig? = null,
+) {
+    private var frozen: List<Located>? = null
+    fun freeze(): SkillStore {
+        if (frozen == null) frozen = list().flatMap { findAll(it.name) }
+        return this
+    }
+    /** A fixed project directory keeps one chat's catalog independent of the selected workspace. */
+    fun forProject(directory: File?): SkillStore = SkillStore(bundled, userDir, { directory }, disabled, optionalBundled)
+    fun configured(config: com.ylstack1.ylharness.config.HarnessConfig): SkillStore =
+        if (!config.present) this else SkillStore(bundled, userDir, { null }, disabled, optionalBundled, config.skills, config)
+
+    fun forWorkspace(workspace: com.ylstack1.ylharness.workspace.WorkspaceFs): SkillStore {
+        if (configuration != null) return this
+        val primary = (workspace as? com.ylstack1.ylharness.workspace.ChatWorkspaceFs)?.primary?.fs ?: workspace
+        return forProject(primary.shellRoot?.resolve(".harness/skills"))
+    }
+
+    /** [directory] is the skill's real folder when it has one; its files are then listed and read on demand. */
+    data class BundledSkill(
+        val relativeDir: String,
+        val content: String,
+        val files: Map<String, String> = emptyMap(),
+        val directory: String? = null,
+    )
+
+    fun list(): List<SkillMeta> {
+        frozen?.let { entries -> return entries.groupBy { it.meta.name }.values.mapNotNull(::pickWinner)
+            .map { it.meta.copy(enabled = it.meta.name !in disabled() && configuration?.skillEnabled(it.meta.name) != false) }
+            .sortedWith(compareBy({ it.category }, { it.name })) }
+        val byName = linkedMapOf<String, SkillMeta>()
+        scanBundled().forEach { byName[it.name] = it }
+        scanDir(userDir, SkillSource.USER).forEach { byName[it.name] = it }
+        projectDir()?.let { dir ->
+            scanDir(dir, SkillSource.PROJECT).forEach { byName[it.name] = it }
+        }
+        configuredSkills.values.mapNotNull { parseLocated(it.content, SkillSource.PROJECT, it.relativeDir, it.files, it.directory)?.meta }
+            .forEach { byName[it.name] = it }
+        val off = disabled()
+        return byName.values
+            .map { it.copy(enabled = it.name !in off && configuration?.skillEnabled(it.name) != false) }
+            .sortedWith(compareBy({ it.category }, { it.name }))
+    }
+
+    fun enabled(): List<SkillMeta> = list().filter { it.enabled }
+
+    fun catalog(): String {
+        val enabled = enabled()
+        if (enabled.isEmpty()) return ""
+        val grouped = enabled.groupBy { it.category }
+        val index = buildString {
+            for (category in grouped.keys.sorted()) {
+                append("  ").append(category).append(":\n")
+                for (skill in grouped.getValue(category).sortedBy { it.name }) {
+                    append("    - ").append(skill.name).append(": ").append(skill.description).append('\n')
+                }
+            }
+        }
+        return buildSkillsPromptBlock(index)
+    }
+
+    fun slashNames(): Set<String> = enabled().map { it.name }.toSet()
+
+    fun view(name: String, filePath: String? = null): Result<SkillView> {
+        val key = name.trim()
+        if (key.isEmpty()) return Result.failure(SkillParseException("Missing skill name."))
+        if (".." in key) return Result.failure(SkillParseException("Path traversal is not allowed."))
+
+        if (key in disabled() || configuration?.skillEnabled(key) == false) {
+            return Result.failure(
+                SkillParseException("Skill '$key' is disabled. Enable it in Settings → Skills."),
+            )
+        }
+
+        val matches = findAll(key)
+        if (matches.isEmpty()) {
+            val available = enabled().joinToString(", ") { it.name }
+            return Result.failure(
+                SkillParseException("Skill '$key' not found." + if (available.isNotEmpty()) " Available: $available" else ""),
+            )
+        }
+        val winner = pickWinner(matches)
+            ?: return Result.failure(
+                SkillParseException(
+                    "Ambiguous skill name '$key': ${matches.size} matches. Load one by a unique name.",
+                ),
+            )
+
+        if (!filePath.isNullOrBlank()) {
+            val extra = readSupportFile(winner, filePath)
+                ?: return Result.failure(
+                    SkillParseException(
+                        "File '$filePath' not found in skill '$key'. " +
+                            "Use a path from the skill's supporting files list.",
+                    ),
+                )
+            return Result.success(
+                SkillView(
+                    name = winner.meta.name,
+                    description = winner.meta.description,
+                    category = winner.meta.category,
+                    content = extra,
+                    source = winner.meta.source,
+                    linkedFiles = winner.linkedFiles,
+                ),
+            )
+        }
+
+        val header = winner.directory?.let { folder ->
+            "Skill folder: ${folder.path}\nScripts, data and other files named in this skill are in that folder. " +
+                "Run its scripts from there, even where the text below shows another path such as .claude/skills/${winner.meta.name}/.\n\n"
+        }.orEmpty()
+        return Result.success(
+            SkillView(
+                name = winner.meta.name,
+                description = winner.meta.description,
+                category = winner.meta.category,
+                content = header + winner.content,
+                source = winner.meta.source,
+                linkedFiles = winner.linkedFiles,
+            ),
+        )
+    }
+
+    /** The SKILL.md text that wins for [name], enabled or not, for showing and editing; null when missing or ambiguous. */
+    fun document(name: String): SkillDocument? {
+        val winner = pickWinner(findAll(name.trim())) ?: return null
+        return SkillDocument(winner.meta.copy(enabled = name !in disabled() && configuration?.skillEnabled(name) != false),
+            winner.content, winner.linkedFiles, winner.directory?.path)
+    }
+
+    fun saveUser(content: String): ParsedSkill {
+        val parsed = SkillParser.validateUserContent(content)
+        val dir = File(userDir, parsed.name)
+        dir.mkdirs()
+        File(dir, "SKILL.md").writeText(parsed.raw)
+        return parsed
+    }
+
+    fun deleteUser(name: String): Boolean {
+        val dir = File(userDir, name)
+        if (!dir.exists()) return false
+        return dir.deleteRecursively()
+    }
+
+    fun patchUserOrCopy(name: String, oldString: String, newString: String): Result<String> {
+        if (oldString == newString) {
+            return Result.failure(SkillParseException("old_string and new_string are identical."))
+        }
+        val located = findAll(name).let { pickWinner(it) }
+            ?: return Result.failure(SkillParseException("Skill '$name' not found."))
+        val current = located.content
+        val count = countOccurrences(current, oldString)
+        if (count == 0) return Result.failure(SkillParseException("old_string was not found in $name."))
+        if (count > 1) {
+            return Result.failure(
+                SkillParseException("old_string appears $count times in $name; make it more specific."),
+            )
+        }
+        val next = current.replaceFirst(oldString, newString)
+        val parsed = runCatching { SkillParser.validateUserContent(next) }
+            .getOrElse { return Result.failure(it) }
+        val dir = File(userDir, parsed.name)
+        dir.mkdirs()
+        File(dir, "SKILL.md").writeText(parsed.raw)
+        return Result.success("Patched ${parsed.name} (saved to your skills).")
+    }
+
+    private data class Located(
+        val meta: SkillMeta,
+        val content: String,
+        val linkedFiles: List<String>,
+        val support: Map<String, String>,
+        val directory: File? = null,
+    )
+
+    private fun findAll(name: String): List<Located> {
+        frozen?.let { return it.filter { located -> located.meta.name == name } }
+        val out = mutableListOf<Located>()
+        (bundled + optionalBundled())[name]?.let { b ->
+            parseLocated(b.content, SkillSource.BUNDLED, b.relativeDir, b.files)?.let { out += it }
+        }
+        scanDirFiles(userDir).filter { it.first == name }.forEach { (_, content, files, rel) ->
+            parseLocated(content, SkillSource.USER, rel, files)?.let { out += it }
+        }
+        projectDir()?.let { dir ->
+            scanDirFiles(dir).filter { it.first == name }.forEach { (_, content, files, rel) ->
+                parseLocated(content, SkillSource.PROJECT, rel, files)?.let { out += it }
+            }
+        }
+        configuredSkills[name]?.let { b ->
+            parseLocated(b.content, SkillSource.PROJECT, b.relativeDir, b.files, b.directory)?.let { out += it }
+        }
+        return out
+    }
+
+    private fun pickWinner(matches: List<Located>): Located? {
+        if (matches.isEmpty()) return null
+        val project = matches.filter { it.meta.source == SkillSource.PROJECT }
+        if (project.size == 1) return project[0]
+        if (project.size > 1) return null
+        val user = matches.filter { it.meta.source == SkillSource.USER }
+        if (user.size == 1) return user[0]
+        if (user.size > 1) return null
+        val bundledHits = matches.filter { it.meta.source == SkillSource.BUNDLED }
+        return bundledHits.singleOrNull()
+    }
+
+    private fun parseLocated(
+        content: String,
+        source: SkillSource,
+        relativeDir: String,
+        files: Map<String, String>,
+        directory: String? = null,
+    ): Located? {
+        val parsed = runCatching { SkillParser.parse(content) }.getOrNull() ?: return null
+        val folder = directory?.let(::File)?.takeIf { it.isDirectory }
+        val meta = SkillMeta(
+            name = parsed.name,
+            description = parsed.catalogDescription,
+            category = parsed.category,
+            source = source,
+            relativeDir = relativeDir,
+            enabled = true,
+        )
+        if (folder != null) {
+            val listed = folder.walkTopDown().onEnter { it == folder || !it.name.startsWith(".") && it.name !in setOf("node_modules", "__pycache__") }
+                .filter { it.isFile && it.name != "SKILL.md" }.take(MAX_LISTED + 1)
+                .map { it.relativeTo(folder).invariantSeparatorsPath }.sorted().toList()
+            return Located(meta, parsed.raw, listed.take(MAX_LISTED), files, folder)
+        }
+        return Located(meta, parsed.raw, files.keys.sorted(), files)
+    }
+
+    private fun scanBundled(): List<SkillMeta> =
+        (bundled + optionalBundled()).values.mapNotNull { b ->
+            val parsed = runCatching { SkillParser.parse(b.content) }.getOrNull() ?: return@mapNotNull null
+            SkillMeta(
+                name = parsed.name,
+                description = parsed.catalogDescription,
+                category = parsed.category,
+                source = SkillSource.BUNDLED,
+                relativeDir = b.relativeDir,
+                enabled = true,
+            )
+        }
+
+    private fun scanDir(dir: File, source: SkillSource): List<SkillMeta> =
+        scanDirFiles(dir).mapNotNull { (name, content, _, rel) ->
+            val parsed = runCatching { SkillParser.parse(content) }.getOrNull() ?: return@mapNotNull null
+            SkillMeta(
+                name = parsed.name.ifBlank { name },
+                description = parsed.catalogDescription,
+                category = parsed.category,
+                source = source,
+                relativeDir = rel,
+                enabled = true,
+            )
+        }
+
+    private fun scanDirFiles(dir: File): List<Quad> {
+        if (!dir.exists() || !dir.isDirectory) return emptyList()
+        return dir.listFiles().orEmpty()
+            .filter { it.isDirectory }
+            .mapNotNull { child ->
+                val skillMd = File(child, "SKILL.md")
+                if (!skillMd.isFile) return@mapNotNull null
+                val content = runCatching { skillMd.readText() }.getOrNull() ?: return@mapNotNull null
+                val files = mutableMapOf<String, String>()
+                for (folder in SUPPORT_DIRS) {
+                    val sub = File(child, folder)
+                    if (!sub.isDirectory) continue
+                    sub.walkTopDown().filter { it.isFile }.forEach { f ->
+                        val rel = "${folder}/${f.relativeTo(sub).invariantSeparatorsPath}"
+                        files[rel] = runCatching { f.readText() }.getOrDefault("")
+                    }
+                }
+                Quad(child.name, content, files, child.name)
+            }
+    }
+
+    private fun readSupportFile(located: Located, filePath: String): String? {
+        val cleaned = filePath.trim().replace('\\', '/').trimStart('/')
+        if (cleaned.contains("..")) return null
+        located.directory?.let { folder ->
+            val file = folder.resolve(cleaned).canonicalFile
+            if (!file.toPath().startsWith(folder.canonicalFile.toPath()) || !file.isFile) return null
+            if (file.length() > MAX_SUPPORT_READ) return "File is ${file.length() / 1024} KiB, too large to show here. Path: ${file.path}"
+            return file.readText()
+        }
+        val root = cleaned.substringBefore('/')
+        if (root !in SUPPORT_DIRS) return null
+        return located.support[cleaned]
+    }
+
+    private fun countOccurrences(haystack: String, needle: String): Int {
+        if (needle.isEmpty()) return 0
+        var count = 0
+        var idx = 0
+        while (true) {
+            val found = haystack.indexOf(needle, idx)
+            if (found < 0) return count
+            count++
+            idx = found + needle.length
+        }
+    }
+
+    private data class Quad(
+        val first: String,
+        val second: String,
+        val third: Map<String, String>,
+        val fourth: String,
+    )
+
+    companion object {
+        val SUPPORT_DIRS = setOf("references", "templates", "scripts", "assets")
+        private const val MAX_LISTED = 300
+        private const val MAX_SUPPORT_READ = 256 * 1024
+
+        fun loadBundledFromAssets(read: (String) -> String?, list: (String) -> List<String>): Map<String, BundledSkill> {
+            val root = "skills"
+            val names = list(root)
+            val out = linkedMapOf<String, BundledSkill>()
+            for (entry in names) {
+                val skillMdPath = "$root/$entry/SKILL.md"
+                val content = read(skillMdPath) ?: continue
+                val parsed = runCatching { SkillParser.parse(content) }.getOrNull() ?: continue
+                val files = mutableMapOf<String, String>()
+                for (folder in SUPPORT_DIRS) {
+                    val prefix = "$root/$entry/$folder"
+                    collectAssetFiles(prefix, folder, read, list, files)
+                }
+                out[parsed.name] = BundledSkill(entry, content, files)
+            }
+            return out
+        }
+
+        private fun collectAssetFiles(
+            assetDir: String,
+            relPrefix: String,
+            read: (String) -> String?,
+            list: (String) -> List<String>,
+            into: MutableMap<String, String>,
+        ) {
+            val children = list(assetDir)
+            if (children.isEmpty()) {
+                read(assetDir)?.let { into[relPrefix] = it }
+                return
+            }
+            for (child in children) {
+                collectAssetFiles("$assetDir/$child", "$relPrefix/$child", read, list, into)
+            }
+        }
+    }
+}

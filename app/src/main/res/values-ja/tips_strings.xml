@@ -20,8 +20,8 @@
     <string name="tip_chat_instructions">チャットオプションで、口調や言語など全チャット共通の指示を追加できます。</string>
     <string name="tip_tts">返信を自動で読み上げられます。音声と速度は音声設定で選べます。</string>
     <string name="tip_agents_md">プロジェクトのルールを AGENTS.md に書くと、エージェントは毎回それに従います。</string>
-    <string name="tip_memory_off">メモリをオンにすると、AndroidHarness はチャットをまたいで好みや決定事項を覚えます。</string>
-    <string name="tip_memory_on">メモリはオンです。AndroidHarness が覚えている内容はいつでも確認や削除ができます。</string>
+    <string name="tip_memory_off">メモリをオンにすると、YL Harness はチャットをまたいで好みや決定事項を覚えます。</string>
+    <string name="tip_memory_on">メモリはオンです。YL Harness が覚えている内容はいつでも確認や削除ができます。</string>
     <string name="tip_thinking">ヘッダーの思考レベルをタップすると、速さとより深い推論を切り替えられます。</string>
     <string name="tip_glass">Harness Glass で、アプリ全体を半透明で重なりのある見た目にできます。</string>
     <string name="tip_compact">コンテキストが残り少ないときは、/compact と入力すると会話を要約して続けられます。</string>
@@ -30,7 +30,7 @@
     <string name="tip_dual_planning">計画用のモデルと、実行用のより安いモデルを分けて使えます。</string>
     <string name="tip_codegraph">CodeGraph をインストールすると、エージェントはすべてのファイルを読まずに呼び出し元や影響範囲を見つけられます。</string>
     <string name="tip_whisper">Groq Whisper で、多くの言語に対応した速くて正確な音声入力ができます。</string>
-    <string name="tip_app_lock">指紋、顔、または端末の PIN で AndroidHarness をロックできます。</string>
+    <string name="tip_app_lock">指紋、顔、または端末の PIN で YL Harness をロックできます。</string>
     <string name="tip_mcp">MCP サーバーを接続すると、エージェントが使えるツールが増えます。</string>
     <string name="tip_web_search">ウェブ検索のバックエンドを Keyless、Brave、Tavily から選べます。</string>
     <string name="tip_theme">外観で、カラーパレットを選んだり自分で作ったりできます。</string>
@@ -47,7 +47,7 @@
     <string name="tip_config">harness.json でプロジェクト設定をリポジトリと共有できます。</string>
     <string name="tip_shizuku">Shizuku を設定すると、エージェントが端末で権限の高いシェルを使えます。</string>
     <string name="tip_plugins">プラグインページでプラグインバンドルをインストールし、スキルやツールを追加できます。</string>
-    <string name="tip_language">AndroidHarness は 11 の言語に対応しています。言語設定で変更できます。</string>
+    <string name="tip_language">YL Harness は 11 の言語に対応しています。言語設定で変更できます。</string>
     <string name="tip_backup">チャットと設定をバックアップとしてエクスポートし、別の端末でインポートできます。</string>
     <string name="tip_progress_bar">外観で、作業中の進捗バーのスタイルを変えられます。</string>
     <string name="tip_turn_off">これらのヒントは設定でいつでもオフにできます。</string>

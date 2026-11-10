@@ -1,5 +1,5 @@
 {
-  "name": "androidharness-editor-tools",
+  "name": "ylharness-editor-tools",
   "private": true,
   "type": "module",
   "scripts": { "build": "node build.mjs", "test": "node --test engine.test.mjs" },

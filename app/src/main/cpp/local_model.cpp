@@ -27,11 +27,11 @@ void fail(JNIEnv * env, const char * message) {
 }
 
 extern "C" JNIEXPORT jlong JNICALL
-Java_com_androidharness_app_local_LocalNative_create(JNIEnv *, jobject) {
+Java_com_ylstack1_ylharness_local_LocalNative_create(JNIEnv *, jobject) {
     return reinterpret_cast<jlong>(new Request());
 }
 extern "C" JNIEXPORT jboolean JNICALL
-Java_com_androidharness_app_local_LocalNative_loadBackend(JNIEnv * env, jobject, jstring path) {
+Java_com_ylstack1_ylharness_local_LocalNative_loadBackend(JNIEnv * env, jobject, jstring path) {
     const char * value = env->GetStringUTFChars(path, nullptr);
     if (!value) return false;
     auto backend = ggml_backend_load(value);
@@ -39,19 +39,19 @@ Java_com_androidharness_app_local_LocalNative_loadBackend(JNIEnv * env, jobject,
     return backend != nullptr;
 }
 extern "C" JNIEXPORT jboolean JNICALL
-Java_com_androidharness_app_local_LocalNative_isCancelled(JNIEnv *, jobject, jlong handle) {
+Java_com_ylstack1_ylharness_local_LocalNative_isCancelled(JNIEnv *, jobject, jlong handle) {
     return reinterpret_cast<Request *>(handle)->cancelled.load();
 }
 extern "C" JNIEXPORT void JNICALL
-Java_com_androidharness_app_local_LocalNative_cancel(JNIEnv *, jobject, jlong handle) {
+Java_com_ylstack1_ylharness_local_LocalNative_cancel(JNIEnv *, jobject, jlong handle) {
     reinterpret_cast<Request *>(handle)->cancelled.store(true);
 }
 extern "C" JNIEXPORT void JNICALL
-Java_com_androidharness_app_local_LocalNative_destroy(JNIEnv *, jobject, jlong handle) {
+Java_com_ylstack1_ylharness_local_LocalNative_destroy(JNIEnv *, jobject, jlong handle) {
     delete reinterpret_cast<Request *>(handle);
 }
 extern "C" JNIEXPORT jintArray JNICALL
-Java_com_androidharness_app_local_LocalNative_generate(
+Java_com_ylstack1_ylharness_local_LocalNative_generate(
     JNIEnv * env, jobject, jlong handle, jbyteArray pathBytes, jobjectArray roles,
     jobjectArray contents, jint contextSize, jint inputLimit, jint outputLimit,
     jint threads, jobject callback) {

@@ -2,7 +2,7 @@
 
 > Discovers, merges, validates and applies `harness.json` / `harness.jsonc` so a Code run gets instructions, references, skills, agent profiles, memory paths, MCP servers and plugin hooks.
 
-The package `com.androidharness.app.config` implements a small layered configuration system. `HarnessConfigLoader` reads files from the global app home and the active workspace, merges them through `ConfigDocument`, validates the result with `ConfigValidation`, and returns an immutable `HarnessConfig`. `HarnessConfigRepository` owns the app-private bindings (connected folders, variables, secrets) and the read/save API used by Settings. `ConfigRunContext` carries the resolved config through a run as a coroutine context element so tools, subagents and hooks can read it.
+The package `com.ylstack1.ylharness.config` implements a small layered configuration system. `HarnessConfigLoader` reads files from the global app home and the active workspace, merges them through `ConfigDocument`, validates the result with `ConfigValidation`, and returns an immutable `HarnessConfig`. `HarnessConfigRepository` owns the app-private bindings (connected folders, variables, secrets) and the read/save API used by Settings. `ConfigRunContext` carries the resolved config through a run as a coroutine context element so tools, subagents and hooks can read it.
 
 The subsystem never executes shell commands, performs network calls or installs packages while loading. `{secret:...}` reads the encrypted store, `{file:...}` reads a bounded UTF-8 file, and everything else is parsing.
 
@@ -122,17 +122,17 @@ Globbing is `ConfigGlob.matches` (`ConfigDocument.kt:124-L138`): `**/` matches z
 - The JSON Schema advertises `local` and `remote` MCP types. `ConfigValidation` accepts them, but the loader normalizes any entry with a `url` to `http` (or `sse` when explicitly typed) and everything else to `stdio` (`HarnessConfig.kt:365`), so `local` and `remote` are accepted but not preserved.
 - `ConfigRunContext.pendingInstructions` is drained by the engine but the queue is populated only by hook results; no other code path adds to it.
 
-Sources: [app/src/main/java/com/androidharness/app/config/HarnessConfig.kt](../app/src/main/java/com/androidharness/app/config/HarnessConfig.kt)#L180-L211), [app/src/main/java/com/androidharness/app/config/ConfigValidation.kt](../app/src/main/java/com/androidharness/app/config/ConfigValidation.kt)#L7-L91), [app/src/main/java/com/androidharness/app/config/ConfigDocument.kt](../app/src/main/java/com/androidharness/app/config/ConfigDocument.kt)#L17-L35), [docs/harness.schema.json](../docs/harness.schema.json)#L1-L6), [app/src/main/java/com/androidharness/app/ui/settings/ConfigurationSection.kt](../app/src/main/java/com/androidharness/app/ui/settings/ConfigurationSection.kt)#L41-L88)
+Sources: [app/src/main/java/com/ylstack1/ylharness/config/HarnessConfig.kt](../app/src/main/java/com/ylstack1/ylharness/config/HarnessConfig.kt)#L180-L211), [app/src/main/java/com/ylstack1/ylharness/config/ConfigValidation.kt](../app/src/main/java/com/ylstack1/ylharness/config/ConfigValidation.kt)#L7-L91), [app/src/main/java/com/ylstack1/ylharness/config/ConfigDocument.kt](../app/src/main/java/com/ylstack1/ylharness/config/ConfigDocument.kt)#L17-L35), [docs/harness.schema.json](../docs/harness.schema.json)#L1-L6), [app/src/main/java/com/ylstack1/ylharness/ui/settings/ConfigurationSection.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/ConfigurationSection.kt)#L41-L88)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/config/HarnessConfig.kt`
-- `app/src/main/java/com/androidharness/app/config/HarnessConfigRepository.kt`
-- `app/src/main/java/com/androidharness/app/config/ConfigValidation.kt`
-- `app/src/main/java/com/androidharness/app/config/ConfigDocument.kt`
-- `app/src/main/java/com/androidharness/app/config/ConfigDocumentFs.kt`
-- `app/src/main/java/com/androidharness/app/config/ConfigRunContext.kt`
-- `app/src/main/java/com/androidharness/app/config/PluginHooks.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/ConfigurationSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/config/HarnessConfig.kt`
+- `app/src/main/java/com/ylstack1/ylharness/config/HarnessConfigRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/config/ConfigValidation.kt`
+- `app/src/main/java/com/ylstack1/ylharness/config/ConfigDocument.kt`
+- `app/src/main/java/com/ylstack1/ylharness/config/ConfigDocumentFs.kt`
+- `app/src/main/java/com/ylstack1/ylharness/config/ConfigRunContext.kt`
+- `app/src/main/java/com/ylstack1/ylharness/config/PluginHooks.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/ConfigurationSection.kt`
 - `docs/harness.schema.json`
 - `docs/configuration/README.md`

@@ -55,7 +55,7 @@ Connection identity is `config.name` for app-side servers, or `name + "_ws_" + s
 6. Chat gate: `ChatViewModel` loads the workspace config, computes `approvalFingerprint`, and if `unapprovedWorkspaceServers` is non-empty shows the approve/decline prompt instead of starting the run (`ChatViewModel.kt:1535-L1547`). `approveWorkspaceMcp` re-checks the fingerprint before calling `approveWorkspace` (`ChatViewModel.kt:337-L359`).
 7. Configuration screen: the Project tab reloads `container.configuration.load(fs)`, checks `isWorkspaceApproved` and `approvalFingerprint`, and offers Approve only when the fingerprint still matches (`ConfigurationSection.kt:80-L83`, `ConfigurationSection.kt:178-L190`).
 8. Plugin servers: `PluginMcpServersSection` resolves the same config, keeps only servers with a `serverSources` plugin name, and shows plugin, scope, approval and live status (`PluginMcpServersSection.kt:40-L79`).
-9. Browser callback: `MainActivity.handleMcpOAuth` accepts `androidharness://mcp?code=...&state=...` on launch and on `onNewIntent`, then calls `completeAuthentication` (`MainActivity.kt:94-L95`, `MainActivity.kt:293-L326`).
+9. Browser callback: `MainActivity.handleMcpOAuth` accepts `ylharness://mcp?code=...&state=...` on launch and on `onNewIntent`, then calls `completeAuthentication` (`MainActivity.kt:94-L95`, `MainActivity.kt:293-L326`).
 10. Headless callers refuse to run with unapproved workspace tools: `TelegramAgentBridge` and `AutomationManager` check `unapprovedWorkspaceServers(...).isEmpty()` (`TelegramAgentBridge.kt:94`, `AutomationManager.kt:228`).
 
 ## Key State and Data Structures
@@ -97,16 +97,16 @@ Connection identity is `config.name` for app-side servers, or `name + "_ws_" + s
 - `unapprovedWorkspaceServers` appends a synthetic `Plugin: <name>` entry for every plugin when the workspace is unapproved (`McpManager.kt:289-L290`), so the chat prompt can list names that are not real servers.
 - `workspaceUsers` is a plain `HashMap` keyed by connection name while `connections` is guarded by `synchronized(connections)`; the two use the same monitor, which is correct but easy to break in a refactor.
 
-Sources: [app/src/main/java/com/androidharness/app/tools/mcp/McpManager.kt](../app/src/main/java/com/androidharness/app/tools/mcp/McpManager.kt)#L319-L377), [app/src/main/java/com/androidharness/app/tools/mcp/McpModels.kt](../app/src/main/java/com/androidharness/app/tools/mcp/McpModels.kt)#L83-L211), [app/src/main/java/com/androidharness/app/ui/settings/SettingsScreen.kt](../app/src/main/java/com/androidharness/app/ui/settings/SettingsScreen.kt)#L1747-L1891), [app/src/main/java/com/androidharness/app/agent/RunManager.kt](../app/src/main/java/com/androidharness/app/agent/RunManager.kt)#L586-L619)
+Sources: [app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpManager.kt](../app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpManager.kt)#L319-L377), [app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpModels.kt](../app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpModels.kt)#L83-L211), [app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsScreen.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsScreen.kt)#L1747-L1891), [app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt](../app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt)#L586-L619)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/tools/mcp/McpManager.kt`
-- `app/src/main/java/com/androidharness/app/tools/mcp/McpModels.kt`
-- `app/src/main/java/com/androidharness/app/tools/mcp/McpReconnectPolicy.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/SettingsScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/PluginMcpServersSection.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/TroubleshootingSection.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt`
-- `app/src/main/java/com/androidharness/app/agent/RunManager.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsBackup.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpModels.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpReconnectPolicy.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/PluginMcpServersSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/TroubleshootingSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/RunManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsBackup.kt`

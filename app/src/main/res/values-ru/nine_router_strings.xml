@@ -1,7 +1,7 @@
 <resources>
     <string name="nine_router_title">9Router</string>
     <string name="nine_router_description">Установка и управление локальным маршрутизатором моделей</string>
-    <string name="nine_router_intro">Запустите 9Router на этом телефоне и управляйте провайдерами, моделями и маршрутизацией в браузере. Использует Linux-инструменты AndroidHarness.</string>
+    <string name="nine_router_intro">Запустите 9Router на этом телефоне и управляйте провайдерами, моделями и маршрутизацией в браузере. Использует Linux-инструменты YL Harness.</string>
     <string name="nine_router_setup">Подготовьте окружение</string>
     <string name="nine_router_not_installed">Готово к установке</string>
     <string name="nine_router_ready">Установлено · Остановлено</string>
@@ -26,12 +26,12 @@
     <string name="nine_router_checking">Проверка…</string>
     <string name="nine_router_update">Обновить до %1$s</string>
     <string name="nine_router_auto_start">Автозапуск 9Router</string>
-    <string name="nine_router_auto_start_body">Запускает установленный маршрутизатор при открытии AndroidHarness.</string>
+    <string name="nine_router_auto_start_body">Запускает установленный маршрутизатор при открытии YL Harness.</string>
     <string name="nine_router_add_provider">Добавить 9Router в провайдеры</string>
     <string name="nine_router_refresh_provider">Обновить провайдер 9Router</string>
     <string name="nine_router_provider_body">При необходимости запускает 9Router и автоматически подставляет локальную конечную точку и ключ API. Подключённые модели появляются в выборе моделей в чате и коде.</string>
     <string name="nine_router_remove_provider">Удалить из провайдеров</string>
-    <string name="nine_router_remove_provider_body">Удаляет подключения 9Router из AndroidHarness. Маршрутизатор и его аккаунты остаются установленными.</string>
+    <string name="nine_router_remove_provider_body">Удаляет подключения 9Router из YL Harness. Маршрутизатор и его аккаунты остаются установленными.</string>
     <string name="nine_router_uninstall">Удалить 9Router</string>
     <string name="nine_router_uninstall_title">Полностью удалить 9Router?</string>
     <string name="nine_router_uninstall_body">Останавливает 9Router и удаляет установку, сохранённые аккаунты, ключи API маршрутизатора, конфигурацию, кеш, настройку автозапуска и подключения провайдеров приложения. Отменить это нельзя. Общие инструменты Linux останутся доступны для других функций.</string>

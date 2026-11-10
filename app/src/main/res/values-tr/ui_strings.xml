@@ -637,7 +637,7 @@
     <string name="ui_shizuku_is_disabled">"Shizuku devre dışı"</string>
     <string name="ui_shizuku_is_no_longer_available_its_server">"Shizuku artık mevcut değil. Sunucusu durmuş veya öldürülmüş olabilir "</string>
     <string name="ui_in_the_background_or_this_app_s">"arka planda veya bu uygulamanın erişimi iptal edilmiş olabilir. "</string>
-    <string name="ui_start_shizuku_and_allow_androidharness_access_to">"Shizuku\'yi başlatın ve onu tekrar kullanmak için AndroidHarness erişimine izin verin."</string>
+    <string name="ui_start_shizuku_and_allow_ylharness_access_to">"Shizuku\'yi başlatın ve onu tekrar kullanmak için YL Harness erişimine izin verin."</string>
     <string name="ui_never_show_this_message_again">"Bu mesajı bir daha asla gösterme"</string>
     <string name="ui_limits_resets">"Sınırlamalar ve sıfırlamalar"</string>
     <string name="ui_view_live_limits_in_chatgpt">"Canlı limitleri ChatGPT\'de görüntüleyin"</string>
@@ -1110,7 +1110,7 @@
     <string name="ui_the_app_needs_node_python_from_the">"Uygulama. Linux ortamından node/python gerekir."</string>
     <string name="ui_not_installed_optional">"Kurulu değil: isteğe bağlı."</string>
     <string name="ui_installed_not_running">"Yüklü, çalışmıyor."</string>
-    <string name="ui_running_grant_androidharness_access">"Çalıştırılıyor: AndroidHarness erişimine izin verin."</string>
+    <string name="ui_running_grant_ylharness_access">"Çalıştırılıyor: YL Harness erişimine izin verin."</string>
     <string name="ui_connected_shell_privileges_ready">"Bağlı: Kabuk ayrıcalıkları hazır."</string>
     <string name="ui_connected_in_compatibility_mode_shell_privileges_ready">"Uyumluluk modunda bağlanıldı: kabuk ayrıcalıkları hazır."</string>
     <string name="ui_access_granted_connecting_to_the_shell_runner">"Erişim verildi. Kabuk koşucusuna bağlanılıyor…"</string>
@@ -1157,10 +1157,10 @@
     <string name="ui_open_source">"Açık kaynak"</string>
     <string name="ui_use_it_change_it_ship_it_even">"Ticari bir uygulamanın içinde bile kullanın, değiştirin, gönderin. Tek şart şu ki "</string>
     <string name="ui_copyright_notice_and_the_license_text_travel">"telif hakkı bildirimi ve lisans metni kodla birlikte seyahat eder. Hiçbir garanti olmadan geliyor."</string>
-    <string name="ui_androidharness_is_built_on_open_source_work">"AndroidHarness açık kaynak çalışması üzerine inşa edilmiştir ve kendisinden önceki ajanların fikirlerini ödünç almıştır."</string>
+    <string name="ui_ylharness_is_built_on_open_source_work">"YL Harness açık kaynak çalışması üzerine inşa edilmiştir ve kendisinden önceki ajanların fikirlerini ödünç almıştır."</string>
     <string name="ui_built_with">"İle oluşturuldu"</string>
     <string name="ui_inspired_by">"İlham veren"</string>
-    <string name="ui_every_project_keeps_its_own_license_androidharness">"Her proje kendi lisansını korur. AndroidHarness onlarla bağlantılı değildir."</string>
+    <string name="ui_every_project_keeps_its_own_license_ylharness">"Her proje kendi lisansını korur. YL Harness onlarla bağlantılı değildir."</string>
     <string name="ui_exported_chats_messages">"Dışa aktarılan %1$s sohbetleri (%2$s mesajları, %3$s anıları)."</string>
     <string name="ui_export_failed">"Dışa aktarma başarısız oldu."</string>
     <string name="ui_export_failed_1230">"Dışa aktarma başarısız oldu: %1$s"</string>
@@ -1249,7 +1249,7 @@
     <string name="ui_status">"Durum"</string>
     <string name="ui_retry_resume">"Yeniden dene / devam ettir"</string>
     <string name="ui_pause_telegram">"Telegram\'yi duraklat"</string>
-    <string name="ui_welcome_to_androidharness">"AndroidHarness\'ye hoş geldiniz"</string>
+    <string name="ui_welcome_to_ylharness">"YL Harness\'ye hoş geldiniz"</string>
     <string name="ui_grant_storage_access_to_start_coding_notifications">"Kodlamaya başlamak için depolama erişimi verin. Bildirimler ve diğer araçlar isteğe bağlıdır."</string>
     <string name="ui_device_storage_access_granted">"Cihaz depolama alanına erişim izni verildi"</string>
     <string name="ui_required_allow_access_to_device_files_and">"Gerekli: cihaz dosyalarına ve klasörlerine erişime izin verin"</string>
@@ -1587,7 +1587,7 @@
     <string name="ui_access_mode">"Erişim modu: %1$s"</string>
     <string name="ui_scheduled_tasks">"Zamanlanmış görevler"</string>
     <string name="ui_project_and_chat_sidebar">"Proje ve sohbet kenar çubuğu"</string>
-    <string name="ui_androidharness_icon">"AndroidHarness simgesi"</string>
+    <string name="ui_ylharness_icon">"YL Harness simgesi"</string>
     <string name="ui_collapse_sidebar">"Kenar çubuğunu daralt"</string>
     <string name="ui_search_chats_and_messages">"Sohbetlerde ve mesajlarda arama yapın"</string>
     <string name="ui_search_chats">"Sohbetlerde ara"</string>
@@ -1639,7 +1639,7 @@
         <item quantity="other">"%1$d satırlar"</item>
     </plurals>
     <string name="voice_transcribing">"Metne dönüştürülüyor…"</string>
-    <string name="donate_funding_message">"AndroidHarness\'nin geliştirilmesini sürdürmek için yeterli fonumuz yok. Desteğiniz gelişmeye devam etmemize yardımcı oluyor."</string>
+    <string name="donate_funding_message">"YL Harness\'nin geliştirilmesini sürdürmek için yeterli fonumuz yok. Desteğiniz gelişmeye devam etmemize yardımcı oluyor."</string>
     <string name="donate_dismiss_message">"Bağış mesajını reddet"</string>
     <string name="background_settings_title">"Arka plan ve bildirimler"</string>
     <string name="background_settings_description">"Arka planda çalışmayı ve bildirimleri yönetin."</string>
@@ -1649,10 +1649,10 @@
     <string name="background_notifications_description">"Uygulama uyarılarına izin ver. Android servis bildirimlerini yönetir."</string>
     <string name="background_android_title">"Android bildirim ayarları"</string>
     <string name="background_android_description">"Tüm Android bildirim ayarlarını yönetin."</string>
-    <string name="background_run_blocked">"Arka planda çalışma kapalı. Bir görevi başlatmak veya devam ettirmek için AndroidHarness\'yi açın."</string>
+    <string name="background_run_blocked">"Arka planda çalışma kapalı. Bir görevi başlatmak veya devam ettirmek için YL Harness\'yi açın."</string>
     <string name="background_service_notice">"Arka plan hizmeti çalışıyor"</string>
     <string name="local_gpu_download_title">"GPU desteği"</string>
-    <string name="local_gpu_runtime_repository">"Kaynak: Sanuu7/AH-GPU-Çalışma Zamanı"</string>
+    <string name="local_gpu_runtime_repository">"Kaynak: ylstack1/AH-GPU-Çalışma Zamanı"</string>
     <string name="local_gpu_delivery_play">"Google Play aracılığıyla güvenli bir şekilde kuruldu."</string>
     <string name="local_gpu_delivery_github">"Bu uygulama ve cihazla eşleşen GPU paketini GitHub\'den indirir."</string>
     <string name="local_gpu_optional_download">"İsteğe bağlı indirme. CPU çıkarımı onsuz da çalışır; GPU desteği kurulumdan sonra çevrimdışı olarak kullanılabilir durumda kalır."</string>

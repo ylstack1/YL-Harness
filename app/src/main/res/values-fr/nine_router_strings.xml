@@ -2,7 +2,7 @@
 <resources>
     <string name="nine_router_title">"9Router"</string>
     <string name="nine_router_description">"Installer et gérer un modèle de routeur local"</string>
-    <string name="nine_router_intro">"Exécutez 9Router sur ce téléphone et gérez ses fournisseurs, modèles et routage dans votre navigateur. Utilise la chaîne d\'outils AndroidHarness Linux."</string>
+    <string name="nine_router_intro">"Exécutez 9Router sur ce téléphone et gérez ses fournisseurs, modèles et routage dans votre navigateur. Utilise la chaîne d\'outils YL Harness Linux."</string>
     <string name="nine_router_setup">"Configurez votre environnement"</string>
     <string name="nine_router_not_installed">"Prêt à installer"</string>
     <string name="nine_router_ready">"Installé · Arrêté"</string>
@@ -27,12 +27,12 @@
     <string name="nine_router_checking">"Vérification…"</string>
     <string name="nine_router_update">"Mise à jour vers %1$s"</string>
     <string name="nine_router_auto_start">"Démarrage automatique 9Router"</string>
-    <string name="nine_router_auto_start_body">"Démarrez le routeur installé lorsque AndroidHarness s\'ouvre."</string>
+    <string name="nine_router_auto_start_body">"Démarrez le routeur installé lorsque YL Harness s\'ouvre."</string>
     <string name="nine_router_add_provider">"Ajouter 9Router aux fournisseurs"</string>
     <string name="nine_router_refresh_provider">"Actualiser le fournisseur 9Router"</string>
     <string name="nine_router_provider_body">"Démarre 9Router si nécessaire et remplit automatiquement son point de terminaison local et sa clé API. Les modèles connectés deviennent disponibles dans les sélecteurs de modèles Chat et Code."</string>
     <string name="nine_router_remove_provider">"Supprimer des fournisseurs"</string>
-    <string name="nine_router_remove_provider_body">"Supprimez les connexions 9Router de AndroidHarness. Le routeur et ses comptes resteront installés."</string>
+    <string name="nine_router_remove_provider_body">"Supprimez les connexions 9Router de YL Harness. Le routeur et ses comptes resteront installés."</string>
     <string name="nine_router_uninstall">"Désinstaller 9Router"</string>
     <string name="nine_router_uninstall_title">"Désinstaller complètement 9Router ?"</string>
     <string name="nine_router_uninstall_body">"Arrête 9Router et supprime son installation, les comptes enregistrés, les clés du routeur API, la configuration, le cache, les préférences de démarrage automatique et les connexions du fournisseur d\'applications. Cela ne peut pas être annulé. La chaîne d\'outils partagée Linux reste disponible pour d\'autres fonctionnalités."</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="learn_title">AndroidHarness を学ぶ</string>
+    <string name="learn_title">YL Harness を学ぶ</string>
     <string name="learn_description">できることをやさしく段階的に学べるガイドです。</string>
     <string name="learn_group">はじめに</string>
     <string name="learn_entry_hint">自分のペースで学べるガイド</string>

@@ -1,6 +1,6 @@
 # Workspace configuration on Android
 
-AndroidHarness reads optional `harness.json` (strict JSON) or `harness.jsonc` (comments and trailing commas) at the start of each **Code** run. Personal Chat agents remain managed by Chat settings. No config preserves existing behavior. Configuration discovery, validation, instructions, references and skills do not require Linux.
+YL Harness reads optional `harness.json` (strict JSON) or `harness.jsonc` (comments and trailing commas) at the start of each **Code** run. Personal Chat agents remain managed by Chat settings. No config preserves existing behavior. Configuration discovery, validation, instructions, references and skills do not require Linux.
 
 Open **Settings → Coding → Configuration**. Project edits the selected workspace; Global edits the app-private `config/harness.json[c]`. The screen previews active files and has a full-screen editor with validation, save-conflict detection and unsaved-change protection. Its project header identifies the selected workspace; this may differ from a particular chat's assigned workspace.
 
@@ -23,7 +23,7 @@ The [JSON Schema](../harness.schema.json) can be used locally in an editor. The 
 
 ## Files and paths
 
-Paths stay relative to the document that declared each value after merging. `~/` means **AndroidHarness configuration home** (`<app-files>/config/home`), not Termux or the optional Linux environment. Connect extra folders from the Global tab and use `@shared/path`. Those aliases are stored on this phone and grant configuration reads only; they do not widen agent file-tool grants. Reconnect moved or revoked Android document folders. Absolute paths and `..` traversal are refused. Symlinks cannot leave a real filesystem's granted root.
+Paths stay relative to the document that declared each value after merging. `~/` means **YL Harness configuration home** (`<app-files>/config/home`), not Termux or the optional Linux environment. Connect extra folders from the Global tab and use `@shared/path`. Those aliases are stored on this phone and grant configuration reads only; they do not widen agent file-tool grants. Reconnect moved or revoked Android document folders. Absolute paths and `..` traversal are refused. Symlinks cannot leave a real filesystem's granted root.
 
 Glob rules: `*` matches within one directory, `**` can cross directories, `**/` can match zero directories, and `?` matches one character. Matching is case-sensitive and results are sorted. Scans skip `.git`, `node_modules`, `build` and `.gradle`. Limits are explicit: 256 KiB per config, 2 MiB of configuration dependencies, 4096 scanned entries per glob, 24 directory levels and 64,000 instruction characters. Narrow the glob or move large background documents to references when a limit is reached.
 

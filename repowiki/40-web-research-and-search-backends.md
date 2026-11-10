@@ -110,21 +110,21 @@ Budgets are per turn, not persisted. `SearchSourceBudget` is created when a run 
 - Tavily search requests never send language or country, even when the caller supplies them. Only freshness and the deep flag change the payload.
 - `SearchSourceBudget` has no persistence. Restarting the app or starting a new turn resets the source and read counters.
 
-Sources: [app/src/main/java/com/androidharness/app/tools/SearchBackends.kt](../app/src/main/java/com/androidharness/app/tools/SearchBackends.kt)#L25-L541), [app/src/main/java/com/androidharness/app/tools/SearchBudget.kt](../app/src/main/java/com/androidharness/app/tools/SearchBudget.kt)#L11-L108), [app/src/main/java/com/androidharness/app/tools/ResearchHttp.kt](../app/src/main/java/com/androidharness/app/tools/ResearchHttp.kt)#L28-L160), [app/src/main/java/com/androidharness/app/tools/MoreTools.kt](../app/src/main/java/com/androidharness/app/tools/MoreTools.kt)#L219-L356)
+Sources: [app/src/main/java/com/ylstack1/ylharness/tools/SearchBackends.kt](../app/src/main/java/com/ylstack1/ylharness/tools/SearchBackends.kt)#L25-L541), [app/src/main/java/com/ylstack1/ylharness/tools/SearchBudget.kt](../app/src/main/java/com/ylstack1/ylharness/tools/SearchBudget.kt)#L11-L108), [app/src/main/java/com/ylstack1/ylharness/tools/ResearchHttp.kt](../app/src/main/java/com/ylstack1/ylharness/tools/ResearchHttp.kt)#L28-L160), [app/src/main/java/com/ylstack1/ylharness/tools/MoreTools.kt](../app/src/main/java/com/ylstack1/ylharness/tools/MoreTools.kt)#L219-L356)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/tools/SearchBackends.kt`
-- `app/src/main/java/com/androidharness/app/tools/SearchBudget.kt`
-- `app/src/main/java/com/androidharness/app/tools/ResearchHttp.kt`
-- `app/src/main/java/com/androidharness/app/tools/TavilyPageReader.kt`
-- `app/src/main/java/com/androidharness/app/tools/StructuredPageText.kt`
-- `app/src/main/java/com/androidharness/app/tools/WebSearchText.kt`
-- `app/src/main/java/com/androidharness/app/tools/PageImages.kt`
-- `app/src/main/java/com/androidharness/app/tools/NetTools.kt`
-- `app/src/main/java/com/androidharness/app/tools/MoreTools.kt`
-- `app/src/main/java/com/androidharness/app/core/ResearchReceipt.kt`
-- `app/src/main/java/com/androidharness/app/data/SearchDepth.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsRepository.kt`
-- `app/src/main/java/com/androidharness/app/HarnessApp.kt`
-- `app/src/main/java/com/androidharness/app/agent/AgentEngine.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/SearchBackends.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/SearchBudget.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/ResearchHttp.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/TavilyPageReader.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/StructuredPageText.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/WebSearchText.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/PageImages.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/NetTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/MoreTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/core/ResearchReceipt.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SearchDepth.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/HarnessApp.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt`

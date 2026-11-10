@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/Sanuu7/AndroidHarness/main/docs/harness.schema.json",
-  "title": "AndroidHarness workspace configuration",
+  "$id": "https://raw.githubusercontent.com/ylstack1/YL Harness/main/docs/harness.schema.json",
+  "title": "YL Harness workspace configuration",
   "type": "object",
   "properties": {
     "$schema": {

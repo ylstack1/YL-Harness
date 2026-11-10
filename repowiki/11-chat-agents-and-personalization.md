@@ -2,7 +2,7 @@
 
 > Saved Chat agents bundle instructions, voice, model choice, knowledge files, instruction-only skills, tool access, and a memory mode, and each conversation stores its own copy so later edits never rewrite old chats.
 
-`ChatAgentProfile` in `app/src/main/java/com/androidharness/app/data/ChatAgents.kt` is the serializable definition. Profiles live in the app settings key `chat_agents` and are copied into a conversation's `ConversationConfig.agent` when a chat starts. Chat prompts are assembled in `AgentEngine.chatSystemPrompt`, tool access is narrowed by `ChatAgentPolicy.tools`, and knowledge and skill tools are built per profile by `ChatAgentTools`. The editor and picker live in `ChatAgentsSheet`, `ChatAgentDropdown`, and `ChatPersonalizationDropdown`. Global instructions are a separate settings value that a conversation can inherit, replace, or switch off with personalization.
+`ChatAgentProfile` in `app/src/main/java/com/ylstack1/ylharness/data/ChatAgents.kt` is the serializable definition. Profiles live in the app settings key `chat_agents` and are copied into a conversation's `ConversationConfig.agent` when a chat starts. Chat prompts are assembled in `AgentEngine.chatSystemPrompt`, tool access is narrowed by `ChatAgentPolicy.tools`, and knowledge and skill tools are built per profile by `ChatAgentTools`. The editor and picker live in `ChatAgentsSheet`, `ChatAgentDropdown`, and `ChatPersonalizationDropdown`. Global instructions are a separate settings value that a conversation can inherit, replace, or switch off with personalization.
 
 ## Module Responsibilities
 
@@ -38,7 +38,7 @@ flowchart TD
 2. `ChatAgentsSheet` lists `settings.chatAgents` sorted by `updatedAt` descending and opens `ChatAgentEditor` on edit or create (`ChatAgentsSheet.kt` lines 105 to 211).
 3. Saving calls `container.settings.saveChatAgent(next)`, which validates, removes the old id, and appends a copy with a fresh `updatedAt` (`SettingsRepository.kt` lines 1123 to 1129).
 4. Selecting an agent calls `ChatViewModel.startAgentChat` (`ChatViewModel.kt` lines 1691 to 1712), which saves the current draft, then calls `AppContainer.startChatAgent`.
-5. `startChatAgent` validates the profile and creates a `CHAT` session with `agent = profile`, initializes model selection, and marks the session active (`app/src/main/java/com/androidharness/app/HarnessApp.kt` lines 153 to 160).
+5. `startChatAgent` validates the profile and creates a `CHAT` session with `agent = profile`, initializes model selection, and marks the session active (`app/src/main/java/com/ylstack1/ylharness/HarnessApp.kt` lines 153 to 160).
 6. At run time `AgentEngine` reads `conversation.agent` for the prompt block and adds `chatAgentTools(conversation.agent)` to the registry (`AgentEngine.kt` lines 373 and 2033).
 7. `ConversationConfig.allowedTools` exposes `ChatAgentPolicy.tools(agent)` for any caller that needs the same set (`ConversationConfig.kt` line 44).
 
@@ -59,7 +59,7 @@ flowchart TD
 
 ## Tool Access and Memory Mode
 
-`ChatAgentPolicy.tools` starts from `ChatExperience.tools`, removes the web, image, and GitHub groups, then adds them back only when the matching `AgentCapability` is present. If `memory == OFF`, it removes `MemoryRepository.toolNames`, which are `remember` and `recall` (`app/src/main/java/com/androidharness/app/data/MemoryRepository.kt` line 343). It adds `search_agent_knowledge` when knowledge exists, `skill_view` when skills exist, and always adds `search_chats`, `recent_chats`, and `read_chat_snippet` (`ChatAgents.kt` lines 73 to 88).
+`ChatAgentPolicy.tools` starts from `ChatExperience.tools`, removes the web, image, and GitHub groups, then adds them back only when the matching `AgentCapability` is present. If `memory == OFF`, it removes `MemoryRepository.toolNames`, which are `remember` and `recall` (`app/src/main/java/com/ylstack1/ylharness/data/MemoryRepository.kt` line 343). It adds `search_agent_knowledge` when knowledge exists, `skill_view` when skills exist, and always adds `search_chats`, `recent_chats`, and `read_chat_snippet` (`ChatAgents.kt` lines 73 to 88).
 
 `AgentMemory` has three values:
 
@@ -73,7 +73,7 @@ flowchart TD
 
 `ChatAgentPolicy.prompt` writes a "# Selected Chat agent" block containing name, description, instructions, optional persona, and a hard statement that instructions cannot grant tools or override app restrictions. When knowledge exists it lists each source with its id, tells the model to search with `search_agent_knowledge`, cite filename and passage number, and never claim a source said something without reading it. When skills exist it names them and tells the model to load one with `skill_view`. It closes with the history access rule (`ChatAgents.kt` lines 97 to 114).
 
-`AgentEngine.chatSystemPrompt` appends that block after the base Chat prompt, research depth, and image guidance. It then handles personalization: when `conversation.personalizationEnabled` is true it appends `conversation.effectiveInstructions(chatInstructions)` under "# User instructions for this chat" and adds saved memory. When false it appends an explicit block telling the model not to use or save memory, not to follow personal instructions, and not to search other chats (`app/src/main/java/com/androidharness/app/agent/AgentEngine.kt` lines 2157 to 2193).
+`AgentEngine.chatSystemPrompt` appends that block after the base Chat prompt, research depth, and image guidance. It then handles personalization: when `conversation.personalizationEnabled` is true it appends `conversation.effectiveInstructions(chatInstructions)` under "# User instructions for this chat" and adds saved memory. When false it appends an explicit block telling the model not to use or save memory, not to follow personal instructions, and not to search other chats (`app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt` lines 2157 to 2193).
 
 Global instructions are stored under `chat_instructions` and capped at `ConversationConfig.MAX_INSTRUCTIONS_CHARS`, which is 4,000 (`SettingsRepository.kt` lines 319 and 1120; `ConversationConfig.kt` line 48). `ConversationConfig.effectiveInstructions` returns an empty string for a non-Chat conversation or when personalization is off. Otherwise it returns either the global text or the per-chat text, depending on `useGlobalInstructions`. The default of `useGlobalInstructions` is `instructions.isBlank()`, so old chats with non-empty per-chat text remain overrides, and newer chats inherit (`ConversationConfig.kt` lines 33 to 41).
 
@@ -83,7 +83,7 @@ Global instructions are stored under `chat_instructions` and capped at `Conversa
 
 The editor's file picker accepts `text/*`, `application/pdf`, and `application/json`. It rejects anything that is neither PDF nor text-like, reads at most 4 MB, extracts text from a PDF through `PdfTextExtractor` and rejects more than 30 pages or 32,000 characters, decodes text as UTF-8 with malformed input reported, strips a BOM, and requires the result to fit the per-file and per-agent totals (`ChatAgentsSheet.kt` lines 252 to 294).
 
-`AgentKnowledgeSearch.passages` windows each file at 1,400 characters with a 1,200 character stride, numbered from 1. `search` filters by optional file id, scores each passage with `MemoryMatch.relevance` over the passage plus the filename, drops zero scores for non-blank queries, sorts by score, filename, and passage, and returns at most six hits (`ChatAgents.kt` lines 118 to 129). `SearchAgentKnowledgeTool` supports both search mode and direct reading with `file_id` plus `passage`, returning at most four passages and refusing ids outside the profile (`app/src/main/java/com/androidharness/app/tools/ChatAgentTools.kt` lines 10 to 34). There is no embedding provider and no filesystem access.
+`AgentKnowledgeSearch.passages` windows each file at 1,400 characters with a 1,200 character stride, numbered from 1. `search` filters by optional file id, scores each passage with `MemoryMatch.relevance` over the passage plus the filename, drops zero scores for non-blank queries, sorts by score, filename, and passage, and returns at most six hits (`ChatAgents.kt` lines 118 to 129). `SearchAgentKnowledgeTool` supports both search mode and direct reading with `file_id` plus `passage`, returning at most four passages and refusing ids outside the profile (`app/src/main/java/com/ylstack1/ylharness/tools/ChatAgentTools.kt` lines 10 to 34). There is no embedding provider and no filesystem access.
 
 ## Per-Conversation Snapshotting
 
@@ -116,18 +116,18 @@ Deleting an agent removes only the settings entry (`SettingsRepository.kt` lines
 - Add a knowledge tool parameter in `SearchAgentKnowledgeTool.parametersSchema`; the profile and passage search are already injectable.
 - Global instructions can be written from Settings through `setChatInstructions`, and the agent settings search catalog exposes it as a sensitive setting (`AgentSettingsCatalog.kt` line 202).
 
-Sources: [app/src/main/java/com/androidharness/app/data/ChatAgents.kt](../app/src/main/java/com/androidharness/app/data/ChatAgents.kt)#L24-L129), [app/src/main/java/com/androidharness/app/ui/chat/components/ChatAgentsSheet.kt](../app/src/main/java/com/androidharness/app/ui/chat/components/ChatAgentsSheet.kt)#L105-L523), [app/src/main/java/com/androidharness/app/data/ConversationConfig.kt](../app/src/main/java/com/androidharness/app/data/ConversationConfig.kt)#L21-L58), [app/src/main/java/com/androidharness/app/agent/AgentEngine.kt](../app/src/main/java/com/androidharness/app/agent/AgentEngine.kt)#L2157-L2193)
+Sources: [app/src/main/java/com/ylstack1/ylharness/data/ChatAgents.kt](../app/src/main/java/com/ylstack1/ylharness/data/ChatAgents.kt)#L24-L129), [app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatAgentsSheet.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatAgentsSheet.kt)#L105-L523), [app/src/main/java/com/ylstack1/ylharness/data/ConversationConfig.kt](../app/src/main/java/com/ylstack1/ylharness/data/ConversationConfig.kt)#L21-L58), [app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt](../app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt)#L2157-L2193)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/data/ChatAgents.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ChatAgentsSheet.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ChatAgentDropdown.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ChatPersonalizationDropdown.kt`
-- `app/src/main/java/com/androidharness/app/data/ConversationConfig.kt`
-- `app/src/main/java/com/androidharness/app/tools/ChatAgentTools.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsRepository.kt`
-- `app/src/main/java/com/androidharness/app/HarnessApp.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatViewModel.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ChatSettingsSheet.kt`
-- `app/src/main/java/com/androidharness/app/agent/AgentEngine.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ChatAgents.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatAgentsSheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatAgentDropdown.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatPersonalizationDropdown.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/ConversationConfig.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/ChatAgentTools.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/HarnessApp.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatViewModel.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatSettingsSheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/agent/AgentEngine.kt`

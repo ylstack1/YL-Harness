@@ -44,7 +44,7 @@ flowchart TD
 ## Invocation Chain
 
 1. `MainActivity.onCreate` reads `container` from `HarnessApp`, starts a foreground update check 2000 ms after resume, and asks for `POST_NOTIFICATIONS` on API 33 and later when notifications are enabled.
-2. It routes the launch Intent: `handleSessionIntent` for `AgentService.EXTRA_SESSION_ID`, `handleMcpOAuth` for `androidharness://mcp`, and `handleShareIntent` for a share target.
+2. It routes the launch Intent: `handleSessionIntent` for `AgentService.EXTRA_SESSION_ID`, `handleMcpOAuth` for `ylharness://mcp`, and `handleShareIntent` for a share target.
 3. `setContent` applies `HarnessTheme`, checks biometric unlock, sets `FLAG_SECURE` from `ScreenshotPolicy.blocked`, binds the `WebView` read-capture host, and calls `AppNav(container)`.
 4. `AppNav` collects sessions, settings, providers, projects, the current back stack entry, and running session ids with `collectAsStateWithLifecycle`.
 5. It resolves the start destination, then computes `desktopNavigation`, `sidebarVisible`, `desktopGuard`, `desktopKeyboard`, and `desktopFocus`.
@@ -161,17 +161,17 @@ Multi-select lives in the sidebar header as `ChatSelectionToolbar`. `selectableI
 - **New layout rule**: change `useWorkspacePanes` thresholds or add a `WorkspaceLayoutMode` value and its settings label.
 - **New screen chrome**: use `AppHeader` so back, menu, insets, and divider behavior stay consistent.
 
-Sources: [app/src/main/java/com/androidharness/app/ui/AppNav.kt](../app/src/main/java/com/androidharness/app/ui/AppNav.kt)#L104-L1305), [app/src/main/java/com/androidharness/app/ui/ProjectNavigationSidebar.kt](../app/src/main/java/com/androidharness/app/ui/ProjectNavigationSidebar.kt)#L68-L554), [app/src/main/java/com/androidharness/app/ui/WorkspaceSplitLayout.kt](../app/src/main/java/com/androidharness/app/ui/WorkspaceSplitLayout.kt)#L23-L96), [app/src/main/java/com/androidharness/app/data/WorkspaceLayoutMode.kt](../app/src/main/java/com/androidharness/app/data/WorkspaceLayoutMode.kt)#L5-L29), [app/src/main/java/com/androidharness/app/ui/DesktopUi.kt](../app/src/main/java/com/androidharness/app/ui/DesktopUi.kt)#L6-L27), [app/src/main/java/com/androidharness/app/ui/theme/Theme.kt](../app/src/main/java/com/androidharness/app/ui/theme/Theme.kt)#L30-L85), [app/src/main/java/com/androidharness/app/MainActivity.kt](../app/src/main/java/com/androidharness/app/MainActivity.kt)#L68-L336)
+Sources: [app/src/main/java/com/ylstack1/ylharness/ui/AppNav.kt](../app/src/main/java/com/ylstack1/ylharness/ui/AppNav.kt)#L104-L1305), [app/src/main/java/com/ylstack1/ylharness/ui/ProjectNavigationSidebar.kt](../app/src/main/java/com/ylstack1/ylharness/ui/ProjectNavigationSidebar.kt)#L68-L554), [app/src/main/java/com/ylstack1/ylharness/ui/WorkspaceSplitLayout.kt](../app/src/main/java/com/ylstack1/ylharness/ui/WorkspaceSplitLayout.kt)#L23-L96), [app/src/main/java/com/ylstack1/ylharness/data/WorkspaceLayoutMode.kt](../app/src/main/java/com/ylstack1/ylharness/data/WorkspaceLayoutMode.kt)#L5-L29), [app/src/main/java/com/ylstack1/ylharness/ui/DesktopUi.kt](../app/src/main/java/com/ylstack1/ylharness/ui/DesktopUi.kt)#L6-L27), [app/src/main/java/com/ylstack1/ylharness/ui/theme/Theme.kt](../app/src/main/java/com/ylstack1/ylharness/ui/theme/Theme.kt)#L30-L85), [app/src/main/java/com/ylstack1/ylharness/MainActivity.kt](../app/src/main/java/com/ylstack1/ylharness/MainActivity.kt)#L68-L336)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/ui/AppNav.kt`
-- `app/src/main/java/com/androidharness/app/ui/ProjectNavigationSidebar.kt`
-- `app/src/main/java/com/androidharness/app/ui/WorkspaceSplitLayout.kt`
-- `app/src/main/java/com/androidharness/app/ui/DesktopUi.kt`
-- `app/src/main/java/com/androidharness/app/ui/NavigationGestures.kt`
-- `app/src/main/java/com/androidharness/app/ui/ChatWorkspaceScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/common/AppHeader.kt`
-- `app/src/main/java/com/androidharness/app/ui/theme/Theme.kt`
-- `app/src/main/java/com/androidharness/app/ui/theme/HarnessGlass.kt`
-- `app/src/main/java/com/androidharness/app/data/WorkspaceLayoutMode.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/AppNav.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/ProjectNavigationSidebar.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/WorkspaceSplitLayout.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/DesktopUi.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/NavigationGestures.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/ChatWorkspaceScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/common/AppHeader.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/Theme.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/HarnessGlass.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/WorkspaceLayoutMode.kt`

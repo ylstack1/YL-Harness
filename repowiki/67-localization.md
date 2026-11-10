@@ -38,7 +38,7 @@ flowchart TD
 - **Immediate application**: the picker does not write a bespoke preference. It calls `AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(tag))`, and AppCompat applies the locale to the running app. An empty tag means System default.
 - **Canonicalization before startup**: `MainActivity.onCreate` reads `getApplicationLocales().toLanguageTags()` and runs `canonicalAppLanguageTags` before `super.onCreate`. If the canonical form differs, it calls `setApplicationLocales` first. This prevents Android from preferring English over legacy Tagalog when both are requested for Filipino.
 - **Resource resolution**: Android picks the best `values-*` directory for the current locale. Untranslated or missing keys fall back to `res/values`. The five missing translated keys are all marked `translatable="false"` in the default set, so this fallback is the intended value.
-- **System picker integration**: `localeConfig` makes the 22 languages appear in Android Settings, Apps, AndroidHarness, Language. Because AppCompat shares the same storage, a change in either place is reflected in the other.
+- **System picker integration**: `localeConfig` makes the 22 languages appear in Android Settings, Apps, YL Harness, Language. Because AppCompat shares the same storage, a change in either place is reflected in the other.
 - **Back to picker state**: `LanguageSection` reads `AppCompatDelegate.getApplicationLocales()[0]` and passes it through `selectedAppLanguageTag`. A null locale becomes an empty string, which selects the System default row.
 
 ## Invocation Chain
@@ -59,10 +59,10 @@ flowchart TD
 - **`locales_config.xml`**: 22 locale entries, English first: `en`, `zh-CN`, `zh-Hant`, `ru`, `ar`, `fa`, `pt-BR`, `de`, `es`, `ja`, `id`, `si`, `vi`, `tr`, `ms`, `th`, `fr`, `hi`, `ko`, `ta`, `bn`, `fil`.
 - **`canonicalAppLanguageTags`**: splits a comma-separated tag list and rewrites any locale whose language is `tl` to `fil`, preserving the rest of the locale through `Locale.Builder`.
 - **`selectedAppLanguageTag`**: maps `zh` by script first (`Hant` to `zh-Hant`, `Hans` to `zh-CN`), then by country (`TW`, `HK`, `MO` to `zh-Hant`, otherwise `zh-CN`). It maps all `pt` to `pt-BR`, `id` and `in` to `id`, `fil` and `tl` to `fil`, and the remaining supported languages to themselves. Anything else maps to `en`.
-- **Default strings**: 4,411 keys across 37 files. Five keys are non-translatable: `app_name` (`AndroidHarness`), `rumble_percent` (`%1$d%%`), `rumble_spacing_ms` (`%1$d ms`), `settings_language_english` (`English`), and `settings_language_chinese` (`简体中文`). That is why each locale has 4,406 rather than 4,411 keys.
+- **Default strings**: 4,411 keys across 37 files. Five keys are non-translatable: `app_name` (`YL Harness`), `rumble_percent` (`%1$d%%`), `rumble_spacing_ms` (`%1$d ms`), `settings_language_english` (`English`), and `settings_language_chinese` (`简体中文`). That is why each locale has 4,406 rather than 4,411 keys.
 - **Language labels**: labels such as `settings_language_russian` through `settings_language_filipino` are endonyms (`Русский`, `日本語`, `Filipino`) repeated in each locale's strings file, so the picker always shows each language in its own script. English and Simplified Chinese are non-translatable endonyms as well.
 - **Plural resources**: 25 in the base set. Examples include `storage_items`, `ui_model_count`, `settings_accounts_models_available`, `harness_free_retry_seconds`, and `harness_free_retry_minutes`. Consumers use `pluralStringResource` or `Resources.getQuantityString` with the actual count as the quantity.
-- **`LocaleCommand`**: writes `bin/locale` when no real locale binary is installed, and refreshes an older AndroidHarness stub. The script supports no arguments, `-a`, `-m`, `charmap`, `-k charmap`, and `--help`, reports `C`, `C.UTF-8`, `en_US.UTF-8`, and `POSIX`, and rejects other charmap values. It does not generate locale data or translate UI.
+- **`LocaleCommand`**: writes `bin/locale` when no real locale binary is installed, and refreshes an older YL Harness stub. The script supports no arguments, `-a`, `-m`, `charmap`, `-k charmap`, and `--help`, reports `C`, `C.UTF-8`, `en_US.UTF-8`, and `POSIX`, and rejects other charmap values. It does not generate locale data or translate UI.
 
 ## Boundary Conditions
 
@@ -90,7 +90,7 @@ flowchart TD
 ## What Stays English
 
 - **Model and provider names**: catalog model ids, provider names, and model display names come from provider data and are not translated.
-- **Tool descriptions and agent prompts**: tool definitions and the system prompts, including the main `You are AndroidHarness...` prompt, are written in English. `FEATURES.md` documents this explicitly.
+- **Tool descriptions and agent prompts**: tool definitions and the system prompts, including the main `You are YL Harness...` prompt, are written in English. `FEATURES.md` documents this explicitly.
 - **Shell output and logs**: terminal output, command results, and logcat lines are shown verbatim.
 - **Learn guide content**: `assets/learn/guide.json` is English only. Lesson chrome such as buttons and section headings is translated through `learn_strings.xml`, but titles, steps, limits, and fixes are English.
 - **Technical units and identifiers**: `app_name`, `rumble_percent`, `rumble_spacing_ms`, language endonyms for English and Simplified Chinese, package names, file names, URLs, and code snippets.
@@ -103,7 +103,7 @@ flowchart TD
 - There is no automated check that every locale has the same key set. The current 5-key gap is intentional because those keys are non-translatable, but a future untranslated key would fall back silently.
 - The picker has no search or grouping. It is a flat list of 23 rows, and the contribution link is the only path for adding a language.
 
-Sources: [app/src/main/java/com/androidharness/app/ui/settings/LanguageSection.kt](../app/src/main/java/com/androidharness/app/ui/settings/LanguageSection.kt)#L26-L121)
+Sources: [app/src/main/java/com/ylstack1/ylharness/ui/settings/LanguageSection.kt](../app/src/main/java/com/ylstack1/ylharness/ui/settings/LanguageSection.kt)#L26-L121)
 
 ## Source files
 
@@ -116,12 +116,12 @@ Sources: [app/src/main/java/com/androidharness/app/ui/settings/LanguageSection.k
 - `app/src/main/res/values/ui_extra_strings.xml`
 - `app/src/main/res/xml/locales_config.xml`
 - `app/src/main/AndroidManifest.xml`
-- `app/src/main/java/com/androidharness/app/ui/settings/AppLanguage.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/LanguageSection.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/SettingsNavigation.kt`
-- `app/src/main/java/com/androidharness/app/MainActivity.kt`
-- `app/src/main/java/com/androidharness/app/ui/common/LeftToRightContent.kt`
-- `app/src/main/java/com/androidharness/app/ui/theme/HarnessGlassSwitch.kt`
-- `app/src/main/java/com/androidharness/app/ui/AppNav.kt`
-- `app/src/main/java/com/androidharness/app/data/env/LocaleCommand.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/AppLanguage.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/LanguageSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsNavigation.kt`
+- `app/src/main/java/com/ylstack1/ylharness/MainActivity.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/common/LeftToRightContent.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/theme/HarnessGlassSwitch.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/AppNav.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/env/LocaleCommand.kt`
 - `app/src/main/assets/learn/guide.json`

@@ -177,15 +177,15 @@ The timeline itself is built by `ChatActivityPresentation.timeline(messages, run
 
 - `FEATURES.md` line 90 says Markdown file previews use the chat renderer up to 400k characters. That limit lives in the file viewer, not in `MarkdownText`, which has no input length guard of its own. The streaming caps apply only while `streaming` is true.
 
-Sources: [app/src/main/java/com/androidharness/app/ui/chat/MarkdownText.kt](../app/src/main/java/com/androidharness/app/ui/chat/MarkdownText.kt)#L120-L159), [app/src/main/java/com/androidharness/app/ui/chat/MarkdownStreaming.kt](../app/src/main/java/com/androidharness/app/ui/chat/MarkdownStreaming.kt)#L4-L47), [app/src/main/java/com/androidharness/app/ui/chat/MarkdownTableLayout.kt](../app/src/main/java/com/androidharness/app/ui/chat/MarkdownTableLayout.kt)#L4-L64), [app/src/main/java/com/androidharness/app/ui/chat/components/RichRenderView.kt](../app/src/main/java/com/androidharness/app/ui/chat/components/RichRenderView.kt)#L58-L140)
+Sources: [app/src/main/java/com/ylstack1/ylharness/ui/chat/MarkdownText.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/MarkdownText.kt)#L120-L159), [app/src/main/java/com/ylstack1/ylharness/ui/chat/MarkdownStreaming.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/MarkdownStreaming.kt)#L4-L47), [app/src/main/java/com/ylstack1/ylharness/ui/chat/MarkdownTableLayout.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/MarkdownTableLayout.kt)#L4-L64), [app/src/main/java/com/ylstack1/ylharness/ui/chat/components/RichRenderView.kt](../app/src/main/java/com/ylstack1/ylharness/ui/chat/components/RichRenderView.kt)#L58-L140)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/ui/chat/MarkdownText.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/MarkdownStreaming.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/MarkdownTableLayout.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ThinkingBlock.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/ChatAnswerVersions.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/RichRenderView.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/Bubbles.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/rich/RichResponseContent.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/MarkdownText.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/MarkdownStreaming.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/MarkdownTableLayout.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ThinkingBlock.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/ChatAnswerVersions.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/RichRenderView.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/Bubbles.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/rich/RichResponseContent.kt`

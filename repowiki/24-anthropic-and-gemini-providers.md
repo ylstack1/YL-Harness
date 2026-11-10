@@ -170,13 +170,13 @@ The `nativeCallIds` gate avoids inventing ids that the original Gemini response 
 - No Gemini safety settings or sampling parameters are exposed in the request body or the UI, so those behaviors are endpoint defaults and cannot be adjusted per connection.
 - Anthropic `metadata.user_id` is capped at 64 characters by truncation, not hashing. Two long session ids sharing a 64-character prefix would share the routing hint, though this is unlikely with UUID session ids.
 
-Sources: [app/src/main/java/com/androidharness/app/llm/AnthropicProvider.kt](../app/src/main/java/com/androidharness/app/llm/AnthropicProvider.kt)#L30-L466), [app/src/main/java/com/androidharness/app/llm/GeminiProvider.kt](../app/src/main/java/com/androidharness/app/llm/GeminiProvider.kt)#L26-L275), [CHANGELOG.md](../CHANGELOG.md)#L50), [app/src/main/java/com/androidharness/app/llm/Llm.kt](../app/src/main/java/com/androidharness/app/llm/Llm.kt)#L236-L284), [app/src/main/java/com/androidharness/app/llm/ProviderHeaders.kt](../app/src/main/java/com/androidharness/app/llm/ProviderHeaders.kt)#L41-L55)
+Sources: [app/src/main/java/com/ylstack1/ylharness/llm/AnthropicProvider.kt](../app/src/main/java/com/ylstack1/ylharness/llm/AnthropicProvider.kt)#L30-L466), [app/src/main/java/com/ylstack1/ylharness/llm/GeminiProvider.kt](../app/src/main/java/com/ylstack1/ylharness/llm/GeminiProvider.kt)#L26-L275), [CHANGELOG.md](../CHANGELOG.md)#L50), [app/src/main/java/com/ylstack1/ylharness/llm/Llm.kt](../app/src/main/java/com/ylstack1/ylharness/llm/Llm.kt)#L236-L284), [app/src/main/java/com/ylstack1/ylharness/llm/ProviderHeaders.kt](../app/src/main/java/com/ylstack1/ylharness/llm/ProviderHeaders.kt)#L41-L55)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/llm/AnthropicProvider.kt`
-- `app/src/main/java/com/androidharness/app/llm/GeminiProvider.kt`
-- `app/src/main/java/com/androidharness/app/llm/Llm.kt`
-- `app/src/main/java/com/androidharness/app/llm/ProviderHeaders.kt`
-- `app/src/main/java/com/androidharness/app/llm/HarnessProvider.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/AnthropicProvider.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/GeminiProvider.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/Llm.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/ProviderHeaders.kt`
+- `app/src/main/java/com/ylstack1/ylharness/llm/HarnessProvider.kt`
 - `CHANGELOG.md`

@@ -34,7 +34,7 @@ sequenceDiagram
     Mgr->>O: discover() then registerClient()
     O-->>Mgr: browser URL
     Mgr->>Mgr: pendingAuth = state + verifier
-    Note over Mgr: Custom Tab, redirect androidharness://mcp
+    Note over Mgr: Custom Tab, redirect ylharness://mcp
     Mgr->>O: exchangeCode() then saveOAuthState()
     Mgr->>Conn: connectionFor() again
     Conn->>T: send initialize
@@ -48,7 +48,7 @@ sequenceDiagram
 
 ### Connection and handshake
 
-`connect(cwd)` chooses the transport from `config.type` (`McpConnection.kt:78-L92`). It launches a collector on the connection scope that feeds every inbound line into `handleLine`, starts the transport, then issues `initialize` with `protocolVersion` equal to `McpProtocol.REMOTE_VERSION` (`2025-06-18`) for remote servers or `2024-11-05` for stdio, empty `capabilities`, and `clientInfo` name `AndroidHarness` version `0.4-alpha` (`McpConnection.kt:104-L118`). It sends `notifications/initialized`, calls `tools/list`, parses the result into `McpToolInfo` objects, and only then sets `ConnectionState.READY`.
+`connect(cwd)` chooses the transport from `config.type` (`McpConnection.kt:78-L92`). It launches a collector on the connection scope that feeds every inbound line into `handleLine`, starts the transport, then issues `initialize` with `protocolVersion` equal to `McpProtocol.REMOTE_VERSION` (`2025-06-18`) for remote servers or `2024-11-05` for stdio, empty `capabilities`, and `clientInfo` name `YL Harness` version `0.4-alpha` (`McpConnection.kt:104-L118`). It sends `notifications/initialized`, calls `tools/list`, parses the result into `McpToolInfo` objects, and only then sets `ConnectionState.READY`.
 
 `handleLine` ignores any message that carries a `method`, which means server-initiated requests and notifications (sampling, roots, elicitation, progress, logging) are dropped rather than answered. Responses are matched by integer `id` into `pending` (`McpConnection.kt:218-L225`).
 
@@ -75,11 +75,11 @@ The shared client is `mcpHttpClient()`: 15 second connect timeout, 5 minute read
 1. `McpOAuth.discover(httpClient, challenge, url)`. Candidate protected-resource metadata URLs are the challenge URL, then the server origin with `/.well-known/oauth-protected-resource<path>`, then the origin root with `/.well-known/oauth-protected-resource`. The first document containing `authorization_servers` wins.
 2. The issuer is the first `authorization_servers` entry. Authorization-server metadata is fetched from `$issuer/.well-known/oauth-authorization-server` and from the same string with the issuer path appended.
 3. `authorization_endpoint` and `token_endpoint` are required; `registration_endpoint` is optional. Scopes come from `scopes_supported` in the resource metadata; `resource` comes from the metadata `resource` field or the server URL.
-4. `McpOAuth.registerClient` posts `client_name`, `redirect_uris: ["androidharness://mcp/oauth"]`, `grant_types: ["authorization_code", "refresh_token"]`, `response_types: ["code"]`, `token_endpoint_auth_method: "none"` and an optional scope, then stores `client_id` and `client_secret`.
+4. `McpOAuth.registerClient` posts `client_name`, `redirect_uris: ["ylharness://mcp/oauth"]`, `grant_types: ["authorization_code", "refresh_token"]`, `response_types: ["code"]`, `token_endpoint_auth_method: "none"` and an optional scope, then stores `client_id` and `client_secret`.
 5. `createState()` and `createVerifier()` each produce 48 random bytes as base64url without padding; `codeChallenge` is the SHA-256 of the verifier, also base64url.
 6. `authorizationUrl` adds `response_type=code`, `client_id`, `redirect_uri`, `state`, `code_challenge`, `code_challenge_method=S256`, `resource` and optional `scope`, with every value URL-encoded (`McpOAuth.kt:191-L208`).
 
-The verifier and state live in `pendingAuth`, a single `@Volatile` `PendingAuth` field, so only one server can be mid-authentication and the state is lost on process death (`McpManager.kt:107-L113`). The redirect is declared in the manifest as scheme `androidharness`, host `mcp` (`AndroidManifest.xml:117-L123`) and handled by `MainActivity.handleMcpOAuth`, which passes `state` and `code` to `completeAuthentication` (`MainActivity.kt:313-L326`). That method rejects a missing pending attempt, a state mismatch and a blank code, exchanges the code with the verifier, saves the tokens, clears `pendingAuth`, disconnects and reconnects the server (`McpManager.kt:583-L614`).
+The verifier and state live in `pendingAuth`, a single `@Volatile` `PendingAuth` field, so only one server can be mid-authentication and the state is lost on process death (`McpManager.kt:107-L113`). The redirect is declared in the manifest as scheme `ylharness`, host `mcp` (`AndroidManifest.xml:117-L123`) and handled by `MainActivity.handleMcpOAuth`, which passes `state` and `code` to `completeAuthentication` (`MainActivity.kt:313-L326`). That method rejects a missing pending attempt, a state mismatch and a blank code, exchanges the code with the verifier, saves the tokens, clears `pendingAuth`, disconnects and reconnects the server (`McpManager.kt:583-L614`).
 
 Refresh (`authHeaderFor`, `McpManager.kt:620-L639`) returns the stored bearer token when `accessTokenValid()` is true, treating a token as expired 30 seconds early (`McpOAuth.kt:37-L38`). Otherwise it takes a per-server mutex, re-reads the state, calls `refreshTokens`, keeps the old refresh token when the provider omits a new one, saves the updated blob and returns the new bearer.
 
@@ -161,17 +161,17 @@ All token requests share `tokenRequest`, which applies a 30 second `callTimeout`
 - `McpManager.startAuthentication` searches only the app-side `_servers` list, so a server that exists only in `harness.json` or a plugin cannot use the Authenticate button.
 - The OAuth access token is only used for `http` and `sse` transports; stdio servers have no token path.
 
-Sources: [app/src/main/java/com/androidharness/app/tools/mcp/McpTransport.kt](../app/src/main/java/com/androidharness/app/tools/mcp/McpTransport.kt)#L122-L176), [app/src/main/java/com/androidharness/app/tools/mcp/McpConnection.kt](../app/src/main/java/com/androidharness/app/tools/mcp/McpConnection.kt)#L77-L169), [app/src/main/java/com/androidharness/app/tools/mcp/McpOAuth.kt](../app/src/main/java/com/androidharness/app/tools/mcp/McpOAuth.kt)#L92-L133), [app/src/main/java/com/androidharness/app/tools/mcp/McpToolAdapter.kt](../app/src/main/java/com/androidharness/app/tools/mcp/McpToolAdapter.kt)#L18-L68)
+Sources: [app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpTransport.kt](../app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpTransport.kt)#L122-L176), [app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpConnection.kt](../app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpConnection.kt)#L77-L169), [app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpOAuth.kt](../app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpOAuth.kt)#L92-L133), [app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpToolAdapter.kt](../app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpToolAdapter.kt)#L18-L68)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/tools/mcp/McpTransport.kt`
-- `app/src/main/java/com/androidharness/app/tools/mcp/McpConnection.kt`
-- `app/src/main/java/com/androidharness/app/tools/mcp/McpOAuth.kt`
-- `app/src/main/java/com/androidharness/app/tools/mcp/McpToolAdapter.kt`
-- `app/src/main/java/com/androidharness/app/tools/mcp/McpModels.kt`
-- `app/src/main/java/com/androidharness/app/tools/mcp/McpManager.kt`
-- `app/src/main/java/com/androidharness/app/ui/common/OAuthBrowser.kt`
-- `app/src/main/java/com/androidharness/app/MainActivity.kt`
-- `app/src/main/java/com/androidharness/app/data/KeyStoreManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpTransport.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpConnection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpOAuth.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpToolAdapter.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpModels.kt`
+- `app/src/main/java/com/ylstack1/ylharness/tools/mcp/McpManager.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/common/OAuthBrowser.kt`
+- `app/src/main/java/com/ylstack1/ylharness/MainActivity.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/KeyStoreManager.kt`
 - `app/src/main/AndroidManifest.xml`

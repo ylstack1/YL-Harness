@@ -109,25 +109,25 @@ flowchart TD
 - The `sources` field in each lesson is present in the asset and used for review, but no UI exposes it.
 - Learn progress is stored outside `SettingsRepository`, so it does not travel with settings backups.
 
-Sources: [app/src/main/java/com/androidharness/app/ui/learn/LearnSection.kt](../app/src/main/java/com/androidharness/app/ui/learn/LearnSection.kt)#L77-L121)
+Sources: [app/src/main/java/com/ylstack1/ylharness/ui/learn/LearnSection.kt](../app/src/main/java/com/ylstack1/ylharness/ui/learn/LearnSection.kt)#L77-L121)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/ui/learn/LearnCatalog.kt`
-- `app/src/main/java/com/androidharness/app/ui/learn/LearnSection.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/RunTips.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/components/RunTipCard.kt`
-- `app/src/main/java/com/androidharness/app/ui/whatsnew/WhatsNewDialog.kt`
-- `app/src/main/java/com/androidharness/app/ui/whatsnew/WhatsNewStore.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/SettingsScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/SettingsNavigation.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/SettingsHome.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/AgentBehaviorSection.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/AgentSettingsCatalog.kt`
-- `app/src/main/java/com/androidharness/app/ui/AppNav.kt`
-- `app/src/main/java/com/androidharness/app/ui/chat/ChatScreen.kt`
-- `app/src/main/java/com/androidharness/app/data/SettingsRepository.kt`
-- `app/src/main/java/com/androidharness/app/MainActivity.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/learn/LearnCatalog.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/learn/LearnSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/RunTips.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/components/RunTipCard.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/whatsnew/WhatsNewDialog.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/whatsnew/WhatsNewStore.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsNavigation.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/SettingsHome.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/AgentBehaviorSection.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/settings/AgentSettingsCatalog.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/AppNav.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/chat/ChatScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/data/SettingsRepository.kt`
+- `app/src/main/java/com/ylstack1/ylharness/MainActivity.kt`
 - `app/src/main/assets/learn/guide.json`
 - `app/src/main/res/values/learn_strings.xml`
 - `app/src/main/res/values/tips_strings.xml`

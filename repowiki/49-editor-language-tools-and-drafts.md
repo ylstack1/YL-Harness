@@ -115,28 +115,28 @@ Project search uses `ProjectSearchOptions` for query, match case, regex, include
 
 - `engine.js` is a single minified bundle of 10.7 MB. The bundled package versions are verified from `assets/editor-tools/LICENSES.txt` (TypeScript 5.9.3, prettier 3.9.6, vscode-html-languageservice 5.6.2, vscode-css-languageservice 6.3.10, vscode-json-languageservice 5.6.3). The per-language operation routing inside that bundle was not read line by line.
 
-Sources: [app/src/main/java/com/androidharness/app/ui/files/WorkspaceEditorScreen.kt](../app/src/main/java/com/androidharness/app/ui/files/WorkspaceEditorScreen.kt)#L49-L248), [app/src/main/java/com/androidharness/app/ui/files/CodeEditorScreen.kt](../app/src/main/java/com/androidharness/app/ui/files/CodeEditorScreen.kt)#L106-L1071), [app/src/main/java/com/androidharness/app/ui/files/EditorDraftStore.kt](../app/src/main/java/com/androidharness/app/ui/files/EditorDraftStore.kt)#L15-L129), [app/src/main/java/com/androidharness/app/ui/files/EditorTabsStore.kt](../app/src/main/java/com/androidharness/app/ui/files/EditorTabsStore.kt)#L19-L89), [app/src/main/java/com/androidharness/app/ui/files/SmartEditorEngine.kt](../app/src/main/java/com/androidharness/app/ui/files/SmartEditorEngine.kt)#L26-L136), [app/src/main/assets/editor-tools/host.js](../app/src/main/assets/editor-tools/host.js)#L1-L6)
+Sources: [app/src/main/java/com/ylstack1/ylharness/ui/files/WorkspaceEditorScreen.kt](../app/src/main/java/com/ylstack1/ylharness/ui/files/WorkspaceEditorScreen.kt)#L49-L248), [app/src/main/java/com/ylstack1/ylharness/ui/files/CodeEditorScreen.kt](../app/src/main/java/com/ylstack1/ylharness/ui/files/CodeEditorScreen.kt)#L106-L1071), [app/src/main/java/com/ylstack1/ylharness/ui/files/EditorDraftStore.kt](../app/src/main/java/com/ylstack1/ylharness/ui/files/EditorDraftStore.kt)#L15-L129), [app/src/main/java/com/ylstack1/ylharness/ui/files/EditorTabsStore.kt](../app/src/main/java/com/ylstack1/ylharness/ui/files/EditorTabsStore.kt)#L19-L89), [app/src/main/java/com/ylstack1/ylharness/ui/files/SmartEditorEngine.kt](../app/src/main/java/com/ylstack1/ylharness/ui/files/SmartEditorEngine.kt)#L26-L136), [app/src/main/assets/editor-tools/host.js](../app/src/main/assets/editor-tools/host.js)#L1-L6)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/ui/files/WorkspaceEditorScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/CodeEditorScreen.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/EditorBufferViewModel.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/EditorDraftStore.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/EditorTabsStore.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/EditorFileCodec.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/EditorSave.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/EditorNavigationGuard.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/BasicCodeLanguage.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/MaterialCompletionAdapter.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/SmartEditorWorkspace.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/SmartEditorController.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/SmartEditorEngine.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/SmartEditorSheet.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/WorkspaceSearch.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/WorkspaceToolsSheet.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/MarkdownPreview.kt`
-- `app/src/main/java/com/androidharness/app/ui/files/SelectedCode.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/WorkspaceEditorScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/CodeEditorScreen.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/EditorBufferViewModel.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/EditorDraftStore.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/EditorTabsStore.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/EditorFileCodec.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/EditorSave.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/EditorNavigationGuard.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/BasicCodeLanguage.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/MaterialCompletionAdapter.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/SmartEditorWorkspace.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/SmartEditorController.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/SmartEditorEngine.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/SmartEditorSheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/WorkspaceSearch.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/WorkspaceToolsSheet.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/MarkdownPreview.kt`
+- `app/src/main/java/com/ylstack1/ylharness/ui/files/SelectedCode.kt`
 - `app/src/main/assets/editor-tools/index.html`
 - `app/src/main/assets/editor-tools/host.js`
 - `app/src/main/assets/editor-tools/engine.js`

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="learn_title">AndroidHarness kennenlernen</string>
+    <string name="learn_title">YL Harness kennenlernen</string>
     <string name="learn_description">Verständliche Schritt-für-Schritt-Anleitungen für alles, was du hier tun kannst.</string>
     <string name="learn_group">Hier starten</string>
     <string name="learn_entry_hint">Deine Anleitung, in deinem Tempo</string>

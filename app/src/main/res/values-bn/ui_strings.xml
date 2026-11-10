@@ -637,7 +637,7 @@
     <string name="ui_shizuku_is_disabled">"Shizuku অক্ষম করা হয়েছে"</string>
     <string name="ui_shizuku_is_no_longer_available_its_server">"Shizuku আর উপলব্ধ নেই৷ এর সার্ভার হয়তো বন্ধ হয়ে গেছে বা মেরে ফেলা হয়েছে "</string>
     <string name="ui_in_the_background_or_this_app_s">"পটভূমিতে, অথবা এই অ্যাপের অ্যাক্সেস প্রত্যাহার করা হয়েছে। "</string>
-    <string name="ui_start_shizuku_and_allow_androidharness_access_to">"Shizuku শুরু করুন এবং এটিকে আবার ব্যবহার করার জন্য AndroidHarness অ্যাক্সেসের অনুমতি দিন।"</string>
+    <string name="ui_start_shizuku_and_allow_ylharness_access_to">"Shizuku শুরু করুন এবং এটিকে আবার ব্যবহার করার জন্য YL Harness অ্যাক্সেসের অনুমতি দিন।"</string>
     <string name="ui_never_show_this_message_again">"এই বার্তাটি আর দেখাবেন না"</string>
     <string name="ui_limits_resets">"সীমা এবং রিসেট"</string>
     <string name="ui_view_live_limits_in_chatgpt">"ChatGPT এ লাইভ সীমা দেখুন"</string>
@@ -1110,7 +1110,7 @@
     <string name="ui_the_app_needs_node_python_from_the">"অ্যাপটি Linux পরিবেশ থেকে node/python প্রয়োজন।"</string>
     <string name="ui_not_installed_optional">"ইনস্টল করা হয়নি: ঐচ্ছিক।"</string>
     <string name="ui_installed_not_running">"ইনস্টল করা, চলমান না।"</string>
-    <string name="ui_running_grant_androidharness_access">"চলমান: AndroidHarness অ্যাক্সেস মঞ্জুর করুন।"</string>
+    <string name="ui_running_grant_ylharness_access">"চলমান: YL Harness অ্যাক্সেস মঞ্জুর করুন।"</string>
     <string name="ui_connected_shell_privileges_ready">"সংযুক্ত: শেল বিশেষাধিকার প্রস্তুত।"</string>
     <string name="ui_connected_in_compatibility_mode_shell_privileges_ready">"সামঞ্জস্য মোডে সংযুক্ত: শেল বিশেষাধিকার প্রস্তুত।"</string>
     <string name="ui_access_granted_connecting_to_the_shell_runner">"অ্যাক্সেস দেওয়া হয়েছে। শেল রানারে সংযোগ করা হচ্ছে..."</string>
@@ -1157,10 +1157,10 @@
     <string name="ui_open_source">"ওপেন সোর্স"</string>
     <string name="ui_use_it_change_it_ship_it_even">"এটি ব্যবহার করুন, এটি পরিবর্তন করুন, এটি পাঠান, এমনকি একটি বাণিজ্যিক অ্যাপের মধ্যেও। একটি শর্ত হল যে "</string>
     <string name="ui_copyright_notice_and_the_license_text_travel">"কপিরাইট বিজ্ঞপ্তি এবং কোড সহ লাইসেন্স পাঠ্য ভ্রমণ। এটি কোন ওয়ারেন্টি সহ আসে।"</string>
-    <string name="ui_androidharness_is_built_on_open_source_work">"AndroidHarness ওপেন সোর্স কাজের উপর নির্মিত এবং এর আগে আসা এজেন্টদের কাছ থেকে ধারণা ধার করে।"</string>
+    <string name="ui_ylharness_is_built_on_open_source_work">"YL Harness ওপেন সোর্স কাজের উপর নির্মিত এবং এর আগে আসা এজেন্টদের কাছ থেকে ধারণা ধার করে।"</string>
     <string name="ui_built_with">"দিয়ে নির্মিত"</string>
     <string name="ui_inspired_by">"দ্বারা অনুপ্রাণিত"</string>
-    <string name="ui_every_project_keeps_its_own_license_androidharness">"প্রতিটি প্রকল্প নিজস্ব লাইসেন্স রাখে। AndroidHarness তাদের সাথে অধিভুক্ত নয়।"</string>
+    <string name="ui_every_project_keeps_its_own_license_ylharness">"প্রতিটি প্রকল্প নিজস্ব লাইসেন্স রাখে। YL Harness তাদের সাথে অধিভুক্ত নয়।"</string>
     <string name="ui_exported_chats_messages">"রপ্তানি করা %1$s চ্যাট (%2$s বার্তা, %3$s স্মৃতি)।"</string>
     <string name="ui_export_failed">"রপ্তানি ব্যর্থ হয়েছে।"</string>
     <string name="ui_export_failed_1230">"রপ্তানি ব্যর্থ হয়েছে: %1$s"</string>
@@ -1249,7 +1249,7 @@
     <string name="ui_status">"স্ট্যাটাস"</string>
     <string name="ui_retry_resume">"পুনরায় চেষ্টা করুন / পুনরায় শুরু করুন"</string>
     <string name="ui_pause_telegram">"Telegram বিরাম দিন"</string>
-    <string name="ui_welcome_to_androidharness">"AndroidHarness এ স্বাগতম"</string>
+    <string name="ui_welcome_to_ylharness">"YL Harness এ স্বাগতম"</string>
     <string name="ui_grant_storage_access_to_start_coding_notifications">"কোডিং শুরু করতে স্টোরেজ অ্যাক্সেস মঞ্জুর করুন। বিজ্ঞপ্তি এবং অন্যান্য সরঞ্জাম ঐচ্ছিক."</string>
     <string name="ui_device_storage_access_granted">"ডিভাইস স্টোরেজ অ্যাক্সেস দেওয়া হয়েছে"</string>
     <string name="ui_required_allow_access_to_device_files_and">"প্রয়োজনীয়: ডিভাইস ফাইল এবং ফোল্ডার অ্যাক্সেসের অনুমতি দিন"</string>
@@ -1587,7 +1587,7 @@
     <string name="ui_access_mode">"অ্যাক্সেস মোড: %1$s"</string>
     <string name="ui_scheduled_tasks">"নির্ধারিত কাজ"</string>
     <string name="ui_project_and_chat_sidebar">"প্রকল্প এবং চ্যাট সাইডবার"</string>
-    <string name="ui_androidharness_icon">"AndroidHarness আইকন"</string>
+    <string name="ui_ylharness_icon">"YL Harness আইকন"</string>
     <string name="ui_collapse_sidebar">"সাইডবার সঙ্কুচিত করুন"</string>
     <string name="ui_search_chats_and_messages">"চ্যাট এবং বার্তা অনুসন্ধান করুন"</string>
     <string name="ui_search_chats">"চ্যাট অনুসন্ধান করুন"</string>
@@ -1639,7 +1639,7 @@
         <item quantity="other">"%1$d সারি"</item>
     </plurals>
     <string name="voice_transcribing">"প্রতিলিপি করা হচ্ছে..."</string>
-    <string name="donate_funding_message">"AndroidHarness উন্নয়ন চালিয়ে যাওয়ার জন্য আমাদের কাছে তহবিলের অভাব রয়েছে। আপনার সমর্থন আমাদের নির্মাণ চালিয়ে যেতে সাহায্য করে."</string>
+    <string name="donate_funding_message">"YL Harness উন্নয়ন চালিয়ে যাওয়ার জন্য আমাদের কাছে তহবিলের অভাব রয়েছে। আপনার সমর্থন আমাদের নির্মাণ চালিয়ে যেতে সাহায্য করে."</string>
     <string name="donate_dismiss_message">"দানের বার্তা খারিজ করুন"</string>
     <string name="background_settings_title">"পটভূমি এবং বিজ্ঞপ্তি"</string>
     <string name="background_settings_description">"পটভূমি কাজ এবং বিজ্ঞপ্তি পরিচালনা করুন."</string>
@@ -1649,10 +1649,10 @@
     <string name="background_notifications_description">"অ্যাপ্লিকেশান সতর্কতাগুলিকে অনুমতি দিন৷ Android পরিষেবা বিজ্ঞপ্তিগুলি পরিচালনা করে৷"</string>
     <string name="background_android_title">"Android বিজ্ঞপ্তি সেটিংস"</string>
     <string name="background_android_description">"সমস্ত Android বিজ্ঞপ্তি সেটিংস পরিচালনা করুন।"</string>
-    <string name="background_run_blocked">"ব্যাকগ্রাউন্ড রানিং বন্ধ আছে। একটি টাস্ক শুরু করতে বা চালিয়ে যেতে AndroidHarness খুলুন।"</string>
+    <string name="background_run_blocked">"ব্যাকগ্রাউন্ড রানিং বন্ধ আছে। একটি টাস্ক শুরু করতে বা চালিয়ে যেতে YL Harness খুলুন।"</string>
     <string name="background_service_notice">"ব্যাকগ্রাউন্ড সার্ভিস চলছে"</string>
     <string name="local_gpu_download_title">"GPU সমর্থন"</string>
-    <string name="local_gpu_runtime_repository">"সূত্র: Sanuu7/AH-GPU-রানটাইম"</string>
+    <string name="local_gpu_runtime_repository">"সূত্র: ylstack1/AH-GPU-রানটাইম"</string>
     <string name="local_gpu_delivery_play">"Google Play এর মাধ্যমে নিরাপদে ইনস্টল করা হয়েছে।"</string>
     <string name="local_gpu_delivery_github">"GitHub থেকে এই অ্যাপ এবং ডিভাইসের সাথে মিলে যাওয়া GPU প্যাকেজ ডাউনলোড করে।"</string>
     <string name="local_gpu_optional_download">"ঐচ্ছিক ডাউনলোড। CPU অনুমান এটি ছাড়া কাজ করে; GPU সমর্থন ইনস্টলেশনের পরে অফলাইনে উপলব্ধ থাকে।"</string>

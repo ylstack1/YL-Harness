@@ -20,8 +20,8 @@
     <string name="tip_chat_instructions">أضف في خيارات الدردشة تعليمات تتبعها كل محادثة، مثل نبرتك أو لغتك المفضلة.</string>
     <string name="tip_tts">يمكن قراءة الردود بصوت عالٍ تلقائيًا. اختر الصوت والسرعة في إعدادات الصوت.</string>
     <string name="tip_agents_md">ضع قواعد المشروع في AGENTS.md وسيتبعها الوكيل في كل تشغيل.</string>
-    <string name="tip_memory_off">شغّل الذاكرة ليتذكر AndroidHarness تفضيلاتك وقراراتك عبر المحادثات.</string>
-    <string name="tip_memory_on">الذاكرة مفعّلة. يمكنك مراجعة ما يتذكره AndroidHarness أو حذفه في أي وقت.</string>
+    <string name="tip_memory_off">شغّل الذاكرة ليتذكر YL Harness تفضيلاتك وقراراتك عبر المحادثات.</string>
+    <string name="tip_memory_on">الذاكرة مفعّلة. يمكنك مراجعة ما يتذكره YL Harness أو حذفه في أي وقت.</string>
     <string name="tip_thinking">اضغط على مستوى التفكير في الشريط العلوي لتبادل السرعة بتفكير أعمق.</string>
     <string name="tip_glass">جرّب Harness Glass لأسطح شفافة ومتعددة الطبقات في التطبيق كله.</string>
     <string name="tip_compact">السياق يوشك على النفاد؟ اكتب /compact لتلخيص المحادثة والمتابعة.</string>
@@ -30,7 +30,7 @@
     <string name="tip_dual_planning">استخدم نموذجًا للتخطيط وآخر أرخص لتنفيذ الخطة.</string>
     <string name="tip_codegraph">ثبّت CodeGraph ليجد الوكيل المستدعين والشيفرة المتأثرة دون قراءة كل ملف.</string>
     <string name="tip_whisper">أملِ بصوتك مع Groq Whisper لإدخال صوتي سريع ودقيق بلغات كثيرة.</string>
-    <string name="tip_app_lock">اقفل AndroidHarness ببصمة الإصبع أو الوجه أو رمز PIN للجهاز.</string>
+    <string name="tip_app_lock">اقفل YL Harness ببصمة الإصبع أو الوجه أو رمز PIN للجهاز.</string>
     <string name="tip_mcp">اربط خوادم MCP لتمنح الوكيل أدوات أكثر.</string>
     <string name="tip_web_search">اختر محرك البحث على الويب: Keyless أو Brave أو Tavily.</string>
     <string name="tip_theme">اختر لوحة ألوان أو أنشئ لوحتك من المظهر.</string>
@@ -47,7 +47,7 @@
     <string name="tip_config">شارك إعدادات المشروع مع مستودعك عبر harness.json.</string>
     <string name="tip_shizuku">اضبط Shizuku ليستخدم الوكيل صلاحيات shell أعلى على جهازك.</string>
     <string name="tip_plugins">ثبّت حزم الإضافات من صفحة الإضافات لإضافة مهارات وأدوات.</string>
-    <string name="tip_language">يتوفر AndroidHarness بـ 11 لغة. غيّرها من إعدادات اللغة.</string>
+    <string name="tip_language">يتوفر YL Harness بـ 11 لغة. غيّرها من إعدادات اللغة.</string>
     <string name="tip_backup">صدّر محادثاتك وإعداداتك كنسخة احتياطية واستوردها على جهاز آخر.</string>
     <string name="tip_progress_bar">غيّر نمط شريط التقدم من المظهر.</string>
     <string name="tip_turn_off">يمكنك إيقاف هذه النصائح في أي وقت من الإعدادات.</string>

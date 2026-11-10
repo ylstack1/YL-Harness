@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="learn_title">"AndroidHarness rehberi"</string>
+    <string name="learn_title">"YL Harness rehberi"</string>
     <string name="learn_description">"Burada yapabilecekleriniz için anlaşılır, adım adım rehberler."</string>
     <string name="learn_group">"Buradan başlayın"</string>
     <string name="learn_entry_hint">"Kendi hızınızda öğrenin"</string>

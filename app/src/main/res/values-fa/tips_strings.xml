@@ -20,8 +20,8 @@
     <string name="tip_chat_instructions">در گزینه‌های گفتگو دستورهایی اضافه کنید که هر گفتگو دنبال کند، مثل لحن یا زبان دلخواه.</string>
     <string name="tip_tts">پاسخ‌ها می‌توانند خودکار بلند خوانده شوند. صدا و سرعت را در تنظیمات صدا انتخاب کنید.</string>
     <string name="tip_agents_md">قوانین پروژه را در AGENTS.md بنویسید تا عامل در هر اجرا آن‌ها را رعایت کند.</string>
-    <string name="tip_memory_off">حافظه را روشن کنید تا AndroidHarness ترجیح‌ها و تصمیم‌های شما را در همهٔ گفتگوها به خاطر بسپارد.</string>
-    <string name="tip_memory_on">حافظه روشن است. هر زمان بخواهید می‌توانید آنچه AndroidHarness به خاطر سپرده را ببینید یا پاک کنید.</string>
+    <string name="tip_memory_off">حافظه را روشن کنید تا YL Harness ترجیح‌ها و تصمیم‌های شما را در همهٔ گفتگوها به خاطر بسپارد.</string>
+    <string name="tip_memory_on">حافظه روشن است. هر زمان بخواهید می‌توانید آنچه YL Harness به خاطر سپرده را ببینید یا پاک کنید.</string>
     <string name="tip_thinking">روی سطح تفکر در سربرگ بزنید تا سرعت را با استدلال عمیق‌تر عوض کنید.</string>
     <string name="tip_glass">Harness Glass را برای سطح‌های نیمه‌شفاف و لایه‌لایه در کل برنامه امتحان کنید.</string>
     <string name="tip_compact">زمینه رو به پایان است؟ /compact را بنویسید تا گفتگو خلاصه شود و ادامه دهید.</string>
@@ -30,7 +30,7 @@
     <string name="tip_dual_planning">از یک مدل برای برنامه‌ریزی و از مدل دیگری که ارزان‌تر است برای اجرای برنامه استفاده کنید.</string>
     <string name="tip_codegraph">CodeGraph را نصب کنید تا عامل بدون خواندن همهٔ فایل‌ها فراخوان‌ها و کد متأثر را پیدا کند.</string>
     <string name="tip_whisper">با Groq Whisper دیکته کنید تا ورودی صوتی سریع و دقیق در زبان‌های بسیار داشته باشید.</string>
-    <string name="tip_app_lock">AndroidHarness را با اثر انگشت، چهره یا PIN دستگاه قفل کنید.</string>
+    <string name="tip_app_lock">YL Harness را با اثر انگشت، چهره یا PIN دستگاه قفل کنید.</string>
     <string name="tip_mcp">سرورهای MCP را وصل کنید تا عامل ابزارهای بیشتری داشته باشد.</string>
     <string name="tip_web_search">موتور جستجوی وب را انتخاب کنید: Keyless، Brave یا Tavily.</string>
     <string name="tip_theme">در ظاهر، یک پالت رنگ انتخاب کنید یا پالت خودتان را بسازید.</string>
@@ -47,7 +47,7 @@
     <string name="tip_config">تنظیمات پروژه را از طریق harness.json با مخزنتان به اشتراک بگذارید.</string>
     <string name="tip_shizuku">Shizuku را راه‌اندازی کنید تا عامل بتواند از دسترسی بالاتر shell روی دستگاه استفاده کند.</string>
     <string name="tip_plugins">بسته‌های افزونه را از صفحهٔ افزونه‌ها نصب کنید تا مهارت و ابزار اضافه شود.</string>
-    <string name="tip_language">AndroidHarness به ۱۱ زبان در دسترس است. آن را در تنظیمات زبان عوض کنید.</string>
+    <string name="tip_language">YL Harness به ۱۱ زبان در دسترس است. آن را در تنظیمات زبان عوض کنید.</string>
     <string name="tip_backup">گفتگوها و تنظیماتتان را به‌عنوان پشتیبان صادر کنید و روی دستگاه دیگری وارد کنید.</string>
     <string name="tip_progress_bar">سبک نوار پیشرفت را در ظاهر تغییر دهید.</string>
     <string name="tip_turn_off">هر زمان بخواهید می‌توانید این نکته‌ها را در تنظیمات خاموش کنید.</string>

@@ -20,8 +20,8 @@
     <string name="tip_chat_instructions">"Chat 옵션에 선호하는 톤이나 언어 등 모든 채팅에 대한 지침을 추가하세요."</string>
     <string name="tip_tts">"답글을 자동으로 소리내어 읽을 수 있습니다. 음성 설정에서 음성과 속도를 선택하세요."</string>
     <string name="tip_agents_md">"AGENTS.md에 프로젝트 규칙을 넣으면 에이전트가 실행될 때마다 이를 따릅니다."</string>
-    <string name="tip_memory_off">"AndroidHarness가 채팅 전반에 걸쳐 귀하의 선호 사항과 결정을 기억할 수 있도록 메모리를 켜십시오."</string>
-    <string name="tip_memory_on">"메모리가 켜져 있습니다. AndroidHarness가 기억하는 내용은 언제든지 검토하거나 삭제할 수 있습니다."</string>
+    <string name="tip_memory_off">"YL Harness가 채팅 전반에 걸쳐 귀하의 선호 사항과 결정을 기억할 수 있도록 메모리를 켜십시오."</string>
+    <string name="tip_memory_on">"메모리가 켜져 있습니다. YL Harness가 기억하는 내용은 언제든지 검토하거나 삭제할 수 있습니다."</string>
     <string name="tip_thinking">"더 깊은 추론을 위해 속도를 바꾸려면 헤더의 사고 수준을 탭하세요."</string>
     <string name="tip_glass">"앱 전체에 걸쳐 반투명하고 층이 있는 표면을 구현하려면 Harness Glass를 사용해 보세요."</string>
     <string name="tip_compact">"맥락이 부족합니까? 대화를 요약하고 계속하려면 /compact를 입력하세요."</string>
@@ -30,7 +30,7 @@
     <string name="tip_dual_planning">"하나의 모델을 사용하여 계획을 세우고, 다른 저렴한 모델을 사용하여 계획을 실행하세요."</string>
     <string name="tip_codegraph">"에이전트가 모든 파일을 읽지 않고도 호출자와 영향을 받는 코드를 찾을 수 있도록 CodeGraph를 설치하십시오."</string>
     <string name="tip_whisper">"다양한 언어로 빠르고 정확한 음성 입력을 위해 Groq Whisper로 받아쓰기하세요."</string>
-    <string name="tip_app_lock">"지문, 얼굴 또는 장치 PIN를 사용하여 AndroidHarness를 잠급니다."</string>
+    <string name="tip_app_lock">"지문, 얼굴 또는 장치 PIN를 사용하여 YL Harness를 잠급니다."</string>
     <string name="tip_mcp">"에이전트에게 더 많은 도구를 제공하려면 MCP 서버를 연결하세요."</string>
     <string name="tip_web_search">"Keyless, Brave 또는 Tavily 중에서 웹 검색 백엔드를 선택하세요."</string>
     <string name="tip_theme">"색상 팔레트를 선택하거나 모양새에서 나만의 팔레트를 만들어보세요."</string>
@@ -47,7 +47,7 @@
     <string name="tip_config">"Harness.json을 통해 프로젝트 설정을 리포지토리와 공유하세요."</string>
     <string name="tip_shizuku">"에이전트가 장치에서 향상된 셸 액세스를 사용할 수 있도록 Shizuku를 설정합니다."</string>
     <string name="tip_plugins">"기술과 도구를 추가하려면 플러그인 페이지에서 플러그인 번들을 설치하세요."</string>
-    <string name="tip_language">"AndroidHarness는 11개 언어로 제공됩니다. 언어 설정에서 변경하세요."</string>
+    <string name="tip_language">"YL Harness는 11개 언어로 제공됩니다. 언어 설정에서 변경하세요."</string>
     <string name="tip_backup">"채팅 및 설정을 백업으로 내보내고 다른 장치로 가져오세요."</string>
     <string name="tip_progress_bar">"Appearance에서 작업 진행률 표시줄의 스타일을 변경합니다."</string>
     <string name="tip_turn_off">"설정에서 언제든지 이 팁을 끌 수 있습니다."</string>

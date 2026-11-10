@@ -1,21 +1,21 @@
 <div align="center">
 
-<img src=".github/assets/icon.png" alt="AndroidHarness icon" width="120">
+<img src=".github/assets/icon.png" alt="YL Harness icon" width="120">
 
-# AndroidHarness
+# YL Harness
 
 **An AI coding agent and chat assistant that runs on your Android phone.**
 
 No PC needed. No root needed.
 
 <p>
-  <a href="https://github.com/Sanuu7/AndroidHarness/releases/latest"><img src=".github/assets/download-from-github.png" alt="Download from GitHub" height="54"></a>
-  <a href="https://play.google.com/store/apps/details?id=com.androidharness.app"><img src=".github/assets/google-play.png" alt="Get it on Google Play" height="54"></a>
+  <a href="https://github.com/ylstack1/YL Harness/releases/latest"><img src=".github/assets/download-from-github.png" alt="Download from GitHub" height="54"></a>
+  <a href="https://play.google.com/store/apps/details?id=com.ylstack1.ylharness"><img src=".github/assets/google-play.png" alt="Get it on Google Play" height="54"></a>
   <a href="https://buymeacoffee.com/sanuj7"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="54"></a>
 </p>
 
-[![Debug build](https://github.com/Sanuu7/AndroidHarness/actions/workflows/nightly.yml/badge.svg)](https://github.com/Sanuu7/AndroidHarness/actions/workflows/nightly.yml)
-[![Version](https://img.shields.io/badge/version-3.4-blue)](https://github.com/Sanuu7/AndroidHarness/releases/latest)
+[![Debug build](https://github.com/ylstack1/YL Harness/actions/workflows/nightly.yml/badge.svg)](https://github.com/ylstack1/YL Harness/actions/workflows/nightly.yml)
+[![Version](https://img.shields.io/badge/version-3.4-blue)](https://github.com/ylstack1/YL Harness/releases/latest)
 [![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-3ddc84)](https://developer.android.com/about/versions/oreo)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -23,7 +23,7 @@ No PC needed. No root needed.
 
 ## About
 
-AndroidHarness is a native Android app, written in Kotlin with Jetpack Compose, for working on real code projects from your phone. The agent reads and edits files, runs commands in a real Linux toolchain (bash, git, python, node), pushes to GitHub, drives a browser, and shows every step in a chat you can inspect.
+YL Harness is a native Android app, written in Kotlin with Jetpack Compose, for working on real code projects from your phone. The agent reads and edits files, runs commands in a real Linux toolchain (bash, git, python, node), pushes to GitHub, drives a browser, and shows every step in a chat you can inspect.
 
 The app has two sections:
 
@@ -74,7 +74,7 @@ See [CHANGELOG.md](CHANGELOG.md) for the full release notes.
 
 ## Getting started
 
-1. Install the app from [Google Play](https://play.google.com/store/apps/details?id=com.androidharness.app) or [GitHub Releases](https://github.com/Sanuu7/AndroidHarness/releases/latest), or build it from source.
+1. Install the app from [Google Play](https://play.google.com/store/apps/details?id=com.ylstack1.ylharness) or [GitHub Releases](https://github.com/ylstack1/YL Harness/releases/latest), or build it from source.
 2. Grant storage access. On Android 11 and newer the app needs All files access so the shell and file tools can use real paths.
 3. Pick a model. Use the built-in keyless provider, add an API key in Settings, or download a model in Settings → Local models.
 4. Recommended: install [Shizuku](https://github.com/RikkaApps/Shizuku), pair Wireless ADB in Settings → Terminal & device, or install the Linux environment from inside the app. This lets shell commands run with proper permissions. Rooted devices can also turn on direct root there.
@@ -194,7 +194,7 @@ Register a [GitHub OAuth app](https://github.com/settings/developers), turn on *
 - [FEATURES.md](FEATURES.md): the complete feature reference
 - [Configuration guide](docs/configuration/README.md) and [JSON Schema](docs/harness.schema.json) for `harness.json`
 - [Plugin guide](docs/configuration/plugin-manager.md)
-- [Developer repo wiki](https://github.com/Sanuu7/AndroidHarness/tree/main/repowiki): architecture of the agent engine, tools, providers, MCP and workspaces
+- [Developer repo wiki](https://github.com/ylstack1/YL Harness/tree/main/repowiki): architecture of the agent engine, tools, providers, MCP and workspaces
 - [CHANGELOG.md](CHANGELOG.md), [PRIVACY.md](PRIVACY.md) and [SECURITY.md](SECURITY.md)
 
 ## Contributing
@@ -203,7 +203,7 @@ Bug reports, fixes, tests and documentation are all welcome. Start with [CONTRIB
 
 ## Acknowledgements
 
-AndroidHarness takes ideas and design inspiration from these open source projects:
+YL Harness takes ideas and design inspiration from these open source projects:
 
 [Hermes Agent](https://github.com/NousResearch/hermes-agent),
 [Aider](https://github.com/Aider-AI/aider),

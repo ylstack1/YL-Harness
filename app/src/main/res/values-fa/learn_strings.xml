@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="learn_title">آشنایی با AndroidHarness</string>
+    <string name="learn_title">آشنایی با YL Harness</string>
     <string name="learn_description">راهنماهای گام‌به‌گام و ساده برای همه کاری که اینجا می‌توانید بکنید.</string>
     <string name="learn_group">از اینجا شروع کنید</string>
     <string name="learn_entry_hint">راهنمای شما، با سرعت خودتان</string>
