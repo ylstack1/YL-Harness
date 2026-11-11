@@ -74,6 +74,17 @@
     <string name="settings_external_agents_installing">Installing…</string>
     <string name="settings_external_agents_builtin_group">Built-in agents</string>
     <string name="settings_external_agents_other_group">Other agents</string>
+    <string name="settings_external_agents_manage">Manage</string>
+    <string name="settings_external_agents_reinstall">Reinstall</string>
+    <string name="settings_external_agents_test">Test connection</string>
+    <string name="settings_external_agents_auth_key">Auth key / API key</string>
+    <string name="settings_external_agents_default_model">Default model</string>
+    <string name="settings_external_agents_skills">Skills</string>
+    <string name="settings_external_agents_mcp">MCP servers</string>
+    <string name="settings_external_agents_manage_title">Manage %1$s</string>
+    <string name="settings_external_agents_installed">Installed</string>
+    <string name="settings_external_agents_not_installed">Not installed</string>
+    <string name="settings_external_agents_save_saved">Saved.</string>
     <string name="settings_page_workspace_title">Workspaces</string>
     <string name="settings_page_workspace_desc">Choose, add and manage your project folders</string>
     <string name="settings_page_storage_title">Storage</string>
