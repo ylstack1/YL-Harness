@@ -1,19 +1,33 @@
 package com.ylstack1.ylharness.agent
 
 import android.content.Context
+import com.androidharness.app.config.ExternalAgentConfig
+import com.androidharness.app.config.HarnessConfig
+import com.androidharness.app.tools.Tool
+import com.androidharness.app.tools.ToolContext
+import com.androidharness.app.tools.ToolRegistry
+import com.androidharness.app.tools.ToolResult
 import com.androidharness.app.data.env.LinuxEnvironmentManager
 import com.androidharness.app.data.env.ShellTierRouter
-import com.androidharness.app.tools.ToolContext
-import com.androidharness.app.tools.ToolResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
+import kotlinx.serialization.json.putJsonObject
 import okhttp3.OkHttpClient
 
 /**
  * Orchestrates external CLI agents (Pi, OpenCode, Claude Code, etc.)
  * Manages lifecycle, configuration, and execution routing.
+ *
+ * The ExternalAgentManager holds a [ToolRegistry] so that when an external agent
+ * (e.g. Pi in RPC mode) requests tool calls, they can be executed through
+ * AndroidHarness's own tool system.
+ *
+ * Agent configuration is read from [resolveConfig] which returns the current
+ * [HarnessConfig] with its [externalAgents] map.
  */
 class ExternalAgentManager(
     private val context: Context,
@@ -21,9 +35,14 @@ class ExternalAgentManager(
     private val shellRouter: ShellTierRouter,
     private val httpClient: OkHttpClient,
     private val json: Json = Json { ignoreUnknownKeys = true },
+    /** Resolves the current HarnessConfig; can be updated by Settings UI. */
+    internal var resolveConfig: suspend () -> HarnessConfig = { HarnessConfig() },
 ) {
     private val piProcessManager = PiProcessManager(context, linuxEnv, shellRouter, httpClient)
     private var piAdapter: PiAgentAdapter? = null
+
+    /** Set after ToolRegistry is created (circular dependency). */
+    internal var toolRegistry: ToolRegistry? = null
 
     /**
      * Execute a task using an external agent.
@@ -31,7 +50,7 @@ class ExternalAgentManager(
      * @param agentId The agent id from harness.json externalAgents config
      * @param prompt The task prompt for the agent
      * @param background Run in background (not yet implemented)
-     * @param ctx ToolContext for tool execution
+     * @param ctx ToolContext from the agent engine (workspace, sessionId, etc.)
      * @return ToolResult with the agent's output
      */
     suspend fun executeAgent(
@@ -64,27 +83,9 @@ class ExternalAgentManager(
         }
     }
 
-    private fun getConfig(agentId: String): ExternalAgentConfig? {
-        // In production this would read from harness.json via HarnessConfig
-        // For now, return a default Pi config
-        if (agentId == "pi") {
-            return ExternalAgentConfig(
-                id = "pi",
-                name = "Pi Coding Agent",
-                enabled = true,
-                provider = null,
-                model = null,
-                toolMapping = mapOf(
-                    "read" to "read_file",
-                    "write" to "write_file",
-                    "edit" to "edit_file",
-                    "list" to "list_dir",
-                    "grep" to "grep",
-                    "bash" to "shell",
-                ),
-            )
-        }
-        return null
+    /** Read agent config from the current HarnessConfig.externalAgents map. */
+    private suspend fun getConfig(agentId: String): ExternalAgentConfig? {
+        return resolveConfig().externalAgents[agentId]
     }
 
     private suspend fun runPiAgent(
@@ -95,6 +96,7 @@ class ExternalAgentManager(
         // Ensure Pi is running
         if (piAdapter == null) {
             val workingDir = config.workingDir?.let { java.io.File(it) }
+                ?: ctx?.workspace?.shellRoot?.let { java.io.File(it) }
                 ?: context.filesDir
 
             val startResult = piProcessManager.startSession(
@@ -112,7 +114,21 @@ class ExternalAgentManager(
             }
 
             val proc = startResult.getOrNull()!!
+
+            val registry = toolRegistry ?: return ToolResult(
+                ok = false,
+                output = "External agent manager not fully initialized (missing ToolRegistry).",
+            )
+
+            // Create tool bridge with access to ToolRegistry and ToolContext
+            val toolBridge = PiToolBridge(registry, ctx)
+
             piAdapter = PiAgentAdapter(proc, json)
+            piAdapter?.addListener { record ->
+                if (record["type"]?.jsonPrimitive?.content == "tool_call") {
+                    handlePiToolCall(record, toolBridge)
+                }
+            }
         }
 
         val adapter = piAdapter ?: return ToolResult(
@@ -135,6 +151,39 @@ class ExternalAgentManager(
         }
     }
 
+    /**
+     * Handle a tool call request from Pi.
+     * Maps the Pi tool name to an AndroidHarness tool and executes it.
+     */
+    private suspend fun handlePiToolCall(
+        record: JsonObject,
+        toolBridge: PiToolBridge,
+    ) {
+        try {
+            val result = toolBridge.executePiToolCall(record, json)
+            // Send result back to Pi via adapter
+            val callId = record["toolCall"]?.jsonObject?.get("id")?.jsonPrimitive?.content ?: ""
+            piAdapter?.sendCommand(buildJsonObject {
+                put("type", "tool_result")
+                put("id", callId)
+                putJsonObject("result") {
+                    put("ok", result.ok)
+                    put("output", result.output)
+                }
+            })
+        } catch (e: Exception) {
+            val callId = record["toolCall"]?.jsonObject?.get("id")?.jsonPrimitive?.content ?: ""
+            piAdapter?.sendCommand(buildJsonObject {
+                put("type", "tool_result")
+                put("id", callId)
+                putJsonObject("result") {
+                    put("ok", false)
+                    put("output", e.message ?: "Tool execution failed")
+                }
+            })
+        }
+    }
+
     /** Stop the Pi agent session if running. */
     fun stopAgent(agentId: String) {
         if (agentId == "pi") {
@@ -145,19 +194,13 @@ class ExternalAgentManager(
     }
 
     /** Check if an agent is available and enabled. */
-    fun isAgentAvailable(agentId: String): Boolean {
+    suspend fun isAgentAvailable(agentId: String): Boolean {
         val config = getConfig(agentId)
         return config?.enabled == true
     }
 
-    /** List all configured external agents. */
-    fun listAgents(): List<ExternalAgentConfig> {
-        return listOf(
-            ExternalAgentConfig(
-                id = "pi",
-                name = "Pi Coding Agent",
-                enabled = true,
-            ),
-        )
+    /** List all configured external agents from current HarnessConfig. */
+    suspend fun listAgents(): List<ExternalAgentConfig> {
+        return resolveConfig().externalAgents.values.toList()
     }
 }
