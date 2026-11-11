@@ -306,13 +306,15 @@ class ExternalAgentManager(
     fun isPiInstalled(): Boolean = piProcessManager.isInstalled()
 
     /** Download and unpack the Pi binary if it is missing. */
-    suspend fun installPi(): Result<java.io.File> = piProcessManager.ensureInstalled()
+    suspend fun installPi(onProgress: PiProcessManager.DownloadProgress? = null): Result<java.io.File> =
+        piProcessManager.ensureInstalled(onProgress)
 
     /** Whether the OpenCode binary is downloaded and executable. */
     fun isOpencodeInstalled(): Boolean = opencodeProcessManager.isInstalled()
 
     /** Download and unpack the OpenCode binary if it is missing. */
-    suspend fun installOpencode(): Result<java.io.File> = opencodeProcessManager.ensureInstalled()
+    suspend fun installOpencode(onProgress: OpenCodeProcessManager.DownloadProgress? = null): Result<java.io.File> =
+        opencodeProcessManager.ensureInstalled(onProgress)
 
     /** Check if an agent is available and enabled. */
     suspend fun isAgentAvailable(agentId: String, workspace: WorkspaceFs? = null): Boolean {

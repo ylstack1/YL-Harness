@@ -6,10 +6,14 @@ import com.ylstack1.ylharness.data.env.ShellTierRouter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.FilterInputStream
+import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okio.buffer
+import okio.source
 
 /**
  * Manages the OpenCode coding agent binary lifecycle: download, start, stop.
@@ -73,11 +77,15 @@ class OpenCodeProcessManager(
     /** Check if the OpenCode binary is already installed and executable. */
     fun isInstalled(): Boolean = opencodeBinary.exists() && opencodeBinary.canExecute()
 
+    /** Callback for download progress: bytes downloaded so far, total content length (or -1 if unknown). */
+    typealias DownloadProgress = (downloaded: Long, total: Long) -> Unit
+
     /**
      * Download and install the OpenCode binary if not already present.
+     * [onProgress] is called periodically with bytes downloaded and total content length.
      * Returns the path to the installed binary.
      */
-    suspend fun ensureInstalled(): Result<File> {
+    suspend fun ensureInstalled(onProgress: DownloadProgress? = null): Result<File> {
         if (isInstalled()) return Result.success(opencodeBinary)
 
         return withContext(Dispatchers.IO) {
@@ -93,8 +101,30 @@ class OpenCodeProcessManager(
                     )
                 }
 
+                val total = response.body?.contentLength() ?: -1L
+                var downloaded = 0L
+
                 response.body?.byteStream()?.use { input ->
-                    val target = extractBinary(input, opencodeBinary)
+                    val progressInput = object : FilterInputStream(input) {
+                        override fun read(buffer: ByteArray, off: Int, len: Int): Int {
+                            val n = super.read(buffer, off, len)
+                            if (n > 0) {
+                                downloaded += n
+                                onProgress?.invoke(downloaded, total)
+                            }
+                            return n
+                        }
+                        override fun read(): Int {
+                            val n = super.read()
+                            if (n >= 0) {
+                                downloaded += 1
+                                onProgress?.invoke(downloaded, total)
+                            }
+                            return n
+                        }
+                    }
+
+                    val target = extractBinary(progressInput, opencodeBinary)
                         ?: return@withContext Result.failure(
                             Exception("OpenCode binary not found in npm archive"),
                         )

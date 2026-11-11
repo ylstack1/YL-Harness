@@ -63,6 +63,8 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
     var installing by remember { mutableStateOf<String?>(null) }
     var installProgress by remember { mutableStateOf<String?>(null) }
     var installMessage by remember { mutableStateOf<String?>(null) }
+    var installPercent by remember { mutableStateOf(0f) }
+    var installStatus by remember { mutableStateOf<String?>(null) }
     var loading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
     var drafts by remember { mutableStateOf(mapOf<String, ExternalAgentConfig>()) }
@@ -179,6 +181,8 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
         showInstallDialog = agentId
         installProgress = null
         installMessage = null
+        installPercent = 0f
+        installStatus = null
         error = null
         scope.launch {
             installing = agentId
@@ -186,13 +190,27 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                 withContext(Dispatchers.IO) {
                     if (agentId == "pi") {
                         installProgress = "Downloading Pi binary…"
-                        val result = container.externalAgentManager.installPi()
+                        val result = container.externalAgentManager.installPi() { downloaded, total ->
+                            installPercent = if (total > 0) (downloaded * 100f / total) else 0f
+                            installStatus = if (total > 0) {
+                                "%.0f MB / %.0f MB".format(downloaded / 1024f / 1024f, total / 1024f / 1024f)
+                            } else {
+                                "%.0f MB".format(downloaded / 1024f / 1024f)
+                            }
+                        }
                         if (result.isFailure) {
                             throw result.exceptionOrNull() ?: Exception("Pi install failed")
                         }
                     } else {
                         installProgress = "Downloading OpenCode binary…"
-                        val result = container.externalAgentManager.installOpencode()
+                        val result = container.externalAgentManager.installOpencode() { downloaded, total ->
+                            installPercent = if (total > 0) (downloaded * 100f / total) else 0f
+                            installStatus = if (total > 0) {
+                                "%.0f MB / %.0f MB".format(downloaded / 1024f / 1024f, total / 1024f / 1024f)
+                            } else {
+                                "%.0f MB".format(downloaded / 1024f / 1024f)
+                            }
+                        }
                         if (result.isFailure) {
                             throw result.exceptionOrNull() ?: Exception("OpenCode install failed")
                         }
@@ -205,6 +223,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                 drafts = drafts + mapOf(agentId to enabledDraft)
                 saveDraft(agentId)
                 installProgress = "Installed."
+                installPercent = 100f
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
@@ -220,6 +239,8 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
         showInstallDialog = agentId
         installProgress = null
         installMessage = null
+        installPercent = 0f
+        installStatus = null
         error = null
         scope.launch {
             installing = agentId
@@ -229,7 +250,14 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                         installProgress = "Reinstalling Pi binary…"
                         val piDir = java.io.File(appFilesDir, "pi")
                         piDir.deleteRecursively()
-                        val result = container.externalAgentManager.installPi()
+                        val result = container.externalAgentManager.installPi() { downloaded, total ->
+                            installPercent = if (total > 0) (downloaded * 100f / total) else 0f
+                            installStatus = if (total > 0) {
+                                "%.0f MB / %.0f MB".format(downloaded / 1024f / 1024f, total / 1024f / 1024f)
+                            } else {
+                                "%.0f MB".format(downloaded / 1024f / 1024f)
+                            }
+                        }
                         if (result.isFailure) {
                             throw result.exceptionOrNull() ?: Exception("Pi reinstall failed")
                         }
@@ -237,7 +265,14 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                         installProgress = "Reinstalling OpenCode binary…"
                         val opencodeDir = java.io.File(appFilesDir, "opencode")
                         opencodeDir.deleteRecursively()
-                        val result = container.externalAgentManager.installOpencode()
+                        val result = container.externalAgentManager.installOpencode() { downloaded, total ->
+                            installPercent = if (total > 0) (downloaded * 100f / total) else 0f
+                            installStatus = if (total > 0) {
+                                "%.0f MB / %.0f MB".format(downloaded / 1024f / 1024f, total / 1024f / 1024f)
+                            } else {
+                                "%.0f MB".format(downloaded / 1024f / 1024f)
+                            }
+                        }
                         if (result.isFailure) {
                             throw result.exceptionOrNull() ?: Exception("OpenCode reinstall failed")
                         }
@@ -245,6 +280,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                 }
                 installed = installed + (agentId to true)
                 installProgress = "Reinstalled."
+                installPercent = 100f
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
@@ -556,9 +592,29 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
             text = {
                 Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        CircularProgressIndicator(Modifier.size(20.dp))
-                        Text(installProgress ?: stringResource(R.string.settings_external_agents_installing),
-                            Modifier.padding(start = 8.dp))
+                        if (installPercent > 0 && installPercent < 100) {
+                            CircularProgressIndicator(
+                                progress = installPercent / 100f,
+                                Modifier.size(24.dp),
+                            )
+                        } else {
+                            CircularProgressIndicator(
+                                Modifier.size(24.dp),
+                            )
+                        }
+                        Column {
+                            Text(installProgress ?: stringResource(R.string.settings_external_agents_installing),
+                                style = MaterialTheme.typography.bodyMedium)
+                            if (installPercent > 0) {
+                                Text("${installPercent.toInt()}%",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.primary)
+                            }
+                            installStatus?.let { status ->
+                                Text(status, style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                        }
                     }
                     installMessage?.let { msg ->
                         Text(msg, style = MaterialTheme.typography.bodySmall,

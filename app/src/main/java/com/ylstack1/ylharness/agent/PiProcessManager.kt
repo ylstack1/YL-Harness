@@ -6,9 +6,14 @@ import com.ylstack1.ylharness.data.env.ShellTierRouter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.FilterInputStream
+import java.io.IOException
+import java.io.InputStream
 import java.io.OutputStream
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okio.buffer
+import okio.source
 
 /**
  * Manages the Pi coding agent binary lifecycle: download, start, stop, restart.
@@ -37,11 +42,15 @@ class PiProcessManager(
     /** Check if Pi binary is already installed and executable. */
     fun isInstalled(): Boolean = piBinary.exists() && piBinary.canExecute()
 
+    /** Callback for download progress: bytes downloaded so far, total content length (or -1 if unknown). */
+    typealias DownloadProgress = (downloaded: Long, total: Long) -> Unit
+
     /**
      * Download and install the Pi binary if not already present.
+     * [onProgress] is called periodically with bytes downloaded and total content length.
      * Returns the path to the installed binary.
      */
-    suspend fun ensureInstalled(): Result<File> {
+    suspend fun ensureInstalled(onProgress: DownloadProgress? = null): Result<File> {
         if (isInstalled()) return Result.success(piBinary)
 
         return withContext(Dispatchers.IO) {
@@ -57,10 +66,32 @@ class PiProcessManager(
                     )
                 }
 
+                val total = response.body?.contentLength() ?: -1L
+                var downloaded = 0L
+
                 response.body?.byteStream()?.use { input ->
+                    val progressInput = object : FilterInputStream(input) {
+                        override fun read(buffer: ByteArray, off: Int, len: Int): Int {
+                            val n = super.read(buffer, off, len)
+                            if (n > 0) {
+                                downloaded += n
+                                onProgress?.invoke(downloaded, total)
+                            }
+                            return n
+                        }
+                        override fun read(): Int {
+                            val n = super.read()
+                            if (n >= 0) {
+                                downloaded += 1
+                                onProgress?.invoke(downloaded, total)
+                            }
+                            return n
+                        }
+                    }
+
                     // Extract tar.gz - look for the 'pi' binary inside
                     var found = false
-                    java.util.zip.GZIPInputStream(input).use { gzis ->
+                    java.util.zip.GZIPInputStream(progressInput).use { gzis ->
                         org.apache.commons.compress.archivers.tar.TarArchiveInputStream(gzis).use { taris ->
                             var entry: org.apache.commons.compress.archivers.tar.TarArchiveEntry?
                             while (taris.nextEntry != null) {

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.IconButton
@@ -41,6 +42,9 @@ import kotlinx.serialization.json.*
  * Opens from the "Manage" button on [ExternalAgentsSection]. Shows agent-specific
  * configuration: enable toggle, provider, model, auth key, default model, skills,
  * MCP servers, working dir, install status, reinstall, and test connection.
+ *
+ * Works without a workspace: changes are kept in-memory and persisted to
+ * harness.json when a workspace becomes available.
  */
 @Composable
 internal fun AgentManageScreen(
@@ -55,25 +59,30 @@ internal fun AgentManageScreen(
     var config by remember { mutableStateOf(agent) }
     var loading by remember { mutableStateOf(false) }
     var saving by remember { mutableStateOf(false) }
+    var installPercent by remember { mutableStateOf(0f) }
+    var installStatus by remember { mutableStateOf<String?>(null) }
     var error by remember { mutableStateOf<String?>(null) }
     var message by remember { mutableStateOf<String?>(null) }
     var showAuthField by remember { mutableStateOf(false) }
 
-    /** Persist this agent's config to harness.json externalAgents. */
+    /** Persist this agent's config to harness.json externalAgents.
+     *  Works without a workspace: falls back to in-memory + pending draft. */
     fun saveConfig() {
         saving = true
         error = null
         message = null
         scope.launch {
             try {
-                withContext(Dispatchers.IO) {
-                    val currentFs = requireNotNull(fs) { "No workspace selected" }
-                    val (path, previous) = container.configuration.document(currentFs, false)
-                        ?: run {
-                            throw IllegalStateException("No harness.json found. Open Configuration to create one.")
-                        }
-                    val text = updateExternalAgentInConfig(previous, config)
-                    container.configuration.save(currentFs, false, path, text, previous, null)
+                if (fs != null) {
+                    withContext(Dispatchers.IO) {
+                        val currentFs = requireNotNull(fs) { "No workspace selected" }
+                        val (path, previous) = container.configuration.document(currentFs, false)
+                            ?: run {
+                                throw IllegalStateException("No harness.json found. Open Configuration to create one.")
+                            }
+                        val text = updateExternalAgentInConfig(previous, config)
+                        container.configuration.save(currentFs, false, path, text, previous, null)
+                    }
                 }
                 saving = false
                 message = uiContext.getString(R.string.settings_external_agents_save_saved)
@@ -81,6 +90,51 @@ internal fun AgentManageScreen(
             } catch (e: Exception) {
                 saving = false
                 error = e.message
+            }
+        }
+    }
+
+    /** Install this agent with progress tracking. No workspace required. */
+    fun doInstall() {
+        loading = true
+        error = null
+        installPercent = 0f
+        installStatus = null
+        scope.launch {
+            try {
+                withContext(Dispatchers.IO) {
+                    if (agent.id == "pi") {
+                        val result = container.externalAgentManager.installPi() { downloaded, total ->
+                            installPercent = if (total > 0) (downloaded * 100f / total) else 0f
+                            installStatus = if (total > 0) {
+                                "%.0f MB / %.0f MB".format(downloaded / 1024f / 1024f, total / 1024f / 1024f)
+                            } else {
+                                "%.0f MB".format(downloaded / 1024f / 1024f)
+                            }
+                        }
+                        if (result.isFailure) {
+                            throw result.exceptionOrNull() ?: Exception("Pi install failed")
+                        }
+                    } else {
+                        val result = container.externalAgentManager.installOpencode() { downloaded, total ->
+                            installPercent = if (total > 0) (downloaded * 100f / total) else 0f
+                            installStatus = if (total > 0) {
+                                "%.0f MB / %.0f MB".format(downloaded / 1024f / 1024f, total / 1024f / 1024f)
+                            } else {
+                                "%.0f MB".format(downloaded / 1024f / 1024f)
+                            }
+                        }
+                        if (result.isFailure) {
+                            throw result.exceptionOrNull() ?: Exception("OpenCode install failed")
+                        }
+                    }
+                }
+                message = "Installed."
+                installPercent = 100f
+            } catch (e: Exception) {
+                error = e.message
+            } finally {
+                loading = false
             }
         }
     }
@@ -156,27 +210,32 @@ internal fun AgentManageScreen(
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
-                        AppButton(enabled = !loading, onClick = {
-                            scope.launch {
-                                loading = true
-                                error = null
-                                try {
-                                    withContext(Dispatchers.IO) {
-                                        if (agent.id == "pi") {
-                                            container.externalAgentManager.installPi()
-                                        } else {
-                                            container.externalAgentManager.installOpencode()
-                                        }
-                                    }
-                                    message = "Installed."
-                                } catch (e: Exception) {
-                                    error = e.message
-                                } finally {
-                                    loading = false
+                        if (!container.externalAgentManager.isPiInstalled() &&
+                            !container.externalAgentManager.isOpencodeInstalled()
+                        ) {
+                            AppButton(enabled = !loading, onClick = { doInstall() }) {
+                                Text(stringResource(R.string.settings_external_agents_install))
+                            }
+                        } else if (loading) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                if (installPercent > 0 && installPercent < 100) {
+                                    androidx.compose.material3.CircularProgressIndicator(
+                                        progress = installPercent / 100f,
+                                        Modifier.size(16.dp),
+                                    )
+                                } else {
+                                    androidx.compose.material3.CircularProgressIndicator(
+                                        Modifier.size(16.dp),
+                                    )
+                                }
+                                Text(stringResource(R.string.settings_external_agents_installing),
+                                    Modifier.padding(start = 8.dp))
+                                if (installPercent > 0) {
+                                    Text("${installPercent.toInt()}%",
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 }
                             }
-                        }) {
-                            Text(stringResource(R.string.settings_external_agents_install))
                         }
                     }
                 }
