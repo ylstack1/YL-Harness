@@ -5,9 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -31,13 +32,11 @@ import com.ylstack1.ylharness.R
 import com.ylstack1.ylharness.agent.ExternalAgentManager
 import com.ylstack1.ylharness.config.ExternalAgentConfig
 import com.ylstack1.ylharness.ui.common.Button
-import com.ylstack1.ylharness.ui.common.OutlinedButton
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.*
-import kotlin.collections.getOrPut
 
 /**
  * Settings for external CLI agents (Pi, OpenCode, custom).
@@ -54,17 +53,16 @@ import kotlin.collections.getOrPut
 @Composable
 internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration: () -> Unit = {}) {
     val uiContext = androidx.compose.ui.platform.LocalContext.current
+    val appFilesDir = uiContext.filesDir
     val scope = rememberCoroutineScope()
     val fs by container.workspace.current.collectAsStateWithLifecycle(initialValue = null)
     val configRevision by container.configuration.revision.collectAsStateWithLifecycle()
     var agents by remember { mutableStateOf<List<ExternalAgentConfig>>(emptyList()) }
     var installed by remember { mutableStateOf(mapOf<String, Boolean>()) }
     var installing by remember { mutableStateOf<String?>(null) }
-    var installProgress by remember { mutableStateOf<String?>(null) }
     var installMessage by remember { mutableStateOf<String?>(null) }
     var loading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
-    /** Per-agent unsaved edits, keyed by agent id. Cleared only after save succeeds. */
     var drafts by remember { mutableStateOf(mapOf<String, ExternalAgentConfig>()) }
     var showCustomAgentDialog by remember { mutableStateOf(false) }
 
@@ -75,7 +73,6 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
             val configured = if (fs != null) withContext(Dispatchers.IO) {
                 container.configuration.load(requireNotNull(fs)).externalAgents
             } else emptyMap<String, ExternalAgentConfig>()
-            // Built-in agents always appear; config values override defaults when present.
             agents = builtinAgents().map { builtin ->
                 configured[builtin.id]?.let { configured ->
                     builtin.copy(
@@ -102,8 +99,13 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
         loading = false
     }
 
-    /** Persist one agent's draft back to harness.json externalAgents. Clears draft on success. */
-    private fun saveDraft(agentId: String, draft: ExternalAgentConfig) {
+    /**
+     * Persist one agent's draft back to harness.json externalAgents.
+     * Includes validation and proper error handling.
+     */
+    fun saveDraft(agentId: String) {
+        val draft = drafts[agentId] ?: return
+        // Validate before saving.
         if (draft.id.isBlank()) {
             error = "Agent id is required."
             return
@@ -112,7 +114,6 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
             error = "Agent name is required."
             return
         }
-        error = null
         scope.launch {
             try {
                 withContext(Dispatchers.IO) {
@@ -124,34 +125,6 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                     val text = updateExternalAgentInConfig(previous, draft)
                     container.configuration.save(currentFs, false, path, text, previous, null)
                 }
-                // Only clear draft after successful save.
-                drafts = drafts - agentId
-                error = null
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                // Keep draft so user can retry; show error.
-                error = e.message
-            }
-        }
-    }
-
-    /** Save just the enabled toggle immediately (auto-save, no Save button needed). */
-    private fun saveEnabled(agentId: String, enabled: Boolean) {
-        val draft = drafts[agentId] ?: agents.find { it.id == agentId } ?: return
-        val newDraft = draft.copy(enabled = enabled)
-        drafts = drafts + (agentId to newDraft)
-        scope.launch {
-            try {
-                withContext(Dispatchers.IO) {
-                    val currentFs = requireNotNull(fs) { "No workspace selected" }
-                    val (path, previous) = container.configuration.document(currentFs, false)
-                        ?: run {
-                            throw IllegalStateException("No harness.json found. Open Configuration to create one.")
-                        }
-                    val text = updateExternalAgentInConfig(previous, newDraft)
-                    container.configuration.save(currentFs, false, path, text, previous, null)
-                }
                 drafts = drafts - agentId
                 error = null
             } catch (e: CancellationException) {
@@ -162,34 +135,32 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
         }
     }
 
-    /** Install Pi/OpenCode, then auto-enable and save. Shows progress. */
-    private fun installAgent(agentId: String) {
+    /**
+     * Install Pi/OpenCode for [agentId], then enable the agent and save.
+     */
+    fun installAgent(agentId: String) {
         scope.launch {
             installing = agentId
-            installProgress = null
             installMessage = null
             error = null
             try {
                 withContext(Dispatchers.IO) {
                     val currentFs = fs
-                    val workingDir = currentFs?.shellRoot?.absolutePath?.let { java.io.File(it) }
-                        ?: java.io.File(contextFilesDir())
+                    val workingDir = currentFs?.shellRoot
+                        ?: appFilesDir
                     if (agentId == "pi") {
-                        installProgress = "Downloading Pi binary…"
                         container.externalAgentManager.installPi()
                     } else {
-                        installProgress = "Downloading OpenCode binary…"
                         container.externalAgentManager.installOpencode()
                     }
                 }
                 installed = installed + (agentId to true)
-                // Auto-enable after install and persist.
-                val agent = agents.find { it.id == agentId } ?: return@withContext
+                // Auto-enable the agent after a successful install.
+                val agent = agents.find { it.id == agentId }
+                    ?: return@launch
                 val enabledDraft = agent.copy(enabled = true)
-                drafts = drafts + (agentId to enabledDraft)
-                saveDraft(agentId, enabledDraft)
-                installProgress = "Installed."
-                installMessage = null
+                drafts = drafts + mapOf(agentId to enabledDraft)
+                saveDraft(agentId)
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
@@ -215,18 +186,14 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                 Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
             }
 
-            // Builtin agents first (Pi, OpenCode), then any others.
             val builtinIds = listOf("pi", "opencode")
             val builtinAgentsList = agents.filter { it.id in builtinIds }
             val otherAgents = agents.filter { it.id !in builtinIds }
 
-            // --- Builtin agents (Pi / OpenCode) ---
             if (builtinAgentsList.isNotEmpty()) {
                 SettingsGroupHeading(R.string.settings_external_agents_builtin_group)
                 builtinAgentsList.forEach { agent ->
                     val agentDraft = drafts[agent.id] ?: agent
-                    val isInstalled = installed[agent.id] == true
-                    val isInstalling = installing == agent.id
 
                     SettingsDisclosure(
                         icon = Icons.Outlined.Code,
@@ -234,10 +201,10 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                         subtitle = if (agent.enabled) uiContext.getString(R.string.settings_external_agents_enabled)
                         else uiContext.getString(R.string.settings_external_agents_disabled),
                         anchors = setOf(R.string.settings_external_agents_agent_id),
-                        initiallyExpanded = drafts.containsKey(agent.id) || !isInstalled,
+                        initiallyExpanded = drafts.containsKey(agent.id),
                     ) {
                         Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                            // Enable toggle — auto-saves immediately.
+                            val draft = agentDraft
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically,
@@ -245,7 +212,9 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                                 Switch(
                                     checked = draft.enabled,
                                     onCheckedChange = { enabled ->
-                                        saveEnabled(agent.id, enabled)
+                                        val newDraft = draft.copy(enabled = enabled)
+                                        drafts = drafts + (agent.id to newDraft)
+                                        saveDraft(agent.id)
                                     },
                                 )
                                 Column(Modifier.weight(1f).padding(start = 8.dp)) {
@@ -260,7 +229,6 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                                 }
                             }
 
-                            // Provider / model (built-in agents that use them)
                             if (agent.id == "pi" || agent.id == "opencode") {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
@@ -274,7 +242,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                                                 val newDraft = draft.copy(
                                                     provider = newProvider.takeIf { it.isNotEmpty() })
                                                 drafts = drafts + (agent.id to newDraft)
-                                                saveDraft(agent.id, newDraft)
+                                                saveDraft(agent.id)
                                             },
                                             label = { Text(stringResource(R.string.settings_external_agents_provider)) },
                                             singleLine = true,
@@ -287,7 +255,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                                             val newDraft = draft.copy(
                                                 model = newModel.takeIf { it.isNotEmpty() })
                                             drafts = drafts + (agent.id to newDraft)
-                                            saveDraft(agent.id, newDraft)
+                                            saveDraft(agent.id)
                                         },
                                         label = { Text(stringResource(R.string.settings_external_agents_model)) },
                                         singleLine = true,
@@ -296,7 +264,6 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                                 }
                             }
 
-                            // Working dir
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically,
@@ -308,7 +275,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                                         val newDraft = draft.copy(
                                             workingDir = newDir.takeIf { it.isNotEmpty() })
                                         drafts = drafts + (agent.id to newDraft)
-                                        saveDraft(agent.id, newDraft)
+                                        saveDraft(agent.id)
                                     },
                                     label = { Text(stringResource(R.string.settings_external_agents_working_dir)) },
                                     singleLine = true,
@@ -316,7 +283,8 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                                 )
                             }
 
-                            // Install status + action (built-in Pi/OpenCode only)
+                            val isInstalled = installed[agent.id] == true
+                            val isInstalling = installing == agent.id
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically,
@@ -324,9 +292,8 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                             ) {
                                 Text(
                                     if (isInstalled) stringResource(R.string.ui_installed)
-                                    else if (isInstalling) {
-                                        installProgress ?: stringResource(R.string.settings_external_agents_installing)
-                                    } else stringResource(R.string.ui_not_installed),
+                                    else if (isInstalling) stringResource(R.string.settings_external_agents_installing)
+                                    else stringResource(R.string.ui_not_installed),
                                     Modifier.weight(1f),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = if (isInstalled) MaterialTheme.colorScheme.primary
@@ -337,17 +304,16 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                                         color = MaterialTheme.colorScheme.error)
                                 }
                                 if (!isInstalled && !isInstalling) {
-                                    OutlinedButton(enabled = error == null, onClick = { installAgent(agent.id) }) {
+                                    TextButton(onClick = { installAgent(agent.id) }) {
                                         Text(stringResource(R.string.settings_external_agents_install))
                                     }
                                 } else if (isInstalling) {
-                                    OutlinedButton(enabled = false, onClick = {}) {
+                                    TextButton(enabled = false, onClick = {}) {
                                         Text(stringResource(R.string.settings_external_agents_installing))
                                     }
                                 }
                             }
 
-                            // Save button shown only when there are unsaved non-toggle changes.
                             val nonToggleChanged = draft.provider != agent.provider ||
                                 draft.model != agent.model ||
                                 draft.workingDir != agent.workingDir
@@ -356,9 +322,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.End,
                                 ) {
-                                    Button(enabled = error == null, onClick = {
-                                        saveDraft(agent.id, draft)
-                                    }) {
+                                    Button(enabled = error == null, onClick = { saveDraft(agent.id) }) {
                                         Text(stringResource(R.string.settings_action_save))
                                     }
                                     TextButton(onClick = {
@@ -374,13 +338,10 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                 }
             }
 
-            // --- Other configured agents ---
             if (otherAgents.isNotEmpty()) {
                 SettingsGroupHeading(R.string.settings_external_agents_other_group)
                 otherAgents.forEach { agent ->
                     val agentDraft = drafts[agent.id] ?: agent
-                    val isInstalled = installed[agent.id] == true
-                    val isInstalling = installing == agent.id
 
                     SettingsDisclosure(
                         icon = Icons.Outlined.Code,
@@ -391,6 +352,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                         initiallyExpanded = drafts.containsKey(agent.id),
                     ) {
                         Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                            val draft = agentDraft
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically,
@@ -398,7 +360,9 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                                 Switch(
                                     checked = draft.enabled,
                                     onCheckedChange = { enabled ->
-                                        saveEnabled(agent.id, enabled)
+                                        val newDraft = draft.copy(enabled = enabled)
+                                        drafts = drafts + (agent.id to newDraft)
+                                        saveDraft(agent.id)
                                     },
                                 )
                                 Column(Modifier.weight(1f).padding(start = 8.dp)) {
@@ -425,7 +389,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                                             val newDraft = draft.copy(
                                                 workingDir = newDir.takeIf { it.isNotEmpty() })
                                             drafts = drafts + (agent.id to newDraft)
-                                            saveDraft(agent.id, newDraft)
+                                            saveDraft(agent.id)
                                         },
                                         label = { Text(stringResource(R.string.settings_external_agents_working_dir)) },
                                         singleLine = true,
@@ -440,9 +404,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.End,
                                 ) {
-                                    Button(enabled = error == null, onClick = {
-                                        saveDraft(agent.id, draft)
-                                    }) {
+                                    Button(enabled = error == null, onClick = { saveDraft(agent.id) }) {
                                         Text(stringResource(R.string.settings_action_save))
                                     }
                                     TextButton(onClick = {
@@ -458,7 +420,6 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                 }
             }
 
-            // --- Add custom agent ---
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -469,7 +430,6 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                 }
             }
 
-            // --- Open raw configuration ---
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End,
@@ -481,7 +441,6 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
         }
     }
 
-    // Custom agent dialog
     if (showCustomAgentDialog) {
         CustomAgentDialog(
             container = container,
@@ -512,22 +471,10 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
     }
 }
 
-/** Files dir for install fallback when no workspace is selected. */
-private fun contextFilesDir(): java.io.File {
-    // Called from Compose context; LocalContext.current gives the app Context.
-    return androidx.compose.ui.platform.LocalContext.current.filesDir
-}
-
-/**
- * Built-in agents that always appear in the External Agents settings.
- * Config values (enabled, workingDir, provider, model, …) override defaults
- * when the agent is present in harness.json externalAgents.
- */
 private fun builtinAgents(): List<ExternalAgentConfig> = listOf(
     ExternalAgentConfig(
         id = "pi",
         name = "Pi",
-        // Pi authenticates via `/login` and picks a model via `/model` interactively.
         provider = null,
         model = null,
         binary = null,
@@ -537,7 +484,6 @@ private fun builtinAgents(): List<ExternalAgentConfig> = listOf(
     ExternalAgentConfig(
         id = "opencode",
         name = "OpenCode",
-        // OpenCode uses provider/model format (e.g. anthropic/claude-sonnet-5-5).
         provider = "anthropic",
         model = "claude-sonnet-5-5",
         binary = null,
@@ -546,10 +492,6 @@ private fun builtinAgents(): List<ExternalAgentConfig> = listOf(
     ),
 )
 
-/**
- * Strip // line comments and /* */ block comments from JSONC text, respecting
- * string literals, so the result is valid JSON for kotlinx.serialization.
- */
 private fun stripJsonComments(text: String): String {
     val result = StringBuilder(text.length)
     var inString = false
@@ -583,10 +525,6 @@ private fun stripJsonComments(text: String): String {
     return result.toString()
 }
 
-/**
- * Update (or create) one entry inside the `externalAgents` JSON object of a
- * config document, returning the full rewritten document text.
- */
 private fun updateExternalAgentInConfig(configText: String?, agent: ExternalAgentConfig): String {
     val json = Json { ignoreUnknownKeys = true }
     val clean = stripJsonComments(configText ?: "{}")
@@ -622,9 +560,6 @@ private fun updateExternalAgentInConfig(configText: String?, agent: ExternalAgen
     return json.encodeToString(newRoot)
 }
 
-/**
- * Add a brand-new custom agent entry to the `externalAgents` JSON object.
- */
 private fun addCustomAgentToConfig(
     configText: String?,
     id: String, name: String, binary: String?, args: List<String>,
@@ -653,9 +588,6 @@ private fun addCustomAgentToConfig(
     return json.encodeToString(newRoot)
 }
 
-/**
- * Dialog for adding a custom external agent. Required fields: id and name.
- */
 @Composable
 private fun CustomAgentDialog(
     container: AppContainer,
