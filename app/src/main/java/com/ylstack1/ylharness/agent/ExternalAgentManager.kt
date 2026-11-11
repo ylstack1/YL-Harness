@@ -11,6 +11,7 @@ import com.ylstack1.ylharness.data.env.LinuxEnvironmentManager
 import com.ylstack1.ylharness.data.env.ShellTierRouter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
@@ -109,14 +110,11 @@ class ExternalAgentManager(
                 extraArgs = config.extraArgs,
             )
 
-            if (!startResult.isSuccess) {
-                return ToolResult(
+            val proc = startResult.getOrNull()
+                ?: return ToolResult(
                     ok = false,
                     output = "Failed to start Pi agent: unknown error",
                 )
-            }
-
-            val proc = startResult.getOrNull()!!
 
             val registry = toolRegistry ?: return ToolResult(
                 ok = false,

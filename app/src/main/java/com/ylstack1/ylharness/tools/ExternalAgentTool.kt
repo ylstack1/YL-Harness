@@ -58,7 +58,7 @@ class ExternalAgentTool(
                     ok = false,
                     output = "Missing required argument: prompt",
                 )
-            val background = args["background"]?.jsonPrimitive?.boolean ?: false
+            val background = args["background"]?.jsonPrimitive?.content == "true"
 
             manager.executeAgent(agentId, prompt, background, ctx)
         }
