@@ -110,11 +110,15 @@ class ExternalAgentManager(
                 extraArgs = config.extraArgs,
             )
 
-            val proc = startResult.getOrDefault(null)
-                ?: return ToolResult(
+            val proc: Process
+            if (startResult.isSuccess) {
+                proc = startResult.getOrThrow()
+            } else {
+                return ToolResult(
                     ok = false,
                     output = "Failed to start Pi agent: unknown error",
                 )
+            }
 
             val registry = toolRegistry ?: return ToolResult(
                 ok = false,
