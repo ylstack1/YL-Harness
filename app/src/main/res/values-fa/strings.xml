@@ -1034,4 +1034,13 @@
     <string name="chat_history_open_message">"باز کردن پیام مطابق"</string>
     <string name="chat_history_open_chat">"باز کردن گفتگو"</string>
     <string name="chat_history_unavailable">"این گفتگو دیگر در دسترس نیست."</string>
+    <string name="settings_page_external_agents_title">ایجنت‌های خارجی</string>
+    <string name="settings_page_external_agents_desc">افزودن Pi، OpenCode، Claude Code و سایر ایجنت‌های کدنویسی خط فرمان</string>
+    <string name="settings_external_agents_empty">هنوز هیچ ایجنت خارجی پیکربندی نشده است.</string>
+    <string name="settings_external_agents_hint">ایجنت‌های خارجی، ایجنت‌های کدنویسی خط فرمان هستند که از طریق محیط Linux اجرا می‌شوند و از ابزارهای فایل و پوسته (shell) همین برنامه استفاده می‌کنند. آن‌ها را در harness.json زیر externalAgents اضافه کنید.</string>
+    <string name="settings_external_agents_open_config">باز کردن پیکربندی</string>
+    <string name="settings_external_agents_enabled">فعال</string>
+    <string name="settings_external_agents_disabled">غیرفعال</string>
+    <string name="settings_external_agents_install">نصب</string>
+    <string name="settings_external_agents_working_dir">پوشه</string>
 </resources>

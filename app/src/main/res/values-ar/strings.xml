@@ -1046,4 +1046,13 @@
     <string name="chat_history_open_message">"فتح الرسالة المطابقة"</string>
     <string name="chat_history_open_chat">"فتح المحادثة"</string>
     <string name="chat_history_unavailable">"هذه المحادثة لم تعد متاحة."</string>
+    <string name="settings_page_external_agents_title">الوكلاء الخارجيون</string>
+    <string name="settings_page_external_agents_desc">أضِف Pi وOpenCode وClaude Code وغيرها من وكلاء البرمجة عبر سطر الأوامر</string>
+    <string name="settings_external_agents_empty">لا يوجد أي وكلاء خارجيين مُعدّين بعد.</string>
+    <string name="settings_external_agents_hint">الوكلاء الخارجيون هم وكلاء برمجة عبر سطر الأوامر يعملون من خلال بيئة Linux ويعيدون استخدام أدوات الملفات والصدف (shell) لهذا التطبيق. أضِفها في harness.json تحت externalAgents.</string>
+    <string name="settings_external_agents_open_config">فتح الإعدادات</string>
+    <string name="settings_external_agents_enabled">مُمكَّن</string>
+    <string name="settings_external_agents_disabled">مُعطَّل</string>
+    <string name="settings_external_agents_install">تثبيت</string>
+    <string name="settings_external_agents_working_dir">المجلد</string>
 </resources>

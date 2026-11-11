@@ -462,7 +462,8 @@ fun SettingsScreen(
                         SettingsPage.MCP -> McpSection(container, onOpenPlugins = { openPage(SettingsPage.PLUGINS) },
                             onOpenConfiguration = { openPage(SettingsPage.CONFIGURATION) })
                         SettingsPage.TELEGRAM -> TelegramSection(container)
-                        // SettingsPage.EXTERNAL_AGENTS -> ExternalAgentsSection(container, container.externalAgentManager)
+                        SettingsPage.EXTERNAL_AGENTS -> ExternalAgentsSection(container,
+                            onOpenConfiguration = { openPage(SettingsPage.CONFIGURATION) })
                         SettingsPage.WORKSPACE -> {
                             RememberedPermissionsSection(container)
                             WorkspaceSection(

@@ -1037,4 +1037,13 @@
     <string name="chat_history_open_message">"Ouvrir le message correspondant"</string>
     <string name="chat_history_open_chat">"Ouvrir la conversation"</string>
     <string name="chat_history_unavailable">"Cette conversation n\'est plus disponible."</string>
+    <string name="settings_page_external_agents_title">Agents externes</string>
+    <string name="settings_page_external_agents_desc">Ajoutez Pi, OpenCode, Claude Code et d\'autres agents de codage en CLI</string>
+    <string name="settings_external_agents_empty">Aucun agent externe n\'est configuré pour l\'instant.</string>
+    <string name="settings_external_agents_hint">Les agents externes sont des agents de codage en ligne de commande qui s\'exécutent via l\'environnement Linux et réutilisent les outils de fichiers et de shell de cette app. Ajoutez-les dans harness.json sous externalAgents.</string>
+    <string name="settings_external_agents_open_config">Ouvrir la configuration</string>
+    <string name="settings_external_agents_enabled">Activé</string>
+    <string name="settings_external_agents_disabled">Désactivé</string>
+    <string name="settings_external_agents_install">Installer</string>
+    <string name="settings_external_agents_working_dir">Dossier</string>
 </resources>

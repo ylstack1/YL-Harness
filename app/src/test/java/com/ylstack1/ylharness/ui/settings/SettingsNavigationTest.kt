@@ -115,6 +115,15 @@ class SettingsNavigationTest {
     }
 
     @Test
+    fun `external agents page is a connections setting and stays searchable`() {
+        val page = SettingsPage.EXTERNAL_AGENTS
+        assertEquals(R.string.settings_group_connections, page.group)
+        assertTrue(page.onHome)
+        assertTrue(SettingsPage.EXTERNAL_AGENTS in matchingSettingsPages("opencode", settingsTestStrings()))
+        assertTrue(SettingsPage.EXTERNAL_AGENTS in matchingSettingsPages("pi agent", settingsTestStrings()))
+    }
+
+    @Test
     fun `existing chat shortcuts land on their focused settings pages`() {
         assertEquals(SettingsPage.MODELS, settingsDeepLink("planning"))
         assertEquals(SettingsPage.VOICE, settingsDeepLink("voice"))

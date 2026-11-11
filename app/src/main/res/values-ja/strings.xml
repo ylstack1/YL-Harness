@@ -1031,4 +1031,13 @@
     <string name="chat_history_open_message">"一致するメッセージを開く"</string>
     <string name="chat_history_open_chat">"会話を開く"</string>
     <string name="chat_history_unavailable">"この会話はもう利用できません。"</string>
+    <string name="settings_page_external_agents_title">外部エージェント</string>
+    <string name="settings_page_external_agents_desc">Pi、OpenCode、Claude Code などの CLI コーディングエージェントを追加します</string>
+    <string name="settings_external_agents_empty">外部エージェントはまだ設定されていません。</string>
+    <string name="settings_external_agents_hint">外部エージェントは Linux 環境で動作し、本アプリのファイルツールとシェルツールを再利用するコマンドライン型コーディングエージェントです。harness.json の externalAgents に追加してください。</string>
+    <string name="settings_external_agents_open_config">設定を開く</string>
+    <string name="settings_external_agents_enabled">有効</string>
+    <string name="settings_external_agents_disabled">無効</string>
+    <string name="settings_external_agents_install">インストール</string>
+    <string name="settings_external_agents_working_dir">フォルダ</string>
 </resources>

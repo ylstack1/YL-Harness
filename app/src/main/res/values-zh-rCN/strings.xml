@@ -1062,4 +1062,13 @@
     <string name="chat_history_open_message">"打开匹配的消息"</string>
     <string name="chat_history_open_chat">"打开对话"</string>
     <string name="chat_history_unavailable">"此对话已不可用。"</string>
+    <string name="settings_page_external_agents_title">外部代理</string>
+    <string name="settings_page_external_agents_desc">添加 Pi、OpenCode、Claude Code 和其他 CLI 编码代理</string>
+    <string name="settings_external_agents_empty">尚未配置任何外部代理。</string>
+    <string name="settings_external_agents_hint">外部代理是命令行编码代理，通过 Linux 环境运行，并复用本应用的文件和 shell 工具。在 harness.json 的 externalAgents 下添加。</string>
+    <string name="settings_external_agents_open_config">打开配置</string>
+    <string name="settings_external_agents_enabled">已启用</string>
+    <string name="settings_external_agents_disabled">已停用</string>
+    <string name="settings_external_agents_install">安装</string>
+    <string name="settings_external_agents_working_dir">文件夹</string>
 </resources>

@@ -1034,4 +1034,13 @@
     <string name="chat_history_open_message">"ගැළපෙන පණිවිඩය විවෘත කරන්න"</string>
     <string name="chat_history_open_chat">"සංවාදය විවෘත කරන්න"</string>
     <string name="chat_history_unavailable">"මෙම සංවාදය තවදුරටත් නොමැත."</string>
+    <string name="settings_page_external_agents_title">බාහිර ඒජන්ට්</string>
+    <string name="settings_page_external_agents_desc">Pi, OpenCode, Claude Code සහ වෙනත් CLI කේතන ඒජන්ට් එකතු කරන්න</string>
+    <string name="settings_external_agents_empty">තවම බාහිර ඒජන්ට් කිසිවක් වින්‍යාස කර නැත.</string>
+    <string name="settings_external_agents_hint">බාහිර ඒජන්ට් යනු Linux පරිසරය හරහා ධාවනය වන අතර මෙම යෙදුමේ ගොනු සහ shell මෙවලම් නැවත භාවිත කරන විධාන පේළි කේතන ඒජන්ට් ය. harness.json තුළ externalAgents යටතේ ඒවා එකතු කරන්න.</string>
+    <string name="settings_external_agents_open_config">වින්‍යාසය විවෘත කරන්න</string>
+    <string name="settings_external_agents_enabled">සක්‍රීයයි</string>
+    <string name="settings_external_agents_disabled">අක්‍රීයයි</string>
+    <string name="settings_external_agents_install">ස්ථාපනය කරන්න</string>
+    <string name="settings_external_agents_working_dir">ෆෝල්ඩරය</string>
 </resources>

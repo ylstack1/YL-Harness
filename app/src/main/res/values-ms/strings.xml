@@ -1031,4 +1031,13 @@
     <string name="chat_history_open_message">"Buka mesej yang sepadan"</string>
     <string name="chat_history_open_chat">"Buka perbualan"</string>
     <string name="chat_history_unavailable">"Perbualan ini tidak lagi tersedia."</string>
+    <string name="settings_page_external_agents_title">Ejen luar</string>
+    <string name="settings_page_external_agents_desc">Tambahkan Pi, OpenCode, Claude Code dan ejen pengekodan CLI lain</string>
+    <string name="settings_external_agents_empty">Tiada ejen luar dikonfigurasi lagi.</string>
+    <string name="settings_external_agents_hint">Ejen luar ialah ejen pengekodan baris perintah yang berjalan melalui persekitaran Linux dan menggunakan semula alat fail dan shell aplikasi ini. Tambahkan dalam harness.json di bawah externalAgents.</string>
+    <string name="settings_external_agents_open_config">Buka konfigurasi</string>
+    <string name="settings_external_agents_enabled">Diaktifkan</string>
+    <string name="settings_external_agents_disabled">Dilumpuhkan</string>
+    <string name="settings_external_agents_install">Pasang</string>
+    <string name="settings_external_agents_working_dir">Folder</string>
 </resources>

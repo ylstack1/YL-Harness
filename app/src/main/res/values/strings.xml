@@ -53,6 +53,15 @@
     <string name="settings_page_mcp_desc">Add and configure MCP servers</string>
     <string name="settings_page_telegram_title">Telegram</string>
     <string name="settings_page_telegram_desc">Continue chats and edit projects from your paired bot</string>
+    <string name="settings_page_external_agents_title">External agents</string>
+    <string name="settings_page_external_agents_desc">Add Pi, OpenCode, Claude Code and other CLI coding agents</string>
+    <string name="settings_external_agents_empty">No external agents are configured yet.</string>
+    <string name="settings_external_agents_hint">External agents are command-line coding agents that run through the Linux environment and reuse this app\'s file and shell tools. Add them to harness.json under externalAgents.</string>
+    <string name="settings_external_agents_open_config">Open configuration</string>
+    <string name="settings_external_agents_enabled">Enabled</string>
+    <string name="settings_external_agents_disabled">Disabled</string>
+    <string name="settings_external_agents_install">Install</string>
+    <string name="settings_external_agents_working_dir">Folder</string>
     <string name="settings_page_workspace_title">Workspaces</string>
     <string name="settings_page_workspace_desc">Choose, add and manage your project folders</string>
     <string name="settings_page_storage_title">Storage</string>

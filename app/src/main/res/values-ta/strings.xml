@@ -1034,4 +1034,13 @@
     <string name="chat_history_open_message">"பொருந்தும் செய்தியைத் திற"</string>
     <string name="chat_history_open_chat">"உரையாடலைத் திற"</string>
     <string name="chat_history_unavailable">"இந்த உரையாடல் இனி கிடைக்காது."</string>
+    <string name="settings_page_external_agents_title">வெளி முகவர்கள்</string>
+    <string name="settings_page_external_agents_desc">Pi, OpenCode, Claude Code மற்றும் பிற CLI நிரலாக்க முகவர்களைச் சேர்க்கவும்</string>
+    <string name="settings_external_agents_empty">இன்னும் எந்த வெளி முகவரும் உள்ளமைக்கப்படவில்லை.</string>
+    <string name="settings_external_agents_hint">வெளி முகவர்கள் என்பவை Linux சூழலில் இயங்கும் கட்டளை வரி நிரலாக்க முகவர்கள்; இந்தச் செயலியின் கோப்பு மற்றும் ஷெல் கருவிகளை மீண்டும் பயன்படுத்துகின்றன. harness.json இல் externalAgents கீழ் சேர்க்கவும்.</string>
+    <string name="settings_external_agents_open_config">உள்ளமைவைத் திறக்கவும்</string>
+    <string name="settings_external_agents_enabled">இயக்கப்பட்டது</string>
+    <string name="settings_external_agents_disabled">முடக்கப்பட்டது</string>
+    <string name="settings_external_agents_install">நிறுவு</string>
+    <string name="settings_external_agents_working_dir">கோப்புறை</string>
 </resources>

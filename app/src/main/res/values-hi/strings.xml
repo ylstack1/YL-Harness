@@ -1034,4 +1034,13 @@
     <string name="chat_history_open_message">"मिलता हुआ संदेश खोलें"</string>
     <string name="chat_history_open_chat">"बातचीत खोलें"</string>
     <string name="chat_history_unavailable">"यह बातचीत अब उपलब्ध नहीं है।"</string>
+    <string name="settings_page_external_agents_title">बाहरी एजेंट</string>
+    <string name="settings_page_external_agents_desc">Pi, OpenCode, Claude Code और अन्य CLI कोडिंग एजेंट जोड़ें</string>
+    <string name="settings_external_agents_empty">अभी कोई बाहरी एजेंट कॉन्फ़िगर नहीं है।</string>
+    <string name="settings_external_agents_hint">बाहरी एजेंट कमांड-लाइन कोडिंग एजेंट हैं जो Linux वातावरण से चलते हैं और इस ऐप के फ़ाइल और शेल टूल का फिर से उपयोग करते हैं। इन्हें harness.json में externalAgents के अंतर्गत जोड़ें।</string>
+    <string name="settings_external_agents_open_config">कॉन्फ़िगरेशन खोलें</string>
+    <string name="settings_external_agents_enabled">सक्रिय</string>
+    <string name="settings_external_agents_disabled">निष्क्रिय</string>
+    <string name="settings_external_agents_install">इंस्टॉल करें</string>
+    <string name="settings_external_agents_working_dir">फ़ोल्डर</string>
 </resources>

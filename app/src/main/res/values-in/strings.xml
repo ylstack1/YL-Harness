@@ -1031,4 +1031,13 @@
     <string name="chat_history_open_message">"Buka pesan yang cocok"</string>
     <string name="chat_history_open_chat">"Buka percakapan"</string>
     <string name="chat_history_unavailable">"Percakapan ini tidak tersedia lagi."</string>
+    <string name="settings_page_external_agents_title">Agen eksternal</string>
+    <string name="settings_page_external_agents_desc">Tambahkan Pi, OpenCode, Claude Code, dan agen coding CLI lainnya</string>
+    <string name="settings_external_agents_empty">Belum ada agen eksternal yang dikonfigurasi.</string>
+    <string name="settings_external_agents_hint">Agen eksternal adalah agen coding baris perintah yang berjalan melalui lingkungan Linux dan memakai ulang alat berkas dan shell aplikasi ini. Tambahkan di harness.json pada bagian externalAgents.</string>
+    <string name="settings_external_agents_open_config">Buka konfigurasi</string>
+    <string name="settings_external_agents_enabled">Diaktifkan</string>
+    <string name="settings_external_agents_disabled">Dinonaktifkan</string>
+    <string name="settings_external_agents_install">Pasang</string>
+    <string name="settings_external_agents_working_dir">Folder</string>
 </resources>

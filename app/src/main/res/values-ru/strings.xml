@@ -1040,4 +1040,13 @@
     <string name="chat_history_open_message">"Открыть совпадающее сообщение"</string>
     <string name="chat_history_open_chat">"Открыть беседу"</string>
     <string name="chat_history_unavailable">"Эта беседа больше недоступна."</string>
+    <string name="settings_page_external_agents_title">Внешние агенты</string>
+    <string name="settings_page_external_agents_desc">Добавьте Pi, OpenCode, Claude Code и другие CLI-агенты для кодинга</string>
+    <string name="settings_external_agents_empty">Внешние агенты пока не настроены.</string>
+    <string name="settings_external_agents_hint">Внешние агенты — это консольные агенты для кодинга, которые работают через среду Linux и используют файловые и shell-инструменты этого приложения. Добавьте их в harness.json в разделе externalAgents.</string>
+    <string name="settings_external_agents_open_config">Открыть конфигурацию</string>
+    <string name="settings_external_agents_enabled">Включён</string>
+    <string name="settings_external_agents_disabled">Отключён</string>
+    <string name="settings_external_agents_install">Установить</string>
+    <string name="settings_external_agents_working_dir">Папка</string>
 </resources>

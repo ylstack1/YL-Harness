@@ -1034,4 +1034,13 @@
     <string name="chat_history_open_message">"Eşleşen mesajı aç"</string>
     <string name="chat_history_open_chat">"Konuşmayı aç"</string>
     <string name="chat_history_unavailable">"Bu konuşma artık kullanılamıyor."</string>
+    <string name="settings_page_external_agents_title">Dış ajanlar</string>
+    <string name="settings_page_external_agents_desc">Pi, OpenCode, Claude Code ve diğer CLI kodlama ajanlarını ekleyin</string>
+    <string name="settings_external_agents_empty">Henüz yapılandırılmış dış ajan yok.</string>
+    <string name="settings_external_agents_hint">Dış ajanlar, Linux ortamı üzerinden çalışan ve bu uygulamanın dosya ve kabuk (shell) araçlarını yeniden kullanan komut satırı kodlama ajanlarıdır. Bunları harness.json içine, externalAgents altına ekleyin.</string>
+    <string name="settings_external_agents_open_config">Yapılandırmayı aç</string>
+    <string name="settings_external_agents_enabled">Etkin</string>
+    <string name="settings_external_agents_disabled">Devre dışı</string>
+    <string name="settings_external_agents_install">Yükle</string>
+    <string name="settings_external_agents_working_dir">Klasör</string>
 </resources>

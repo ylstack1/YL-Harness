@@ -185,6 +185,12 @@ internal enum class SettingsPage(
         R.string.settings_group_connections,
         "telegram bot remote control pairing notifications gateway",
     ),
+    EXTERNAL_AGENTS(
+        R.string.settings_page_external_agents_title,
+        R.string.settings_page_external_agents_desc,
+        R.string.settings_group_connections,
+        "external agent pi opencode claude code cli integration tool",
+    ),
     WORKSPACE(
         R.string.settings_page_workspace_title,
         R.string.settings_page_workspace_desc,
@@ -289,7 +295,7 @@ internal val settingsHomePages = listOf(
     SettingsPage.MEMORY, SettingsPage.CODING, SettingsPage.RUMBLE, SettingsPage.PRIVACY,
     SettingsPage.MODELS, SettingsPage.LOCAL_MODELS, SettingsPage.VOICE, SettingsPage.LIVE_MODE,
     SettingsPage.GITHUB, SettingsPage.SEARCH, SettingsPage.MCP,
-    SettingsPage.TELEGRAM, SettingsPage.SYNC, SettingsPage.FTP_SERVER,
+    SettingsPage.TELEGRAM, SettingsPage.EXTERNAL_AGENTS, SettingsPage.SYNC, SettingsPage.FTP_SERVER,
     SettingsPage.BACKGROUND, SettingsPage.STORAGE,
     SettingsPage.BACKUP, SettingsPage.USAGE, SettingsPage.TROUBLESHOOTING,
     SettingsPage.UPDATES, SettingsPage.SETUP, SettingsPage.ABOUT,

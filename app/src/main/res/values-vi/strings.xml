@@ -1031,4 +1031,13 @@
     <string name="chat_history_open_message">"Mở tin nhắn trùng khớp"</string>
     <string name="chat_history_open_chat">"Mở hội thoại"</string>
     <string name="chat_history_unavailable">"Hội thoại này không còn khả dụng."</string>
+    <string name="settings_page_external_agents_title">Agent bên ngoài</string>
+    <string name="settings_page_external_agents_desc">Thêm Pi, OpenCode, Claude Code và các agent lập trình CLI khác</string>
+    <string name="settings_external_agents_empty">Chưa cấu hình agent bên ngoài nào.</string>
+    <string name="settings_external_agents_hint">Agent bên ngoài là các agent lập trình dòng lệnh chạy qua môi trường Linux và tái sử dụng các công cụ tệp và shell của ứng dụng này. Thêm chúng vào harness.json trong phần externalAgents.</string>
+    <string name="settings_external_agents_open_config">Mở cấu hình</string>
+    <string name="settings_external_agents_enabled">Đã bật</string>
+    <string name="settings_external_agents_disabled">Đã tắt</string>
+    <string name="settings_external_agents_install">Cài đặt</string>
+    <string name="settings_external_agents_working_dir">Thư mục</string>
 </resources>

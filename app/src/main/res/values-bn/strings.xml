@@ -1034,4 +1034,13 @@
     <string name="chat_history_open_message">"মিলে যাওয়া বার্তা খুলুন"</string>
     <string name="chat_history_open_chat">"আলোচনা খুলুন"</string>
     <string name="chat_history_unavailable">"এই আলোচনা আর পাওয়া যাচ্ছে না।"</string>
+    <string name="settings_page_external_agents_title">বাহ্যিক এজেন্ট</string>
+    <string name="settings_page_external_agents_desc">Pi, OpenCode, Claude Code এবং অন্যান্য CLI কোডিং এজেন্ট যোগ করুন</string>
+    <string name="settings_external_agents_empty">এখনও কোনো বাহ্যিক এজেন্ট কনফিগার করা হয়নি।</string>
+    <string name="settings_external_agents_hint">বাহ্যিক এজেন্ট হলো কমান্ড-লাইন কোডিং এজেন্ট যারা Linux পরিবেশের মাধ্যমে চলে এবং এই অ্যাপের ফাইল ও শেল টুল পুনরায় ব্যবহার করে। harness.json-এ externalAgents-এর অধীনে যোগ করুন।</string>
+    <string name="settings_external_agents_open_config">কনফিগারেশন খুলুন</string>
+    <string name="settings_external_agents_enabled">সক্রিয়</string>
+    <string name="settings_external_agents_disabled">নিষ্ক্রিয়</string>
+    <string name="settings_external_agents_install">ইনস্টল করুন</string>
+    <string name="settings_external_agents_working_dir">ফোল্ডার</string>
 </resources>

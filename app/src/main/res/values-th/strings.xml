@@ -1031,4 +1031,13 @@
     <string name="chat_history_open_message">"เปิดข้อความที่ตรงกัน"</string>
     <string name="chat_history_open_chat">"เปิดบทสนทนา"</string>
     <string name="chat_history_unavailable">"บทสนทนานี้ไม่พร้อมใช้งานแล้ว"</string>
+    <string name="settings_page_external_agents_title">ตัวแทนภายนอก</string>
+    <string name="settings_page_external_agents_desc">เพิ่ม Pi, OpenCode, Claude Code และตัวแทนเขียนโค้ดแบบ CLI อื่น ๆ</string>
+    <string name="settings_external_agents_empty">ยังไม่มีการตั้งค่าตัวแทนภายนอก</string>
+    <string name="settings_external_agents_hint">ตัวแทนภายนอกคือตัวแทนเขียนโค้ดแบบบรรทัดคำสั่งที่ทำงานผ่านสภาพแวดล้อม Linux และใช้เครื่องมือไฟล์และเชลล์ของแอปนี้ซ้ำ เพิ่มใน harness.json ภายใต้ externalAgents</string>
+    <string name="settings_external_agents_open_config">เปิดการกำหนดค่า</string>
+    <string name="settings_external_agents_enabled">เปิดใช้</string>
+    <string name="settings_external_agents_disabled">ปิดใช้</string>
+    <string name="settings_external_agents_install">ติดตั้ง</string>
+    <string name="settings_external_agents_working_dir">โฟลเดอร์</string>
 </resources>

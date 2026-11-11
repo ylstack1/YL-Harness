@@ -255,7 +255,12 @@ class AppContainer(val appContext: Context) {
     )
     val browser = com.ylstack1.ylharness.browser.BrowserController(appContext, images)
     val externalAgentManager = com.ylstack1.ylharness.agent.ExternalAgentManager(
-        appContext, linuxEnv, shellRouter, fetchClient
+        appContext, linuxEnv, shellRouter, fetchClient,
+        resolveConfig = { workspace ->
+            // Same per-workspace configuration the agent engine resolves,
+            // so harness.json externalAgents are visible to the tool.
+            if (workspace != null) configuration.load(workspace) else com.ylstack1.ylharness.config.HarnessConfig()
+        },
     )
     val registry = ToolRegistry.default(
         fetchClient, todoStore, backgroundProcesses, linuxEnv, shizuku, shellRouter, skills, codeGraph,
