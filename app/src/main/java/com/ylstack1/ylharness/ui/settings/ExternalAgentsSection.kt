@@ -14,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.ylstack1.ylharness.AppContainer
 import com.ylstack1.ylharness.agent.ExternalAgentManager
@@ -62,7 +63,6 @@ internal fun ExternalAgentsSection(
 
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
-            key = { refresh.value },
         ) {
             items(agents, key = { it.id }) { agent ->
                 Card(

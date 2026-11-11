@@ -11,7 +11,6 @@ import com.ylstack1.ylharness.data.env.LinuxEnvironmentManager
 import com.ylstack1.ylharness.data.env.ShellTierRouter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.Result
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
@@ -39,7 +38,7 @@ class ExternalAgentManager(
     private val httpClient: OkHttpClient,
     private val json: Json = Json { ignoreUnknownKeys = true },
     /** Resolves the current HarnessConfig; can be updated by Settings UI. */
-    internal var resolveConfig: suspend () -> HarnessConfig = { HarnessConfig() },
+    internal var resolveConfig: () -> HarnessConfig = { HarnessConfig() },
 ) {
     private val piProcessManager = PiProcessManager(context, linuxEnv, shellRouter, httpClient)
     private var piAdapter: PiAgentAdapter? = null
@@ -87,7 +86,7 @@ class ExternalAgentManager(
     }
 
     /** Read agent config from the current HarnessConfig.externalAgents map. */
-    private suspend fun getConfig(agentId: String): ExternalAgentConfig? {
+    private fun getConfig(agentId: String): ExternalAgentConfig? {
         return resolveConfig().externalAgents[agentId]
     }
 
@@ -109,10 +108,11 @@ class ExternalAgentManager(
                 extraArgs = config.extraArgs,
             )
 
-            if (startResult is Result.Failure) {
+            val exception = startResult.exceptionOrNull()
+            if (exception != null) {
                 return ToolResult(
                     ok = false,
-                    output = "Failed to start Pi agent: ${startResult.exceptionOrNull()?.message ?: "unknown error"}",
+                    output = "Failed to start Pi agent: ${exception.message ?: "unknown error"}",
                 )
             }
 

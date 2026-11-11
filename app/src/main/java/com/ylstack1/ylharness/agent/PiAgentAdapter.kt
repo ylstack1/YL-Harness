@@ -72,7 +72,7 @@ class PiAgentAdapter(
     }
 
     private fun handleRecord(record: JsonObject) {
-        val id = record["id"]?.jsonPrimitive?.contentOrNull
+        val id = record["id"]?.jsonPrimitive?.content
         if (id != null) {
             // Response to a command we sent
             pending[id]?.let { deferred ->
@@ -96,7 +96,7 @@ class PiAgentAdapter(
      * Throws PiProcessClosedException if the process has died.
      */
     suspend fun sendCommand(command: JsonObject): JsonObject {
-        val id = command["id"]?.jsonPrimitive?.contentOrNull
+        val id = command["id"]?.jsonPrimitive?.content
             ?: UUID.randomUUID().toString()
         val cmd = buildJsonObject {
             command.entries.forEach { (k, v) -> put(k, v) }
