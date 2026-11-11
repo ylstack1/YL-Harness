@@ -484,7 +484,7 @@ fun SettingsScreen(
                         SettingsPage.SYNC -> com.ylstack1.ylharness.ui.transfer.SyncSettingsSection(container)
                         SettingsPage.FTP_SERVER -> com.ylstack1.ylharness.ui.transfer.FtpServerSection(container)
                         SettingsPage.ABOUT -> AboutSection(container)
-                        SettingsPage.SKILLS, SettingsPage.USAGE, SettingsPage.SETUP -> Unit
+                        SettingsPage.SKILLS, SettingsPage.USAGE, SettingsPage.SETUP, SettingsPage.EXTERNAL_AGENTS -> Unit
                     }
                         if (page != SettingsPage.LEARN && page != SettingsPage.LOCAL_MODELS) Spacer(Modifier.height(16.dp))
                     }

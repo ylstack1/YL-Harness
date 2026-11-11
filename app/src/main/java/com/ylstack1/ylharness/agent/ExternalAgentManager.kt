@@ -100,7 +100,7 @@ class ExternalAgentManager(
         // Ensure Pi is running
         if (piAdapter == null) {
             val workingDir = config.workingDir?.let { java.io.File(it) }
-                ?: ctx?.workspace?.shellRoot?.let { java.io.File(it) }
+                ?: ctx?.workspace?.shellRoot
                 ?: context.filesDir
 
             val startResult = piProcessManager.startSession(
