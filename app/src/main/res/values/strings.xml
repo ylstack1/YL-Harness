@@ -53,6 +53,8 @@
     <string name="settings_page_mcp_desc">Add and configure MCP servers</string>
     <string name="settings_page_telegram_title">Telegram</string>
     <string name="settings_page_telegram_desc">Continue chats and edit projects from your paired bot</string>
+    <string name="settings_page_external_agents_title">External agents</string>
+    <string name="settings_page_external_agents_desc">Add Pi, OpenCode, Claude Code and other CLI coding agents</string>
     <string name="settings_page_workspace_title">Workspaces</string>
     <string name="settings_page_workspace_desc">Choose, add and manage your project folders</string>
     <string name="settings_page_storage_title">Storage</string>
