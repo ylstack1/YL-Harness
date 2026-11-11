@@ -1034,10 +1034,20 @@
     <string name="settings_page_external_agents_title">Ejen luar</string>
     <string name="settings_page_external_agents_desc">Tambahkan Pi, OpenCode, Claude Code dan ejen pengekodan CLI lain</string>
     <string name="settings_external_agents_empty">Tiada ejen luar dikonfigurasi lagi.</string>
-    <string name="settings_external_agents_hint">Ejen luar ialah ejen pengekodan baris perintah yang berjalan melalui persekitaran Linux dan menggunakan semula alat fail dan shell aplikasi ini. Tambahkan dalam harness.json di bawah externalAgents.</string>
+        <string name="settings_external_agents_hint">External agents are command-line coding agents that run through the Linux environment and reuse this apps file and shell tools. Enable, configure and install them here, or edit externalAgents in harness.json on the Configuration page.</string>
     <string name="settings_external_agents_open_config">Buka konfigurasi</string>
     <string name="settings_external_agents_enabled">Diaktifkan</string>
     <string name="settings_external_agents_disabled">Dilumpuhkan</string>
     <string name="settings_external_agents_install">Pasang</string>
     <string name="settings_external_agents_working_dir">Folder</string>
+    <string name="settings_external_agents_loading">Loading agents…</string>
+    <string name="settings_external_agents_provider">Provider</string>
+    <string name="settings_external_agents_model">Model</string>
+    <string name="settings_external_agents_agent_id">Agent id</string>
+    <string name="settings_external_agents_agent_name">Name</string>
+    <string name="settings_external_agents_binary">Binary / command</string>
+    <string name="settings_external_agents_args">Arguments (space-separated)</string>
+    <string name="settings_external_agents_add_custom">Add custom agent</string>
+    <string name="settings_external_agents_add_custom_title">Add custom agent</string>
+    <string name="settings_external_agents_installing">Installing…</string>
 </resources>

@@ -1037,10 +1037,20 @@
     <string name="settings_page_external_agents_title">ایجنت‌های خارجی</string>
     <string name="settings_page_external_agents_desc">افزودن Pi، OpenCode، Claude Code و سایر ایجنت‌های کدنویسی خط فرمان</string>
     <string name="settings_external_agents_empty">هنوز هیچ ایجنت خارجی پیکربندی نشده است.</string>
-    <string name="settings_external_agents_hint">ایجنت‌های خارجی، ایجنت‌های کدنویسی خط فرمان هستند که از طریق محیط Linux اجرا می‌شوند و از ابزارهای فایل و پوسته (shell) همین برنامه استفاده می‌کنند. آن‌ها را در harness.json زیر externalAgents اضافه کنید.</string>
+        <string name="settings_external_agents_hint">External agents are command-line coding agents that run through the Linux environment and reuse this apps file and shell tools. Enable, configure and install them here, or edit externalAgents in harness.json on the Configuration page.</string>
     <string name="settings_external_agents_open_config">باز کردن پیکربندی</string>
     <string name="settings_external_agents_enabled">فعال</string>
     <string name="settings_external_agents_disabled">غیرفعال</string>
     <string name="settings_external_agents_install">نصب</string>
     <string name="settings_external_agents_working_dir">پوشه</string>
+    <string name="settings_external_agents_loading">Loading agents…</string>
+    <string name="settings_external_agents_provider">Provider</string>
+    <string name="settings_external_agents_model">Model</string>
+    <string name="settings_external_agents_agent_id">Agent id</string>
+    <string name="settings_external_agents_agent_name">Name</string>
+    <string name="settings_external_agents_binary">Binary / command</string>
+    <string name="settings_external_agents_args">Arguments (space-separated)</string>
+    <string name="settings_external_agents_add_custom">Add custom agent</string>
+    <string name="settings_external_agents_add_custom_title">Add custom agent</string>
+    <string name="settings_external_agents_installing">Installing…</string>
 </resources>

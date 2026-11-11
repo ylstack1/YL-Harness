@@ -1037,10 +1037,20 @@
     <string name="settings_page_external_agents_title">Agentes externos</string>
     <string name="settings_page_external_agents_desc">Añade Pi, OpenCode, Claude Code y otros agentes de programación de CLI</string>
     <string name="settings_external_agents_empty">Todavía no hay agentes externos configurados.</string>
-    <string name="settings_external_agents_hint">Los agentes externos son agentes de programación de línea de órdenes que se ejecutan en el entorno Linux y reutilizan las herramientas de archivos y shell de esta app. Añádelos en harness.json, en externalAgents.</string>
+        <string name="settings_external_agents_hint">External agents are command-line coding agents that run through the Linux environment and reuse this apps file and shell tools. Enable, configure and install them here, or edit externalAgents in harness.json on the Configuration page.</string>
     <string name="settings_external_agents_open_config">Abrir configuración</string>
     <string name="settings_external_agents_enabled">Activado</string>
     <string name="settings_external_agents_disabled">Desactivado</string>
     <string name="settings_external_agents_install">Instalar</string>
     <string name="settings_external_agents_working_dir">Carpeta</string>
+    <string name="settings_external_agents_loading">Loading agents…</string>
+    <string name="settings_external_agents_provider">Provider</string>
+    <string name="settings_external_agents_model">Model</string>
+    <string name="settings_external_agents_agent_id">Agent id</string>
+    <string name="settings_external_agents_agent_name">Name</string>
+    <string name="settings_external_agents_binary">Binary / command</string>
+    <string name="settings_external_agents_args">Arguments (space-separated)</string>
+    <string name="settings_external_agents_add_custom">Add custom agent</string>
+    <string name="settings_external_agents_add_custom_title">Add custom agent</string>
+    <string name="settings_external_agents_installing">Installing…</string>
 </resources>

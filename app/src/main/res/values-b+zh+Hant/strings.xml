@@ -1034,10 +1034,20 @@
     <string name="settings_page_external_agents_title">外部代理</string>
     <string name="settings_page_external_agents_desc">新增 Pi、OpenCode、Claude Code 及其他 CLI 編碼代理</string>
     <string name="settings_external_agents_empty">尚未設定任何外部代理。</string>
-    <string name="settings_external_agents_hint">外部代理是命令列編碼代理，透過 Linux 環境執行，並重複使用本應用程式的檔案與 shell 工具。在 harness.json 的 externalAgents 下新增。</string>
+        <string name="settings_external_agents_hint">External agents are command-line coding agents that run through the Linux environment and reuse this apps file and shell tools. Enable, configure and install them here, or edit externalAgents in harness.json on the Configuration page.</string>
     <string name="settings_external_agents_open_config">開啟設定</string>
     <string name="settings_external_agents_enabled">已啟用</string>
     <string name="settings_external_agents_disabled">已停用</string>
     <string name="settings_external_agents_install">安裝</string>
     <string name="settings_external_agents_working_dir">資料夾</string>
+    <string name="settings_external_agents_loading">Loading agents…</string>
+    <string name="settings_external_agents_provider">Provider</string>
+    <string name="settings_external_agents_model">Model</string>
+    <string name="settings_external_agents_agent_id">Agent id</string>
+    <string name="settings_external_agents_agent_name">Name</string>
+    <string name="settings_external_agents_binary">Binary / command</string>
+    <string name="settings_external_agents_args">Arguments (space-separated)</string>
+    <string name="settings_external_agents_add_custom">Add custom agent</string>
+    <string name="settings_external_agents_add_custom_title">Add custom agent</string>
+    <string name="settings_external_agents_installing">Installing…</string>
 </resources>

@@ -1040,10 +1040,20 @@
     <string name="settings_page_external_agents_title">Agents externes</string>
     <string name="settings_page_external_agents_desc">Ajoutez Pi, OpenCode, Claude Code et d\'autres agents de codage en CLI</string>
     <string name="settings_external_agents_empty">Aucun agent externe n\'est configuré pour l\'instant.</string>
-    <string name="settings_external_agents_hint">Les agents externes sont des agents de codage en ligne de commande qui s\'exécutent via l\'environnement Linux et réutilisent les outils de fichiers et de shell de cette app. Ajoutez-les dans harness.json sous externalAgents.</string>
+        <string name="settings_external_agents_hint">External agents are command-line coding agents that run through the Linux environment and reuse this apps file and shell tools. Enable, configure and install them here, or edit externalAgents in harness.json on the Configuration page.</string>
     <string name="settings_external_agents_open_config">Ouvrir la configuration</string>
     <string name="settings_external_agents_enabled">Activé</string>
     <string name="settings_external_agents_disabled">Désactivé</string>
     <string name="settings_external_agents_install">Installer</string>
     <string name="settings_external_agents_working_dir">Dossier</string>
+    <string name="settings_external_agents_loading">Loading agents…</string>
+    <string name="settings_external_agents_provider">Provider</string>
+    <string name="settings_external_agents_model">Model</string>
+    <string name="settings_external_agents_agent_id">Agent id</string>
+    <string name="settings_external_agents_agent_name">Name</string>
+    <string name="settings_external_agents_binary">Binary / command</string>
+    <string name="settings_external_agents_args">Arguments (space-separated)</string>
+    <string name="settings_external_agents_add_custom">Add custom agent</string>
+    <string name="settings_external_agents_add_custom_title">Add custom agent</string>
+    <string name="settings_external_agents_installing">Installing…</string>
 </resources>

@@ -1034,10 +1034,20 @@
     <string name="settings_page_external_agents_title">ตัวแทนภายนอก</string>
     <string name="settings_page_external_agents_desc">เพิ่ม Pi, OpenCode, Claude Code และตัวแทนเขียนโค้ดแบบ CLI อื่น ๆ</string>
     <string name="settings_external_agents_empty">ยังไม่มีการตั้งค่าตัวแทนภายนอก</string>
-    <string name="settings_external_agents_hint">ตัวแทนภายนอกคือตัวแทนเขียนโค้ดแบบบรรทัดคำสั่งที่ทำงานผ่านสภาพแวดล้อม Linux และใช้เครื่องมือไฟล์และเชลล์ของแอปนี้ซ้ำ เพิ่มใน harness.json ภายใต้ externalAgents</string>
+        <string name="settings_external_agents_hint">External agents are command-line coding agents that run through the Linux environment and reuse this apps file and shell tools. Enable, configure and install them here, or edit externalAgents in harness.json on the Configuration page.</string>
     <string name="settings_external_agents_open_config">เปิดการกำหนดค่า</string>
     <string name="settings_external_agents_enabled">เปิดใช้</string>
     <string name="settings_external_agents_disabled">ปิดใช้</string>
     <string name="settings_external_agents_install">ติดตั้ง</string>
     <string name="settings_external_agents_working_dir">โฟลเดอร์</string>
+    <string name="settings_external_agents_loading">Loading agents…</string>
+    <string name="settings_external_agents_provider">Provider</string>
+    <string name="settings_external_agents_model">Model</string>
+    <string name="settings_external_agents_agent_id">Agent id</string>
+    <string name="settings_external_agents_agent_name">Name</string>
+    <string name="settings_external_agents_binary">Binary / command</string>
+    <string name="settings_external_agents_args">Arguments (space-separated)</string>
+    <string name="settings_external_agents_add_custom">Add custom agent</string>
+    <string name="settings_external_agents_add_custom_title">Add custom agent</string>
+    <string name="settings_external_agents_installing">Installing…</string>
 </resources>

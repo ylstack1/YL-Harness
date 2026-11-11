@@ -1034,10 +1034,20 @@
     <string name="settings_page_external_agents_title">Agent bên ngoài</string>
     <string name="settings_page_external_agents_desc">Thêm Pi, OpenCode, Claude Code và các agent lập trình CLI khác</string>
     <string name="settings_external_agents_empty">Chưa cấu hình agent bên ngoài nào.</string>
-    <string name="settings_external_agents_hint">Agent bên ngoài là các agent lập trình dòng lệnh chạy qua môi trường Linux và tái sử dụng các công cụ tệp và shell của ứng dụng này. Thêm chúng vào harness.json trong phần externalAgents.</string>
+        <string name="settings_external_agents_hint">External agents are command-line coding agents that run through the Linux environment and reuse this apps file and shell tools. Enable, configure and install them here, or edit externalAgents in harness.json on the Configuration page.</string>
     <string name="settings_external_agents_open_config">Mở cấu hình</string>
     <string name="settings_external_agents_enabled">Đã bật</string>
     <string name="settings_external_agents_disabled">Đã tắt</string>
     <string name="settings_external_agents_install">Cài đặt</string>
     <string name="settings_external_agents_working_dir">Thư mục</string>
+    <string name="settings_external_agents_loading">Loading agents…</string>
+    <string name="settings_external_agents_provider">Provider</string>
+    <string name="settings_external_agents_model">Model</string>
+    <string name="settings_external_agents_agent_id">Agent id</string>
+    <string name="settings_external_agents_agent_name">Name</string>
+    <string name="settings_external_agents_binary">Binary / command</string>
+    <string name="settings_external_agents_args">Arguments (space-separated)</string>
+    <string name="settings_external_agents_add_custom">Add custom agent</string>
+    <string name="settings_external_agents_add_custom_title">Add custom agent</string>
+    <string name="settings_external_agents_installing">Installing…</string>
 </resources>

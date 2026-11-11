@@ -1037,10 +1037,20 @@
     <string name="settings_page_external_agents_title">Mga external na ahente</string>
     <string name="settings_page_external_agents_desc">Magdagdag ng Pi, OpenCode, Claude Code at iba pang CLI coding agent</string>
     <string name="settings_external_agents_empty">Wala pang na-configure na external na ahente.</string>
-    <string name="settings_external_agents_hint">Ang mga external na ahente ay mga command-line coding agent na tumatakbo sa pamamagitan ng Linux environment at muling gumagamit ng mga file at shell tool ng app na ito. Idagdag ang mga ito sa harness.json sa ilalim ng externalAgents.</string>
+        <string name="settings_external_agents_hint">External agents are command-line coding agents that run through the Linux environment and reuse this apps file and shell tools. Enable, configure and install them here, or edit externalAgents in harness.json on the Configuration page.</string>
     <string name="settings_external_agents_open_config">Buksan ang configuration</string>
     <string name="settings_external_agents_enabled">Naka-enable</string>
     <string name="settings_external_agents_disabled">Naka-disable</string>
     <string name="settings_external_agents_install">I-install</string>
     <string name="settings_external_agents_working_dir">Folder</string>
+    <string name="settings_external_agents_loading">Loading agents…</string>
+    <string name="settings_external_agents_provider">Provider</string>
+    <string name="settings_external_agents_model">Model</string>
+    <string name="settings_external_agents_agent_id">Agent id</string>
+    <string name="settings_external_agents_agent_name">Name</string>
+    <string name="settings_external_agents_binary">Binary / command</string>
+    <string name="settings_external_agents_args">Arguments (space-separated)</string>
+    <string name="settings_external_agents_add_custom">Add custom agent</string>
+    <string name="settings_external_agents_add_custom_title">Add custom agent</string>
+    <string name="settings_external_agents_installing">Installing…</string>
 </resources>

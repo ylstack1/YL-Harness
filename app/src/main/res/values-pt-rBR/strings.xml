@@ -1037,10 +1037,20 @@
     <string name="settings_page_external_agents_title">Agentes externos</string>
     <string name="settings_page_external_agents_desc">Adicione Pi, OpenCode, Claude Code e outros agentes de programação de CLI</string>
     <string name="settings_external_agents_empty">Nenhum agente externo está configurado ainda.</string>
-    <string name="settings_external_agents_hint">Agentes externos são agentes de programação de linha de comando que executam no ambiente Linux e reutilizam as ferramentas de arquivos e shell deste app. Adicione-os ao harness.json em externalAgents.</string>
+        <string name="settings_external_agents_hint">External agents are command-line coding agents that run through the Linux environment and reuse this apps file and shell tools. Enable, configure and install them here, or edit externalAgents in harness.json on the Configuration page.</string>
     <string name="settings_external_agents_open_config">Abrir configuração</string>
     <string name="settings_external_agents_enabled">Ativado</string>
     <string name="settings_external_agents_disabled">Desativado</string>
     <string name="settings_external_agents_install">Instalar</string>
     <string name="settings_external_agents_working_dir">Pasta</string>
+    <string name="settings_external_agents_loading">Loading agents…</string>
+    <string name="settings_external_agents_provider">Provider</string>
+    <string name="settings_external_agents_model">Model</string>
+    <string name="settings_external_agents_agent_id">Agent id</string>
+    <string name="settings_external_agents_agent_name">Name</string>
+    <string name="settings_external_agents_binary">Binary / command</string>
+    <string name="settings_external_agents_args">Arguments (space-separated)</string>
+    <string name="settings_external_agents_add_custom">Add custom agent</string>
+    <string name="settings_external_agents_add_custom_title">Add custom agent</string>
+    <string name="settings_external_agents_installing">Installing…</string>
 </resources>
