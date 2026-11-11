@@ -229,7 +229,9 @@ class ExternalAgentManager(
 
             val startResult = opencodeProcessManager.startSession(
                 workingDir = workingDir,
-                extraArgs = config.extraArgs,
+                extraArgs = config.extraArgs + listOf(
+                    "--model", "${config.provider ?: "anthropic"}/${config.model ?: "claude-sonnet-5-5"}",
+                ),
             )
             val proc = startResult.getOrElse { e ->
                 return ToolResult(

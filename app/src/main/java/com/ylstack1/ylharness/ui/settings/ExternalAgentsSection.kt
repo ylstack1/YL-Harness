@@ -103,25 +103,41 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
     /** Persist one agent's draft back to harness.json externalAgents. */
     fun saveDraft(agentId: String) {
         val draft = drafts[agentId] ?: return
+        // Validate before saving.
+        if (draft.id.isBlank()) {
+            error = "Agent id is required."
+            return
+        }
+        if (draft.name.isBlank()) {
+            error = "Agent name is required."
+            return
+        }
+        // Clear draft optimistically so a config-revision refresh shows the
+        // saved state rather than a stale draft.
+        drafts = drafts - agentId
+        error = null
         scope.launch {
             try {
                 withContext(Dispatchers.IO) {
-                    val currentFs = requireNotNull(fs) { "No workspace" }
+                    val currentFs = requireNotNull(fs) { "No workspace selected" }
                     val (path, previous) = container.configuration.document(currentFs, false)
+                        ?: run {
+                            throw IllegalStateException("No harness.json found. Open Configuration to create one.")
+                        }
                     val text = updateExternalAgentInConfig(previous, draft)
                     container.configuration.save(currentFs, false, path, text, previous, null)
                 }
-                drafts = drafts - agentId
-                error = null
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
+                // Restore draft on failure so the user can retry.
+                drafts = drafts + (agentId to draft)
                 error = e.message
             }
         }
     }
 
-    /** Install Pi/OpenCode for [agentId], then refresh install state. */
+    /** Install Pi/OpenCode for [agentId], then enable the agent and save. */
     fun installAgent(agentId: String) {
         scope.launch {
             installing = agentId
@@ -136,6 +152,24 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                     }
                 }
                 installed = installed + (agentId to true)
+                // Auto-enable the agent after a successful install.
+                val agent = agents.find { it.id == agentId }
+                if (agent != null) {
+                    val enabledDraft = agent.copy(enabled = true)
+                    val newDrafts = drafts.toMutableMap()
+                    newDrafts[agentId] = enabledDraft
+                    drafts = newDrafts
+                    // Save to config (inline, no nested launch).
+                    val currentFs = requireNotNull(fs) { "No workspace selected" }
+                    val (path, previous) = container.configuration.document(currentFs, false)
+                        ?: run {
+                            throw IllegalStateException("No harness.json found. Open Configuration to create one.")
+                        }
+                    val text = updateExternalAgentInConfig(previous, enabledDraft)
+                    container.configuration.save(currentFs, false, path, text, previous, null)
+                    drafts = drafts - agentId
+                    error = null
+                }
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
@@ -452,6 +486,8 @@ private fun builtinAgents(): List<ExternalAgentConfig> = listOf(
     ExternalAgentConfig(
         id = "pi",
         name = "Pi",
+        // Pi authenticates via `/login` and picks a model via `/model` interactively;
+        // provider/model are passed as --provider/--model to Pi's RPC mode when set.
         provider = null,
         model = null,
         binary = null,
@@ -461,8 +497,10 @@ private fun builtinAgents(): List<ExternalAgentConfig> = listOf(
     ExternalAgentConfig(
         id = "opencode",
         name = "OpenCode",
-        provider = null,
-        model = null,
+        // OpenCode uses provider/model format (e.g. anthropic/claude-sonnet-5-5)
+        // configured in opencode.json; passed to `opencode acp` as --model.
+        provider = "anthropic",
+        model = "claude-sonnet-5-5",
         binary = null,
         workingDir = null,
         enabled = false,
