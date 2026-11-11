@@ -23,14 +23,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.*
-import androidx.compose.material3.Switch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.Switch
 import com.ylstack1.ylharness.AppContainer
 import com.ylstack1.ylharness.R
 import com.ylstack1.ylharness.agent.ExternalAgentManager
@@ -69,7 +69,6 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
     var error by remember { mutableStateOf<String?>(null) }
     var drafts by remember { mutableStateOf(mapOf<String, ExternalAgentConfig>()) }
     var showCustomAgentDialog by remember { mutableStateOf(false) }
-    /** Per-agent drafts waiting to be persisted when a workspace becomes available. */
     var pendingDrafts by remember { mutableStateOf(mapOf<String, ExternalAgentConfig>()) }
     var showManageScreen by remember { mutableStateOf<String?>(null) }
     var showInstallDialog by remember { mutableStateOf<String?>(null) }
@@ -130,6 +129,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
 
     /**
      * Persist one agent's draft back to harness.json externalAgents.
+     * Updates agents list immediately so UI reflects change without delay.
      * If no workspace is selected, keeps the change in-memory and marks it pending.
      */
     fun saveDraft(agentId: String) {
@@ -218,10 +218,12 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                 }
                 installed = installed + (agentId to true)
                 // Auto-enable after install.
-                val agent = agents.find { it.id == agentId } ?: return@launch
-                val enabledDraft = agent.copy(enabled = true)
-                drafts = drafts + mapOf(agentId to enabledDraft)
-                saveDraft(agentId)
+                val agent = agents.find { it.id == agentId }
+                if (agent != null) {
+                    val enabledDraft = agent.copy(enabled = true)
+                    drafts = drafts + mapOf(agentId to enabledDraft)
+                    saveDraft(agentId)
+                }
                 installProgress = "Installed."
                 installPercent = 100f
             } catch (e: CancellationException) {
@@ -353,7 +355,6 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                                 }
                             }
 
-                            // Provider / model (built-in agents that use them)
                             if (agent.id == "pi" || agent.id == "opencode") {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
@@ -414,7 +415,6 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                                 )
                             }
 
-                            // Install status + action
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically,
@@ -447,7 +447,6 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                                         }
                                     }
                                 } else if (isInstalled) {
-                                    // Installed: show Manage + Reinstall
                                     TextButton(onClick = { showManageScreen = agent.id }) {
                                         Text(stringResource(R.string.settings_external_agents_manage))
                                     }
@@ -594,7 +593,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
             text = {
                 Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        if (installPercent > 0 && installPercent < 100) {
+                        if (installPercent > 0f && installPercent < 100f) {
                             CircularProgressIndicator(
                                 progress = installPercent / 100f,
                                 Modifier.size(24.dp),
@@ -607,7 +606,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                         Column {
                             Text(installProgress ?: stringResource(R.string.settings_external_agents_installing),
                                 style = MaterialTheme.typography.bodyMedium)
-                            if (installPercent > 0) {
+                            if (installPercent > 0f) {
                                 Text("${installPercent.toInt()}%",
                                     style = MaterialTheme.typography.titleMedium,
                                     color = MaterialTheme.colorScheme.primary)
