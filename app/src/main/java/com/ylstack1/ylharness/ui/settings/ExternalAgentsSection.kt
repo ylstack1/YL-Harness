@@ -143,6 +143,8 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
             return
         }
         error = null
+        // Update agents list immediately so the UI reflects the change without delay.
+        agents = agents.map { if (it.id == agentId) draft else it }
         if (fs != null) {
             scope.launch {
                 try {
@@ -168,8 +170,6 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
             // No workspace: keep in-memory, mark pending for when workspace is selected.
             drafts = drafts - agentId
             pendingDrafts = pendingDrafts + (agentId to draft)
-            agents = agents.map { if (it.id == agentId) draft else it }
-            error = null
         }
     }
 
@@ -230,6 +230,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                 installMessage = e.message
             } finally {
                 installing = null
+                showInstallDialog = null
             }
         }
     }
@@ -287,6 +288,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                 installMessage = e.message
             } finally {
                 installing = null
+                showInstallDialog = null
             }
         }
     }
@@ -659,17 +661,19 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
 
     // Per-agent manage screen
     if (showManageScreen != null) {
-        val agent = agents.find { it.id == showManageScreen } ?: return
-        AgentManageScreen(
-            container = container,
-            agent = agent,
-            onDismiss = { showManageScreen = null },
-            onSave = { updated ->
-                drafts = drafts + (agent.id to updated)
-                saveDraft(agent.id)
-                showManageScreen = null
-            },
-        )
+        val agent = agents.find { it.id == showManageScreen }
+        if (agent != null) {
+            AgentManageScreen(
+                container = container,
+                agent = agent,
+                onDismiss = { showManageScreen = null },
+                onSave = { updated ->
+                    drafts = drafts + (agent.id to updated)
+                    saveDraft(agent.id)
+                    showManageScreen = null
+                },
+            )
+        }
     }
 }
 

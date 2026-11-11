@@ -201,17 +201,19 @@ internal fun AgentManageScreen(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
+                        val isAgentInstalled = if (agent.id == "pi")
+                            container.externalAgentManager.isPiInstalled()
+                        else container.externalAgentManager.isOpencodeInstalled()
                         Text(
-                            if (container.externalAgentManager.isPiInstalled() ||
-                                container.externalAgentManager.isOpencodeInstalled())
+                            if (isAgentInstalled)
                                 stringResource(R.string.settings_external_agents_installed)
                             else stringResource(R.string.settings_external_agents_not_installed),
                             Modifier.weight(1f),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
-                        if (!container.externalAgentManager.isPiInstalled() &&
-                            !container.externalAgentManager.isOpencodeInstalled()
+                        if (!container.externalAgentManager.isPiInstalled() && agent.id == "pi"
+                            || !container.externalAgentManager.isOpencodeInstalled() && agent.id == "opencode"
                         ) {
                             AppButton(enabled = !loading, onClick = { doInstall() }) {
                                 Text(stringResource(R.string.settings_external_agents_install))
