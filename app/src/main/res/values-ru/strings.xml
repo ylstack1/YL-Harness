@@ -1059,4 +1059,6 @@
     <string name="settings_external_agents_add_custom">Add custom agent</string>
     <string name="settings_external_agents_add_custom_title">Add custom agent</string>
     <string name="settings_external_agents_installing">Installing…</string>
+    <string name="settings_external_agents_builtin_group">Built-in agents</string>
+    <string name="settings_external_agents_other_group">Other agents</string>
 </resources>
