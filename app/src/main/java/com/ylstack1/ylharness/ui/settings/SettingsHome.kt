@@ -311,7 +311,6 @@ internal fun settingsIcon(page: SettingsPage): ImageVector = when (page) {
     SettingsPage.SEARCH -> Icons.Outlined.TravelExplore
     SettingsPage.MCP -> Icons.Outlined.Extension
     SettingsPage.TELEGRAM -> Icons.AutoMirrored.Outlined.Send
-    SettingsPage.EXTERNAL_AGENTS -> Icons.Outlined.Extension
     SettingsPage.WORKSPACE -> Icons.Outlined.Folder
     SettingsPage.BACKGROUND -> Icons.Outlined.Notifications
     SettingsPage.STORAGE -> Icons.Outlined.Storage

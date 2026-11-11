@@ -185,12 +185,6 @@ internal enum class SettingsPage(
         R.string.settings_group_connections,
         "telegram bot remote control pairing notifications gateway",
     ),
-    EXTERNAL_AGENTS(
-        R.string.settings_page_external_agents_title,
-        R.string.settings_page_external_agents_desc,
-        R.string.settings_group_connections,
-        "external agent pi opencode claude code cli integration tool",
-    ),
     WORKSPACE(
         R.string.settings_page_workspace_title,
         R.string.settings_page_workspace_desc,
