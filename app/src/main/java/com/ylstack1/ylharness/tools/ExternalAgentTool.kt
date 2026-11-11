@@ -1,9 +1,9 @@
 package com.ylstack1.ylharness.tools
 
-import com.androidharness.app.agent.ExternalAgentManager
-import com.androidharness.app.tools.Tool
-import com.androidharness.app.tools.ToolContext
-import com.androidharness.app.tools.ToolResult
+import com.ylstack1.ylharness.agent.ExternalAgentManager
+import com.ylstack1.ylharness.tools.Tool
+import com.ylstack1.ylharness.tools.ToolContext
+import com.ylstack1.ylharness.tools.ToolResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonObject
@@ -19,7 +19,7 @@ import kotlinx.serialization.json.JsonObject
  *   })
  */
 class ExternalAgentTool(
-    private val manager: com.androidharness.app.agent.ExternalAgentManager,
+    private val manager: com.ylstack1.ylharness.agent.ExternalAgentManager,
 ) : Tool {
 
     override val name = "external_agent"
