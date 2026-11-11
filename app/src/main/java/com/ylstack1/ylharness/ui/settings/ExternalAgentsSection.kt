@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.PlayCircleOutline
 import androidx.compose.material.icons.outlined.Stop
@@ -30,13 +28,10 @@ internal fun ExternalAgentsSection(
     externalAgentManager: ExternalAgentManager,
 ) {
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
 
     val agents by remember {
         mutableStateOf<List<ExternalAgentConfig>>(emptyList())
     }
-
-    val refresh = remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
         scope.launch {
@@ -44,7 +39,6 @@ internal fun ExternalAgentsSection(
                 externalAgentManager.listAgents()
             }
             agents.value = loaded
-            refresh.value += 1
         }
     }
 
@@ -95,18 +89,15 @@ internal fun ExternalAgentsSection(
                             }
                         }
                         Row {
-                            val isRunning = agent.id == "pi" // simplified check
                             if (agent.enabled) {
                                 IconButton(
                                     onClick = { scope.launch {
                                         // toggle would go here
                                     } },
-                                    enabled = true,
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Stop,
                                         contentDescription = "Stop agent",
-                                        tint = MaterialTheme.colorScheme.error,
                                     )
                                 }
                             } else {
@@ -114,18 +105,15 @@ internal fun ExternalAgentsSection(
                                     onClick = { scope.launch {
                                         // enable would go here
                                     } },
-                                    enabled = true,
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.PlayCircleOutline,
                                         contentDescription = "Enable agent",
-                                        tint = MaterialTheme.colorScheme.primary,
                                     )
                                 }
                             }
                             IconButton(
                                 onClick = { },
-                                enabled = true,
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Edit,

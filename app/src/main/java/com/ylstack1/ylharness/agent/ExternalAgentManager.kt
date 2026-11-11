@@ -10,6 +10,7 @@ import com.ylstack1.ylharness.tools.ToolResult
 import com.ylstack1.ylharness.data.env.LinuxEnvironmentManager
 import com.ylstack1.ylharness.data.env.ShellTierRouter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
@@ -108,11 +109,10 @@ class ExternalAgentManager(
                 extraArgs = config.extraArgs,
             )
 
-            val exception = startResult.exceptionOrNull()
-            if (exception != null) {
+            if (!startResult.isSuccess) {
                 return ToolResult(
                     ok = false,
-                    output = "Failed to start Pi agent: ${exception.message ?: "unknown error"}",
+                    output = "Failed to start Pi agent: unknown error",
                 )
             }
 
@@ -129,7 +129,9 @@ class ExternalAgentManager(
             piAdapter = PiAgentAdapter(proc, json)
             piAdapter?.addListener { record ->
                 if (record["type"]?.jsonPrimitive?.content == "tool_call") {
-                    handlePiToolCall(record, toolBridge)
+                    GlobalScope.launch(Dispatchers.IO) {
+                        handlePiToolCall(record, toolBridge)
+                    }
                 }
             }
         }
