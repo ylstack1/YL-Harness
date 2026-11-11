@@ -111,6 +111,8 @@ class ExternalAgentManager(
         prompt: String,
         ctx: ToolContext?,
     ): ToolResult {
+        agentNotInstalled("pi", piProcessManager.isInstalled())?.let { return it }
+
         // Ensure Pi is running
         if (piAdapter == null) {
             val workingDir = config.workingDir?.let { java.io.File(it) }
@@ -218,6 +220,8 @@ class ExternalAgentManager(
         prompt: String,
         ctx: ToolContext?,
     ): ToolResult {
+        agentNotInstalled("opencode", opencodeProcessManager.isInstalled())?.let { return it }
+
         val adapter = opencodeAdapter ?: run {
             val workingDir = config.workingDir?.let { java.io.File(it) }
                 ?: ctx?.workspace?.shellRoot
@@ -318,6 +322,17 @@ class ExternalAgentManager(
     suspend fun listAgents(workspace: WorkspaceFs? = null): List<ExternalAgentConfig> {
         return resolveConfig(workspace).externalAgents.values.toList()
     }
+}
+
+/**
+ * Returns a not-installed ToolResult when the agent's binary is missing, else null.
+ * Top-level so it can be unit-tested without an Android Context.
+ */
+internal fun agentNotInstalled(agentId: String, installed: Boolean): ToolResult? {
+    return if (installed) null else ToolResult(
+        ok = false,
+        output = "External agent '$agentId' is not installed. Install it in Settings first, then run the task again.",
+    )
 }
 
 /**
