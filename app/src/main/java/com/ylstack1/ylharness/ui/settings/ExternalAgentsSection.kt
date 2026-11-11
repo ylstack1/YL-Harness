@@ -28,7 +28,7 @@ internal fun ExternalAgentsSection(
     val context = LocalContext.current
 
     val agents by remember {
-        mutableStateOf<List<ExternalAgentConfig>>(emptyList())
+        mutableStateOf(emptyList<List<ExternalAgentConfig>>())
     }
 
     LaunchedEffect(Unit) {
