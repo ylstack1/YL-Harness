@@ -7,6 +7,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -14,6 +15,7 @@ import java.io.OutputStream
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
+import kotlin.concurrent.thread
 
 /**
  * JSON-RPC protocol adapter for Pi coding agent.
@@ -30,7 +32,7 @@ class PiAgentAdapter(
     private val json: Json = Json { ignoreUnknownKeys = true },
 ) {
     private val stdin: OutputStream = process.outputStream
-    private val stdout: BufferedReader = InputStreamReader(process.inputStream).bufferedReader()
+    private val stdout: BufferedReader = BufferedReader(InputStreamReader(process.inputStream))
 
     /** Pending command requests awaiting response, keyed by command id. */
     private val pending = ConcurrentHashMap<String, CompletableDeferred<JsonObject>>()
@@ -43,13 +45,15 @@ class PiAgentAdapter(
     init {
         // Reader thread: parse JSONL responses and events from stdout
         thread(name = "pi-rpc-reader", isDaemon = true) {
-            var line: String?
+            var line: String? = null
             try {
-                while (process.isAlive && stdout.readLine().also { line = it } != null) {
-                    line.trim()
-                    if (line.isEmpty()) continue
+                while (process.isAlive) {
+                    line = stdout.readLine()
+                    if (line == null) break
+                    val trimmed = line.trim()
+                    if (trimmed.isEmpty()) continue
                     try {
-                        val record = json.parseToJsonElement(line).jsonObject
+                        val record = json.parseToJsonElement(trimmed).jsonObject
                         handleRecord(record)
                     } catch (e: Exception) {
                         // Silently skip malformed lines; Pi may emit non-JSON debug output

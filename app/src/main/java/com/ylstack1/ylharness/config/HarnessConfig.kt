@@ -367,8 +367,8 @@ class HarnessConfigLoader(
                 model = v["model"]?.string()?.takeIf { it.isNotEmpty() },
                 workingDir = v["workingDir"]?.string()?.takeIf { it.isNotEmpty() },
                 tier = v["tier"]?.string()?.takeIf { it.isNotEmpty() },
-                toolMapping = v["toolMapping"]?.fields.orEmpty().mapValues { it.value.string()?.orEmpty() },
-                extraArgs = v["extraArgs"]?.items.orEmpty().map { it.string()?.orEmpty() },
+                toolMapping = v["toolMapping"]?.fields.orEmpty().mapValues { it.value.string().orEmpty() },
+                extraArgs = v["extraArgs"]?.items.orEmpty().map { it.string().orEmpty() },
             )
         }
         val instructions = (pluginInstructions + rootInstructions).distinctBy { it.source to it.path }

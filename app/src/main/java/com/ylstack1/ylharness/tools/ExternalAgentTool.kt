@@ -7,6 +7,7 @@ import com.ylstack1.ylharness.tools.ToolResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonPrimitive
 
 /**
  * Tool that delegates tasks to external CLI agents (Pi, OpenCode, Claude Code).
