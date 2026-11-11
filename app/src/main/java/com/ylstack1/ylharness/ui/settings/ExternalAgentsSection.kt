@@ -69,9 +69,25 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
         loading = true
         error = null
         try {
-            agents = if (fs != null) withContext(Dispatchers.IO) {
-                container.configuration.load(requireNotNull(fs)).externalAgents.values.toList()
-            } else emptyList()
+            val configured = if (fs != null) withContext(Dispatchers.IO) {
+                container.configuration.load(requireNotNull(fs)).externalAgents
+            } else emptyMap<String, ExternalAgentConfig>()
+            // Built-in agents (Pi, OpenCode) always appear; config values (enabled,
+            // workingDir, provider, model, …) override the built-in defaults when present.
+            agents = builtinAgents().map { builtin ->
+                configured[builtin.id]?.let { configured ->
+                    builtin.copy(
+                        enabled = configured.enabled,
+                        autoStart = configured.autoStart,
+                        provider = configured.provider,
+                        model = configured.model,
+                        workingDir = configured.workingDir,
+                        tier = configured.tier,
+                        toolMapping = configured.toolMapping,
+                        extraArgs = configured.extraArgs,
+                    )
+                } ?: builtin
+            }
             installed = mapOf(
                 "pi" to container.externalAgentManager.isPiInstalled(),
                 "opencode" to container.externalAgentManager.isOpencodeInstalled(),
@@ -426,6 +442,32 @@ private fun AgentSettingsCard(
         }
     }
 }
+
+/**
+ * Built-in agents that always appear in the External Agents settings.
+ * Config values (enabled, workingDir, provider, model, …) override defaults
+ * when the agent is present in harness.json externalAgents.
+ */
+private fun builtinAgents(): List<ExternalAgentConfig> = listOf(
+    ExternalAgentConfig(
+        id = "pi",
+        name = "Pi",
+        provider = null,
+        model = null,
+        binary = null,
+        workingDir = null,
+        enabled = false,
+    ),
+    ExternalAgentConfig(
+        id = "opencode",
+        name = "OpenCode",
+        provider = null,
+        model = null,
+        binary = null,
+        workingDir = null,
+        enabled = false,
+    ),
+)
 
 /**
  * Strip // line comments and /* */ block comments from JSONC text, respecting
