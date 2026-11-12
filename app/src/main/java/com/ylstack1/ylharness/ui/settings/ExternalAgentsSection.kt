@@ -157,7 +157,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
                         val text = updateExternalAgentInConfig(previous, draft)
                         container.configuration.save(currentFs, false, path, text, previous, null)
                     }
-                    drafts = drafts - agentId
+                    drafts = drafts + mapOf(agentId to draft)
                     pendingDrafts = pendingDrafts - agentId
                     error = null
                 } catch (e: CancellationException) {
@@ -168,7 +168,7 @@ internal fun ExternalAgentsSection(container: AppContainer, onOpenConfiguration:
             }
         } else {
             // No workspace: keep in-memory, mark pending for when workspace is selected.
-            drafts = drafts - agentId
+            drafts = drafts + mapOf(agentId to draft)
             pendingDrafts = pendingDrafts + (agentId to draft)
         }
     }
