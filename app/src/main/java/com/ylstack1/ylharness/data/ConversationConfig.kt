@@ -33,6 +33,8 @@ data class ConversationConfig(
     /** Old nonempty per-chat instructions remain overrides; other chats inherit the app setting. */
     val useGlobalInstructions: Boolean = instructions.isBlank(),
     val agent: ChatAgentProfile? = null,
+    /** External CLI agent (Pi, OpenCode, custom) to run this chat instead of the default LLM. */
+    val externalAgentId: String? = null,
 ) {
     val isChat: Boolean get() = kind == ConversationKind.CHAT
 

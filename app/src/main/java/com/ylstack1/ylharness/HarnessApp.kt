@@ -75,6 +75,9 @@ class AppContainer(val appContext: Context) {
     /** Build/test failure prompt waiting for a fresh chat to run it. */
     val pendingAgentPrompt = kotlinx.coroutines.flow.MutableStateFlow<String?>(null)
 
+    /** External agent (Pi, OpenCode, custom) selected for the next new chat. */
+    var nextChatExternalAgentId: String? = null
+
     /** In-app nav channel: a screen asking Settings to scroll to a section. */
     val pendingSettingsScroll = kotlinx.coroutines.flow.MutableStateFlow<String?>(null)
 

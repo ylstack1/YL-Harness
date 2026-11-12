@@ -3,6 +3,7 @@ package com.ylstack1.ylharness.ui
 import com.ylstack1.ylharness.ui.theme.*
 import com.ylstack1.ylharness.R
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.clickable
 
 import androidx.compose.foundation.layout.navigationBarsPadding
 
@@ -233,6 +234,10 @@ fun AppNav(container: AppContainer) {
         .collectAsStateWithLifecycle(initialValue = null)
     var workspaceError by remember { mutableStateOf<String?>(null) }
     var creatingProjectChat by remember { mutableStateOf(false) }
+    /** Agent selection dialog for new chat. */
+    var newChatAgentDialog by remember { mutableStateOf(false) }
+    var selectedNewChatAgent by remember { mutableStateOf<String?>(null) }
+    var pendingNewChatAction by remember { mutableStateOf<(() -> Unit)?>(null) }
     fun selectWorkspace(id: String) {
         val sid = workspaceSessionId
         scope.launch {
@@ -462,21 +467,21 @@ fun AppNav(container: AppContainer) {
                 } else sidebarActivity(false, session.pendingPlan)
             },
             onNewChat = { navigateFromSidebar {
-                scope.launch { currentWorkspace?.id?.let { container.workspace.setActiveProject(it) }; openChat(null) }
+                scope.launch { currentWorkspace?.id?.let { container.workspace.setActiveProject(it) } }
+                newChatAgentDialog = true
+                selectedNewChatAgent = null
+                pendingNewChatAction = { scope.launch { openChat(null) } }
             } }, onChat = { sid -> navigateFromSidebar { openChat(sid) } },
             onMessage = { hit -> navigateFromSidebar { openChat(hit.sessionId, hit.messageId) } },
             onProjectChat = { project -> if (!creatingProjectChat) {
                 creatingProjectChat = true
-                val create = { scope.launch {
+                newChatAgentDialog = true
+                selectedNewChatAgent = null
+                pendingNewChatAction = { scope.launch {
                     try { openChat(container.sessions.createSession(uiContext.getString(R.string.settings_telegram_new_chat), project.id)) }
                     catch (e: Exception) { if (e is kotlinx.coroutines.CancellationException) throw e; workspaceError = e.message ?: uiContext.getString(R.string.ui_could_not_create_chat) }
                     finally { creatingProjectChat = false }
-                }; Unit }
-                if (desktopNavigation) {
-                    // A cancelled editor guard must not leave every new-chat button disabled.
-                    creatingProjectChat = false
-                    desktopGuard.navigate { creatingProjectChat = true; create() }
-                } else create()
+                }}
             } },
             onProjects = { navigateFromSidebar { nav.navigate("projects") { launchSingleTop = true } } },
             onChatActions = { actionsSession = it }, onAction = ::sidebarAction,
@@ -1054,6 +1059,74 @@ fun AppNav(container: AppContainer) {
             },
             dismissButton = {
                 TextButton(onClick = { dismissLatePackagesNotice() }) { Text(uiContext.getString(R.string.ui_later)) }
+            },
+        )
+    }
+
+    // Agent selection dialog for new chat (Pi, OpenCode, YL Harness default).
+    if (newChatAgentDialog) {
+        val piInstalled = container.externalAgentManager.isPiInstalled()
+        val opencodeInstalled = container.externalAgentManager.isOpencodeInstalled()
+        AlertDialog(
+            onDismissRequest = {
+                newChatAgentDialog = false
+                selectedNewChatAgent = null
+                pendingNewChatAction = null
+            },
+            title = { Text(uiContext.getString(R.string.ui_select_agent_for_new_chat)) },
+            text = {
+                androidx.compose.foundation.layout.Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                            .clickable { selectedNewChatAgent = null },
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(if (selectedNewChatAgent == null) "●" else "○")
+                        Text(uiContext.getString(R.string.ui_agent_ylharness_default))
+                    }
+                    if (piInstalled) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                                .clickable { selectedNewChatAgent = "pi" },
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(if (selectedNewChatAgent == "pi") "●" else "○")
+                            Text("Pi")
+                        }
+                    }
+                    if (opencodeInstalled) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
+                                .clickable { selectedNewChatAgent = "opencode" },
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(if (selectedNewChatAgent == "opencode") "●" else "○")
+                            Text("OpenCode")
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    enabled = selectedNewChatAgent != null,
+                    onClick = {
+                        container.nextChatExternalAgentId = selectedNewChatAgent
+                        newChatAgentDialog = false
+                        selectedNewChatAgent = null
+                        pendingNewChatAction?.invoke()
+                        pendingNewChatAction = null
+                    },
+                ) { Text(uiContext.getString(R.string.ui_use_agent)) }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    newChatAgentDialog = false
+                    selectedNewChatAgent = null
+                    pendingNewChatAction = null
+                }) { Text(uiContext.getString(R.string.ui_cancel)) }
             },
         )
     }

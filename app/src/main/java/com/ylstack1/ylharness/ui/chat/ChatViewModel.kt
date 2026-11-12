@@ -307,7 +307,12 @@ class ChatViewModel(
     private val sessionCreation = Mutex()
 
     private suspend fun ensureSession(title: String = c.appContext.getString(R.string.settings_telegram_new_chat)): String = sessionCreation.withLock {
-        sessionId ?: c.sessions.createSession(title, c.workspace.currentProjectOnce().id, _state.value.conversation).also { sid ->
+        sessionId ?: c.sessions.createSession(
+            title, c.workspace.currentProjectOnce().id,
+            _state.value.conversation.copy(externalAgentId = c.nextChatExternalAgentId).also {
+                c.nextChatExternalAgentId = null
+            }
+        ).also { sid ->
             c.chatModels.initialize(sid)
             sessionId = sid
             sessionIdFlow.value = sid
@@ -1574,6 +1579,32 @@ class ChatViewModel(
                 val localLimits = if (com.ylstack1.ylharness.local.LocalModelCatalog.isLocal(provider.id)) {
                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { c.localModels.limits(provider.id.removePrefix(com.ylstack1.ylharness.local.LocalModelCatalog.PROVIDER_PREFIX)) }
                 } else null
+                // Route to external agent (Pi, OpenCode, custom) if selected for this chat.
+                val externalAgentId = s0.conversation.externalAgentId
+                if (externalAgentId != null && externalAgentId.isNotBlank()) {
+                    val ctx = com.ylstack1.ylharness.tools.ToolContext(
+                        workspace = runWorkspace,
+                        sessionId = boundSession,
+                        configuration = c.configuration.load(runWorkspace),
+                    )
+                    val result = c.externalAgentManager.executeAgent(
+                        externalAgentId, payload, false, ctx,
+                    )
+                    c.sessions.addMessage(boundSession, com.ylstack1.ylharness.core.ChatMessage(
+                        role = com.ylstack1.ylharness.core.Role.ASSISTANT,
+                        text = result.output,
+                        isError = !result.ok,
+                    ))
+                    if (sessionId == null) {
+                        sessionId = boundSession
+                        sessionIdFlow.value = boundSession
+                        _state.update { it.copy(sessionId = boundSession, sessionTitle = payload.take(48)) }
+                        viewModelScope.launch {
+                            c.settings.setLastActiveSessionId(boundSession)
+                        }
+                    }
+                    return@launch
+                }
                 val sid = c.runManager.startRun(
                     sessionId = boundSession,
                     text = payload,

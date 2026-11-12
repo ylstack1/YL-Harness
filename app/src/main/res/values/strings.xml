@@ -1092,4 +1092,8 @@
     <string name="chat_history_open_message">Open matching message</string>
     <string name="chat_history_open_chat">Open conversation</string>
     <string name="chat_history_unavailable">This conversation is no longer available.</string>
+    <!-- Agent selection for new chat -->
+    <string name="ui_select_agent_for_new_chat">Select agent for this chat</string>
+    <string name="ui_agent_ylharness_default">YL Harness (default)</string>
+    <string name="ui_use_agent">Use agent</string>
 </resources>
