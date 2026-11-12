@@ -307,16 +307,19 @@ class ChatViewModel(
     private val sessionCreation = Mutex()
 
     private suspend fun ensureSession(title: String = c.appContext.getString(R.string.settings_telegram_new_chat)): String = sessionCreation.withLock {
+        val agentId = c.nextChatExternalAgentId
         sessionId ?: c.sessions.createSession(
             title, c.workspace.currentProjectOnce().id,
-            _state.value.conversation.copy(externalAgentId = c.nextChatExternalAgentId).also {
+            _state.value.conversation.copy(externalAgentId = agentId).also {
                 c.nextChatExternalAgentId = null
             }
         ).also { sid ->
             c.chatModels.initialize(sid)
             sessionId = sid
             sessionIdFlow.value = sid
-            _state.update { it.copy(sessionId = sid, sessionTitle = title) }
+            // Update conversation in state so startRun can read externalAgentId immediately
+            _state.update { it.copy(sessionId = sid, sessionTitle = title,
+                conversation = _state.value.conversation.copy(externalAgentId = agentId)) }
             c.settings.setLastActiveSessionId(sid)
         }
     }
@@ -1580,7 +1583,15 @@ class ChatViewModel(
                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { c.localModels.limits(provider.id.removePrefix(com.ylstack1.ylharness.local.LocalModelCatalog.PROVIDER_PREFIX)) }
                 } else null
                 // Route to external agent (Pi, OpenCode, custom) if selected for this chat.
-                val externalAgentId = s0.conversation.externalAgentId
+                // Read conversation fresh (not stale s0) because ensureSession just updated it.
+                val freshConv = _state.value.conversation
+                val externalAgentId = freshConv.externalAgentId
+                    ?: run {
+                        // Fallback: load conversation from session DB directly
+                        c.sessions.session(boundSession)?.let {
+                            com.ylstack1.ylharness.data.ConversationConfig.decode(it.conversationJson).externalAgentId
+                        }
+                    }
                 if (externalAgentId != null && externalAgentId.isNotBlank()) {
                     val ctx = com.ylstack1.ylharness.tools.ToolContext(
                         workspace = runWorkspace,
